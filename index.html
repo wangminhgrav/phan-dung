@@ -35,6 +35,8 @@
             --accent-glow: rgba(56, 189, 248, 0.35);
             --col-left-w: 248px;
             --col-right-w: 252px;
+            --phase-bar-h: 48px;
+            --taskbar-w: 76px;
             --font-display: 'Cinzel', serif;
             --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
@@ -2612,6 +2614,7 @@
             pointer-events: auto;
         }
         .viewport-wrapper {
+            position: relative;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -2619,7 +2622,7 @@
             height: 100vh;
         }
         .persistent-phase-bar {
-            height: 48px;
+            height: var(--phase-bar-h);
             background: #060b14;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
@@ -3714,9 +3717,9 @@
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: stretch;
-            height: 180px;
-            min-height: 180px;
-            max-height: 180px;
+            height: 192px;
+            min-height: 192px;
+            max-height: 192px;
             width: 100%;
             box-sizing: border-box;
             flex-shrink: 0;
@@ -3917,15 +3920,133 @@
         .form-input:focus {
             border-color: #38bdf8;
         }
-        .margin-toggle-box {
+        .margin-ctrl-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 4px 7px;
+            background: rgba(13, 20, 34, 0.85);
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.74rem;
+        }
+        .margin-ctrl-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 5px 8px;
-            background: rgba(13, 20, 34, 0.8);
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            font-size: 0.74rem;
+        }
+        .margin-ctrl-title {
+            font-size: 0.64rem;
+            font-weight: 700;
+            color: #94a3b8;
+            font-family: var(--font-mono);
+            letter-spacing: 0.04em;
+        }
+        .margin-badge-tier {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+        .margin-badge-tier:hover { filter: brightness(1.25); }
+        .tier-1 { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
+        .tier-2 { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
+        .tier-3 { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+        .tier-4 { background: rgba(245, 158, 11, 0.18); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
+        .tier-5 { background: rgba(245, 158, 11, 0.25); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.5); }
+        .tier-10 { background: rgba(239, 68, 68, 0.22); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.5); box-shadow: 0 0 8px rgba(239, 68, 68, 0.3); }
+        .tier-extreme { background: rgba(239, 68, 68, 0.3); color: #f87171; border: 1px solid #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+
+        .margin-stepper-wrap {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .margin-step-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #94a3b8;
+            border-radius: 2px;
+            font-size: 0.62rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            width: 17px;
+            height: 17px;
+            line-height: 15px;
+            text-align: center;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.12s ease;
+        }
+        .margin-step-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            color: #fff;
+            border-color: #38bdf8;
+        }
+
+        .margin-chk-wrap {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .margin-chk-text {
+            font-size: 0.62rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: #10b981;
+        }
+        .margin-chk-text.off {
+            color: #64748b;
+        }
+
+        .margin-presets-row {
+            display: flex;
+            gap: 3px;
+            width: 100%;
+        }
+        .mult-pill {
+            flex: 1;
+            padding: 2px 0;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            color: #94a3b8;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.12s ease;
+            user-select: none;
+        }
+        .mult-pill:hover {
+            background: rgba(30, 41, 59, 0.85);
+            color: #fff;
+            border-color: rgba(56, 189, 248, 0.35);
+        }
+        .mult-pill.active {
+            background: rgba(56, 189, 248, 0.18);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            font-weight: 800;
+        }
+        .mult-pill-danger.active {
+            background: rgba(239, 68, 68, 0.22);
+            border-color: #ef4444;
+            color: #ef4444;
+            box-shadow: 0 0 6px rgba(239, 68, 68, 0.25);
+        }
+        .mult-pill-custom {
+            max-width: 30px;
+            background: rgba(148, 163, 184, 0.08);
+            border-color: rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
         }
         .btn-order-exec {
             padding: 7px;
@@ -4062,27 +4183,345 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.8; transform: scale(1.03); }
         }
+        /* =========================================================================
+           TACTICAL NEWS DATABASE & INTELLIGENCE ARCHIVE (HIGH-TECH // ZERO-LAG)
+           ========================================================================= */
         .news-db-overlay {
             position: absolute;
-            inset: 48px 0 0 76px;
-            background: #080d16;
-            z-index: 35;
+            top: var(--phase-bar-h);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #060911;
+            background: linear-gradient(180deg, #070c18 0%, #050811 100%);
+            z-index: 50;
             display: none;
             flex-direction: column;
-            padding: 16px;
+            padding: 12px 18px 14px;
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
+            box-shadow: inset 0 6px 20px rgba(0, 0, 0, 0.6);
         }
         .news-db-overlay.active { display: flex; }
-        .news-filter-pills { display: flex; gap: 6px; margin-bottom: 12px; }
-        .pill-btn {
-            padding: 4px 10px;
-            background: #111827;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            color: var(--text-secondary);
-            font-size: 0.72rem;
-            cursor: pointer;
+
+        .news-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
         }
-        .pill-btn.active { background: var(--accent); color: #fff; }
+        .news-telemetry-strip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: #10b981;
+            letter-spacing: 0.12em;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .news-dot-live {
+            color: #10b981;
+            font-size: 8px;
+        }
+        .news-badge-divider { color: #334155; }
+        .news-badge-accent {
+            color: #38bdf8;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        .news-main-title {
+            font-family: var(--font-sans);
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #ffffff;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .news-close-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            color: #cbd5e1;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .news-close-btn:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.45);
+            color: #ef4444;
+        }
+        .news-close-key {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 0.64rem;
+            color: #94a3b8;
+        }
+
+        .news-filter-pills {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+        .news-filter-pills .pill-btn {
+            padding: 5px 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            border-radius: 4px;
+            color: #94a3b8;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .news-filter-pills .pill-btn:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(56, 189, 248, 0.4);
+            color: #f1f5f9;
+        }
+        .news-filter-pills .pill-btn.active {
+            background: rgba(56, 189, 248, 0.14);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.15);
+        }
+
+        .news-grid-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr 270px;
+            gap: 12px;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .news-col-assets {
+            background: rgba(8, 14, 26, 0.85);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1e293b transparent;
+        }
+        .news-asset-item {
+            padding: 8px 10px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 3px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 5px;
+        }
+        .news-asset-item:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        .news-asset-item.active {
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.14) 0%, rgba(15, 23, 42, 0.7) 100%);
+            border-color: rgba(56, 189, 248, 0.4);
+            border-left: 3px solid #38bdf8;
+        }
+        .news-asset-ticker-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .news-asset-ticker {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .news-asset-item.active .news-asset-ticker {
+            color: #38bdf8;
+        }
+        .news-asset-tag {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 3px;
+            background: rgba(56, 189, 248, 0.12);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+        .news-asset-name {
+            font-size: 0.67rem;
+            color: #94a3b8;
+        }
+
+        .news-feed-center {
+            background: rgba(8, 14, 26, 0.85);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1e293b transparent;
+        }
+        .news-card {
+            background: rgba(13, 21, 38, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 3px solid rgba(56, 189, 248, 0.4);
+            border-radius: 5px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .news-card:hover {
+            background: rgba(18, 29, 52, 0.8);
+            border-color: rgba(56, 189, 248, 0.35);
+            border-left-color: #38bdf8;
+            transform: translateX(2px);
+        }
+        .news-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .news-time-badge {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+        .news-phase-pill {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 1px 6px;
+            border-radius: 3px;
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            margin-left: 6px;
+        }
+        .news-cat-tag {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .news-card-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.35;
+            margin: 2px 0;
+        }
+        .news-card-body {
+            font-size: 0.74rem;
+            color: #94a3b8;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        .news-col-dossier {
+            background: rgba(8, 14, 26, 0.85);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1e293b transparent;
+            gap: 10px;
+        }
+        .dossier-hero {
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .dossier-ticker {
+            font-family: var(--font-mono);
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.04em;
+            margin: 0;
+        }
+        .dossier-sub {
+            font-size: 0.7rem;
+            color: #10b981;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .dossier-block {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .dossier-lbl {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            color: #64748b;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .dossier-val {
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+        .dossier-advice-card {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.28);
+            border-left: 3px solid #10b981;
+            padding: 8px 10px;
+            border-radius: 4px;
+        }
+        .dossier-advice-lbl {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #10b981;
+            margin-bottom: 3px;
+        }
+        .dossier-advice-txt {
+            font-size: 0.72rem;
+            color: #d1fae5;
+            line-height: 1.4;
+        }
 
         /* =========================================================================
            RESPONSIVE VIEWPORT HEIGHT & ZOOM FIXES (100% ZOOM LAPTOP/DESKTOP OPTIMIZATION)
@@ -4142,17 +4581,19 @@
             .target-select-bar { padding: 5px 8px; font-size: 9.5px; }
 
             /* Screen 6: Main Trading Platform */
+            :root { --phase-bar-h: 40px; }
             .persistent-phase-bar { height: 40px; padding: 0 12px; }
             .phase-badge { font-size: 0.68rem; padding: 2px 8px; }
             .phase-timer { font-size: 0.92rem; padding: 3px 10px; }
             .index-strip-container { padding: 3px 8px; gap: 6px; }
             .index-card { padding: 3px 6px; min-width: 115px; }
-            .trading-dock-bar { height: 158px; min-height: 158px; max-height: 158px; }
+            .trading-dock-bar { height: 184px; min-height: 184px; max-height: 184px; }
             .dock-chart-box { padding: 4px 8px; }
             .dock-order-box { width: 280px; min-width: 280px; padding: 4px 8px; gap: 3px; }
             .trade-tab-btn { padding: 4px; font-size: 0.78rem; }
             .form-input { padding: 4px 6px; font-size: 0.8rem; }
-            .margin-toggle-box { padding: 3px 6px; font-size: 0.7rem; }
+            .margin-ctrl-box { padding: 3px 5px; gap: 2px; }
+            .mult-pill { font-size: 0.62rem; padding: 1px 0; }
             .btn-order-exec { padding: 6px; font-size: 0.8rem; }
             .column-left { width: 230px; }
             .column-right { width: 235px; }
@@ -4212,15 +4653,17 @@
 
             /* Screen 6 */
             .persistent-phase-bar { height: 36px; }
-            .trading-dock-bar { height: 152px; min-height: 152px; max-height: 152px; }
+            .trading-dock-bar { height: 176px; min-height: 176px; max-height: 176px; }
             .dock-order-box { width: 260px; min-width: 260px; padding: 4px 8px; gap: 3px; }
             .trade-tab-btn { padding: 3px; font-size: 0.74rem; }
             .form-input { padding: 3px 6px; font-size: 0.78rem; }
-            .margin-toggle-box { padding: 2px 6px; font-size: 0.68rem; }
+            .margin-ctrl-box { padding: 2px 4px; gap: 2px; }
+            .mult-pill { font-size: 0.58rem; padding: 1px 0; }
             .btn-order-exec { padding: 5px; font-size: 0.78rem; }
             :root {
                 --col-left-w: 210px;
                 --col-right-w: 215px;
+                --phase-bar-h: 36px;
             }
             .widget-box { padding: 4px 8px; }
             .news-flash-widget { min-height: 90px; }
@@ -5428,24 +5871,48 @@
                             <button id="btn-tab-buy" class="trade-tab-btn active-buy" onclick="setOrderTab('BUY')">BUY</button>
                             <button id="btn-tab-sell" class="trade-tab-btn" onclick="setOrderTab('SELL')">SELL</button>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-size: 0.7rem; color: #94a3b8;">Shares (Qty):</span>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="toggle-btn" style="padding: 1px 5px;" onclick="setOrderQtyPreset(10)">10</button>
-                                <button class="toggle-btn" style="padding: 1px 5px;" onclick="setOrderQtyPreset(50)">50</button>
-                                <button class="toggle-btn" style="padding: 1px 5px;" onclick="setOrderQtyPreset(100)">100</button>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <span style="font-size: 0.68rem; color: #94a3b8; font-family: var(--font-mono); font-weight: 600; flex-shrink: 0;">Qty:</span>
+                            <input type="number" id="trade-qty" class="form-input" value="10" min="1" style="flex: 1; min-width: 45px; padding: 2px 6px; font-size: 0.8rem; height: 24px;">
+                            <div style="display: flex; gap: 3px; flex-shrink: 0;">
+                                <button type="button" class="toggle-btn" style="padding: 1px 4px; font-size: 0.65rem;" onclick="setOrderQtyPreset(10)">10</button>
+                                <button type="button" class="toggle-btn" style="padding: 1px 4px; font-size: 0.65rem;" onclick="setOrderQtyPreset(50)">50</button>
+                                <button type="button" class="toggle-btn" style="padding: 1px 4px; font-size: 0.65rem;" onclick="setOrderQtyPreset(100)">100</button>
+                                <button type="button" class="toggle-btn" style="padding: 1px 4px; font-size: 0.65rem; color: #38bdf8; border-color: rgba(56,189,248,0.4);" onclick="setOrderQtyMax()" title="Max affordable shares at current margin leverage">MAX</button>
                             </div>
                         </div>
-                        <input type="number" id="trade-qty" class="form-input" value="10" min="1">
-                        <div class="margin-toggle-box">
-                            <span style="font-weight: 700; color: #facc15;">Margin Leverage 4.0×</span>
-                            <input type="checkbox" id="margin-toggle-chk" checked style="transform: scale(1.15); cursor: pointer;" onchange="updateEstimatedVal()">
+                        <div class="margin-ctrl-box">
+                            <div class="margin-ctrl-header">
+                                <div style="display: flex; align-items: center; gap: 4px;">
+                                    <span class="margin-ctrl-title">LEVERAGE:</span>
+                                    <span id="margin-mult-badge" class="margin-badge-tier tier-4" onclick="promptCustomMargin()" title="Click to set custom multiplier">4.0×</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 4px;">
+                                    <div class="margin-stepper-wrap">
+                                        <button type="button" class="margin-step-btn" onclick="stepMarginMultiplier(-0.5)" title="Decrease Multiplier (−0.5×)">−</button>
+                                        <button type="button" class="margin-step-btn" onclick="stepMarginMultiplier(0.5)" title="Increase Multiplier (+0.5×)">+</button>
+                                    </div>
+                                    <label class="margin-chk-wrap" title="Toggle Margin Borrowing on/off">
+                                        <input type="checkbox" id="margin-toggle-chk" checked onchange="toggleMarginCheckbox(this.checked)">
+                                        <span class="margin-chk-text">ON</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="margin-presets-row">
+                                <button type="button" class="mult-pill" data-mult="1" onclick="setMarginMultiplier(1, this)" title="1x Cash Only (No Borrowing)">1×</button>
+                                <button type="button" class="mult-pill" data-mult="2" onclick="setMarginMultiplier(2, this)" title="2x Leverage (50% Margin)">2×</button>
+                                <button type="button" class="mult-pill" data-mult="3" onclick="setMarginMultiplier(3, this)" title="3x Leverage (33% Margin)">3×</button>
+                                <button type="button" class="mult-pill active" data-mult="4" onclick="setMarginMultiplier(4, this)" title="4x Leverage (Standard KRX 25% Margin)">4×</button>
+                                <button type="button" class="mult-pill" data-mult="5" onclick="setMarginMultiplier(5, this)" title="5x Leverage (20% Margin)">5×</button>
+                                <button type="button" class="mult-pill mult-pill-danger" data-mult="10" onclick="setMarginMultiplier(10, this)" title="10x Extreme Leverage (10% Margin)">10×</button>
+                                <button type="button" class="mult-pill mult-pill-custom" id="btn-custom-margin" onclick="promptCustomMargin()" title="Set Custom Multiplier (e.g. 1.5x - 20x)">SET</button>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #94a3b8;">
-                            <span>Estimated Value:</span>
-                            <span style="font-family: var(--font-mono); font-weight: 700; color: #fff;" id="trade-est-val">$1,447.00</span>
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 0.68rem; color: #94a3b8; margin: 1px 0;">
+                            <span>Est: <b style="font-family: var(--font-mono); font-weight: 700; color: #fff; font-size: 0.78rem;" id="trade-est-val">$1,447.00</b></span>
+                            <span id="trade-margin-breakdown" style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">Req: <b style="color:#10b981;">$361.75</b> | Debt: <b style="color:#f59e0b;">$1,085.25</b></span>
                         </div>
-                        <button class="btn-order-exec" id="btn-exec-trade" onclick="openOrderConfirmModal()">
+                        <button class="btn-order-exec" id="btn-exec-trade" onclick="openOrderConfirmModal()" style="padding: 6px; font-size: 0.82rem;">
                             CONFIRM BUY ORDER
                         </button>
                     </div>
@@ -5472,9 +5939,20 @@
                     </div>
 
                     <div class="widget-box" id="tut-target-leverage">
-                        <div class="widget-label">Leverage Multiplier</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="widget-label">Leverage Multiplier</div>
+                            <div style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">TIER: <span id="val-max-margin-tier" style="color: #f59e0b; font-weight: 700;">4.0×</span></div>
+                        </div>
                         <div class="widget-big-val" id="val-leverage">1.00×</div>
-                        <div style="font-size: 0.68rem; color: var(--text-secondary); margin-top: 2px;">Max Margin Limit: <b>4.0×</b></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                            <span style="font-size: 0.68rem; color: var(--text-secondary);">Margin Ceiling:</span>
+                            <div style="display: flex; gap: 3px;">
+                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem;" onclick="setMarginMultiplier(2)">2×</button>
+                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem;" onclick="setMarginMultiplier(4)">4×</button>
+                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem;" onclick="setMarginMultiplier(5)">5×</button>
+                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem; color: #ef4444; border-color: rgba(239,68,68,0.3);" onclick="setMarginMultiplier(10)">10×</button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="widget-box" id="tut-target-margin">
@@ -5482,7 +5960,7 @@
                         <div class="widget-big-val text-green" id="val-margin-ratio">100.0%</div>
                         <div class="health-meter-container"><div id="health-meter-fill" class="health-meter-bar"></div></div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.68rem; margin-top: 4px; font-family: var(--font-mono);">
-                            <span class="text-red">🚨 Liq. Floor: 20.0%</span>
+                            <span class="text-red">🚨 Liq. Floor: <span id="val-liq-floor">20.0%</span></span>
                             <span id="badge-margin-status" class="text-green">HEALTHY</span>
                         </div>
                     </div>
@@ -5507,115 +5985,156 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- NEWS DATABASE OVERLAY (FULL ENGLISH + PRE-GAME & PHASE 1 NEWS) -->
-    <div id="news-db-view" class="news-db-overlay">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <div>
-                <div style="font-family: var(--font-mono); font-size: 0.68rem; color: #10b981; letter-spacing: 0.14em; font-weight: 800;">INTELLIGENCE TERMINAL // PUBLIC NEWS QUEUE</div>
-                <h2 style="font-family: var(--font-display); font-size: 1.35rem; color: #fff;">MARKET NEWS & INTELLIGENCE ARCHIVE</h2>
+        <!-- NEWS DATABASE OVERLAY (SEAMLESS FLUSH UNDER PHASE BAR // ZERO-LAG) -->
+        <div id="news-db-view" class="news-db-overlay">
+            <div class="news-top-bar">
+                <div>
+                    <div class="news-telemetry-strip">
+                        <span class="news-dot-live">●</span>
+                        <span>KRX INTELLIGENCE SYSTEM // TERMINAL NODE 04</span>
+                        <span class="news-badge-divider">|</span>
+                        <span class="news-badge-accent">FEED: REAL-TIME CRYPTO &amp; EQUITY WIRES</span>
+                    </div>
+                    <h2 class="news-main-title">MARKET NEWS &amp; INTELLIGENCE ARCHIVE</h2>
+                </div>
+                <button class="news-close-btn" onclick="switchNavTab('home')">
+                    <span class="news-close-key">ESC</span>
+                    <span>✕ RETURN TO TRADING</span>
+                </button>
             </div>
-            <button class="btn-secondary" onclick="switchNavTab('home')">✕ Close [ESC]</button>
-        </div>
-        <div class="news-filter-pills">
-            <button class="pill-btn active" onclick="filterNewsTab('all', this)">ALL NEWS</button>
-            <button class="pill-btn" onclick="filterNewsTab('briefing', this)">PRE-GAME BRIEFING</button>
-            <button class="pill-btn" onclick="filterNewsTab('phase1', this)">PHASE 1 TIMED NEWS</button>
-            <button class="pill-btn" onclick="filterNewsTab('assets', this)">ASSET ANALYSIS</button>
-        </div>
-        <div style="display: grid; grid-template-columns: 220px 1fr 260px; gap: 14px; flex: 1; min-height: 0; overflow: hidden;">
-            <!-- Left List: 5 Core Assets -->
-            <div style="background: #090e18; border-radius: 6px; border: 1px solid var(--border); padding: 10px; overflow-y: auto;">
-                <div class="widget-label">CORE ASSETS (NEWS DOCX)</div>
-                <div style="margin-top: 6px; font-size: 0.76rem; display: flex; flex-direction: column; gap: 4px;" id="news-asset-list">
-                    <div style="padding: 7px; background: #131e33; border-radius: 4px; font-weight: bold; color: #fff; cursor: pointer; border-left: 3px solid #10b981;" onclick="selectNewsAsset('VNT')">
-                        VNT (Vintrumite)
-                        <div style="font-size: 0.65rem; color: #10b981; font-weight: normal;">AI Memory & HBM Leader</div>
-                    </div>
-                    <div style="padding: 7px; background: #0c121e; border-radius: 4px; color: var(--text-secondary); cursor: pointer;" onclick="selectNewsAsset('SEC')">
-                        SEC (Samsung Electronics)
-                        <div style="font-size: 0.65rem; color: #94a3b8;">Tech Market Bellwether</div>
-                    </div>
-                    <div style="padding: 7px; background: #0c121e; border-radius: 4px; color: var(--text-secondary); cursor: pointer;" onclick="selectNewsAsset('KODEX')">
-                        KODEX (KODEX Semiconductor)
-                        <div style="font-size: 0.65rem; color: #94a3b8;">Chip Sector ETF Basket</div>
-                    </div>
-                    <div style="padding: 7px; background: #0c121e; border-radius: 4px; color: var(--text-secondary); cursor: pointer;" onclick="selectNewsAsset('KODEX2X')">
-                        KODEX 2X (KODEX Leverage)
-                        <div style="font-size: 0.65rem; color: #ef4444;">2× Daily Return Volatility</div>
-                    </div>
-                    <div style="padding: 7px; background: #0c121e; border-radius: 4px; color: var(--text-secondary); cursor: pointer;" onclick="selectNewsAsset('TIGER')">
-                        TIGER (TIGER Semi TOP10)
-                        <div style="font-size: 0.65rem; color: #94a3b8;">Top 10 Chipmakers Basket</div>
+
+            <div class="news-filter-pills">
+                <button class="pill-btn active" onclick="filterNewsTab('all', this)">⚡ ALL INTEL WIRES</button>
+                <button class="pill-btn" onclick="filterNewsTab('briefing', this)">📋 PRE-GAME BRIEFING</button>
+                <button class="pill-btn" onclick="filterNewsTab('phase1', this)">⏱ PHASE 1 TIMED NEWS</button>
+                <button class="pill-btn" onclick="filterNewsTab('assets', this)">🔍 ASSET ANALYSIS</button>
+            </div>
+
+            <div class="news-grid-layout">
+                <!-- Column 1: Core Assets -->
+                <div class="news-col-assets">
+                    <div class="widget-label" style="margin-bottom: 8px;">CORE ASSET DOSSIERS [5]</div>
+                    <div id="news-asset-list">
+                        <div class="news-asset-item active" onclick="selectNewsAsset('VNT')">
+                            <div class="news-asset-ticker-row">
+                                <span class="news-asset-ticker">VNT</span>
+                                <span class="news-asset-tag">AI / HBM</span>
+                            </div>
+                            <div class="news-asset-name">Vintrumite (SK hynix Proxy)</div>
+                        </div>
+                        <div class="news-asset-item" onclick="selectNewsAsset('SEC')">
+                            <div class="news-asset-ticker-row">
+                                <span class="news-asset-ticker">SEC</span>
+                                <span class="news-asset-tag">FOUNDRY</span>
+                            </div>
+                            <div class="news-asset-name">Samsung Electronics</div>
+                        </div>
+                        <div class="news-asset-item" onclick="selectNewsAsset('KODEX')">
+                            <div class="news-asset-ticker-row">
+                                <span class="news-asset-ticker">KODEX</span>
+                                <span class="news-asset-tag">ETF BASKET</span>
+                            </div>
+                            <div class="news-asset-name">KODEX Semiconductor</div>
+                        </div>
+                        <div class="news-asset-item" onclick="selectNewsAsset('KODEX2X')">
+                            <div class="news-asset-ticker-row">
+                                <span class="news-asset-ticker">KODEX 2X</span>
+                                <span class="news-asset-tag" style="color: #ef4444; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1);">2X LEVERAGE</span>
+                            </div>
+                            <div class="news-asset-name">KODEX Leverage</div>
+                        </div>
+                        <div class="news-asset-item" onclick="selectNewsAsset('TIGER')">
+                            <div class="news-asset-ticker-row">
+                                <span class="news-asset-ticker">TIGER</span>
+                                <span class="news-asset-tag">TOP 10</span>
+                            </div>
+                            <div class="news-asset-name">TIGER Semi TOP10</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Center: News Feed -->
-            <div style="background: #090e18; border-radius: 6px; border: 1px solid var(--border); padding: 12px; overflow-y: auto;" id="news-feed-center">
-                <div class="widget-label">LIVE INTELLIGENCE STREAM</div>
-                <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 10px;" id="news-feed-items">
-                    <!-- Dynamic or Initial News Items -->
-                    <div style="border-bottom: 1px solid #1a2333; padding-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="text-green" style="font-size: 0.68rem; font-weight: 800; font-family: var(--font-mono);">🟢 [0:00] PHASE 1 LAUNCH</span>
-                            <span style="font-size: 0.65rem; color: #64748b;">Market Overview</span>
-                        </div>
-                        <h4 style="margin: 4px 0; font-size: 0.88rem; color: #f8fafc;">South Korea's Semiconductor Outlook Strengthens</h4>
-                        <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.45;">Strong AI-related demand continues to support expectations for Korean semiconductor exports and memory-chip demand. Investors are watching major Korean technology stocks as the AI infrastructure cycle remains a key growth theme.</p>
+                <!-- Column 2: Live Intelligence Feed -->
+                <div class="news-feed-center" id="news-feed-center">
+                    <div class="widget-label" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>LIVE INTELLIGENCE STREAM</span>
+                        <span style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">CHRONOLOGICAL // REAL-TIME</span>
                     </div>
-
-                    <div style="border-bottom: 1px solid #1a2333; padding-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="text-green" style="font-size: 0.68rem; font-weight: 800; font-family: var(--font-mono);">🟢 [0:00] ASSET INTEL</span>
-                            <span style="font-size: 0.65rem; color: #64748b;">Vintrumite (VNT)</span>
+                    <div id="news-feed-items">
+                        <div class="news-card">
+                            <div class="news-card-header">
+                                <div>
+                                    <span class="news-time-badge">[0:00]</span>
+                                    <span class="news-phase-pill">PHASE 1 LAUNCH</span>
+                                </div>
+                                <span class="news-cat-tag">MARKET OVERVIEW</span>
+                            </div>
+                            <h4 class="news-card-title">South Korea's Semiconductor Outlook Strengthens</h4>
+                            <p class="news-card-body">Strong AI-related demand continues to support expectations for Korean semiconductor exports and memory-chip demand. Investors are watching major Korean technology stocks as the AI infrastructure cycle remains a key growth theme.</p>
                         </div>
-                        <h4 style="margin: 4px 0; font-size: 0.88rem; color: #f8fafc;">AI Memory Demand Remains a Key Growth Theme</h4>
-                        <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.45;">SK hynix highlighted AI memory, HBM, and next-gen packaging solutions as prime growth drivers during the 2026 Future Forum presentation.</p>
-                    </div>
 
-                    <div style="border-bottom: 1px solid #1a2333; padding-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #38bdf8; font-size: 0.68rem; font-weight: 800; font-family: var(--font-mono);">🔵 [2:30] INFRASTRUCTURE EXPANSION</span>
-                            <span style="font-size: 0.65rem; color: #64748b;">Industry News</span>
+                        <div class="news-card">
+                            <div class="news-card-header">
+                                <div>
+                                    <span class="news-time-badge">[0:00]</span>
+                                    <span class="news-phase-pill">ASSET INTEL</span>
+                                </div>
+                                <span class="news-cat-tag">Vintrumite (VNT)</span>
+                            </div>
+                            <h4 class="news-card-title">AI Memory Demand Remains a Key Growth Theme</h4>
+                            <p class="news-card-body">SK hynix highlighted AI memory, HBM, and next-gen packaging solutions as prime growth drivers during the 2026 Future Forum presentation.</p>
                         </div>
-                        <h4 style="margin: 4px 0; font-size: 0.88rem; color: #f8fafc;">AI Infrastructure Investment Supports Korean Chipmakers</h4>
-                        <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.45;">Continued spending on AI data centers is strengthening expectations for high-bandwidth memory (HBM) and advanced semiconductor demand. The positive sector outlook supports broad interest in Korean semiconductor equities and ETFs.</p>
-                    </div>
 
-                    <div style="border-bottom: 1px solid #1a2333; padding-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #c084fc; font-size: 0.68rem; font-weight: 800; font-family: var(--font-mono);">🟣 [4:00] SENTIMENT PEAK</span>
-                            <span style="font-size: 0.65rem; color: #64748b;">Broad Market</span>
+                        <div class="news-card">
+                            <div class="news-card-header">
+                                <div>
+                                    <span class="news-time-badge">[2:30]</span>
+                                    <span class="news-phase-pill">INFRASTRUCTURE EXPANSION</span>
+                                </div>
+                                <span class="news-cat-tag">INDUSTRY NEWS</span>
+                            </div>
+                            <h4 class="news-card-title">AI Infrastructure Investment Supports Korean Chipmakers</h4>
+                            <p class="news-card-body">Continued spending on AI data centers is strengthening expectations for high-bandwidth memory (HBM) and advanced semiconductor demand. The positive sector outlook supports broad interest in Korean semiconductor equities and ETFs.</p>
                         </div>
-                        <h4 style="margin: 4px 0; font-size: 0.88rem; color: #f8fafc;">Investor Sentiment Improves Across Korean Technology Stocks</h4>
-                        <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.45;">Improving risk appetite is drawing attention back to large-cap technology and semiconductor shares. Market participants remain optimistic, while noting that the sector is sensitive to valuation changes.</p>
+
+                        <div class="news-card">
+                            <div class="news-card-header">
+                                <div>
+                                    <span class="news-time-badge">[4:00]</span>
+                                    <span class="news-phase-pill">SENTIMENT PEAK</span>
+                                </div>
+                                <span class="news-cat-tag">BROAD MARKET</span>
+                            </div>
+                            <h4 class="news-card-title">Investor Sentiment Improves Across Korean Technology Stocks</h4>
+                            <p class="news-card-body">Improving risk appetite is drawing attention back to large-cap technology and semiconductor shares. Market participants remain optimistic, while noting that the sector is sensitive to valuation changes.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Right Detail Box: Asset Dossier -->
-            <div style="background: #090e18; border-radius: 6px; border: 1px solid var(--border); padding: 12px; overflow-y: auto;" id="news-asset-dossier">
-                <div class="widget-label">ASSET PROFILE</div>
-                <h3 style="margin-top: 6px; font-size: 1.1rem; color: #fff;" id="dossier-ticker">VNT</h3>
-                <div style="font-size: 0.72rem; color: #10b981; font-weight: 700; margin-bottom: 6px;" id="dossier-sub">Vintrumite | Memory & HBM Leader</div>
-                <div style="font-size: 0.73rem; color: #94a3b8; line-height: 1.45; display: flex; flex-direction: column; gap: 8px;">
-                    <div>
-                        <b style="color: #cbd5e1;">Recent Trend:</b><br>
-                        <span id="dossier-trend">Aug 31–Sep 11, 2026: rose from ₩1.674m to ₩1.812m (+8.2%). Rallied strongly (+8.26% on Sep 7) before -2.21% move on Sep 11. High volatility momentum.</span>
+                <!-- Column 3: Strategic Dossier -->
+                <div class="news-col-dossier" id="news-asset-dossier">
+                    <div class="widget-label" style="display: flex; justify-content: space-between;">
+                        <span>STRATEGIC ASSET DOSSIER</span>
+                        <span style="color: #38bdf8; font-family: var(--font-mono); font-size: 0.62rem;">DOC // CLASSIFIED</span>
                     </div>
-                    <div>
-                        <b style="color: #cbd5e1;">Key Catalysts:</b><br>
-                        <span id="dossier-catalysts">AI/data-center investment, HBM demand, memory contract prices, export restrictions.</span>
+                    <div class="dossier-hero">
+                        <h3 class="dossier-ticker" id="dossier-ticker">VNT</h3>
+                        <div class="dossier-sub" id="dossier-sub">Vintrumite | Memory &amp; HBM Leader</div>
                     </div>
-                    <div>
-                        <b style="color: #cbd5e1;">Game Role:</b><br>
-                        <span id="dossier-role">High-impact semiconductor growth driver; primary speculative momentum asset.</span>
+                    <div class="dossier-block">
+                        <span class="dossier-lbl">Recent Benchmark Trend:</span>
+                        <span class="dossier-val" id="dossier-trend">Aug 31–Sep 11, 2026: rose from ₩1.674m to ₩1.812m (+8.2%). Rallied strongly (+8.26% on Sep 7) before -2.21% move on Sep 11. High volatility momentum.</span>
                     </div>
-                    <div style="background: rgba(16, 185, 129, 0.08); padding: 6px 8px; border-radius: 4px; border-left: 2px solid #10b981;">
-                        <b style="color: #10b981;">Player Advice:</b><br>
-                        <span id="dossier-advice">AI + HBM demand moves this asset violently. High upside with extreme margin wipeout risk.</span>
+                    <div class="dossier-block">
+                        <span class="dossier-lbl">Key Catalysts:</span>
+                        <span class="dossier-val" id="dossier-catalysts">AI/data-center investment, HBM demand, memory contract prices, export restrictions.</span>
+                    </div>
+                    <div class="dossier-block">
+                        <span class="dossier-lbl">Simulation Role:</span>
+                        <span class="dossier-val" id="dossier-role">High-impact semiconductor growth driver; primary speculative momentum asset.</span>
+                    </div>
+                    <div class="dossier-advice-card">
+                        <div class="dossier-advice-lbl">🛡️ TACTICAL EXECUTION DIRECTIVE:</div>
+                        <div class="dossier-advice-txt" id="dossier-advice">AI + HBM demand moves this asset violently. High upside potential with extreme margin wipeout risk under leverage.</div>
                     </div>
                 </div>
             </div>
@@ -6473,7 +6992,15 @@ window.addEventListener('keydown', (e) => {
 });
 
 /* NAVIGATION */
+function closeTaskbar() {
+    const tb = document.getElementById('main-left-taskbar');
+    if (tb && tb.classList.contains('expanded')) {
+        tb.classList.remove('expanded');
+    }
+}
+
 function navigateTo(screenNum) {
+    closeTaskbar();
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(`screen-${screenNum}`);
 
@@ -7104,9 +7631,20 @@ function initCategoryNav() {
     });
 }
 
-// Hotkeys to toggle Portfolio HUD (P / 4) and Risk HUD (R / 5)
+// Hotkeys to toggle Portfolio HUD (P / 4), Risk HUD (R / 5), and ESC handlers
 window.addEventListener('keydown', (e) => {
     if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
+
+    if (e.key === 'Escape') {
+        const newsView = document.getElementById('news-db-view');
+        if (newsView && newsView.classList.contains('active')) {
+            switchNavTab('home');
+            return;
+        }
+        closeTaskbar();
+        return;
+    }
+
     const s6 = document.getElementById('screen-6');
     if (!s6 || !s6.classList.contains('active')) return;
 
@@ -7119,7 +7657,18 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+// Click outside to collapse expanded taskbar
+document.addEventListener('click', (e) => {
+    const tb = document.getElementById('main-left-taskbar');
+    if (tb && tb.classList.contains('expanded')) {
+        if (!tb.contains(e.target)) {
+            tb.classList.remove('expanded');
+        }
+    }
+});
+
 function switchNavTab(tab, el) {
+    closeTaskbar();
     const newsView = document.getElementById('news-db-view');
     if (tab === 'news') {
         if (newsView) newsView.classList.add('active');
@@ -7127,11 +7676,12 @@ function switchNavTab(tab, el) {
         if (newsView) newsView.classList.remove('active');
     } else if (tab === 'bank') {
         openBankDashboard();
+        return;
     }
 
-    const navItems = document.querySelectorAll('#main-left-taskbar .nav-item');
-    navItems.forEach(i => i.classList.remove('active'));
-    if (el) {
+    const modeTabs = document.querySelectorAll('#main-left-taskbar .nav-item:not(#nav-item-portfolio):not(#nav-item-risk)');
+    modeTabs.forEach(i => i.classList.remove('active'));
+    if (el && !el.id.includes('portfolio') && !el.id.includes('risk')) {
         el.classList.add('active');
     } else if (tab === 'home') {
         const homeItem = document.querySelector('#main-left-taskbar .nav-item');
@@ -7756,6 +8306,129 @@ function setOrderQtyPreset(n) {
     }
 }
 
+function setOrderQtyMax() {
+    const useMargin = document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false;
+    const price = getCurrentSelectedStockPrice();
+    if (!price || price <= 0) return;
+
+    if (gameState.orderAction === 'SELL') {
+        const curHolding = (ClientEngine && ClientEngine.holdings) ? (ClientEngine.holdings[gameState.currentStock] || 0) : 0;
+        const qtyEl = document.getElementById('trade-qty');
+        if (qtyEl) {
+            qtyEl.value = Math.max(1, Math.floor(curHolding));
+            updateEstimatedVal();
+        }
+    } else {
+        const mult = (useMargin && ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
+        const cash = (ClientEngine && ClientEngine.cash) ? ClientEngine.cash : 10000;
+        const maxCash = cash * mult;
+        const maxShares = Math.max(1, Math.floor(maxCash / price));
+        const qtyEl = document.getElementById('trade-qty');
+        if (qtyEl) {
+            qtyEl.value = maxShares;
+            updateEstimatedVal();
+        }
+    }
+}
+
+function setMarginMultiplier(mult, el) {
+    mult = Math.max(1.0, Math.min(20.0, Math.round(parseFloat(mult) * 10) / 10));
+    if (ClientEngine && typeof ClientEngine.setMarginMultiplier === 'function') {
+        ClientEngine.setMarginMultiplier(mult);
+    }
+
+    const chk = document.getElementById('margin-toggle-chk');
+    const chkText = document.querySelector('.margin-chk-text');
+    if (mult === 1.0) {
+        if (chk) chk.checked = false;
+        if (chkText) { chkText.textContent = 'OFF'; chkText.classList.add('off'); }
+    } else {
+        if (chk) chk.checked = true;
+        if (chkText) { chkText.textContent = 'ON'; chkText.classList.remove('off'); }
+    }
+
+    // Update preset pills active state
+    document.querySelectorAll('.margin-presets-row .mult-pill').forEach(btn => {
+        const m = parseFloat(btn.dataset.mult);
+        btn.classList.toggle('active', m === mult);
+    });
+
+    // Update dynamic tier badge in order dock
+    const badge = document.getElementById('margin-mult-badge');
+    if (badge) {
+        badge.textContent = mult.toFixed(1) + '×';
+        badge.className = 'margin-badge-tier ' + (
+            mult <= 1.0 ? 'tier-1' :
+            mult <= 2.0 ? 'tier-2' :
+            mult <= 3.0 ? 'tier-3' :
+            mult <= 4.0 ? 'tier-4' :
+            mult <= 5.0 ? 'tier-5' :
+            mult <= 10.0 ? 'tier-10' : 'tier-extreme'
+        );
+    }
+
+    // Update Risk HUD Max Margin display
+    const hudTier = document.getElementById('val-max-margin-tier');
+    if (hudTier) hudTier.textContent = mult.toFixed(1) + '×';
+
+    // Update Liquidation Floor display in Risk HUD
+    const liqFloor = document.getElementById('val-liq-floor');
+    if (liqFloor && ClientEngine) {
+        const floorPct = ((ClientEngine.maintenanceMarginRatio || 0.20) * 100).toFixed(1);
+        liqFloor.textContent = floorPct + '%';
+    }
+
+    updateEstimatedVal();
+
+    // Sync with backend API
+    try {
+        fetch('/api/margin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ margin_multiplier: mult })
+        }).catch(() => {});
+    } catch(e) {}
+}
+
+function stepMarginMultiplier(delta) {
+    const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
+    const next = Math.max(1.0, Math.min(20.0, Math.round((cur + delta) * 10) / 10));
+    setMarginMultiplier(next);
+}
+
+function promptCustomMargin() {
+    const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
+    const input = prompt(`Enter custom margin multiplier (1.0× to 20.0×):\nCurrently: ${cur}×`, cur);
+    if (input !== null) {
+        const val = parseFloat(input);
+        if (!isNaN(val) && val >= 1.0 && val <= 20.0) {
+            setMarginMultiplier(val);
+        } else if (!isNaN(val)) {
+            alert("Margin multiplier must be between 1.0× and 20.0×.");
+        }
+    }
+}
+
+function toggleMarginCheckbox(checked) {
+    const chkText = document.querySelector('.margin-chk-text');
+    if (!checked) {
+        if (chkText) { chkText.textContent = 'OFF'; chkText.classList.add('off'); }
+        const badge = document.getElementById('margin-mult-badge');
+        if (badge) {
+            badge.textContent = '1.0× (OFF)';
+            badge.className = 'margin-badge-tier tier-1';
+        }
+        document.querySelectorAll('.margin-presets-row .mult-pill').forEach(btn => {
+            btn.classList.toggle('active', parseFloat(btn.dataset.mult) === 1);
+        });
+    } else {
+        if (chkText) { chkText.textContent = 'ON'; chkText.classList.remove('off'); }
+        const restoreMult = (ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 4.0;
+        setMarginMultiplier(restoreMult);
+    }
+    updateEstimatedVal();
+}
+
 function getCurrentSelectedStockPrice() {
     const stock = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock);
     return stock ? stock.price : 144.70;
@@ -7765,23 +8438,42 @@ function updateEstimatedVal() {
     const qty = parseFloat(document.getElementById('trade-qty').value) || 1;
     const price = getCurrentSelectedStockPrice();
     const est = qty * price;
+    const useMargin = document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false;
+    const marginMult = (useMargin && ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
+    
     document.getElementById('trade-est-val').textContent = '$' + est.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const breakdownEl = document.getElementById('trade-margin-breakdown');
+    if (breakdownEl) {
+        if (gameState.orderAction === 'BUY') {
+            if (useMargin && marginMult > 1.0) {
+                const reqCash = est / marginMult;
+                const borrow = Math.max(0, est - reqCash);
+                breakdownEl.innerHTML = `Req: <b style="color:#10b981;">$${reqCash.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b> | Debt: <b style="color:#f59e0b;">$${borrow.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b>`;
+            } else {
+                breakdownEl.innerHTML = `Cash: <b style="color:#38bdf8;">$${est.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b> (No Debt)`;
+            }
+        } else {
+            breakdownEl.innerHTML = `Proceeds: <b style="color:#10b981;">+$${est.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b> (Repays Debt)`;
+        }
+    }
 }
 document.getElementById('trade-qty').addEventListener('input', updateEstimatedVal);
 
 function openOrderConfirmModal() {
     const qty = parseFloat(document.getElementById('trade-qty').value) || 1;
-    const useMargin = document.getElementById('margin-toggle-chk').checked;
+    const useMargin = document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false;
     const price = getCurrentSelectedStockPrice();
     const est = qty * price;
-    const newDebt = useMargin ? (est * 0.75) : 0;
+    const marginMult = (useMargin && ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
+    const newDebt = (gameState.orderAction === 'BUY' && useMargin && marginMult > 1.0) ? Math.max(0, est - (est / marginMult)) : 0;
     
     document.getElementById('modal-order-action').textContent = gameState.orderAction;
     document.getElementById('modal-order-action').className = gameState.orderAction === 'BUY' ? 'text-green' : 'text-red';
     document.getElementById('modal-order-asset').textContent = `${qty} SHARES ${gameState.currentStock.toUpperCase()}`;
     document.getElementById('modal-order-val').textContent = '$' + est.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('modal-order-new-debt').textContent = '$' + newDebt.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('modal-order-new-lev').textContent = useMargin ? '2.50×' : '1.00×';
+    document.getElementById('modal-order-new-lev').textContent = useMargin ? `${marginMult.toFixed(1)}× Tier` : '1.00× (Cash)';
     document.getElementById('order-confirm-modal').classList.add('active');
 }
 
@@ -7792,11 +8484,12 @@ function closeOrderConfirmModal() {
 async function executeConfirmedOrder() {
     closeOrderConfirmModal();
     const qty = parseFloat(document.getElementById('trade-qty').value) || 1;
-    const useMargin = document.getElementById('margin-toggle-chk').checked;
+    const useMargin = document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false;
+    const marginMult = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
     const price = getCurrentSelectedStockPrice();
 
     // 1. Client-side immediate update
-    const resLocal = ClientEngine.trade(gameState.currentStock, gameState.orderAction, qty, useMargin);
+    const resLocal = ClientEngine.trade(gameState.currentStock, gameState.orderAction, qty, useMargin, marginMult);
     if (resLocal.state) {
         updateHUD(resLocal.state);
     } else if (resLocal.message) {
@@ -7816,7 +8509,8 @@ async function executeConfirmedOrder() {
                 action: gameState.orderAction, 
                 shares: qty, 
                 price: price,
-                use_margin: useMargin 
+                use_margin: useMargin,
+                margin_multiplier: marginMult
             })
         });
         const data = await res.json();
@@ -7857,6 +8551,7 @@ function quickSellHolding(ticker, shares) {
 let currentBankState = { balance: 0, emergency_reserve: 0, available_transfer: 0 };
 
 function openBankDashboard() {
+    closeTaskbar();
     const overlay = document.getElementById('bank-modal-overlay');
     if (overlay) overlay.classList.add('active');
     initGameBackend();
@@ -8173,21 +8868,11 @@ function selectNewsAsset(code) {
     if (rEl) rEl.textContent = data.role;
     if (aEl) aEl.textContent = data.advice;
 
-    const list = document.getElementById('news-asset-list');
-    if (list) {
-        const divs = list.querySelectorAll('div[onclick]');
-        divs.forEach(el => {
-            if (el.getAttribute('onclick').includes(code)) {
-                el.style.background = '#131e33';
-                el.style.borderLeft = '3px solid #10b981';
-                el.style.color = '#ffffff';
-            } else {
-                el.style.background = '#0c121e';
-                el.style.borderLeft = 'none';
-                el.style.color = 'var(--text-secondary)';
-            }
-        });
-    }
+    const items = document.querySelectorAll('.news-asset-item');
+    items.forEach(it => {
+        const onclickStr = it.getAttribute('onclick') || '';
+        it.classList.toggle('active', onclickStr.includes(code));
+    });
 }
 
 function filterNewsTab(tab, el) {
@@ -8212,13 +8897,16 @@ function filterNewsTab(tab, el) {
     }
 
     container.innerHTML = items.map(n => `
-        <div style="border-bottom: 1px solid #1a2333; padding-bottom: 10px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="${n.badgeColor}" style="font-size: 0.68rem; font-weight: 800; font-family: var(--font-mono);">[${n.time}] ${n.phase}</span>
-                <span style="font-size: 0.65rem; color: #64748b;">${n.type}</span>
+        <div class="news-card">
+            <div class="news-card-header">
+                <div>
+                    <span class="news-time-badge">[${n.time}]</span>
+                    <span class="news-phase-pill ${n.badgeColor || ''}">${n.phase}</span>
+                </div>
+                <span class="news-cat-tag">${n.type}</span>
             </div>
-            <h4 style="margin: 4px 0; font-size: 0.88rem; color: #f8fafc;">${n.title}</h4>
-            <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.45;">${n.summary}</p>
+            <h4 class="news-card-title">${n.title}</h4>
+            <p class="news-card-body">${n.summary}</p>
         </div>
     `).join('');
 }
@@ -8585,6 +9273,7 @@ const ClientEngine = {
     emergencyReserve: 0.0,
     marginDebt: 0.0,
     holdings: {},
+    marginMultiplier: 4.0,
     initialMarginRatio: 0.25,
     maintenanceMarginRatio: 0.20,
     targetHouseType: 'Normal House',
@@ -8609,6 +9298,14 @@ const ClientEngine = {
     ],
     isLiquidated: false,
 
+    setMarginMultiplier(mult) {
+        mult = Math.max(1.0, Math.min(20.0, Math.round(parseFloat(mult) * 10) / 10 || 1.0));
+        this.marginMultiplier = mult;
+        this.initialMarginRatio = 1.0 / mult;
+        this.maintenanceMarginRatio = Math.min(0.20, this.initialMarginRatio * 0.80);
+        return this.getState();
+    },
+
     init(capital, houseType, marginRatio) {
         this.initialCapital = capital || 10000.0;
         this.cash = this.initialCapital;
@@ -8617,6 +9314,8 @@ const ClientEngine = {
         this.marginDebt = 0.0;
         this.holdings = {};
         this.initialMarginRatio = marginRatio || 0.25;
+        this.marginMultiplier = Math.round((1.0 / this.initialMarginRatio) * 10) / 10;
+        this.maintenanceMarginRatio = Math.min(0.20, this.initialMarginRatio * 0.80);
         this.targetHouseType = houseType || 'Normal House';
         const mult = houseType === 'Small House' ? 3 : (houseType === 'ToLam Villa' ? 100 : 20);
         this.targetValue = this.initialCapital * mult;
@@ -8750,7 +9449,10 @@ const ClientEngine = {
         };
     },
 
-    trade(ticker, action, shares, useMargin) {
+    trade(ticker, action, shares, useMargin, customMultiplier) {
+        if (customMultiplier !== undefined && customMultiplier > 0) {
+            this.setMarginMultiplier(customMultiplier);
+        }
         if (this.isLiquidated) return { success: false, message: 'Account is liquidated.' };
         ensureMarketStocksLoaded();
         const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
@@ -8759,12 +9461,15 @@ const ClientEngine = {
         const cost = shares * price;
 
         if (action === 'BUY') {
-            if (!useMargin) {
+            if (!useMargin || this.marginMultiplier <= 1.0) {
                 if (cost > this.cash + 0.05) return { success: false, message: 'Insufficient cash balance.' };
                 this.cash = Math.max(0, this.cash - cost);
             } else {
                 const reqCash = cost * this.initialMarginRatio;
-                if (this.cash < reqCash - 0.05) return { success: false, message: 'Exceeds allowable purchasing power.' };
+                if (this.cash < reqCash - 0.05) {
+                    const maxAffordable = Math.floor((this.cash / this.initialMarginRatio) / price);
+                    return { success: false, message: `Order exceeds allowable purchasing power at ${this.marginMultiplier}× margin leverage. Max affordable: ${maxAffordable} shares.` };
+                }
                 const borrow = Math.max(0, cost - this.cash);
                 this.cash = Math.max(0, this.cash - cost);
                 this.marginDebt += borrow;
@@ -8901,6 +9606,15 @@ function updateHUD(data) {
     // Risk & Efficiency (Right Column)
     document.getElementById('val-leverage').textContent = m.leverage + '×';
     document.getElementById('val-margin-ratio').textContent = m.margin_ratio + '%';
+
+    const hudTier = document.getElementById('val-max-margin-tier');
+    if (hudTier && ClientEngine) {
+        hudTier.textContent = (ClientEngine.marginMultiplier || 4.0).toFixed(1) + '×';
+    }
+    const liqFloor = document.getElementById('val-liq-floor');
+    if (liqFloor && ClientEngine) {
+        liqFloor.textContent = ((ClientEngine.maintenanceMarginRatio || 0.20) * 100).toFixed(1) + '%';
+    }
 
     const statusBadge = document.getElementById('badge-margin-status');
     statusBadge.textContent = m.margin_status;
