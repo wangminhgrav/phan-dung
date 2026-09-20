@@ -646,6 +646,412 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
         }
 
+        /* =========================================================================
+           BADASS CYBERPUNK ORDER CONFIRMATION TERMINAL (HUD EXECUTION SUITE)
+           ========================================================================= */
+        .badass-order-box {
+            position: relative;
+            width: 100%;
+            max-width: 530px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(15, 23, 42, 0.97) 0%, rgba(3, 7, 18, 0.99) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 12px;
+            padding: 24px 28px 26px 28px;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(56, 189, 248, 0.15);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            animation: badassModalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes badassModalIn {
+            0% { transform: scale(0.94) translateY(12px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .badass-order-box.theme-buy {
+            border-color: rgba(16, 185, 129, 0.55);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), 0 0 45px rgba(16, 185, 129, 0.25);
+        }
+
+        .badass-order-box.theme-sell {
+            border-color: rgba(239, 68, 68, 0.55);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), 0 0 45px rgba(239, 68, 68, 0.25);
+        }
+
+        /* Scanline Texture */
+        .badass-order-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 255, 255, 0.015) 3px, rgba(255, 255, 255, 0.015) 6px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Top Edge Light Flare */
+        .badass-order-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        .badass-order-box.theme-buy::after {
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+        }
+        .badass-order-box.theme-sell::after {
+            background: linear-gradient(90deg, transparent, #ef4444, transparent);
+        }
+
+        /* Corner Cyber Brackets */
+        .badass-corner {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #38bdf8;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .badass-order-box.theme-buy .badass-corner { border-color: #10b981; }
+        .badass-order-box.theme-sell .badass-corner { border-color: #ef4444; }
+        .badass-corner.top-left { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+        .badass-corner.top-right { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+        .badass-corner.bottom-left { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
+        .badass-corner.bottom-right { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+
+        /* Telemetry Header */
+        .badass-telemetry-header {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 14px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+        }
+        .badass-telemetry-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #94a3b8;
+        }
+        .badass-radar-pip {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: radarPulse 1.4s infinite;
+        }
+        @keyframes radarPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.4); opacity: 1; }
+        }
+        .badass-order-box.theme-sell .badass-radar-pip {
+            background: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+        }
+        .badass-ticket-tag {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #38bdf8;
+            font-weight: 700;
+        }
+
+        /* Hero Row: Action Badge + Ticker & Name + Unit Price */
+        .badass-hero-row {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+        }
+        .badass-hero-badge {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.92rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .badass-order-box.theme-buy .badass-hero-badge {
+            background: rgba(16, 185, 129, 0.18);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.6);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+        }
+        .badass-order-box.theme-sell .badass-hero-badge {
+            background: rgba(239, 68, 68, 0.18);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
+        }
+
+        .badass-hero-asset-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .badass-hero-asset-code {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #f8fafc;
+            line-height: 1.1;
+        }
+        .badass-hero-asset-name {
+            font-size: 0.74rem;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+        .badass-hero-price-wrap {
+            text-align: right;
+            font-family: var(--font-mono);
+        }
+        .badass-hero-price-label {
+            font-size: 0.6rem;
+            color: #64748b;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .badass-hero-price-val {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+
+        /* 2x2 Tactical Grid Matrix */
+        .badass-grid-matrix {
+            position: relative;
+            z-index: 3;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .badass-card {
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 6px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .badass-card-label {
+            font-size: 0.62rem;
+            font-family: var(--font-mono);
+            color: #64748b;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .badass-card-primary {
+            font-size: 1.05rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: #f8fafc;
+            line-height: 1.2;
+        }
+        .badass-card-sub {
+            font-size: 0.64rem;
+            font-family: var(--font-mono);
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* Margin Health Gauge */
+        .badass-gauge-box {
+            position: relative;
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+        }
+        .badass-gauge-header {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            margin-bottom: 6px;
+        }
+        .badass-gauge-title {
+            color: #94a3b8;
+            letter-spacing: 0.08em;
+        }
+        .badass-gauge-values {
+            color: #f8fafc;
+            font-weight: 700;
+        }
+        .badass-gauge-track {
+            position: relative;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            overflow: visible;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+        .badass-gauge-bar {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 25%, #10b981 70%);
+            transition: width 0.35s ease;
+        }
+        .badass-gauge-floor-marker {
+            position: absolute;
+            left: 20%;
+            top: -3px;
+            bottom: -3px;
+            width: 2px;
+            background: #ef4444;
+            box-shadow: 0 0 6px #ef4444;
+        }
+        .badass-gauge-floor-label {
+            position: absolute;
+            top: 10px;
+            left: -18px;
+            font-size: 0.52rem;
+            font-family: var(--font-mono);
+            color: #ef4444;
+            font-weight: 800;
+            white-space: nowrap;
+            letter-spacing: 0.04em;
+        }
+        .badass-gauge-sub {
+            font-size: 0.64rem;
+            color: #94a3b8;
+            font-family: var(--font-mono);
+        }
+
+        /* Advisory Strip */
+        .badass-advisory-note {
+            position: relative;
+            z-index: 3;
+            font-size: 0.68rem;
+            font-family: var(--font-mono);
+            line-height: 1.4;
+            color: #cbd5e1;
+            background: rgba(56, 189, 248, 0.06);
+            border-left: 2px solid #38bdf8;
+            padding: 6px 10px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 16px;
+        }
+        .badass-order-box.theme-buy .badass-advisory-note {
+            border-left-color: #10b981;
+            background: rgba(16, 185, 129, 0.06);
+        }
+        .badass-order-box.theme-sell .badass-advisory-note {
+            border-left-color: #ef4444;
+            background: rgba(239, 68, 68, 0.06);
+        }
+
+        /* Badass Action Buttons */
+        .badass-actions-row {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            gap: 12px;
+        }
+        .badass-btn-abort {
+            flex: 1;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 6px;
+            color: #cbd5e1;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        .badass-btn-abort:hover {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+        .badass-btn-confirm {
+            flex: 1.6;
+            padding: 12px 18px;
+            border-radius: 6px;
+            border: none;
+            color: #030712;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+        .badass-order-box.theme-buy .badass-btn-confirm {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+        }
+        .badass-order-box.theme-buy .badass-btn-confirm:hover {
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.75);
+            transform: translateY(-1px);
+        }
+        .badass-order-box.theme-sell .badass-btn-confirm {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+        }
+        .badass-order-box.theme-sell .badass-btn-confirm:hover {
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.75);
+            transform: translateY(-1px);
+        }
+        .badass-btn-kbd {
+            font-size: 0.62rem;
+            opacity: 0.75;
+            padding: 1px 5px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        /* Paused Timer Animation */
+        @keyframes timerPausedPulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(245, 158, 11, 0.6); }
+            50% { opacity: 0.45; text-shadow: none; }
+        }
+        .timer-paused-blink {
+            animation: timerPausedPulse 1s infinite ease-in-out !important;
+            color: #f59e0b !important;
+        }
+
         /* SCREEN 2: APOCALYPTIC DEMON ENTER NAME THEATER */
         #screen-2 {
             flex-direction: column;
@@ -6851,33 +7257,108 @@
     </div>
 </div>
 
-<!-- ORDER CONFIRMATION MODAL -->
-<div id="order-confirm-modal" class="s1-modal-backdrop">
-    <div class="s1-modal-box" style="max-width: 420px;">
-        <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 14px; color: #fff;" id="modal-order-title">CONFIRM ORDER</h3>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #27272a; font-size: 0.88rem;">
-            <span style="color: var(--text-secondary);">Action</span>
-            <span class="text-green" id="modal-order-action" style="font-weight: 700;">BUY</span>
+<!-- ORDER CONFIRMATION MODAL (CYBERPUNK TACTICAL MATCHING TERMINAL) -->
+<div id="order-confirm-modal" class="s1-modal-backdrop" onclick="if(event.target===this) closeOrderConfirmModal()">
+    <div class="badass-order-box theme-buy" id="badass-order-box">
+        <!-- Corner Cyber Brackets -->
+        <div class="badass-corner top-left"></div>
+        <div class="badass-corner top-right"></div>
+        <div class="badass-corner bottom-left"></div>
+        <div class="badass-corner bottom-right"></div>
+
+        <!-- Telemetry Header Strip -->
+        <div class="badass-telemetry-header">
+            <div class="badass-telemetry-left">
+                <span class="badass-radar-pip"></span>
+                <span class="badass-telemetry-protocol">KRX DIRECT ORDER ROUTING // L2 PROTOCOL</span>
+            </div>
+            <div class="badass-telemetry-right">
+                <span class="badass-ticket-tag" id="badass-order-ticket">TICKET #KRX-8821</span>
+            </div>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #27272a; font-size: 0.88rem;">
-            <span style="color: var(--text-secondary);">Asset</span>
-            <span id="modal-order-asset" style="font-family: var(--font-mono);">10 VINTRUMITE</span>
+
+        <!-- Hidden backward-compatibility elements -->
+        <span id="modal-order-title" style="display:none;">CONFIRM ORDER</span>
+        <span id="modal-order-action" style="display:none;">BUY</span>
+        <span id="modal-order-asset" style="display:none;">10 VINTRUMITE</span>
+
+        <!-- Hero Action & Asset Row -->
+        <div class="badass-hero-row" id="badass-hero-row">
+            <div class="badass-hero-badge" id="badass-action-badge">BUY // LONG</div>
+            <div class="badass-hero-asset-info">
+                <div class="badass-hero-asset-code" id="badass-asset-code">VNT</div>
+                <div class="badass-hero-asset-name" id="badass-asset-name">Vintrumite Corporation • TECH &amp; SEMICONDUCTOR</div>
+            </div>
+            <div class="badass-hero-price-wrap">
+                <div class="badass-hero-price-label">EXEC PRICE</div>
+                <div class="badass-hero-price-val" id="badass-exec-price">$144.70</div>
+            </div>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #27272a; font-size: 0.88rem;">
-            <span style="color: var(--text-secondary);">Est. Value</span>
-            <span id="modal-order-val" style="font-family: var(--font-mono);">$1,400.00</span>
+
+        <!-- Tactical Matrix Cards (2x2 Grid) -->
+        <div class="badass-grid-matrix">
+            <!-- Card 1: Volume & Est Value -->
+            <div class="badass-card">
+                <div class="badass-card-label">ORDER VOLUME &amp; VALUE</div>
+                <div class="badass-card-primary" id="modal-order-val">$1,447.00</div>
+                <div class="badass-card-sub" id="badass-order-shares-sub">10 SHARES @ $144.70</div>
+            </div>
+
+            <!-- Card 2: Leverage Tier -->
+            <div class="badass-card">
+                <div class="badass-card-label">LEVERAGE MULTIPLIER</div>
+                <div class="badass-card-primary" id="modal-order-new-lev">4.0× Tier</div>
+                <div class="badass-card-sub" id="badass-order-lev-tag">⚠️ 25% INITIAL MARGIN REQUIREMENT</div>
+            </div>
+
+            <!-- Card 3: Capital Allocation (Cash Outlay vs Proceeds) -->
+            <div class="badass-card">
+                <div class="badass-card-label" id="badass-cash-label">CASH OUTLAY</div>
+                <div class="badass-card-primary" id="badass-order-cash-outlay">$361.75</div>
+                <div class="badass-card-sub" id="badass-order-cash-sub">Deducted from liquid balance</div>
+            </div>
+
+            <!-- Card 4: New Margin Debt -->
+            <div class="badass-card">
+                <div class="badass-card-label">NEW BORROWED DEBT</div>
+                <div class="badass-card-primary text-red" id="modal-order-new-debt">$1,085.25</div>
+                <div class="badass-card-sub" id="badass-order-debt-sub">Broker margin obligation</div>
+            </div>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #27272a; font-size: 0.88rem;">
-            <span style="color: var(--text-secondary);">New Margin Debt</span>
-            <span class="text-red" id="modal-order-new-debt" style="font-family: var(--font-mono);">$1,050.00</span>
+
+        <!-- Solvency Impact & Post-Trade Health Gauge -->
+        <div class="badass-gauge-box">
+            <div class="badass-gauge-header">
+                <span class="badass-gauge-title">PROJECTED MARGIN HEALTH</span>
+                <span class="badass-gauge-values" id="badass-gauge-ratio-text">Current: 100% → Post-Trade: 68.2%</span>
+            </div>
+            <div class="badass-gauge-track">
+                <div class="badass-gauge-bar" id="badass-gauge-bar" style="width: 68%;"></div>
+                <div class="badass-gauge-floor-marker" title="20% Forced Liquidation Floor">
+                    <span class="badass-gauge-floor-label">20% FLOOR</span>
+                </div>
+            </div>
+            <div class="badass-gauge-sub" id="badass-gauge-sub">
+                🛡️ Solvency Buffer: <b style="color:#10b981;">+48.2%</b> above 20% liquidation threshold.
+            </div>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #27272a; font-size: 0.88rem;">
-            <span style="color: var(--text-secondary);">Projected Leverage</span>
-            <span class="text-amber" id="modal-order-new-lev" style="font-family: var(--font-mono);">1.14×</span>
+
+        <!-- Tactical Advisory Warning Note -->
+        <div class="badass-advisory-note" id="badass-advisory-note">
+            ⚡ Execution Warning: Volatile phase conditions active. Ensure sufficient liquidity to prevent sudden margin call.
         </div>
-        <div style="display: flex; gap: 10px; margin-top: 18px;">
-            <button class="btn-secondary" style="flex: 1; border-radius: 0;" onclick="closeOrderConfirmModal()">CANCEL</button>
-            <button class="btn-primary" style="flex: 1; background: var(--green); border-radius: 0;" onclick="executeConfirmedOrder()">CONFIRM</button>
+
+        <!-- Action Controls -->
+        <div class="badass-actions-row">
+            <button class="badass-btn-abort" onclick="closeOrderConfirmModal()">
+                <span class="badass-btn-kbd">ESC</span>
+                <span>ABORT ORDER</span>
+            </button>
+            <button class="badass-btn-confirm" id="badass-btn-confirm" onclick="executeConfirmedOrder()">
+                <span class="badass-btn-icon">⚡</span>
+                <span id="badass-confirm-btn-text">AUTHORIZE &amp; TRANSMIT ORDER</span>
+                <span class="badass-btn-kbd">[ENTER]</span>
+            </button>
         </div>
     </div>
 </div>
@@ -7637,7 +8118,26 @@ function initCategoryNav() {
 window.addEventListener('keydown', (e) => {
     if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) return;
 
+    const orderModal = document.getElementById('order-confirm-modal');
+    if (orderModal && orderModal.classList.contains('active')) {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            closeOrderConfirmModal();
+            return;
+        }
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            executeConfirmedOrder();
+            return;
+        }
+    }
+
     if (e.key === 'Escape') {
+        const bankModal = document.getElementById('bank-modal-overlay');
+        if (bankModal && bankModal.classList.contains('active')) {
+            closeBankDashboard();
+            return;
+        }
         const newsView = document.getElementById('news-db-view');
         if (newsView && newsView.classList.contains('active')) {
             switchNavTab('home');
@@ -7679,9 +8179,11 @@ function switchNavTab(tab, el) {
                 activeNewsTab = 'briefing';
             }
             if (typeof renderNewsDB === 'function') renderNewsDB();
+            pauseMarketTimer('NEWS DB');
         }
     } else if (tab === 'home') {
         if (newsView) newsView.classList.remove('active');
+        resumeMarketTimer('NEWS DB');
     } else if (tab === 'bank') {
         openBankDashboard();
         return;
@@ -7929,6 +8431,9 @@ window.MarketFlashEngine = MarketFlashEngine;
 
 function renderPriceBoard() {
     ensureMarketStocksLoaded();
+    if (typeof ClientEngine !== 'undefined' && (!marketStocks[0] || !marketStocks[0]._phaseRefInitialized)) {
+        ClientEngine.updatePhaseReferencePrices(ClientEngine.currentPhase || 1);
+    }
     const tbody = document.getElementById('price-board-body');
     if (!tbody) return;
 
@@ -7941,10 +8446,10 @@ function renderPriceBoard() {
     });
 
     tbody.innerHTML = filtered.map(s => {
-        const isUp = s.change > 0;
-        const isDown = s.change < 0;
-        const isCeil = s.price >= s.ceil;
-        const isFloor = s.price <= s.floor;
+        const isCeil = s.price >= s.ceil - 0.01;
+        const isFloor = s.price <= s.floor + 0.01;
+        const isUp = s.price > s.ref + 0.001;
+        const isDown = s.price < s.ref - 0.001;
 
         let symColor = isUp ? 'color-buy' : (isDown ? 'color-sell' : 'color-ref');
         if (isCeil) symColor = 'color-ceil';
@@ -8466,24 +8971,169 @@ function updateEstimatedVal() {
 document.getElementById('trade-qty').addEventListener('input', updateEstimatedVal);
 
 function openOrderConfirmModal() {
+    pauseMarketTimer('ORDERING');
     const qty = parseFloat(document.getElementById('trade-qty').value) || 1;
     const useMargin = document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false;
     const price = getCurrentSelectedStockPrice();
     const est = qty * price;
     const marginMult = (useMargin && ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
-    const newDebt = (gameState.orderAction === 'BUY' && useMargin && marginMult > 1.0) ? Math.max(0, est - (est / marginMult)) : 0;
-    
-    document.getElementById('modal-order-action').textContent = gameState.orderAction;
-    document.getElementById('modal-order-action').className = gameState.orderAction === 'BUY' ? 'text-green' : 'text-red';
-    document.getElementById('modal-order-asset').textContent = `${qty} SHARES ${gameState.currentStock.toUpperCase()}`;
-    document.getElementById('modal-order-val').textContent = '$' + est.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('modal-order-new-debt').textContent = '$' + newDebt.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    document.getElementById('modal-order-new-lev').textContent = useMargin ? `${marginMult.toFixed(1)}× Tier` : '1.00× (Cash)';
+    const isBuy = (gameState.orderAction === 'BUY');
+    const curStockObj = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock) || { code: gameState.currentStock, name: gameState.currentStock, sector: 'Equities' };
+
+    const fmt = (n) => '$' + Number(n || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    let reqCash = est;
+    let newDebt = 0;
+    if (isBuy) {
+        if (useMargin && marginMult > 1.0) {
+            reqCash = est / marginMult;
+            newDebt = Math.max(0, est - reqCash);
+        }
+    } else {
+        reqCash = 0;
+        newDebt = 0;
+    }
+
+    const modalBox = document.getElementById('badass-order-box');
+    if (modalBox) {
+        modalBox.className = 'badass-order-box ' + (isBuy ? 'theme-buy' : 'theme-sell');
+    }
+
+    const ticketEl = document.getElementById('badass-order-ticket');
+    if (ticketEl) {
+        const randHex = Math.floor(1000 + Math.random() * 9000);
+        ticketEl.textContent = `TICKET #KRX-${randHex}`;
+    }
+
+    const badgeEl = document.getElementById('badass-action-badge');
+    if (badgeEl) badgeEl.textContent = isBuy ? 'BUY // LONG' : 'SELL // SHORT';
+
+    const codeEl = document.getElementById('badass-asset-code');
+    const nameEl = document.getElementById('badass-asset-name');
+    const priceEl = document.getElementById('badass-exec-price');
+    if (codeEl) codeEl.textContent = curStockObj.code || gameState.currentStock;
+    if (nameEl) nameEl.textContent = `${curStockObj.name} • ${(curStockObj.sector || 'EQUITY').toUpperCase()}`;
+    if (priceEl) priceEl.textContent = fmt(price);
+
+    // Legacy elements
+    const actEl = document.getElementById('modal-order-action');
+    if (actEl) {
+        actEl.textContent = gameState.orderAction;
+        actEl.className = isBuy ? 'text-green' : 'text-red';
+    }
+    const assetEl = document.getElementById('modal-order-asset');
+    if (assetEl) assetEl.textContent = `${qty} SHARES ${gameState.currentStock.toUpperCase()}`;
+
+    // Card 1: Value & shares
+    const valEl = document.getElementById('modal-order-val');
+    if (valEl) valEl.textContent = fmt(est);
+    const sharesSub = document.getElementById('badass-order-shares-sub');
+    if (sharesSub) sharesSub.textContent = `${qty} SHARES @ ${fmt(price)}`;
+
+    // Card 2: Leverage
+    const levEl = document.getElementById('modal-order-new-lev');
+    if (levEl) levEl.textContent = (isBuy && useMargin && marginMult > 1.0) ? `${marginMult.toFixed(1)}× Tier` : '1.00× (Cash)';
+    const levTag = document.getElementById('badass-order-lev-tag');
+    if (levTag) {
+        if (!isBuy) levTag.textContent = 'POSITION LIQUIDATION / DEBT REPAY';
+        else if (useMargin && marginMult > 1.0) levTag.textContent = `⚠️ ${(100 / marginMult).toFixed(0)}% CASH / ${((marginMult - 1)/marginMult * 100).toFixed(0)}% MARGIN`;
+        else levTag.textContent = '🛡️ UNLEVERAGED 100% CASH SETTLED';
+    }
+
+    // Card 3: Cash outlay / proceeds
+    const cashLbl = document.getElementById('badass-cash-label');
+    const cashVal = document.getElementById('badass-order-cash-outlay');
+    const cashSub = document.getElementById('badass-order-cash-sub');
+    if (cashLbl) cashLbl.textContent = isBuy ? 'CASH OUTLAY' : 'EST. PROCEEDS';
+    if (cashVal) {
+        cashVal.textContent = isBuy ? fmt(reqCash) : `+${fmt(est)}`;
+        cashVal.style.color = isBuy ? '#f8fafc' : '#10b981';
+    }
+    if (cashSub) {
+        cashSub.textContent = isBuy ? 'Deducted from liquid balance' : 'Credited / repays margin loan';
+    }
+
+    // Card 4: New debt
+    const debtEl = document.getElementById('modal-order-new-debt');
+    if (debtEl) {
+        debtEl.textContent = isBuy ? fmt(newDebt) : '$0.00 (DELEVERAGE)';
+        debtEl.style.color = (newDebt > 0) ? '#ef4444' : '#10b981';
+    }
+    const debtSub = document.getElementById('badass-order-debt-sub');
+    if (debtSub) {
+        debtSub.textContent = isBuy ? (newDebt > 0 ? 'Broker margin obligation' : 'No leverage borrowed') : 'Proceeds extinguish debt first';
+    }
+
+    // Projected Margin Health Gauge
+    const curState = (typeof ClientEngine !== 'undefined') ? ClientEngine.getState() : { metrics: { equity: 10000, margin_ratio: 100, margin_debt: 0, cash: 10000 }, bank: { balance: 0 }, holdings: {} };
+    const curMetrics = curState.metrics || {};
+    const curEquity = (curMetrics.equity !== undefined) ? curMetrics.equity : 0;
+    const curMarginRatio = (curMetrics.margin_ratio !== undefined) ? curMetrics.margin_ratio : 100;
+    const curCash = (curMetrics.cash !== undefined) ? curMetrics.cash : ((typeof ClientEngine !== 'undefined') ? ClientEngine.cash : 10000);
+    const curBank = (curState.bank && curState.bank.balance !== undefined) ? curState.bank.balance : ((typeof ClientEngine !== 'undefined') ? ClientEngine.bankSavings : 0);
+    let postDebt = (curMetrics.margin_debt !== undefined) ? curMetrics.margin_debt : ((typeof ClientEngine !== 'undefined') ? ClientEngine.marginDebt : 0);
+    let postEquity = curEquity;
+    let postStockVal = 0;
+    const holdings = curState.holdings || ((typeof ClientEngine !== 'undefined') ? ClientEngine.holdings : {}) || {};
+    Object.entries(holdings).forEach(([t, s]) => {
+        const stk = marketStocks.find(m => m.name === t || m.code === t);
+        const p = stk ? stk.price : 100;
+        postStockVal += (s || 0) * p;
+    });
+
+    if (isBuy) {
+        postStockVal += est;
+        postDebt += newDebt;
+        postEquity = Math.max(0, (curCash - reqCash) + postStockVal + curBank - postDebt);
+    } else {
+        postStockVal = Math.max(0, postStockVal - est);
+        const repay = Math.min(postDebt, est);
+        postDebt -= repay;
+        postEquity = Math.max(0, curCash + (est - repay) + postStockVal + curBank - postDebt);
+    }
+
+    const postRatio = postStockVal > 0 ? Math.max(0, Math.min(100, (postEquity / postStockVal) * 100)) : 100;
+    const ratioTextEl = document.getElementById('badass-gauge-ratio-text');
+    if (ratioTextEl) ratioTextEl.textContent = `${curMarginRatio.toFixed(1)}% → ${postRatio.toFixed(1)}%`;
+    const barEl = document.getElementById('badass-gauge-bar');
+    if (barEl) barEl.style.width = `${Math.max(5, Math.min(100, postRatio))}%`;
+
+    const gaugeSub = document.getElementById('badass-gauge-sub');
+    if (gaugeSub) {
+        const buffer = postRatio - 20;
+        if (buffer < 5 && postDebt > 0) {
+            gaugeSub.innerHTML = `⚠️ <b style="color:#ef4444;">CRITICAL DANGER:</b> Only ${buffer.toFixed(1)}% buffer before 20% forced liquidation!`;
+        } else if (postDebt > 0) {
+            gaugeSub.innerHTML = `🛡️ Solvency Buffer: <b style="color:#10b981;">+${buffer.toFixed(1)}%</b> above 20% liquidation threshold.`;
+        } else {
+            gaugeSub.innerHTML = `🛡️ Zero Debt: 100% Solvency — Immune to broker liquidation calls.`;
+        }
+    }
+
+    // Advisory note
+    const advEl = document.getElementById('badass-advisory-note');
+    if (advEl) {
+        if (!isBuy) {
+            advEl.innerHTML = `✅ <b>DELEVERAGING PROTOCOL:</b> Selling shares reduces risk exposure and extinguishes accrued broker debt.`;
+        } else if (useMargin && marginMult > 1.0) {
+            advEl.innerHTML = `⚠️ <b>HIGH LEVERAGE PROTOCOL:</b> Operating at ${marginMult.toFixed(1)}× borrowing. Sharp market drops may breach your 20% maintenance floor.`;
+        } else {
+            advEl.innerHTML = `🛡️ <b>CASH EXECUTION PROTOCOL:</b> Unleveraged transaction settled with available trading reserves.`;
+        }
+    }
+
+    // Confirm button text
+    const confirmTextEl = document.getElementById('badass-confirm-btn-text');
+    if (confirmTextEl) {
+        confirmTextEl.textContent = isBuy ? 'AUTHORIZE & TRANSMIT ORDER' : 'TRANSMIT SELL EXECUTION';
+    }
+
     document.getElementById('order-confirm-modal').classList.add('active');
 }
 
 function closeOrderConfirmModal() {
     document.getElementById('order-confirm-modal').classList.remove('active');
+    resumeMarketTimer('ORDERING');
 }
 
 async function executeConfirmedOrder() {
@@ -8560,11 +9210,13 @@ function openBankDashboard() {
     const overlay = document.getElementById('bank-modal-overlay');
     if (overlay) overlay.classList.add('active');
     initGameBackend();
+    pauseMarketTimer('BANK VAULT');
 }
 
 function closeBankDashboard() {
     const overlay = document.getElementById('bank-modal-overlay');
     if (overlay) overlay.classList.remove('active');
+    resumeMarketTimer('BANK VAULT');
 }
 
 function setBankTransferAmt(val) {
@@ -9260,20 +9912,138 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
-function triggerNewsFlash(text) {
+let currentFlashSlot = '';
+
+function getPhaseTimeSlotNews(phase, timeSlot) {
+    const pData = window.FREE_FALL_NEWS?.phases?.[String(phase)];
+    if (!pData) return [];
+    const list = [];
+    
+    // 1. Industry News
+    (pData.industry_news || []).forEach(item => {
+        if (item.time === timeSlot) {
+            const parsed = parseNewsItem(item.content);
+            list.push({
+                type: 'INDUSTRY',
+                badge: 'INDUSTRY INTEL',
+                time: item.time,
+                title: parsed.title,
+                body: parsed.body
+            });
+        }
+    });
+
+    // 2. Market News
+    (pData.market_news || []).forEach(item => {
+        if (item.time === timeSlot) {
+            const parsed = parseNewsItem(item.content);
+            list.push({
+                type: 'MARKET',
+                badge: 'MACRO MARKET',
+                time: item.time,
+                title: parsed.title,
+                body: parsed.body
+            });
+        }
+    });
+
+    // 3. Asset News
+    (pData.asset_news || []).forEach(item => {
+        if (item.time === timeSlot) {
+            const parsed = parseNewsItem(item.content);
+            list.push({
+                type: 'ASSET',
+                ticker: item.ticker,
+                badge: `${item.ticker} // ${(item.asset_name || item.ticker).toUpperCase()}`,
+                time: item.time,
+                title: parsed.title,
+                body: parsed.body
+            });
+        }
+    });
+
+    return list;
+}
+
+function updateMarketFlashNews(forceSlot) {
+    const curP = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
+    let slot = forceSlot;
+    if (!slot) {
+        if (sessionSecondsRemaining > 150) {
+            slot = '0:00';
+        } else if (sessionSecondsRemaining > 60) {
+            slot = '2:30';
+        } else {
+            slot = '4:00';
+        }
+    }
+
+    if (slot === currentFlashSlot && !forceSlot) return;
+    currentFlashSlot = slot;
+
+    const newsItems = getPhaseTimeSlotNews(curP, slot);
     const container = document.getElementById('flash-news-container');
-    if (container) {
-        // Remove old news so only the latest news is displayed
-        container.innerHTML = '';
+    if (!container) return;
+
+    container.innerHTML = '';
+    const badge = document.getElementById('flash-news-badge');
+    if (badge) badge.textContent = `UPDATE [${slot}]: ${newsItems.length} WIRES`;
+
+    if (newsItems.length === 0) {
+        container.innerHTML = `<div style="padding: 6px 8px; font-size: 0.7rem; color: #94a3b8;">No wire broadcasts available for [${slot}].</div>`;
+        return;
+    }
+
+    newsItems.forEach((n, idx) => {
         const item = document.createElement('div');
-        item.style.padding = '5px 7px';
-        item.style.background = 'rgba(16, 185, 129, 0.12)';
+        item.className = 'flash-news-card-item';
+        item.style.padding = '6px 8px';
+        item.style.background = 'rgba(16, 185, 129, 0.08)';
         item.style.borderRadius = '4px';
         item.style.borderLeft = '2px solid #10b981';
         item.style.fontSize = '0.72rem';
         item.style.lineHeight = '1.35';
-        item.innerHTML = `<span style="color:#10b981; font-weight:800;">⚡ BREAKING</span>: ${text}`;
+        item.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
+                <span style="color:#10b981; font-weight:800; font-size:0.62rem; font-family:var(--font-mono); letter-spacing:0.04em;">⚡ [${n.time}] ${n.badge}</span>
+                <span style="color:#64748b; font-size:0.6rem; font-family:var(--font-mono);">#0${idx + 1}/07</span>
+            </div>
+            <div style="font-weight:700; color:#f8fafc; font-size:0.71rem; margin-bottom: 2px;">${n.title}</div>
+            <div style="color:#94a3b8; font-size:0.67rem; line-height:1.3;">${n.body}</div>
+        `;
         container.appendChild(item);
+    });
+
+    const wrap = document.getElementById('flash-news-scroll-wrap');
+    if (wrap) {
+        wrap.scrollTop = 0;
+        onNewsScroll(wrap);
+    }
+}
+
+function triggerNewsFlash(text) {
+    if (text.includes('[0:00]')) {
+        updateMarketFlashNews('0:00');
+        return;
+    } else if (text.includes('[2:30]')) {
+        updateMarketFlashNews('2:30');
+        return;
+    } else if (text.includes('[4:00]')) {
+        updateMarketFlashNews('4:00');
+        return;
+    }
+
+    const container = document.getElementById('flash-news-container');
+    if (container) {
+        const item = document.createElement('div');
+        item.style.padding = '5px 7px';
+        item.style.background = 'rgba(56, 189, 248, 0.12)';
+        item.style.borderRadius = '4px';
+        item.style.borderLeft = '2px solid #38bdf8';
+        item.style.fontSize = '0.72rem';
+        item.style.lineHeight = '1.35';
+        item.innerHTML = `<span style="color:#38bdf8; font-weight:800;">ℹ️ NOTICE</span>: ${text}`;
+        container.insertBefore(item, container.firstChild);
     }
     const badge = document.getElementById('flash-news-badge');
     if (badge) badge.textContent = 'UPDATE ACTIVE';
@@ -9322,6 +10092,50 @@ let hasReadFixedNews = false;
 let marketSessionStarted = false;
 let sessionSecondsRemaining = 300;
 let marketTimerInterval = null;
+
+let activePauseReasons = new Set();
+
+function isMarketTimerPaused() {
+    return activePauseReasons.size > 0;
+}
+
+function pauseMarketTimer(reason) {
+    if (!marketSessionStarted || sessionSecondsRemaining <= 0) return;
+    activePauseReasons.add(reason);
+    updatePausedTimerDisplay();
+}
+
+function resumeMarketTimer(reason) {
+    activePauseReasons.delete(reason);
+    if (activePauseReasons.size === 0) {
+        updateActiveTimerDisplay();
+    }
+}
+
+function updatePausedTimerDisplay() {
+    const el = document.getElementById('hud-timer');
+    if (!el) return;
+    const mins = String(Math.floor(sessionSecondsRemaining / 60)).padStart(2, '0');
+    const secs = String(sessionSecondsRemaining % 60).padStart(2, '0');
+    const reasonStr = Array.from(activePauseReasons).join(', ') || 'PAUSED';
+    el.textContent = `${mins}:${secs} [⏸ PAUSED // ${reasonStr}]`;
+    el.classList.add('timer-paused-blink');
+}
+
+function updateActiveTimerDisplay() {
+    const el = document.getElementById('hud-timer');
+    if (!el) return;
+    el.classList.remove('timer-paused-blink');
+    el.style.color = '';
+    const mins = String(Math.floor(sessionSecondsRemaining / 60)).padStart(2, '0');
+    const secs = String(sessionSecondsRemaining % 60).padStart(2, '0');
+    if (typeof ClientEngine !== 'undefined') {
+        const globalSec = (ClientEngine.currentPhase - 1) * 300 + (300 - sessionSecondsRemaining);
+        el.textContent = `${mins}:${secs} [SEC ${globalSec}/1800]`;
+    } else {
+        el.textContent = `${mins}:${secs}`;
+    }
+}
 
 const phaseAnnouncements = {
     1: "[0:00] PHASE 1: Korean Semiconductor Outlook Improves as AI Demand Remains Strong",
@@ -9437,16 +10251,19 @@ function startMarketSession() {
 
     MarketFlashEngine.onPhaseStart();
 
-    const curPhase = ClientEngine.currentPhase;
-    if (phaseAnnouncements[curPhase]) {
-        triggerNewsFlash(phaseAnnouncements[curPhase]);
-    }
+    currentFlashSlot = '';
+    updateMarketFlashNews('0:00');
 
     // Refresh News DB when session starts so 0:00 items unlock
     renderNewsDB();
 
     if (marketTimerInterval) clearInterval(marketTimerInterval);
     marketTimerInterval = setInterval(() => {
+        if (activePauseReasons.size > 0) {
+            updatePausedTimerDisplay();
+            return;
+        }
+
         if (sessionSecondsRemaining > 0) {
             sessionSecondsRemaining--;
             const globalSec = (ClientEngine.currentPhase - 1) * 300 + (300 - sessionSecondsRemaining);
@@ -9485,23 +10302,29 @@ function startMarketSession() {
             syncTickToServer(globalSec);
 
             // 7. Check timed news queue & dynamic News DB unlock
-            const pNews = timedPhaseNews[ClientEngine.currentPhase];
-            if (pNews && pNews[sessionSecondsRemaining]) {
-                triggerNewsFlash(pNews[sessionSecondsRemaining]);
-            }
-
             const elapsedSecs = 300 - sessionSecondsRemaining;
-            if (elapsedSecs === 150 || elapsedSecs === 240) {
+            if (elapsedSecs === 150) {
+                updateMarketFlashNews('2:30');
                 renderNewsDB();
+            } else if (elapsedSecs === 240) {
+                updateMarketFlashNews('4:00');
+                renderNewsDB();
+            } else if (sessionSecondsRemaining === 300 || !currentFlashSlot) {
+                updateMarketFlashNews('0:00');
             }
         } else {
             // Phase Complete
+            activePauseReasons.clear();
             MarketFlashEngine.stop();
             clearInterval(marketTimerInterval);
             marketTimerInterval = null;
             marketSessionStarted = false;
             const el = document.getElementById('hud-timer');
-            if (el) el.textContent = `00:00 [PHASE ${ClientEngine.currentPhase} COMPLETE]`;
+            if (el) {
+                el.classList.remove('timer-paused-blink');
+                el.style.color = '';
+                el.textContent = `00:00 [PHASE ${ClientEngine.currentPhase} COMPLETE]`;
+            }
             updateMarketStartButton();
             updateAdvancePhaseButton();
             renderChartPhaseButtons();
@@ -9530,6 +10353,7 @@ async function syncTickToServer(globalSec) {
    HUD REFRESH & REAL-TIME STATE ENGINE (ENGLISH LOCALIZED)
    ========================================================================= */
 async function advancePhaseAction() {
+    activePauseReasons.clear();
     MarketFlashEngine.stop();
     MarketFlashEngine.lastFlashedCodes.clear();
 
@@ -9597,10 +10421,8 @@ async function advancePhaseAction() {
     const el = document.getElementById('hud-timer');
     if (el) el.textContent = `05:00 [PHASE ${ClientEngine.currentPhase} READY]`;
 
-    if (phaseAnnouncements[ClientEngine.currentPhase]) {
-        triggerNewsFlash(phaseAnnouncements[ClientEngine.currentPhase]);
-    }
-
+    currentFlashSlot = '';
+    updateMarketFlashNews('0:00');
     renderNewsDB();
 
     try {
@@ -9675,6 +10497,24 @@ const ClientEngine = {
         return this.getState();
     },
 
+    updatePhaseReferencePrices(phase) {
+        phase = Math.max(1, Math.min(6, phase || 1));
+        const ticksObj = (window.MARKET_DATA && window.MARKET_DATA.ticks) ? window.MARKET_DATA.ticks : null;
+        if (!ticksObj) return;
+        ensureMarketStocksLoaded();
+        const refTickIdx = (phase === 1) ? 0 : (phase - 1) * 300 - 1;
+        marketStocks.forEach(s => {
+            const tickArr = ticksObj[s.name] || ticksObj[s.code];
+            if (tickArr && tickArr[refTickIdx] !== undefined) {
+                const phaseRef = Math.round(tickArr[refTickIdx] * 100) / 100;
+                s.ref = phaseRef;
+                s.ceil = Math.round(phaseRef * 1.30 * 100) / 100;
+                s.floor = Math.round(phaseRef * 0.70 * 100) / 100;
+                s._phaseRefInitialized = true;
+            }
+        });
+    },
+
     init(capital, houseType, marginRatio) {
         this.initialCapital = capital || 10000.0;
         this.cash = this.initialCapital;
@@ -9693,6 +10533,8 @@ const ClientEngine = {
         this.isLiquidated = false;
         if (typeof MarketFlashEngine !== 'undefined') MarketFlashEngine.stop();
         ensureMarketStocksLoaded();
+        this.updatePhaseReferencePrices(1);
+        this._activePhaseRef = 1;
         this.setGlobalSecond(1);
         return this.getState();
     },
@@ -9700,7 +10542,24 @@ const ClientEngine = {
     setGlobalSecond(sec) {
         sec = Math.max(1, Math.min(1800, Math.round(sec)));
         this.currentGlobalSecond = sec;
-        this.currentPhase = Math.min(6, Math.floor((sec - 1) / 300) + 1);
+        const newPhase = Math.min(6, Math.floor((sec - 1) / 300) + 1);
+        const phaseChanged = (this.currentPhase !== newPhase || this._activePhaseRef !== newPhase);
+        this.currentPhase = newPhase;
+
+        if (phaseChanged) {
+            this.updatePhaseReferencePrices(newPhase);
+            this._activePhaseRef = newPhase;
+            const ticksObj = (window.MARKET_DATA && window.MARKET_DATA.ticks) ? window.MARKET_DATA.ticks : null;
+            if (ticksObj) {
+                const tickIdx = sec - 1;
+                marketStocks.forEach(s => {
+                    const tickArr = ticksObj[s.name] || ticksObj[s.code];
+                    const curPrice = (tickArr && tickArr[tickIdx] !== undefined) ? tickArr[tickIdx] : s.price;
+                    s.high = curPrice;
+                    s.low = curPrice;
+                });
+            }
+        }
 
         const ticksObj = (window.MARKET_DATA && window.MARKET_DATA.ticks) ? window.MARKET_DATA.ticks : null;
         if (ticksObj) {
@@ -9725,11 +10584,14 @@ const ClientEngine = {
                     s.ask2 = Math.round((curPrice + spread * 2) * 100) / 100;
                     s.ask3 = Math.round((curPrice + spread * 3) * 100) / 100;
 
-                    // Dynamic sparkline sampling
-                    const step = Math.max(1, Math.floor(sec / 6));
+                    // Dynamic sparkline sampling within current phase
+                    const phaseStartSec = (this.currentPhase - 1) * 300 + 1;
+                    const phaseElapsed = Math.max(1, sec - phaseStartSec + 1);
+                    const step = Math.max(1, Math.floor(phaseElapsed / 6));
+                    const startTick = phaseStartSec - 1;
                     const pts = [];
                     for (let i = 0; i < 7; i++) {
-                        const sampleIdx = Math.max(0, Math.min(tickIdx, i * step));
+                        const sampleIdx = Math.max(startTick, Math.min(tickIdx, startTick + i * step));
                         const p = tickArr[sampleIdx] !== undefined ? tickArr[sampleIdx] : curPrice;
                         const y = Math.max(1, Math.min(11, Math.round(6 - ((p - s.ref) / (s.ref || 1)) * 32)));
                         pts.push(`${i * 6.5},${y}`);
@@ -9834,19 +10696,20 @@ const ClientEngine = {
                 if (cost > this.cash + 0.05) return { success: false, message: 'Insufficient cash balance.' };
                 this.cash = Math.max(0, this.cash - cost);
             } else {
-                const reqCash = cost * this.initialMarginRatio;
+                const mult = (this.marginMultiplier && this.marginMultiplier > 1.0) ? this.marginMultiplier : (1.0 / this.initialMarginRatio);
+                const reqCash = cost / mult;
+                const newDebt = Math.max(0, cost - reqCash);
                 if (this.cash < reqCash - 0.05) {
-                    const maxAffordable = Math.floor((this.cash / this.initialMarginRatio) / price);
-                    return { success: false, message: `Order exceeds allowable purchasing power at ${this.marginMultiplier}× margin leverage. Max affordable: ${maxAffordable} shares.` };
+                    const maxAffordable = Math.floor((this.cash * mult) / price);
+                    return { success: false, message: `Order exceeds allowable purchasing power at ${mult}× margin leverage. Max affordable: ${maxAffordable} shares.` };
                 }
-                const borrow = Math.max(0, cost - this.cash);
-                this.cash = Math.max(0, this.cash - cost);
-                this.marginDebt += borrow;
+                this.cash = Math.max(0, this.cash - reqCash);
+                this.marginDebt += newDebt;
             }
             this.holdings[key] = (this.holdings[key] || 0) + shares;
             return { success: true, state: this.getState() };
         } else if (action === 'SELL') {
-            const curShares = this.holdings[key] || this.holdings[ticker] || 0;
+            const curShares = (this.holdings[key] !== undefined) ? this.holdings[key] : ((this.holdings[ticker] !== undefined) ? this.holdings[ticker] : (stock && this.holdings[stock.code] !== undefined ? this.holdings[stock.code] : 0));
             if (shares > curShares + 0.0001) return { success: false, message: 'Insufficient shares to sell.' };
             let proceeds = cost;
             if (this.marginDebt > 0) {
@@ -9855,10 +10718,13 @@ const ClientEngine = {
                 proceeds -= repay;
             }
             this.cash += proceeds;
-            if (this.holdings[key]) {
+            if (this.holdings[key] !== undefined) {
                 this.holdings[key] -= shares;
                 if (this.holdings[key] <= 0.0001) delete this.holdings[key];
-            } else if (this.holdings[ticker]) {
+            } else if (stock && this.holdings[stock.code] !== undefined) {
+                this.holdings[stock.code] -= shares;
+                if (this.holdings[stock.code] <= 0.0001) delete this.holdings[stock.code];
+            } else if (this.holdings[ticker] !== undefined) {
                 this.holdings[ticker] -= shares;
                 if (this.holdings[ticker] <= 0.0001) delete this.holdings[ticker];
             }
@@ -9908,6 +10774,8 @@ const ClientEngine = {
             this.currentPhase += 1;
         }
         this.currentGlobalSecond = (this.currentPhase - 1) * 300 + 1;
+        this.updatePhaseReferencePrices(this.currentPhase);
+        this._activePhaseRef = this.currentPhase;
         this.setGlobalSecond(this.currentGlobalSecond);
         return { success: true, state: this.getState() };
     },
@@ -9940,6 +10808,7 @@ window.ClientEngine = ClientEngine;
 async function initGameBackend() {
     const localState = ClientEngine.getState();
     updateHUD(localState);
+    if (typeof updateMarketFlashNews === 'function') updateMarketFlashNews('0:00');
     try {
         const res = await fetch('/api/state');
         const data = await res.json();
