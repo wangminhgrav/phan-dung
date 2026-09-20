@@ -1,0 +1,779 @@
+{
+  "pre_game_briefing": [
+    {
+      "company": "Vintrumite (000660) — Major Korean semiconductor company focused on memory products including DRAM, NAND and high-bandwidth memory (HBM). Its exposure to AI infrastructure makes it highly sensitive to memory demand and semiconductor expectations.",
+      "recent_trend": "Aug 31–Sep 11, 2026: rose from about ₩1.674m to ₩1.812m (+8.2%). It rallied strongly in early September, including +8.26% on Sep 7, before a -2.21% move on Sep 11. Recent trading shows strong momentum with high day-to-day volatility.",
+      "possible_news": "• AI/data-center investment and HBM demand• Memory-price changes• Semiconductor earnings/guidance• AI spending concerns• Export or geopolitical restrictions",
+      "game_role": "High-impact individual semiconductor stock; a key driver of the simulated semiconductor theme.",
+      "for_the_player": "AI + HBM demand can move Vintrumite strongly. High upside potential comes with high volatility."
+    },
+    {
+      "company": "Samsung Electronics (005930) — Diversified Korean technology company spanning semiconductors, smartphones, consumer electronics and other technology businesses. Its semiconductor business is particularly relevant to the game's market theme.",
+      "recent_trend": "Aug 31–Sep 11, 2026: roughly flat overall, from ₩260,000 to ₩259,500 (-0.2%). The period included a +5.68% move on Sep 7 followed by a -3.53% move on Sep 11, showing meaningful short-term swings despite limited net change.",
+      "possible_news": "• Semiconductor earnings and memory demand• AI-chip demand and technology investment• Smartphone/electronics demand• Company investment or shareholder-return decisions• Global technology-market sentiment",
+      "game_role": "Major Korean technology-market bellwether and semiconductor-related driver.",
+      "for_the_player": "A diversified giant, but semiconductor news can still move the stock sharply."
+    },
+    {
+      "company": "KODEX Semiconductor (091160) — ETF providing exposure to Korean semiconductor companies rather than a single stock. It gives the player a broader semiconductor-sector position.",
+      "recent_trend": "Aug 31–Sep 11, 2026: rose from about ₩124,680 to ₩128,900 (+3.4%). It gained strongly during Sep 4–10, including +6.02% on Sep 7, then fell -5.86% on Sep 11. The recent pattern reflects strong sector momentum followed by a sharp pullback.",
+      "possible_news": "• Korean semiconductor-sector outlook• AI and HBM demand• Semiconductor exports and earnings• Changes in major chip-company expectations• Broad technology-sector risk-off events",
+      "game_role": "Sector-level semiconductor exposure; less dependent on one company than a single-stock position.",
+      "for_the_player": "You are betting on the semiconductor sector, not just one company."
+    },
+    {
+      "company": "KODEX Leverage (122630) — Leveraged ETF designed to provide approximately 2× the daily return of the KOSPI200. It is inherently more sensitive to market movements than a normal broad-market ETF.",
+      "recent_trend": "Aug 31–Sep 10, 2026: rose from about ₩107,080 to ₩115,000 (+7.4%). It experienced very large daily moves, including +12.37% on Aug 20 and -12.42% on Aug 19 in the broader recent period. This is the most naturally volatile instrument in the five-asset set.",
+      "possible_news": "• KOSPI200 market direction• Large-cap Korean equity sentiment• Interest rates and foreign flows• Global risk-on/risk-off moves• Sudden market shocks",
+      "game_role": "High-risk leveraged instrument. It amplifies market moves before the player's own margin leverage is even considered.",
+      "for_the_player": "This asset can make gains fast — and losses faster. Watch leverage carefully."
+    },
+    {
+      "company": "TIGER Semiconductor TOP10 (396500) — ETF concentrated in 10 major Korean semiconductor companies, giving diversified but still concentrated exposure to the sector's leading firms.",
+      "recent_trend": "Sep 8–Sep 11, 2026: moved from about ₩37,230 to ₩36,595 (-1.7%). It gained on Sep 9 (+2.42%) and Sep 10 (+0.24%) before falling -4.25% on Sep 11. The short sample shows a quick reversal after a short rebound.",
+      "possible_news": "• Performance of major Korean chipmakers• AI/HBM demand• Semiconductor-sector earnings• Index composition/rebalancing effects• Broad sector corrections",
+      "game_role": "Concentrated semiconductor basket; useful for testing sector conviction without choosing only one company.",
+      "for_the_player": "A basket of major chipmakers: more diversified than one stock, but still sector-heavy."
+    }
+  ],
+  "phases": {
+    "1": {
+      "phase": 1,
+      "industry_news": [
+        {
+          "time": "0:00",
+          "content": "KOREAN SEMICONDUCTOR OUTLOOK IMPROVES AS AI DEMAND REMAINS STRONGKorean semiconductor industry sentiment improves as global demand for AI-related computing equipment remains resilient. Analysts expect continued demand for advanced memory and semiconductor components."
+        },
+        {
+          "time": "2:30",
+          "content": "KOREAN CHIPMAKERS GAIN AS AI INFRASTRUCTURE INVESTMENT EXPANDSGlobal investment in AI data centers continues to support expectations for memory and semiconductor demand. Korean technology companies are seen as potential beneficiaries of the expanding AI infrastructure cycle."
+        },
+        {
+          "time": "4:00",
+          "content": "INVESTOR CONFIDENCE RETURNS TO KOREAN TECHNOLOGY STOCKSImproving technology-sector sentiment is attracting investors back to Korean semiconductor and large-cap technology stocks. Analysts remain positive on the sector, although they caution that the recovery could still be sensitive to changes in global demand."
+        }
+      ],
+      "market_news": [
+        {
+          "time": "0:00",
+          "content": "South Korea's Semiconductor Outlook Strengthens — Strong AI-related demand continues to support expectations for Korean semiconductor exports and memory-chip demand. Investors are watching major Korean technology stocks as the AI infrastructure cycle remains a key growth theme."
+        },
+        {
+          "time": "2:30",
+          "content": "AI Infrastructure Investment Supports Korean Chipmakers — Continued spending on AI data centers is strengthening expectations for high-bandwidth memory and advanced semiconductor demand. The positive sector outlook supports broader interest in Korean semiconductor equities and ETFs."
+        },
+        {
+          "time": "4:00",
+          "content": "Investor Sentiment Improves Across Korean Technology Stocks — Improving risk appetite is drawing attention back to large-cap technology and semiconductor shares. Market participants remain optimistic, while noting that the sector is still sensitive to global demand and valuation changes."
+        }
+      ],
+      "asset_news": [
+        {
+          "time": "0:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Memory Demand Remains a Key Growth Theme — SK hynix highlighted AI memory, HBM and future memory solutions as major areas of focus at its 2026 Future Forum."
+        },
+        {
+          "time": "0:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "AI Partnerships Strengthen Semiconductor Strategy — Samsung announced a strategic partnership with Mistral AI focused on AI technologies across its semiconductor operations."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Semiconductor Sector Exposure Gains Attention — The ETF's Korean semiconductor basket is positioned to benefit from improving expectations for AI-driven memory and chip demand."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Korean Market Momentum Supports Leveraged Exposure — The fund targets approximately 2× the daily return of the KOSPI200, making it highly sensitive to a broad improvement in Korean equity sentiment."
+        },
+        {
+          "time": "0:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Major Korean Chipmakers Remain in Focus — The ETF provides concentrated exposure to leading Korean semiconductor companies, linking its performance to the strength of the domestic chip sector."
+        },
+        {
+          "time": "2:30",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "SK hynix Expands Focus on AI-Era Memory Solutions — The company discussed full-stack memory solutions and 3D memory as technologies for future AI systems."
+        },
+        {
+          "time": "2:30",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Samsung and ASML Expand Next-Generation Semiconductor Collaboration — Samsung announced deeper cooperation with ASML on High NA EUV and advanced semiconductor manufacturing."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Broad Semiconductor Optimism Supports Basket Exposure — Positive expectations for large Korean chipmakers can translate into broader interest in semiconductor-sector ETFs."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Broad Large-Cap Technology Strength Can Amplify Returns — Because the fund magnifies daily KOSPI200 movements, positive large-cap technology sentiment can have a stronger effect on its daily performance."
+        },
+        {
+          "time": "2:30",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Sector Concentration Creates Strong Semiconductor Sensitivity — News affecting Samsung, SK hynix and other major chipmakers can influence the basket at the same time."
+        },
+        {
+          "time": "4:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Ecosystem Demand Keeps Memory in the Spotlight — SK hynix's recent public materials continue to emphasize the importance of memory bandwidth and AI infrastructure in future computing."
+        },
+        {
+          "time": "4:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "OpenAI Cooperation Highlights AI-Chip Opportunity — OpenAI said it is expanding cooperation with Samsung on next-generation chip development, reinforcing Samsung's AI-related positioning."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Positive Sector Signals Support Korean Semiconductor ETFs — Stronger expectations for the semiconductor cycle can benefit the fund's diversified exposure, although individual constituents may move differently."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Higher Market Sensitivity Means Higher Risk — The ETF can respond more strongly to both positive and negative KOSPI200 moves, increasing the impact of broad market sentiment."
+        },
+        {
+          "time": "4:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Diversified Within Semiconductors, but Still Sector-Heavy — The TOP10 structure spreads exposure across major companies while retaining significant sensitivity to the Korean semiconductor cycle."
+        }
+      ]
+    },
+    "2": {
+      "phase": 2,
+      "industry_news": [
+        {
+          "time": "0:00",
+          "content": "AI MEMORY DEMAND SHOWS SIGNS OF FUNDAMENTAL STRENGTHContinued investment in AI infrastructure supports expectations for HBM, advanced memory and related semiconductor demand. The improving outlook gives greater support to the Korean semiconductor industry."
+        },
+        {
+          "time": "2:30",
+          "content": "KOREAN SEMICONDUCTOR INVESTMENT OUTLOOK IMPROVESNew investment commitments across semiconductor materials, equipment and infrastructure reinforce expectations that Korea will remain an important part of the global chip supply chain."
+        },
+        {
+          "time": "4:00",
+          "content": "GLOBAL CHIPMAKER SPENDING SUPPORTS KOREAN TECHNOLOGY SHARESMajor semiconductor manufacturers continue to invest in advanced production capacity. The stronger industry backdrop is drawing attention toward Korean technology and semiconductor assets."
+        }
+      ],
+      "market_news": [
+        {
+          "time": "0:00",
+          "content": "AI Memory Demand Gains Fundamental Support — Continued AI infrastructure spending is supporting expectations for HBM and advanced memory demand. Korean semiconductor companies remain closely linked to this cycle."
+        },
+        {
+          "time": "2:30",
+          "content": "Semiconductor Investment Expands Across the Supply Chain — New investment in semiconductor materials, equipment and energy infrastructure is strengthening expectations for Korea's technology ecosystem."
+        },
+        {
+          "time": "4:00",
+          "content": "Improving Fundamentals Strengthen Market Confidence — Investors are increasingly focusing on earnings, memory demand and AI-related capital expenditure rather than only short-term market sentiment."
+        }
+      ],
+      "asset_news": [
+        {
+          "time": "0:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Memory Demand Gains Support — Vintrumite's public materials continue to emphasize AI memory, HBM and full-stack memory solutions for future AI systems."
+        },
+        {
+          "time": "0:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "AI Infrastructure Partnerships Expand — Samsung's Mistral AI partnership highlights its strategy to build intelligence-driven semiconductor infrastructure."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Fundamental Semiconductor Signals Improve — The ETF's broad Korean semiconductor exposure can reflect stronger expectations for memory and chip demand."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Broad Market Strength Supports Leveraged Exposure — Positive KOSPI200 sentiment can have an amplified effect on the fund's daily performance."
+        },
+        {
+          "time": "0:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Major Chipmakers Remain Supported — Concentrated exposure to leading Korean semiconductor firms links the basket to improving sector fundamentals."
+        },
+        {
+          "time": "2:30",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "Future Memory Technologies Stay in Focus — Vintrumite has discussed 3D memory and other future-memory solutions as part of the AI computing ecosystem."
+        },
+        {
+          "time": "2:30",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "High NA EUV Collaboration Deepens — Samsung and ASML announced expanded cooperation on next-generation semiconductor manufacturing."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector Diversification Spreads Company Risk — Exposure is distributed across several Korean semiconductor companies rather than one issuer."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Leverage Amplifies Market Direction — The fund is designed to target approximately 2× the daily KOSPI200 return, increasing sensitivity to broad market moves."
+        },
+        {
+          "time": "2:30",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Concentrated Sector Exposure Remains — The TOP10 structure diversifies within semiconductors while retaining strong sensitivity to the sector."
+        },
+        {
+          "time": "4:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Infrastructure Keeps Memory in Focus — Public company materials continue to connect memory bandwidth with the expansion of AI infrastructure."
+        },
+        {
+          "time": "4:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "AI-Chip Cooperation Strengthens Positioning — Cooperation involving Samsung and next-generation AI chips reinforces attention on its semiconductor business."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Positive Industry Expectations Support the Basket — Stronger expectations for the semiconductor cycle can increase interest in sector ETFs."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Large-Cap Technology Sentiment Matters — Changes in major Korean technology shares can materially affect the leveraged fund."
+        },
+        {
+          "time": "4:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Sector Correlation Remains High — News affecting Samsung, Vintrumite and other major chipmakers can influence the basket together."
+        }
+      ]
+    },
+    "3": {
+      "phase": 3,
+      "industry_news": [
+        {
+          "time": "0:00",
+          "content": "KOREAN TECHNOLOGY STOCKS ENTER A BROADER RALLYImproving semiconductor fundamentals and continued AI investment are supporting broader interest in Korean technology shares. Market attention is spreading beyond individual names toward the wider sector."
+        },
+        {
+          "time": "2:30",
+          "content": "AI INFRASTRUCTURE SPENDING DRIVES STRONGER SEMICONDUCTOR SENTIMENTInvestment in data centers and advanced computing infrastructure continues to support expectations for memory, logic and semiconductor equipment demand."
+        },
+        {
+          "time": "4:00",
+          "content": "RISK APPETITE RETURNS ACROSS KOREAN EQUITIESStronger technology-sector sentiment is encouraging investors to increase exposure to Korean equities. Semiconductor companies remain central to the market's AI-related growth narrative."
+        }
+      ],
+      "market_news": [
+        {
+          "time": "0:00",
+          "content": "Korean Technology Shares Attract Broader Buying Interest — Improving semiconductor expectations are supporting stronger participation across large-cap technology and sector assets."
+        },
+        {
+          "time": "2:30",
+          "content": "AI Infrastructure Spending Remains a Major Market Driver — Continued investment in computing capacity is supporting expectations for semiconductor demand and earnings."
+        },
+        {
+          "time": "4:00",
+          "content": "Risk Appetite Broadens Across Korean Equities — Stronger technology sentiment is spreading from individual semiconductor names into broader Korean equity exposure."
+        }
+      ],
+      "asset_news": [
+        {
+          "time": "0:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Memory Becomes a Major Market Theme — Vintrumite remains closely linked to the HBM and AI-memory cycle as demand expectations strengthen."
+        },
+        {
+          "time": "0:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Advanced Semiconductor Investment Supports Sentiment — Samsung's work with Mistral AI and ASML keeps its semiconductor strategy in focus."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Broad Sector Rally Benefits the Basket — Strength across major Korean semiconductor companies can lift diversified semiconductor exposure."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Strong KOSPI200 Sentiment Can Magnify Daily Moves — Broad market momentum has a larger effect on a leveraged ETF."
+        },
+        {
+          "time": "0:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Leading Chipmakers Drive the Basket — Stronger performance among major Korean semiconductor companies can lift the concentrated TOP10 exposure."
+        },
+        {
+          "time": "2:30",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Memory Solutions Remain Central — The company's focus on HBM and future memory technologies keeps it at the center of the AI semiconductor narrative."
+        },
+        {
+          "time": "2:30",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Next-Generation Manufacturing Draws Attention — Samsung's High NA EUV collaboration supports expectations for continued advanced manufacturing investment."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector Breadth Improves — More of the major semiconductor names contribute to the ETF's overall performance."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Broad Equity Momentum Is Amplified — A stronger KOSPI200 environment can produce larger daily changes in the leveraged ETF."
+        },
+        {
+          "time": "2:30",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Large-Cap Semiconductor Strength Supports the Index — Gains among the largest chipmakers can have a meaningful effect on the TOP10 basket."
+        },
+        {
+          "time": "4:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Infrastructure Demand Remains a Key Driver — Memory bandwidth and AI-system requirements continue to support the industry's growth narrative."
+        },
+        {
+          "time": "4:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "AI Ecosystem Cooperation Expands — Samsung's cooperation with AI and semiconductor partners keeps attention on its technology ecosystem."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Semiconductor ETFs Gain From Broader Participation — Stronger sector-wide sentiment reduces reliance on a single company moving higher."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Market Direction Remains Critical — The leveraged structure makes broad Korean equity sentiment especially important."
+        },
+        {
+          "time": "4:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Sector Concentration Keeps Sensitivity High — The basket remains strongly linked to the Korean semiconductor cycle."
+        }
+      ]
+    },
+    "4": {
+      "phase": 4,
+      "industry_news": [
+        {
+          "time": "0:00",
+          "content": "SEMICONDUCTOR RALLY GAINS MOMENTUM AS INVESTORS CHASE AI EXPOSUREStrong performance across semiconductor assets is increasing attention on AI-related growth opportunities. More investors are focusing on companies and funds with direct exposure to the theme."
+        },
+        {
+          "time": "2:30",
+          "content": "AI INFRASTRUCTURE BECOMES THE MARKET'S DOMINANT GROWTH THEMEAI data-center investment, advanced memory and next-generation semiconductor manufacturing remain central to expectations for future technology growth."
+        },
+        {
+          "time": "4:00",
+          "content": "KOREAN TECHNOLOGY SHARES SEE INCREASED SPECULATIVE INTERESTAs recent gains attract more attention, investors are increasingly focused on momentum and AI exposure. Valuation and volatility remain important considerations for market participants."
+        }
+      ],
+      "market_news": [
+        {
+          "time": "0:00",
+          "content": "AI Exposure Becomes Increasingly Popular — Strong semiconductor performance is drawing more attention to Korean technology stocks and ETFs linked to the AI infrastructure cycle."
+        },
+        {
+          "time": "2:30",
+          "content": "Growth Expectations Spread Across Semiconductor Assets — Investors are increasingly looking at memory, advanced manufacturing and sector-wide AI exposure."
+        },
+        {
+          "time": "4:00",
+          "content": "Momentum Trading Becomes More Visible — Strong recent performance is encouraging greater participation, while market sensitivity to changing expectations remains high."
+        }
+      ],
+      "asset_news": [
+        {
+          "time": "0:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "Vintrumite Becomes a Key AI-Memory Exposure — The company's HBM and future-memory narrative is attracting greater attention as AI infrastructure spending expands."
+        },
+        {
+          "time": "0:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Samsung's AI Ecosystem Story Gains Visibility — Its Mistral AI and ASML relationships strengthen attention on advanced semiconductor opportunities."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Broad Semiconductor Exposure Gains Popularity — Investors seeking diversified AI-related semiconductor exposure may focus on the sector ETF."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Leveraged Exposure Attracts More Attention — Strong KOSPI200 momentum can produce amplified gains, while increasing downside sensitivity."
+        },
+        {
+          "time": "0:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "TOP10 Semiconductor Exposure Gains Visibility — The concentrated basket provides broad access to leading Korean chipmakers participating in the AI cycle."
+        },
+        {
+          "time": "2:30",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Memory Leadership Remains a Central Theme — Vintrumite's HBM and advanced-memory focus keeps the stock closely tied to AI expectations."
+        },
+        {
+          "time": "2:30",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "High NA EUV Adoption Signals Long-Term Investment — Samsung's planned use of High NA tools reinforces the advanced-manufacturing narrative."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector Momentum Becomes More Broad-Based — The ETF can benefit when multiple major semiconductor names participate in the rally."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Leverage Makes Momentum More Sensitive — Daily returns can be amplified as the broader Korean equity market moves."
+        },
+        {
+          "time": "2:30",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Concentration Can Increase Sector Sensitivity — Strong semiconductor momentum affects several of the basket's major constituents simultaneously."
+        },
+        {
+          "time": "4:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Demand Supports a Strong Growth Narrative — The market continues to associate memory technology with expanding AI infrastructure."
+        },
+        {
+          "time": "4:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Samsung's AI Partnerships Reinforce Growth Expectations — Cooperation with AI and semiconductor technology partners remains a visible part of the story."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector ETFs Offer Broad AI Exposure — The basket allows investors to participate in the semiconductor theme without selecting a single company."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "High Sensitivity Creates Larger Daily Changes — The leveraged ETF can respond strongly to both continued momentum and any change in market direction."
+        },
+        {
+          "time": "4:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "TOP10 Exposure Balances Diversification and Concentration — The fund spreads exposure across leading firms while remaining heavily tied to semiconductors."
+        }
+      ]
+    },
+    "5": {
+      "phase": 5,
+      "industry_news": [
+        {
+          "time": "0:00",
+          "content": "KOREAN AI TRADE ENTERS EUFORIC PHASE AS SEMICONDUCTOR SHARES SURGESemiconductor and AI-related assets are receiving exceptionally strong attention as investors focus on the continuation of the technology growth cycle."
+        },
+        {
+          "time": "2:30",
+          "content": "INVESTORS LOOK BEYOND NEAR-TERM VALUATIONS AS AI DEMAND REMAINS STRONGStrong expectations for AI infrastructure and memory demand are encouraging investors to emphasize future growth opportunities even as market valuations attract greater discussion."
+        },
+        {
+          "time": "4:00",
+          "content": "MOMENTUM TRADING INTENSIFIES ACROSS KOREAN TECHNOLOGY ASSETSRapid gains and strong thematic narratives are increasing participation in technology assets. The market is becoming more sensitive to shifts in expectations and liquidity."
+        }
+      ],
+      "market_news": [
+        {
+          "time": "0:00",
+          "content": "AI and Semiconductor Momentum Dominates Attention — Strong recent performance is keeping Korean technology assets at the center of investor discussion."
+        },
+        {
+          "time": "2:30",
+          "content": "Future Growth Expectations Remain Elevated — Investors continue to focus on AI infrastructure, memory demand and long-term semiconductor capacity expansion."
+        },
+        {
+          "time": "4:00",
+          "content": "Momentum Becomes a Larger Part of Market Activity — Strong gains are encouraging greater participation, while leveraged and concentrated exposures become more sensitive to any reversal."
+        }
+      ],
+      "asset_news": [
+        {
+          "time": "0:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI-Memory Momentum Keeps Vintrumite in Focus — Strong expectations for HBM and AI infrastructure continue to support attention on Vintrumite."
+        },
+        {
+          "time": "0:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "AI Ecosystem Exposure Supports Investor Attention — Samsung's semiconductor partnerships connect the company to several major AI infrastructure themes."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Semiconductor Basket Benefits From Sector-Wide Momentum — Broad strength across major chipmakers can lift the ETF as a group."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Leveraged Exposure Becomes More Sensitive — Strong market momentum can create larger gains, but the same structure increases exposure to a reversal."
+        },
+        {
+          "time": "0:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Concentrated Semiconductor Exposure Peaks With the Theme — Strong moves among major chipmakers can affect the TOP10 basket together."
+        },
+        {
+          "time": "2:30",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "HBM and Future Memory Remain Core Themes — Continued AI investment keeps advanced memory at the center of Vintrumite's market narrative."
+        },
+        {
+          "time": "2:30",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "High NA and AI Infrastructure Strengthen the Long-Term Story — Samsung's manufacturing partnerships support expectations for continued technology investment."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector Correlation Becomes More Important — Several constituents can move together when the same AI narrative drives the market."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Leverage Adds Another Layer of Exposure — The ETF's approximately 2× daily structure can magnify broad market moves before any player margin is applied."
+        },
+        {
+          "time": "2:30",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Basket Exposure Remains Strongly Sector-Dependent — Diversification across ten companies does not remove semiconductor-cycle risk."
+        },
+        {
+          "time": "4:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI Infrastructure Keeps Demand Expectations Elevated — Memory bandwidth and advanced semiconductor technology remain central to the AI growth narrative."
+        },
+        {
+          "time": "4:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Samsung's AI Partnerships Reinforce the Theme — Cooperation with Mistral AI and other technology partners keeps AI infrastructure prominent."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Strong Sector Sentiment Supports ETF Demand — Broad optimism can increase interest in semiconductor-sector exposure."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Market-Wide Reversal Would Be Amplified — The leveraged ETF is particularly sensitive if broad Korean equity sentiment changes."
+        },
+        {
+          "time": "4:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Sector Concentration Can Synchronize Moves — Major chipmakers may respond together to the same AI or macroeconomic information."
+        }
+      ]
+    },
+    "6": {
+      "phase": 6,
+      "industry_news": [
+        {
+          "time": "0:00",
+          "content": "GLOBAL TECHNOLOGY STOCKS FALL AS INVESTORS QUESTION THE PACE OF AI SPENDINGConcerns about the speed and sustainability of AI development trigger a broad reassessment of technology-sector expectations. Semiconductor shares come under pressure as investors reduce risk."
+        },
+        {
+          "time": "2:30",
+          "content": "KOREAN TECHNOLOGY SHARES FACE BROAD RISK-OFF SELLINGWeakness in global technology markets spreads into Korean equities. Semiconductor companies and sector ETFs face simultaneous selling as investors reassess growth expectations."
+        },
+        {
+          "time": "4:00",
+          "content": "LIQUIDITY PRESSURE INTENSIFIES AS LEVERAGED POSITIONS ARE CUTFalling asset prices increase pressure on leveraged investors. As positions are reduced, selling can spread across semiconductor stocks, broad-market ETFs and leveraged products."
+        }
+      ],
+      "market_news": [
+        {
+          "time": "0:00",
+          "content": "Global AI Concerns Trigger a Technology Sell-Off — Recent concerns about the pace of AI development have pressured global technology shares and increased uncertainty around semiconductor demand."
+        },
+        {
+          "time": "2:30",
+          "content": "Korean Semiconductor Assets Face Broad Risk-Off Pressure — Weak global technology sentiment is transmitted into Korean technology stocks and semiconductor ETFs."
+        },
+        {
+          "time": "4:00",
+          "content": "Leveraged Positions Add to Market Pressure — As asset values fall, investors using leverage face rising margin pressure and may reduce positions, reinforcing the risk-off environment."
+        }
+      ],
+      "asset_news": [
+        {
+          "time": "0:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "AI-Memory Expectations Face a Sudden Reassessment — Vintrumite becomes sensitive to concerns over AI spending, memory demand and global production decisions."
+        },
+        {
+          "time": "0:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Semiconductor Investment Risks Come Back Into Focus — Samsung faces attention on AI-related spending, advanced manufacturing costs and broader technology-market weakness."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector-Wide Selling Hits the Basket — A broad semiconductor decline can affect many constituents simultaneously, reducing the protection normally provided by diversification."
+        },
+        {
+          "time": "0:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Leveraged ETF Losses Can Be Amplified — The approximately 2× structure increases sensitivity to broad KOSPI200 declines."
+        },
+        {
+          "time": "0:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Concentrated Sector Exposure Increases Downside Sensitivity — Weakness across major Korean chipmakers can pull the TOP10 basket lower together."
+        },
+        {
+          "time": "2:30",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "U.S. Manufacturing Uncertainty Adds Another Risk Factor — Exploratory Vintrumite-Intel talks raise questions around production location, investment costs and government considerations."
+        },
+        {
+          "time": "2:30",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "Power and Infrastructure Costs Draw Attention — Samsung and Vintrumite rejected a proposed large upfront power payment to KEPCO for semiconductor clusters, highlighting infrastructure-cost pressures."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector Correlation Becomes a Downside Risk — When major semiconductor names sell off together, the ETF can experience a broad decline."
+        },
+        {
+          "time": "2:30",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Broad Market Weakness Is Magnified — Leveraged exposure can produce larger daily losses when KOSPI200 sentiment turns sharply negative."
+        },
+        {
+          "time": "2:30",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "Semiconductor Concentration Limits Diversification During a Sector Shock — The basket remains exposed to simultaneous declines in major chipmakers."
+        },
+        {
+          "time": "4:00",
+          "ticker": "VNT",
+          "asset_name": "Vintrumite",
+          "content": "Supply and Geopolitical Questions Increase Uncertainty — Vintrumite's U.S. manufacturing discussions come alongside broader questions about semiconductor supply-chain strategy."
+        },
+        {
+          "time": "4:00",
+          "ticker": "SEC",
+          "asset_name": "Samsung Electronics",
+          "content": "AI Growth Expectations Are Reassessed — Samsung remains exposed to changes in global technology spending and semiconductor demand."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_SEMI",
+          "asset_name": "KODEX Semiconductor",
+          "content": "Sector ETFs Reflect the Broad Shock — The basket can fall as multiple constituent companies respond to the same negative industry information."
+        },
+        {
+          "time": "4:00",
+          "ticker": "KODEX_LEV",
+          "asset_name": "KODEX Leverage",
+          "content": "Margin Pressure Can Rise Quickly — A leveraged market position can deteriorate faster when broad equity prices decline."
+        },
+        {
+          "time": "4:00",
+          "ticker": "TIGER_TOP10",
+          "asset_name": "TIGER Semiconductor TOP10",
+          "content": "TOP10 Constituents Can Move Together — Concentrated exposure means a sector-wide risk-off event can affect most of the basket at once."
+        }
+      ]
+    }
+  }
+}
