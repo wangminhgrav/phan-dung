@@ -5902,10 +5902,8 @@
                                 <button type="button" class="mult-pill" data-mult="1" onclick="setMarginMultiplier(1, this)" title="1x Cash Only (No Borrowing)">1×</button>
                                 <button type="button" class="mult-pill" data-mult="2" onclick="setMarginMultiplier(2, this)" title="2x Leverage (50% Margin)">2×</button>
                                 <button type="button" class="mult-pill" data-mult="3" onclick="setMarginMultiplier(3, this)" title="3x Leverage (33% Margin)">3×</button>
-                                <button type="button" class="mult-pill active" data-mult="4" onclick="setMarginMultiplier(4, this)" title="4x Leverage (Standard KRX 25% Margin)">4×</button>
-                                <button type="button" class="mult-pill" data-mult="5" onclick="setMarginMultiplier(5, this)" title="5x Leverage (20% Margin)">5×</button>
-                                <button type="button" class="mult-pill mult-pill-danger" data-mult="10" onclick="setMarginMultiplier(10, this)" title="10x Extreme Leverage (10% Margin)">10×</button>
-                                <button type="button" class="mult-pill mult-pill-custom" id="btn-custom-margin" onclick="promptCustomMargin()" title="Set Custom Multiplier (e.g. 1.5x - 20x)">SET</button>
+                                <button type="button" class="mult-pill mult-pill-danger active" data-mult="4" onclick="setMarginMultiplier(4, this)" title="4x Maximum Legal Margin Ceiling (KRX 25% Requirement)">4× MAX</button>
+                                <button type="button" class="mult-pill mult-pill-custom" id="btn-custom-margin" onclick="promptCustomMargin()" title="Set Custom Multiplier (1.0x to 4.0x MAX)">SET</button>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 0.68rem; color: #94a3b8; margin: 1px 0;">
@@ -5947,10 +5945,10 @@
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
                             <span style="font-size: 0.68rem; color: var(--text-secondary);">Margin Ceiling:</span>
                             <div style="display: flex; gap: 3px;">
-                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem;" onclick="setMarginMultiplier(2)">2×</button>
-                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem;" onclick="setMarginMultiplier(4)">4×</button>
-                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem;" onclick="setMarginMultiplier(5)">5×</button>
-                                <button class="toggle-btn" style="padding: 1px 4px; font-size: 0.62rem; color: #ef4444; border-color: rgba(239,68,68,0.3);" onclick="setMarginMultiplier(10)">10×</button>
+                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(1)" title="1x Cash Only (No Margin)">1×</button>
+                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(2)" title="2x Leverage">2×</button>
+                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(3)" title="3x Leverage">3×</button>
+                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem; color: #f59e0b; border-color: rgba(245,158,11,0.4);" onclick="setMarginMultiplier(4)" title="4x Max Legal Margin">4× MAX</button>
                             </div>
                         </div>
                     </div>
@@ -8332,7 +8330,7 @@ function setOrderQtyMax() {
 }
 
 function setMarginMultiplier(mult, el) {
-    mult = Math.max(1.0, Math.min(20.0, Math.round(parseFloat(mult) * 10) / 10));
+    mult = Math.max(1.0, Math.min(4.0, Math.round(parseFloat(mult) * 10) / 10));
     if (ClientEngine && typeof ClientEngine.setMarginMultiplier === 'function') {
         ClientEngine.setMarginMultiplier(mult);
     }
@@ -8360,10 +8358,7 @@ function setMarginMultiplier(mult, el) {
         badge.className = 'margin-badge-tier ' + (
             mult <= 1.0 ? 'tier-1' :
             mult <= 2.0 ? 'tier-2' :
-            mult <= 3.0 ? 'tier-3' :
-            mult <= 4.0 ? 'tier-4' :
-            mult <= 5.0 ? 'tier-5' :
-            mult <= 10.0 ? 'tier-10' : 'tier-extreme'
+            mult <= 3.0 ? 'tier-3' : 'tier-4'
         );
     }
 
@@ -8392,19 +8387,19 @@ function setMarginMultiplier(mult, el) {
 
 function stepMarginMultiplier(delta) {
     const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
-    const next = Math.max(1.0, Math.min(20.0, Math.round((cur + delta) * 10) / 10));
+    const next = Math.max(1.0, Math.min(4.0, Math.round((cur + delta) * 10) / 10));
     setMarginMultiplier(next);
 }
 
 function promptCustomMargin() {
     const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
-    const input = prompt(`Enter custom margin multiplier (1.0× to 20.0×):\nCurrently: ${cur}×`, cur);
+    const input = prompt(`Enter custom margin multiplier (1.0× to 4.0× MAX):\nCurrently: ${cur}×`, cur);
     if (input !== null) {
         const val = parseFloat(input);
-        if (!isNaN(val) && val >= 1.0 && val <= 20.0) {
+        if (!isNaN(val) && val >= 1.0 && val <= 4.0) {
             setMarginMultiplier(val);
         } else if (!isNaN(val)) {
-            alert("Margin multiplier must be between 1.0× and 20.0×.");
+            alert("Margin multiplier must be between 1.0× and 4.0× (Maximum legal limit).");
         }
     }
 }
@@ -9299,7 +9294,7 @@ const ClientEngine = {
     isLiquidated: false,
 
     setMarginMultiplier(mult) {
-        mult = Math.max(1.0, Math.min(20.0, Math.round(parseFloat(mult) * 10) / 10 || 1.0));
+        mult = Math.max(1.0, Math.min(4.0, Math.round(parseFloat(mult) * 10) / 10 || 1.0));
         this.marginMultiplier = mult;
         this.initialMarginRatio = 1.0 / mult;
         this.maintenanceMarginRatio = Math.min(0.20, this.initialMarginRatio * 0.80);
