@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="data/market_ticks.js" onerror="this.onerror=null; this.src='web/data/market_ticks.js';"></script>
+    <script src="data/free_fall_2_news_all_phases.js" onerror="this.onerror=null; this.src='web/data/free_fall_2_news_all_phases.js';"></script>
     <style>
         :root {
             --bg-base: #030712;
@@ -4805,11 +4806,11 @@
         <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 14px; max-height: 55vh; overflow-y: auto; padding-right: 6px;">
             <div style="border: 1px solid #18181b; background: #09090b; padding: 14px;">
                 <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12px;">
-                    <span style="font-weight: 700; color: #fff;">01. Phase Breakdown & Euphoria Curve</span>
+                    <span style="font-weight: 700; color: #fff;">01. 6-Phase Market Architecture</span>
                     <span style="color: #34d399;">Phases 1 → 6</span>
                 </div>
                 <p style="font-size: 12px; color: #a1a1aa; margin-top: 6px; line-height: 1.5;">
-                    Rounds 1–4 offer consistent leveraged bull runs. Phase 5 triggers extreme market euphoria before the Phase 6 systemic shock plunges Korean equities by <b style="color: #f87171;">-57.8%</b>.
+                    The simulation consists of 6 sequential phases (5 minutes each, 30 minutes total). Market dynamics, order flow, news intelligence, and volatility evolve dynamically across each phase.
                 </p>
             </div>
 
@@ -5568,7 +5569,7 @@
         <div class="persistent-phase-bar">
             <div class="phase-brand-group">
                 <span class="phase-badge" id="hud-phase-badge">PHASE 1 / 6</span>
-                <span class="phase-title-text" id="hud-phase-name" title="PHASE 1: DECEPTIVE GREEN & HYPE">DECEPTIVE GREEN & HYPE</span>
+                <span id="hud-phase-name" style="display: none;"></span>
                 <div class="phase-progress-track">
                     <div id="hud-phase-track-fill" class="phase-progress-fill"></div>
                     <div class="phase-progress-grid">
@@ -5583,7 +5584,7 @@
                     </span>
                 </button>
                 <button class="toggle-btn" style="border-color: #10b981; color: #10b981; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 4px 9px;" onclick="openBankDashboard()">🏦 Safe Haven Bank ($<span id="top-bar-bank-val">0</span>)</button>
-                <button class="toggle-btn" style="border-color: #38bdf8; color: #38bdf8; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 4px 9px;" onclick="advancePhaseAction()">⏩ Advance Phase</button>
+                <button class="toggle-btn admin-btn" id="btn-advance-phase" style="border-color: #a855f7; color: #d8b4fe; background: rgba(168,85,247,0.12); font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 4px 9px;" onclick="advancePhaseAction()" title="[ADMIN TOOL] Immediately fast-forward to the end of the phase. Not present in final game release.">⚙️ [ADMIN] Advance Phase</button>
                 <div class="phase-timer" id="hud-timer">05:00 [PRE-MARKET]</div>
             </div>
         </div>
@@ -5977,7 +5978,7 @@
                     <div class="widget-box" style="border-bottom: none; background: rgba(245, 158, 11, 0.05);">
                         <div style="font-size: 0.7rem; font-weight: 700; color: var(--amber); margin-bottom: 2px;">⚠ SYSTEM RISK ADVISORY</div>
                         <div style="font-size: 0.72rem; color: var(--text-secondary); line-height: 1.35;">
-                            Phase 1 deceptive hype active. Maintain healthy collateral cushion before systemic liquidation shocks hit in Phases 5 & 6.
+                            Maintain a healthy collateral cushion and monitor leverage ratios closely to prevent forced liquidation during periods of elevated volatility.
                         </div>
                     </div>
                 </div>
@@ -6001,10 +6002,9 @@
                 </button>
             </div>
 
-            <div class="news-filter-pills">
-                <button class="pill-btn active" onclick="filterNewsTab('all', this)">⚡ ALL INTEL WIRES</button>
-                <button class="pill-btn" onclick="filterNewsTab('briefing', this)">📋 PRE-GAME BRIEFING</button>
-                <button class="pill-btn" onclick="filterNewsTab('phase1', this)">⏱ PHASE 1 TIMED NEWS</button>
+            <div class="news-filter-pills" id="news-filter-pills">
+                <button class="pill-btn active" onclick="filterNewsTab('briefing', this)">📋 PRE-GAME BRIEFING</button>
+                <button class="pill-btn" onclick="filterNewsTab('live', this)">⚡ LIVE INTEL STREAM</button>
                 <button class="pill-btn" onclick="filterNewsTab('assets', this)">🔍 ASSET ANALYSIS</button>
             </div>
 
@@ -6054,8 +6054,8 @@
                 <!-- Column 2: Live Intelligence Feed -->
                 <div class="news-feed-center" id="news-feed-center">
                     <div class="widget-label" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span>LIVE INTELLIGENCE STREAM</span>
-                        <span style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">CHRONOLOGICAL // REAL-TIME</span>
+                        <span id="news-feed-heading">PRE-GAME ASSET BRIEFING</span>
+                        <span id="news-feed-subheading" style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">5 STRATEGIC DOSSIERS // INITIAL INTEL</span>
                     </div>
                     <div id="news-feed-items">
                         <div class="news-card">
@@ -6224,19 +6224,19 @@
                     Get Rich. Stay Solvent. Achieve Your Target Before The Collapse.
                 </h3>
                 <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px;">
-                    You enter the Seoul Trading Desk with <b>$10,000 USD</b> in cash. The market is not random: it follows an engineered <b>6-phase psychological lifecycle</b> designed by institutional smart money. Early phases pump deceptive momentum and cheap margin debt. The final phase triggers a systemic liquidity crash. 
+                    You enter the Seoul Trading Desk with <b>$10,000 USD</b> in cash. The simulation progresses through <b>6 chronological market phases</b> of 5 minutes each (30 minutes total). Market dynamics, order book depth, news wires, and asset volatility shift dynamically across each phase.
                 </p>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.74rem;">
-                    <div><b class="text-green">⚡ Early Phase Strategy:</b> Ride aggressive compound momentum across high-beta semiconductor assets.</div>
-                    <div><b class="text-amber">🛡️ Mid Phase Discipline:</b> Periodically transfer trading profits into the Safe Haven Bank (100% immune from liquidation).</div>
-                    <div><b class="text-red">🚨 Late Phase Imperative:</b> Eliminate all margin debt before Phase 6. Unbanked accounts will be wiped out completely.</div>
+                    <div><b class="text-green">⚡ Execution Protocol:</b> Monitor real-time order flow and breaking intelligence wires to capture tactical upside.</div>
+                    <div><b class="text-amber">🛡️ Solvency Protocol:</b> Maintain your Margin Health strictly above the 20.0% floor to avoid broker liquidation.</div>
+                    <div><b class="text-red">🏦 Capital Protocol:</b> Transfer trading profits into the Safe Haven Bank to secure your capital toward the housing target.</div>
                 </div>
             </div>
 
-            <!-- 6-Phase Threat Lifecycle Cards -->
+            <!-- 6-Phase Threat Lifecycle Cards (Zero Spoiler) -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
                 <span style="font-family: var(--font-mono); font-size: 9.5px; font-weight: 800; letter-spacing: 0.12em; color: #94a3b8; text-transform: uppercase;">
-                    SIMULATED MARKET LIFECYCLE // 6 PHASES OF RISK & REWARD
+                    SIMULATED MARKET LIFECYCLE // 6 PHASES (5 MIN EACH)
                 </span>
                 <span style="font-family: var(--font-mono); font-size: 8.5px; color: #10b981;">● SYNTHETIC SCENARIO ENGINE LOADED</span>
             </div>
@@ -6248,13 +6248,13 @@
                         <span style="font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; color: #10b981;">PHASE 01</span>
                         <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b;">0:00 - 5:00</span>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Fake Positive News</div>
-                    <span style="font-family: var(--font-mono); font-size: 8px; color: #10b981; font-weight: 700;">🟢 THREAT: MINIMAL</span>
+                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Opening Market Session</div>
+                    <span style="font-family: var(--font-mono); font-size: 8px; color: #10b981; font-weight: 700;">🟢 STATUS: ACTIVE</span>
                     <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4; flex: 1;">
-                        Controlled algorithmic climb driven by glowing AI headlines. Retail traders are lured into adopting margin debt.
+                        Initial trading session. Pre-Game Asset Briefing and public opening intelligence wires are accessible in the News DB.
                     </p>
                     <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(16,185,129,0.1); border-radius: 3px; border-left: 2px solid #10b981; color: #6ee7b7;">
-                        <b>Directive:</b> Build core long positions in VNT & tech bellwethers.
+                        <b>Directive:</b> Review asset briefs, inspect order depth, and initiate positioning.
                     </div>
                 </div>
 
@@ -6264,13 +6264,13 @@
                         <span style="font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; color: #38bdf8;">PHASE 02</span>
                         <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b;">5:00 - 10:00</span>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">True Positive News</div>
-                    <span style="font-family: var(--font-mono); font-size: 8px; color: #38bdf8; font-weight: 700;">🔵 THREAT: MODERATE</span>
+                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Market Session 2</div>
+                    <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b; font-weight: 700;">🔒 CLASSIFIED</span>
                     <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4; flex: 1;">
-                        Legitimate semiconductor earnings and AI infrastructure capex data validate the rally. Confidence broadens.
+                        Second trading session. Economic reports, industry wires, and corporate developments unlock chronologically during the session.
                     </p>
-                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(56,189,248,0.1); border-radius: 3px; border-left: 2px solid #38bdf8; color: #7dd3fc;">
-                        <b>Directive:</b> Ride the expansion. Compound equity aggressively.
+                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(56,189,248,0.08); border-radius: 3px; border-left: 2px solid #38bdf8; color: #7dd3fc;">
+                        <b>Directive:</b> Locked until Phase 1 concludes.
                     </div>
                 </div>
 
@@ -6280,13 +6280,13 @@
                         <span style="font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; color: #c084fc;">PHASE 03</span>
                         <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b;">10:00 - 15:00</span>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Bull Market Expansion</div>
-                    <span style="font-family: var(--font-mono); font-size: 8px; color: #c084fc; font-weight: 700;">🟣 THREAT: MEDIUM-HIGH</span>
+                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Market Session 3</div>
+                    <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b; font-weight: 700;">🔒 CLASSIFIED</span>
                     <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4; flex: 1;">
-                        Explosive momentum across chipmakers and 2× leveraged ETFs. Highest compounding velocity of the simulation.
+                        Third trading session. Market momentum and asset trends develop in response to unfolding industry conditions.
                     </p>
-                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(192,132,252,0.1); border-radius: 3px; border-left: 2px solid #c084fc; color: #e9d5ff;">
-                        <b>Directive:</b> Execute discipline: transfer first 20% profits to Bank.
+                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(192,132,252,0.08); border-radius: 3px; border-left: 2px solid #c084fc; color: #e9d5ff;">
+                        <b>Directive:</b> Locked until Phase 2 concludes.
                     </div>
                 </div>
 
@@ -6296,13 +6296,13 @@
                         <span style="font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; color: #f59e0b;">PHASE 04</span>
                         <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b;">15:00 - 20:00</span>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">FOMO & Dip Buying</div>
-                    <span style="font-family: var(--font-mono); font-size: 8px; color: #f59e0b; font-weight: 700;">🟡 THREAT: HIGH</span>
+                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Market Session 4</div>
+                    <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b; font-weight: 700;">🔒 CLASSIFIED</span>
                     <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4; flex: 1;">
-                        Volatility expands. Minor pullbacks are aggressively bought by retail traders using excessive leverage.
+                        Fourth trading session. Mid-game market dynamics and intelligence wires stream at scheduled intervals.
                     </p>
-                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(245,158,11,0.1); border-radius: 3px; border-left: 2px solid #f59e0b; color: #fde68a;">
-                        <b>Directive:</b> Tighten stops. Do NOT add new debt during dips.
+                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(245,158,11,0.08); border-radius: 3px; border-left: 2px solid #f59e0b; color: #fde68a;">
+                        <b>Directive:</b> Locked until Phase 3 concludes.
                     </div>
                 </div>
 
@@ -6312,13 +6312,13 @@
                         <span style="font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; color: #f97316;">PHASE 05</span>
                         <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b;">20:00 - 25:00</span>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Market Euphoria & Trap</div>
-                    <span style="font-family: var(--font-mono); font-size: 8px; color: #f97316; font-weight: 700;">🟠 THREAT: CRITICAL</span>
+                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Market Session 5</div>
+                    <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b; font-weight: 700;">🔒 CLASSIFIED</span>
                     <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4; flex: 1;">
-                        Parabolic vertical spikes. Retail sentiment turns blindly euphoric while institutional smart money distributes.
+                        Fifth trading session. Late-cycle market action demands heightened solvency awareness and disciplined risk management.
                     </p>
-                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(249,115,22,0.1); border-radius: 3px; border-left: 2px solid #f97316; color: #fdba74;">
-                        <b>Directive:</b> LAST EXIT: Pay down all debt & lock Bank Reserve!
+                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(249,115,22,0.08); border-radius: 3px; border-left: 2px solid #f97316; color: #fdba74;">
+                        <b>Directive:</b> Locked until Phase 4 concludes.
                     </div>
                 </div>
 
@@ -6328,13 +6328,13 @@
                         <span style="font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; color: #ef4444;">PHASE 06</span>
                         <span style="font-family: var(--font-mono); font-size: 8px; color: #f87171;">25:00 - 30:00</span>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">The Free Fall (Crash)</div>
-                    <span style="font-family: var(--font-mono); font-size: 8px; color: #ef4444; font-weight: 700;">☠️ THREAT: BLACK SWAN</span>
-                    <p style="font-size: 0.7rem; color: #fca5a5; line-height: 1.4; flex: 1;">
-                        Negative systemic shock hits. Limit-down plunge (-58%). Cascade margin liquidations wipe out all levered traders.
+                    <div style="font-size: 0.82rem; font-weight: 800; color: #ffffff;">Final Market Session</div>
+                    <span style="font-family: var(--font-mono); font-size: 8px; color: #64748b; font-weight: 700;">🔒 CLASSIFIED</span>
+                    <p style="font-size: 0.7rem; color: #94a3b8; line-height: 1.4; flex: 1;">
+                        Final trading session. The 30-minute simulation concludes at the end of this phase with a comprehensive solvency audit.
                     </p>
-                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(239,68,68,0.15); border-radius: 3px; border-left: 2px solid #ef4444; color: #fca5a5;">
-                        <b>Directive:</b> SURVIVE: Only Safe Haven Bank funds survive 100%.
+                    <div style="font-size: 0.68rem; padding: 4px 6px; background: rgba(239,68,68,0.08); border-radius: 3px; border-left: 2px solid #ef4444; color: #fca5a5;">
+                        <b>Directive:</b> Locked until Phase 5 concludes.
                     </div>
                 </div>
             </div>
@@ -6564,7 +6564,7 @@
                     </div>
                     <h4 style="font-size: 0.95rem; color: #fff;">Emergency Reserve Lock & Direct Margin Repay</h4>
                     <p style="font-size: 0.76rem; color: #94a3b8; line-height: 1.45;">
-                        Psychological protection against your own emotions during euphoric bull traps.
+                        Psychological protection against your own emotions during rapid market movements.
                     </p>
                     <div style="background: rgba(0,0,0,0.4); border-radius: 4px; padding: 8px 10px; font-size: 0.73rem; font-family: var(--font-mono); border-left: 2px solid #f59e0b; color: #fde68a;">
                         • <b>Emergency Reserve:</b> Lock a portion of bank funds so you cannot transfer it back into trading during FOMO euphoria.<br>
@@ -7192,6 +7192,10 @@ window.addEventListener('DOMContentLoaded', () => {
             if (tb) tb.classList.add('expanded');
         }
     } catch(e) {}
+    try {
+        if (typeof renderNewsDB === 'function') renderNewsDB();
+        if (typeof updateAdvancePhaseButton === 'function') updateAdvancePhaseButton();
+    } catch(e) {}
     initCategoryNav();
 });
 
@@ -7248,7 +7252,7 @@ const tutorialStepsData = [
         targetLabel: 'CHART & TICKER',
         title: 'MARKET WATCH & LIVE CHART',
         desc: 'Monitor price candles in real-time. Use the dropdown to switch between Vintrumite (High-Growth AI), Samsung, and POSCO. Watch ticker movements across 6 market phases.',
-        tip: 'Phases 1–4 are engineered bull runs. Phase 5 triggers euphoria right before the Phase 6 systemic collapse.',
+        tip: 'Market conditions evolve across 6 distinct phases. Adapt your strategy and risk management as each phase unfolds.',
         nextBtnText: 'NEXT: LEVERAGE'
     },
     {
@@ -7279,9 +7283,9 @@ const tutorialStepsData = [
         badge: 'STEP 6 / 7',
         targetTag: '[INTELLIGENCE DB]',
         targetLabel: 'NEWS FEED',
-        title: 'MARKET NEWS & DECEPTIVE HYPE',
-        desc: 'Real-time intelligence feed. Early phases blast hyper-bullish sentiment and FOMO headlines to lure traders into high leverage before institutional smart money dumps.',
-        tip: 'Read headlines carefully. Sentiment shifts precede price reversals by several ticks.',
+        title: 'MARKET NEWS & INTELLIGENCE',
+        desc: 'Real-time intelligence feed. Breaking industry developments, market bulletins, and asset-specific news stream continuously into your terminal.',
+        tip: 'Read headlines carefully. News releases can trigger immediate volatility and trend shifts.',
         nextBtnText: 'NEXT: ORDER DOCK'
     },
     {
@@ -7669,7 +7673,13 @@ function switchNavTab(tab, el) {
     closeTaskbar();
     const newsView = document.getElementById('news-db-view');
     if (tab === 'news') {
-        if (newsView) newsView.classList.add('active');
+        if (newsView) {
+            newsView.classList.add('active');
+            if (!marketSessionStarted && ClientEngine && ClientEngine.currentPhase === 1 && sessionSecondsRemaining === 300) {
+                activeNewsTab = 'briefing';
+            }
+            if (typeof renderNewsDB === 'function') renderNewsDB();
+        }
     } else if (tab === 'home') {
         if (newsView) newsView.classList.remove('active');
     } else if (tab === 'bank') {
@@ -8771,84 +8781,87 @@ const assetIntelData = {
     }
 };
 
-const phase1NewsFeed = [
-    {
-        time: '0:00',
-        phase: 'PHASE 1 LAUNCH',
-        type: 'Market Overview',
-        badgeColor: 'text-green',
-        title: "South Korea's Semiconductor Outlook Strengthens",
-        summary: "Strong AI-related demand continues to support expectations for Korean semiconductor exports and memory-chip demand. Investors are watching major Korean technology stocks as the AI infrastructure cycle remains a key growth theme."
-    },
-    {
-        time: '0:00',
-        phase: 'PHASE 1 LAUNCH',
-        type: 'Asset Intel',
-        badgeColor: 'text-green',
-        title: "AI Memory Demand Remains a Key Growth Theme (Vintrumite / VNT)",
-        summary: "Vintrumite highlighted AI memory, HBM, and future memory architectures as primary strategic focus areas at its 2026 Future Forum, pointing to strong multi-year data-center demand."
-    },
-    {
-        time: '0:00',
-        phase: 'PHASE 1 LAUNCH',
-        type: 'Asset Intel',
-        badgeColor: 'text-green',
-        title: "AI Partnerships Strengthen Semiconductor Strategy (Samsung Electronics / SEC)",
-        summary: "Samsung Electronics announced a strategic collaboration with Mistral AI focusing on AI acceleration technologies across its advanced semiconductor and foundry operations."
-    },
-    {
-        time: '2:30',
-        phase: 'INFRASTRUCTURE EXPANSION',
-        type: 'Industry News',
-        badgeColor: 'color-buy',
-        title: "AI Infrastructure Investment Supports Korean Chipmakers",
-        summary: "Continued spending on AI data centers is strengthening expectations for high-bandwidth memory (HBM) and advanced semiconductor demand. The positive sector outlook supports broad interest in Korean semiconductor equities and ETFs."
-    },
-    {
-        time: '2:30',
-        phase: 'INFRASTRUCTURE EXPANSION',
-        type: 'Asset Intel',
-        badgeColor: 'color-buy',
-        title: "Samsung and ASML Deepen High-NA EUV Cooperation (SEC)",
-        summary: "Samsung Electronics announced expanded next-generation semiconductor manufacturing collaboration with ASML, securing early access to High NA EUV lithography systems."
-    },
-    {
-        time: '2:30',
-        phase: 'INFRASTRUCTURE EXPANSION',
-        type: 'Asset Intel',
-        badgeColor: 'color-buy',
-        title: "Vintrumite Expands Focus on Full-Stack AI Memory Solutions (VNT)",
-        summary: "The company unveiled development blueprints for full-stack memory architectures and 3D stacked DRAM tailored specifically for generative AI supercomputing clusters."
-    },
-    {
-        time: '4:00',
-        phase: 'SENTIMENT PEAK',
-        type: 'Broad Market',
-        badgeColor: 'color-ceil',
-        title: "Investor Sentiment Improves Across Korean Technology Stocks",
-        summary: "Improving risk appetite is drawing retail and institutional capital back to large-cap technology and semiconductor shares. Market participants remain optimistic, while noting sensitivity to valuation changes."
-    },
-    {
-        time: '4:00',
-        phase: 'SENTIMENT PEAK',
-        type: 'Asset Intel',
-        badgeColor: 'color-ceil',
-        title: "OpenAI Cooperation Highlights Advanced AI-Chip Opportunity (SEC)",
-        summary: "OpenAI announced expanded exploratory discussions with Samsung Electronics for dedicated custom inference silicon development, driving speculative euphoria."
-    },
-    {
-        time: '4:00',
-        phase: 'SENTIMENT PEAK',
-        type: 'Asset Intel',
-        badgeColor: 'color-ceil',
-        title: "Leveraged ETF Turnover Surges on Bullish Momentum (KODEX 2X)",
-        summary: "Trading volumes in 2× leveraged KOSPI ETFs spiked as retail investors chased morning momentum gains, increasing system-wide leverage exposure."
+/* =========================================================================
+   FREE FALL 2.0 NEWS DATABASE & CHRONOLOGICAL INTELLIGENCE ENGINE
+   Source: Free_Fall_2_News_All_Phases_FINAL.docx (window.FREE_FALL_NEWS)
+   ========================================================================= */
+let activeNewsTab = 'briefing';
+let selectedNewsAssetCode = 'VNT';
+
+function parseNewsItem(content) {
+    if (!content) return { title: 'Market Intelligence Wire', body: '' };
+    if (content.includes(' — ')) {
+        const parts = content.split(' — ');
+        return {
+            title: parts[0].trim(),
+            body: parts.slice(1).join(' — ').trim()
+        };
     }
-];
+    const m = content.match(/^([A-Z0-9\s,.'-]{4,})([A-Z][a-z].*)$/);
+    if (m) {
+        return {
+            title: m[1].trim(),
+            body: m[2].trim()
+        };
+    }
+    const dotIdx = content.indexOf('. ');
+    if (dotIdx > 0 && dotIdx < 100) {
+        return {
+            title: content.substring(0, dotIdx + 1),
+            body: content.substring(dotIdx + 2)
+        };
+    }
+    return {
+        title: content.substring(0, 70),
+        body: content
+    };
+}
+
+function parseTimeToSeconds(timeStr) {
+    if (!timeStr) return 0;
+    const parts = timeStr.split(':');
+    if (parts.length === 2) {
+        return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+    }
+    return 0;
+}
+
+function isNewsUnlocked(phaseNum, timeStr) {
+    const curP = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
+    if (phaseNum < curP) {
+        return true;
+    }
+    if (phaseNum > curP) {
+        return false;
+    }
+    if (sessionSecondsRemaining === 0) {
+        return true;
+    }
+    if (!marketSessionStarted && sessionSecondsRemaining === 300) {
+        return false;
+    }
+    const elapsed = 300 - sessionSecondsRemaining;
+    const itemSec = parseTimeToSeconds(timeStr);
+    return elapsed >= itemSec;
+}
+
+const ASSET_CODE_MAP = {
+    'VNT': { idx: 0, code: 'VNT', name: 'Vintrumite (000660)', sub: 'Memory & HBM Leader', badge: 'AI / HBM', aliases: ['VNT', '000660'] },
+    'SEC': { idx: 1, code: 'SEC', name: 'Samsung Electronics (005930)', sub: 'Tech Bellwether & Foundry', badge: 'FOUNDRY', aliases: ['SEC', '005930'] },
+    'KODEX': { idx: 2, code: 'KODEX', name: 'KODEX Semiconductor (091160)', sub: 'Chip Sector Basket ETF', badge: 'ETF BASKET', aliases: ['KODEX', '091160', 'KODEX_SEMI'] },
+    'KODEX2X': { idx: 3, code: 'KODEX 2X', name: 'KODEX Leverage (122630)', sub: '2× Leveraged KOSPI200 ETF', badge: '2X LEVERAGE', aliases: ['KODEX2X', '122630', 'KODEX_LEV', 'KODEX 2X'] },
+    'TIGER': { idx: 4, code: 'TIGER', name: 'TIGER Semiconductor TOP10 (396500)', sub: 'Top 10 Chip Basket ETF', badge: 'TOP 10', aliases: ['TIGER', '396500', 'TIGER_TOP10'] }
+};
 
 function selectNewsAsset(code) {
-    const data = assetIntelData[code];
-    if (!data) return;
+    selectedNewsAssetCode = code;
+    const assetMeta = ASSET_CODE_MAP[code] || ASSET_CODE_MAP['VNT'];
+
+    let brief = null;
+    if (window.FREE_FALL_NEWS && window.FREE_FALL_NEWS.pre_game_briefing && window.FREE_FALL_NEWS.pre_game_briefing[assetMeta.idx]) {
+        brief = window.FREE_FALL_NEWS.pre_game_briefing[assetMeta.idx];
+    }
+
     const tEl = document.getElementById('dossier-ticker');
     const sEl = document.getElementById('dossier-sub');
     const trEl = document.getElementById('dossier-trend');
@@ -8856,54 +8869,335 @@ function selectNewsAsset(code) {
     const rEl = document.getElementById('dossier-role');
     const aEl = document.getElementById('dossier-advice');
 
-    if (tEl) tEl.textContent = data.code;
-    if (sEl) sEl.textContent = data.sub;
-    if (trEl) trEl.textContent = data.trend;
-    if (cEl) cEl.textContent = data.catalysts;
-    if (rEl) rEl.textContent = data.role;
-    if (aEl) aEl.textContent = data.advice;
+    if (tEl) tEl.textContent = assetMeta.code;
+    if (sEl) sEl.textContent = `${assetMeta.name} | ${assetMeta.sub}`;
+
+    if (brief) {
+        if (trEl) trEl.textContent = brief.recent_trend || '';
+        if (cEl) cEl.textContent = brief.possible_news || '';
+        if (rEl) rEl.textContent = brief.game_role || '';
+        if (aEl) aEl.textContent = brief.for_the_player || '';
+    } else {
+        const data = assetIntelData[code];
+        if (data) {
+            if (trEl) trEl.textContent = data.trend || '';
+            if (cEl) cEl.textContent = data.catalysts || '';
+            if (rEl) rEl.textContent = data.role || '';
+            if (aEl) aEl.textContent = data.advice || '';
+        }
+    }
 
     const items = document.querySelectorAll('.news-asset-item');
     items.forEach(it => {
         const onclickStr = it.getAttribute('onclick') || '';
         it.classList.toggle('active', onclickStr.includes(code));
     });
+
+    if (activeNewsTab === 'assets') {
+        renderNewsFeed();
+    }
+}
+
+function updateNewsFilterPills() {
+    const pillContainer = document.getElementById('news-filter-pills');
+    if (!pillContainer) return;
+
+    const curP = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
+    let html = '';
+
+    html += `<button class="pill-btn ${activeNewsTab === 'briefing' ? 'active' : ''}" onclick="filterNewsTab('briefing', this)">📋 PRE-GAME BRIEFING</button>`;
+    html += `<button class="pill-btn ${activeNewsTab === 'live' ? 'active' : ''}" onclick="filterNewsTab('live', this)">⚡ LIVE INTEL STREAM</button>`;
+
+    for (let p = 1; p <= curP; p++) {
+        if (p < curP || (p === curP && sessionSecondsRemaining === 0)) {
+            html += `<button class="pill-btn ${activeNewsTab === 'phase' + p ? 'active' : ''}" onclick="filterNewsTab('phase${p}', this)">📁 PHASE ${p} ARCHIVE</button>`;
+        }
+    }
+
+    html += `<button class="pill-btn ${activeNewsTab === 'assets' ? 'active' : ''}" onclick="filterNewsTab('assets', this)">🔍 ASSET INTEL (${selectedNewsAssetCode})</button>`;
+    pillContainer.innerHTML = html;
 }
 
 function filterNewsTab(tab, el) {
-    if (el) {
-        document.querySelectorAll('.news-filter-pills .pill-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-    }
+    activeNewsTab = tab;
+    updateNewsFilterPills();
+    renderNewsFeed();
+}
 
-    if (tab === 'briefing') {
-        openPreGameBriefingModal();
+function renderNewsFeed() {
+    const container = document.getElementById('news-feed-items');
+    const headingEl = document.getElementById('news-feed-heading');
+    const subheadingEl = document.getElementById('news-feed-subheading');
+    if (!container) return;
+
+    const curP = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
+
+    // VIEW 1: PRE-GAME ASSET BRIEFING
+    if (activeNewsTab === 'briefing') {
+        if (headingEl) headingEl.textContent = 'PRE-GAME ASSET BRIEFING';
+        if (subheadingEl) subheadingEl.textContent = '5 STRATEGIC DOSSIERS // INITIAL INTEL';
+
+        const briefings = window.FREE_FALL_NEWS?.pre_game_briefing || [];
+        if (briefings.length > 0) {
+            const assetCodes = ['VNT', 'SEC', 'KODEX', 'KODEX2X', 'TIGER'];
+            container.innerHTML = briefings.map((b, idx) => {
+                const code = assetCodes[idx] || 'VNT';
+                const meta = ASSET_CODE_MAP[code];
+                return `
+                    <div class="news-card" onclick="selectNewsAsset('${code}')" style="cursor: pointer; border-left: 3px solid #10b981; margin-bottom: 12px; transition: background 0.15s ease;">
+                        <div class="news-card-header">
+                            <div>
+                                <span class="news-time-badge">[PRE-GAME]</span>
+                                <span class="news-phase-pill text-green">CORE ASSET INTEL</span>
+                            </div>
+                            <span class="news-cat-tag" style="color: #38bdf8; font-weight: 700;">${meta.code} // ${meta.badge}</span>
+                        </div>
+                        <h4 class="news-card-title" style="color: #fff; font-size: 0.92rem; margin: 4px 0 6px 0;">${b.company.split(' — ')[0]}</h4>
+                        <p class="news-card-body" style="font-size: 0.77rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                            ${b.company.includes(' — ') ? b.company.split(' — ')[1] : b.company}
+                        </p>
+                        <div style="background: rgba(0,0,0,0.35); border-radius: 4px; padding: 7px 10px; font-size: 0.73rem; margin-bottom: 6px;">
+                            <div style="color: #94a3b8; margin-bottom: 3px;"><b style="color: #f8fafc;">Recent Trend:</b> ${b.recent_trend}</div>
+                            <div style="color: #94a3b8;"><b style="color: #f8fafc;">Key Role:</b> ${b.game_role}</div>
+                        </div>
+                        <div style="background: rgba(16,185,129,0.08); border-left: 2px solid #10b981; padding: 6px 9px; border-radius: 3px; font-size: 0.72rem; color: #6ee7b7; font-family: var(--font-mono);">
+                            🛡️ <b>Strategic Directive:</b> ${b.for_the_player}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
         return;
     }
 
-    const container = document.getElementById('news-feed-items');
-    if (!container) return;
+    // VIEW 2: PHASE ARCHIVE (e.g. phase1, phase2...)
+    if (activeNewsTab.startsWith('phase')) {
+        const pNum = parseInt(activeNewsTab.replace('phase', ''), 10);
+        if (headingEl) headingEl.textContent = `PHASE ${pNum} FIXED NEWS ARCHIVE`;
+        if (subheadingEl) subheadingEl.textContent = `ALL 21 HISTORICAL INTEL WIRES UNLOCKED`;
 
-    let items = phase1NewsFeed;
-    if (tab === 'phase1') {
-        items = phase1NewsFeed.filter(n => n.type !== 'Asset Intel');
-    } else if (tab === 'assets') {
-        items = phase1NewsFeed.filter(n => n.type === 'Asset Intel');
+        const phaseData = window.FREE_FALL_NEWS?.phases?.[String(pNum)];
+        if (!phaseData) {
+            container.innerHTML = `<div class="news-card"><p class="news-card-body" style="color: #94a3b8;">No archived data found for Phase ${pNum}.</p></div>`;
+            return;
+        }
+
+        const cards = [];
+        (phaseData.industry_news || []).forEach(item => {
+            const parsed = parseNewsItem(item.content);
+            cards.push({
+                time: item.time,
+                phase: `PHASE ${pNum}`,
+                type: 'INDUSTRY WIRE',
+                badgeColor: 'text-green',
+                title: parsed.title,
+                summary: parsed.body
+            });
+        });
+        (phaseData.market_news || []).forEach(item => {
+            const parsed = parseNewsItem(item.content);
+            cards.push({
+                time: item.time,
+                phase: `PHASE ${pNum}`,
+                type: 'MARKET OVERVIEW',
+                badgeColor: 'color-buy',
+                title: parsed.title,
+                summary: parsed.body
+            });
+        });
+        (phaseData.asset_news || []).forEach(item => {
+            const parsed = parseNewsItem(item.content);
+            cards.push({
+                time: item.time,
+                phase: `PHASE ${pNum}`,
+                type: `ASSET // ${item.ticker}`,
+                badgeColor: 'color-ceil',
+                title: `${parsed.title} (${item.asset_name})`,
+                summary: parsed.body,
+                ticker: item.ticker
+            });
+        });
+
+        cards.sort((a, b) => parseTimeToSeconds(a.time) - parseTimeToSeconds(b.time));
+
+        container.innerHTML = cards.map(n => `
+            <div class="news-card" ${n.ticker ? `onclick="selectNewsAsset('${n.ticker}')"` : ''} style="${n.ticker ? 'cursor: pointer;' : ''}">
+                <div class="news-card-header">
+                    <div>
+                        <span class="news-time-badge">[${n.time}]</span>
+                        <span class="news-phase-pill ${n.badgeColor || ''}">${n.phase}</span>
+                    </div>
+                    <span class="news-cat-tag">${n.type}</span>
+                </div>
+                <h4 class="news-card-title">${n.title}</h4>
+                <p class="news-card-body">${n.summary}</p>
+            </div>
+        `).join('');
+        return;
     }
 
-    container.innerHTML = items.map(n => `
-        <div class="news-card">
-            <div class="news-card-header">
-                <div>
-                    <span class="news-time-badge">[${n.time}]</span>
-                    <span class="news-phase-pill ${n.badgeColor || ''}">${n.phase}</span>
+    // VIEW 3: LIVE INTEL STREAM
+    if (activeNewsTab === 'live') {
+        if (headingEl) headingEl.textContent = 'LIVE INTELLIGENCE STREAM';
+        const elapsedSecs = 300 - sessionSecondsRemaining;
+        const mins = String(Math.floor(elapsedSecs / 60)).padStart(2, '0');
+        const secs = String(elapsedSecs % 60).padStart(2, '0');
+        if (subheadingEl) subheadingEl.textContent = `CHRONOLOGICAL // PHASE ${curP} ELAPSED: ${mins}:${secs}`;
+
+        const unlockedCards = [];
+
+        for (let p = 1; p <= curP; p++) {
+            const pData = window.FREE_FALL_NEWS?.phases?.[String(p)];
+            if (!pData) continue;
+
+            (pData.industry_news || []).forEach(item => {
+                if (isNewsUnlocked(p, item.time)) {
+                    const parsed = parseNewsItem(item.content);
+                    unlockedCards.push({
+                        time: item.time,
+                        phaseNum: p,
+                        phase: `PHASE ${p}`,
+                        type: 'INDUSTRY WIRE',
+                        badgeColor: 'text-green',
+                        title: parsed.title,
+                        summary: parsed.body
+                    });
+                }
+            });
+            (pData.market_news || []).forEach(item => {
+                if (isNewsUnlocked(p, item.time)) {
+                    const parsed = parseNewsItem(item.content);
+                    unlockedCards.push({
+                        time: item.time,
+                        phaseNum: p,
+                        phase: `PHASE ${p}`,
+                        type: 'MARKET OVERVIEW',
+                        badgeColor: 'color-buy',
+                        title: parsed.title,
+                        summary: parsed.body
+                    });
+                }
+            });
+            (pData.asset_news || []).forEach(item => {
+                if (isNewsUnlocked(p, item.time)) {
+                    const parsed = parseNewsItem(item.content);
+                    unlockedCards.push({
+                        time: item.time,
+                        phaseNum: p,
+                        phase: `PHASE ${p}`,
+                        type: `ASSET // ${item.ticker}`,
+                        badgeColor: 'color-ceil',
+                        title: `${parsed.title} (${item.asset_name})`,
+                        summary: parsed.body,
+                        ticker: item.ticker
+                    });
+                }
+            });
+        }
+
+        if (unlockedCards.length === 0) {
+            container.innerHTML = `
+                <div class="news-card" style="border-left: 3px solid #38bdf8; padding: 18px 16px;">
+                    <div class="news-card-header">
+                        <div>
+                            <span class="news-time-badge">[STANDBY]</span>
+                            <span class="news-phase-pill text-green">SESSION PRE-MARKET</span>
+                        </div>
+                        <span class="news-cat-tag">SYSTEM INTEL</span>
+                    </div>
+                    <h4 class="news-card-title" style="color: #38bdf8; font-size: 0.95rem; margin: 6px 0;">⚡ LIVE FEED STANDBY</h4>
+                    <p class="news-card-body" style="line-height: 1.5; color: #cbd5e1;">
+                        Phase ${curP} market session has not commenced. Timed intelligence wires (0:00, 2:30, 4:00) unlock chronologically once trading begins.<br><br>
+                        👉 Click <b>'PRE-GAME BRIEFING'</b> to study the 5 core asset dossiers, or click <b>'START PHASE ${curP}'</b> on the top HUD bar to initiate real-time market action.
+                    </p>
                 </div>
-                <span class="news-cat-tag">${n.type}</span>
+            `;
+            return;
+        }
+
+        unlockedCards.sort((a, b) => {
+            if (b.phaseNum !== a.phaseNum) return b.phaseNum - a.phaseNum;
+            return parseTimeToSeconds(b.time) - parseTimeToSeconds(a.time);
+        });
+
+        container.innerHTML = unlockedCards.map(n => `
+            <div class="news-card" ${n.ticker ? `onclick="selectNewsAsset('${n.ticker}')"` : ''} style="${n.ticker ? 'cursor: pointer;' : ''}">
+                <div class="news-card-header">
+                    <div>
+                        <span class="news-time-badge">[${n.time}]</span>
+                        <span class="news-phase-pill ${n.badgeColor || ''}">${n.phase}</span>
+                    </div>
+                    <span class="news-cat-tag">${n.type}</span>
+                </div>
+                <h4 class="news-card-title">${n.title}</h4>
+                <p class="news-card-body">${n.summary}</p>
             </div>
-            <h4 class="news-card-title">${n.title}</h4>
-            <p class="news-card-body">${n.summary}</p>
-        </div>
-    `).join('');
+        `).join('');
+        return;
+    }
+
+    // VIEW 4: ASSET ANALYSIS
+    if (activeNewsTab === 'assets') {
+        const meta = ASSET_CODE_MAP[selectedNewsAssetCode] || ASSET_CODE_MAP['VNT'];
+        if (headingEl) headingEl.textContent = `ASSET INTEL: ${meta.name}`;
+        if (subheadingEl) subheadingEl.textContent = `ALL UNLOCKED INTEL WIRES FOR ${meta.code}`;
+
+        const assetCards = [];
+        for (let p = 1; p <= curP; p++) {
+            const pData = window.FREE_FALL_NEWS?.phases?.[String(p)];
+            if (!pData) continue;
+            (pData.asset_news || []).forEach(item => {
+                const matches = meta.aliases.some(a => item.ticker === a || (item.asset_name && item.asset_name.toLowerCase().includes(a.toLowerCase())));
+                if (matches && isNewsUnlocked(p, item.time)) {
+                    const parsed = parseNewsItem(item.content);
+                    assetCards.push({
+                        time: item.time,
+                        phaseNum: p,
+                        phase: `PHASE ${p}`,
+                        type: `ASSET // ${item.ticker}`,
+                        badgeColor: 'color-ceil',
+                        title: `${parsed.title} (${item.asset_name})`,
+                        summary: parsed.body,
+                        ticker: item.ticker
+                    });
+                }
+            });
+        }
+
+        if (assetCards.length === 0) {
+            container.innerHTML = `
+                <div class="news-card">
+                    <p class="news-card-body" style="color: #94a3b8;">No timed news unlocked yet for ${meta.name}. As the simulation progresses, asset-specific reports will appear here automatically.</p>
+                </div>
+            `;
+            return;
+        }
+
+        assetCards.sort((a, b) => {
+            if (b.phaseNum !== a.phaseNum) return b.phaseNum - a.phaseNum;
+            return parseTimeToSeconds(b.time) - parseTimeToSeconds(a.time);
+        });
+
+        container.innerHTML = assetCards.map(n => `
+            <div class="news-card">
+                <div class="news-card-header">
+                    <div>
+                        <span class="news-time-badge">[${n.time}]</span>
+                        <span class="news-phase-pill ${n.badgeColor || ''}">${n.phase}</span>
+                    </div>
+                    <span class="news-cat-tag">${n.type}</span>
+                </div>
+                <h4 class="news-card-title">${n.title}</h4>
+                <p class="news-card-body">${n.summary}</p>
+            </div>
+        `).join('');
+    }
+}
+
+function renderNewsDB() {
+    updateNewsFilterPills();
+    renderNewsFeed();
+    selectNewsAsset(selectedNewsAssetCode);
 }
 
 /* =========================================================================
@@ -9030,44 +9324,59 @@ let sessionSecondsRemaining = 300;
 let marketTimerInterval = null;
 
 const phaseAnnouncements = {
-    1: "[0:00] PHASE 1 LAUNCH: South Korea's Semiconductor Outlook Strengthens on AI demand!",
-    2: "[0:00] PHASE 2 LAUNCH: Verified earnings & AI infrastructure capex expansion validate corporate balance sheets!",
-    3: "[0:00] PHASE 3 LAUNCH: Explosive bull market rally! High-beta chipmakers and 2X leveraged ETFs surge!",
-    4: "[0:00] PHASE 4 LAUNCH: Volatility expands! Inexperienced investors rush to buy dips using maximum margin leverage.",
-    5: "[0:00] PHASE 5 LAUNCH: Market Euphoria & Bull Trap! Parabolic blow-off spikes reach extreme levels.",
-    6: "[0:00] PHASE 6 LAUNCH: SYSTEMIC SHOCK! Geopolitical sanctions & unexpected margin cascades hit tech bellwethers!"
+    1: "[0:00] PHASE 1: Korean Semiconductor Outlook Improves as AI Demand Remains Strong",
+    2: "[0:00] PHASE 2: Korean Chipmakers Gain on Solid Results and Strong Global Demand",
+    3: "[0:00] PHASE 3: Semiconductor Strength Broadens as Korean Tech Gains Steam",
+    4: "[0:00] PHASE 4: Korean Tech Consolidates After Recent Gains as Investors Assess Demand",
+    5: "[0:00] PHASE 5: AI-Related Optimism Reaches Highs Amid Expanding Tech Collaboration",
+    6: "[0:00] PHASE 6: Market Pullback Extends on Mixed Tech Outlook and Volatility Concerns"
 };
 
 const timedPhaseNews = {
     1: {
-        240: "[1:00] BREAKING: U.S. Tech Giants expand High-Bandwidth Memory (HBM) supply orders from Seoul manufacturers.",
-        120: "[3:00] SECTOR INTEL: Retail brokerage margin lending rates reduced to 4.2%. Leveraged accounts surge."
+        150: "[2:30] INDUSTRY INTEL: Korean Chipmakers Gain as AI Infrastructure Investment Expands",
+        60: "[4:00] MARKET WIRE: Investor Confidence Returns to Korean Technology Stocks"
     },
     2: {
-        210: "[1:30] EARNINGS BEAT: Semiconductor export volume rises +34% YoY. Analysts revise target valuations upward.",
-        80: "[3:40] INSTITUTIONAL DESK: Heavy algorithmic buy orders detected across Top 10 domestic technology equities."
+        150: "[2:30] INDUSTRY INTEL: Korean Semiconductor Investment Outlook Improves",
+        60: "[4:00] MARKET WIRE: Global Chipmaker Spending Supports Korean Technology Shares"
     },
     3: {
-        200: "[1:40] ALL-TIME HIGHS: Tech bellwethers breach psychological resistance as volume sets record.",
-        90: "[3:30] LEVERAGE APPETITE: Retail margin borrowing on Seoul exchanges crosses ₩22 Trillion."
+        150: "[2:30] INDUSTRY INTEL: AI Infrastructure Spending Drives Stronger Semiconductor Sentiment",
+        60: "[4:00] MARKET WIRE: Risk Appetite Returns Across Korean Equities"
     },
     4: {
-        220: "[1:20] FLASH PULLBACK: Macro yield spike causes sudden -4% intraday dip across tech leaders.",
-        100: "[3:20] DIP BUYING FRENZY: 'Buy the Dip' dominates retail chatrooms as traders take maximum margin loans."
+        150: "[2:30] INDUSTRY INTEL: AI Infrastructure Becomes Market's Dominant Growth Theme",
+        60: "[4:00] MARKET WIRE: Korean Technology Shares See Increased Speculative Interest"
     },
     5: {
-        250: "[0:50] PARABOLIC SPIKE: VNT surges past $300! Media calls it 'The Unstoppable Korean Supercycle'.",
-        150: "[2:30] DIVERGENCE WARNING: Institutional volume drops as smart money discretely unloads inventory.",
-        50: "[4:10] CRITICAL WARNING: Liquidity drying up. Margin loan rates spiked to 14.5% p.a."
+        150: "[2:30] INDUSTRY INTEL: Investors Look Beyond Near-Term Valuations as AI Demand Remains Strong",
+        60: "[4:00] MARKET WIRE: Momentum Trading Intensifies Across Korean Technology Assets"
     },
     6: {
-        280: "[0:20] BLACK SWAN ALERT: Sudden systemic tech shock & geopolitical trade block trigger panic selling!",
-        200: "[1:40] LIMIT DOWN PLUNGE: VNT and index ETFs tumble -25%! Broker servers report queue overloads.",
-        120: "[3:00] CASCADE LIQUIDATIONS: Auto-liquidation algorithms trigger mass dumping into bidless book!",
-        40: "[4:20] CAPITAL AUDIT: Only Safe Haven Bank deposits survive the catastrophic wipeout!"
+        150: "[2:30] INDUSTRY INTEL: Korean Technology Shares Face Broad Risk-Off Selling",
+        60: "[4:00] MARKET WIRE: Liquidity Pressure Intensifies as Leveraged Positions Are Cut"
     }
 };
 const phaseFixedEvents = timedPhaseNews;
+
+function updateAdvancePhaseButton() {
+    const btn = document.getElementById('btn-advance-phase');
+    if (!btn) return;
+    const curP = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
+    if (sessionSecondsRemaining > 0) {
+        btn.innerHTML = `⚙️ [ADMIN] End Phase ${curP}`;
+        btn.title = `[ADMIN TOOL] Immediately fast-forward to the end of Phase ${curP} and settle stock prices. Not present in final game release.`;
+    } else {
+        if (curP < 6) {
+            btn.innerHTML = `⚙️ [ADMIN] Start Phase ${curP + 1}`;
+            btn.title = `[ADMIN TOOL] Advance to Phase ${curP + 1}. Not present in final game release.`;
+        } else {
+            btn.innerHTML = `⚙️ [ADMIN] Solvency Audit`;
+            btn.title = `[ADMIN TOOL] View final simulation audit report. Not present in final game release.`;
+        }
+    }
+}
 
 function updateMarketStartButton() {
     const btnLabel = document.getElementById('market-start-btn-label');
@@ -9101,6 +9410,8 @@ function updateMarketStartButton() {
         btn.style.cursor = 'pointer';
         btnLabel.innerHTML = `<span class="launch-icon">🔒</span> <span class="launch-text">READ FIXED NEWS TO START</span>`;
     }
+
+    updateAdvancePhaseButton();
 }
 
 function onMarketStartButtonClick() {
@@ -9130,6 +9441,9 @@ function startMarketSession() {
     if (phaseAnnouncements[curPhase]) {
         triggerNewsFlash(phaseAnnouncements[curPhase]);
     }
+
+    // Refresh News DB when session starts so 0:00 items unlock
+    renderNewsDB();
 
     if (marketTimerInterval) clearInterval(marketTimerInterval);
     marketTimerInterval = setInterval(() => {
@@ -9170,10 +9484,15 @@ function startMarketSession() {
             // 6. Background async sync with server
             syncTickToServer(globalSec);
 
-            // 7. Check timed news queue
+            // 7. Check timed news queue & dynamic News DB unlock
             const pNews = timedPhaseNews[ClientEngine.currentPhase];
             if (pNews && pNews[sessionSecondsRemaining]) {
                 triggerNewsFlash(pNews[sessionSecondsRemaining]);
+            }
+
+            const elapsedSecs = 300 - sessionSecondsRemaining;
+            if (elapsedSecs === 150 || elapsedSecs === 240) {
+                renderNewsDB();
             }
         } else {
             // Phase Complete
@@ -9184,12 +9503,14 @@ function startMarketSession() {
             const el = document.getElementById('hud-timer');
             if (el) el.textContent = `00:00 [PHASE ${ClientEngine.currentPhase} COMPLETE]`;
             updateMarketStartButton();
+            updateAdvancePhaseButton();
             renderChartPhaseButtons();
+            renderNewsDB();
             if (ClientEngine.currentPhase === 6) {
                 triggerNewsFlash('🏁 30-MINUTE SIMULATION CONCLUDED: Final solvency audit ready.');
                 showFinalAuditModal();
             } else {
-                triggerNewsFlash(`🔔 PHASE ${ClientEngine.currentPhase} COMPLETE. Advance to Phase ${ClientEngine.currentPhase + 1} when ready.`);
+                triggerNewsFlash(`🔔 PHASE ${ClientEngine.currentPhase} COMPLETE. Fixed news archived in News DB. Advance when ready.`);
             }
         }
     }, 1000);
@@ -9211,10 +9532,59 @@ async function syncTickToServer(globalSec) {
 async function advancePhaseAction() {
     MarketFlashEngine.stop();
     MarketFlashEngine.lastFlashedCodes.clear();
-    if (ClientEngine.currentPhase >= 6 && sessionSecondsRemaining === 0) {
+
+    // CASE 1: Fast-forward phase to end if currently running or in pre-market for current phase
+    if (sessionSecondsRemaining > 0) {
+        if (marketTimerInterval) {
+            clearInterval(marketTimerInterval);
+            marketTimerInterval = null;
+        }
+        marketSessionStarted = false;
+        sessionSecondsRemaining = 0;
+
+        // Immediately move to the end of the phase on the stock screen!
+        const endSec = ClientEngine.currentPhase * 300;
+        const st = ClientEngine.setGlobalSecond(endSec);
+
+        // Update all stock prices and board
+        renderPriceBoard();
+
+        const curStock = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock);
+        if (curStock) {
+            const priceEl = document.getElementById('chart-live-price');
+            const changeEl = document.getElementById('chart-live-change');
+            if (priceEl) priceEl.textContent = `$${curStock.price.toFixed(2)}`;
+            if (changeEl) {
+                const sign = curStock.change > 0 ? '+' : '';
+                changeEl.textContent = `${sign}${curStock.pct.toFixed(2)}%`;
+                changeEl.className = curStock.change >= 0 ? 'text-green' : 'text-red';
+            }
+            updateEstimatedVal();
+            appendPriceToChart(curStock, endSec);
+        }
+
+        if (st) updateHUD(st);
+
+        const el = document.getElementById('hud-timer');
+        if (el) el.textContent = `00:00 [PHASE ${ClientEngine.currentPhase} COMPLETE]`;
+
+        updateMarketStartButton();
+        updateAdvancePhaseButton();
+        renderChartPhaseButtons();
+        renderNewsDB();
+
+        syncTickToServer(endSec);
+
+        triggerNewsFlash(`⚙️ [ADMIN FAST-FORWARD] Phase ${ClientEngine.currentPhase} completed. Stock prices settled at final tick ${endSec}.`);
+        return;
+    }
+
+    // CASE 2: Advance to next phase if current phase is completed
+    if (ClientEngine.currentPhase >= 6) {
         showFinalAuditModal();
         return;
     }
+
     const advLocal = ClientEngine.advancePhase();
     sessionSecondsRemaining = 300;
     marketSessionStarted = false;
@@ -9222,12 +9592,16 @@ async function advancePhaseAction() {
     renderChartPhaseButtons();
     if (advLocal.state) updateHUD(advLocal.state);
     updateMarketStartButton();
+    updateAdvancePhaseButton();
+
     const el = document.getElementById('hud-timer');
     if (el) el.textContent = `05:00 [PHASE ${ClientEngine.currentPhase} READY]`;
 
     if (phaseAnnouncements[ClientEngine.currentPhase]) {
         triggerNewsFlash(phaseAnnouncements[ClientEngine.currentPhase]);
     }
+
+    renderNewsDB();
 
     try {
         const res = await fetch('/api/advance', { method: 'POST' });
@@ -9276,20 +9650,20 @@ const ClientEngine = {
     currentPhase: 1,
     currentGlobalSecond: 1,
     phaseNames: [
-        'Phase 1 - Fake Positive News',
-        'Phase 2 - True Positive News',
-        'Phase 3 - Bull Market',
-        'Phase 4 - Strong Growth (FOMO)',
-        'Phase 5 - Market Euphoria & Bull Trap',
-        'Phase 6 - Negative Shock & Cascade Plunge'
+        'Phase 1',
+        'Phase 2',
+        'Phase 3',
+        'Phase 4',
+        'Phase 5',
+        'Phase 6'
     ],
     phaseDescs: [
-        'Tech stocks gain modest positive momentum. Retail margin leverage expands.',
-        'Earnings data validates fundamentals. Multi-phase compounding builds confidence.',
-        'Broad-based market rally. Maximum purchasing power deployed.',
-        'Market pulls back slightly. Inexperienced investors buy the dip on margin.',
-        'Euphoric bull-trap rallies stretch valuations to critical limits.',
-        'Systemic collapse (-57.8%). Forced liquidations trigger wipeouts.'
+        'Initial trading session. Review pre-game briefing and establish positions.',
+        'Second trading session. Economic reports and corporate developments unfold.',
+        'Third trading session. Market momentum and asset trends develop.',
+        'Fourth trading session. Mid-game market dynamics and intelligence wires stream.',
+        'Fifth trading session. Late-cycle market action demands heightened solvency awareness.',
+        'Final trading session. 30-minute simulation concludes with a solvency audit.'
     ],
     isLiquidated: false,
 
@@ -9699,7 +10073,7 @@ function updateHUD(data) {
 
     // Phase Status
     const curPhaseId = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : (data.phase ? data.phase.id : 1);
-    const rawPhaseName = (ClientEngine && ClientEngine.phaseNames) ? ClientEngine.phaseNames[curPhaseId - 1] : (data.phase ? data.phase.name : 'Phase 1 - Fake Positive News');
+    const rawPhaseName = (ClientEngine && ClientEngine.phaseNames) ? ClientEngine.phaseNames[curPhaseId - 1] : (data.phase ? data.phase.name : 'Phase 1');
     const cleanPhaseName = rawPhaseName.replace(/^Phase\s*\d+\s*[-:]\s*/i, '').trim().toUpperCase();
     const badgeEl = document.getElementById('hud-phase-badge');
     const nameEl = document.getElementById('hud-phase-name');
