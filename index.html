@@ -2698,6 +2698,38 @@
             font-weight: 800;
             color: #00f0ff;
         }
+        .briefing-news-pills {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .briefing-news-pills .pill-btn {
+            padding: 5px 14px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(51, 65, 85, 0.7);
+            border-radius: 4px;
+            color: #94a3b8;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .briefing-news-pills .pill-btn:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(56, 189, 248, 0.5);
+            color: #f1f5f9;
+        }
+        .briefing-news-pills .pill-btn.active {
+            background: rgba(56, 189, 248, 0.16);
+            border-color: #38bdf8;
+            color: #38bdf8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+        }
 
         /* Bottom Command Dock Bar */
         .briefing-footer-bar {
@@ -5886,7 +5918,7 @@
 
         <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; width: 100%;">
             <!-- 01 TRADING -->
-            <div class="nav-item active" onclick="switchNavTab('home', this)" data-tooltip="01 // TRADING FLOOR" title="Trading Floor [EXECUTION]">
+            <div class="nav-item active" id="nav-item-trading" onclick="switchNavTab('home', this)" data-tooltip="01 // TRADING FLOOR" title="Trading Floor [EXECUTION]">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 3v18h18"/>
@@ -5898,7 +5930,7 @@
             </div>
 
             <!-- 02 NEWS DB (Moved above Bank) -->
-            <div class="nav-item" onclick="switchNavTab('news', this)" data-tooltip="02 // NEWS INTELLIGENCE" title="News Intelligence Database [INTEL]">
+            <div class="nav-item" id="nav-item-news" onclick="switchNavTab('news', this)" data-tooltip="02 // NEWS INTELLIGENCE" title="News Intelligence Database [INTEL]">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
@@ -5945,7 +5977,7 @@
             </div>
 
             <!-- 06 PROTOCOL / GUIDE -->
-            <div class="nav-item" onclick="navigateTo(4)" data-tooltip="06 // PROTOCOL MANUAL" title="Operational Guide & Mechanics [PROTOCOL]">
+            <div class="nav-item" id="nav-item-protocol" onclick="tutorialOrigin = 'trading'; navigateTo(4)" data-tooltip="06 // PROTOCOL MANUAL" title="Operational Guide & Mechanics [PROTOCOL]">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
@@ -6065,12 +6097,17 @@
                     <div class="widget-box news-flash-widget" id="tut-target-news">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                             <div class="widget-label">Market Flash News</div>
-                            <span id="flash-news-badge" style="font-size: 0.62rem; color: #10b981; font-family: var(--font-mono); font-weight: 700;">UPDATE ACTIVE</span>
+                            <span id="flash-news-badge" style="font-size: 0.62rem; color: #38bdf8; font-family: var(--font-mono); font-weight: 700;">STANDBY</span>
                         </div>
                         <div class="flash-news-scroll-wrap" id="flash-news-scroll-wrap" onscroll="onNewsScroll(this)">
                             <div id="flash-news-container" style="display: flex; flex-direction: column; gap: 6px;">
-                                <div style="padding: 5px 7px; background: #0c121e; border-radius: 4px; border-left: 2px solid var(--green); font-size: 0.72rem; line-height: 1.35;">
-                                    <span class="text-green" style="font-weight: 700;">AI MEMORY HYPE</span>: SK hynix highlights HBM & advanced memory roadmap for AI infrastructure.
+                                <div style="padding: 10px 10px; background: rgba(56, 189, 248, 0.04); border-radius: 4px; border-left: 2px solid #38bdf8; font-size: 0.72rem; line-height: 1.45;">
+                                    <div style="color: #38bdf8; font-weight: 800; font-size: 0.64rem; font-family: var(--font-mono); letter-spacing: 0.05em; margin-bottom: 4px;">
+                                        📡 TRANSMISSION STANDBY // PHASE 1
+                                    </div>
+                                    <div style="color: #94a3b8; font-size: 0.68rem;">
+                                        Market intelligence wires are awaiting session launch. Press <b style="color: #38bdf8;">"START PHASE 1"</b> to decrypt real-time phase broadcasts.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -6608,7 +6645,7 @@
             <span>🛡️</span> 03 // SURVIVAL PROTOCOLS & BANK HAVEN
         </button>
         <button class="briefing-tab-btn" id="briefing-tab-news" onclick="switchBriefingTab('news', this)">
-            <span>⏱️</span> 04 // PHASE 1 TIMED PUBLIC NEWS QUEUE
+            <span>📰</span> 04 // PHASE 1 FIXED NEWS & PRE-GAME INTEL
         </button>
     </div>
 
@@ -6981,92 +7018,268 @@
         </div>
 
         <!-- =================================================================
-             PANEL 4: PHASE 1 TIMED PUBLIC NEWS QUEUE
+             PANEL 4: PHASE 1 FIXED NEWS & PRE-GAME ASSET BRIEFING
              ================================================================= -->
         <div id="briefing-panel-news" class="briefing-panel">
-            <div style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 2px;">
-                Fixed public information sequence for the 5-minute Phase 1 session. Headlines alert in the trading feed at exact timestamp triggers:
+            <!-- Top Controls & Mode Switcher -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px; flex-wrap: wrap; background: rgba(8, 14, 26, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); padding: 8px 14px; border-radius: 6px;">
+                <div style="font-size: 0.76rem; color: #94a3b8; display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1rem;">📡</span>
+                    <span><b>Pre-Session Intelligence:</b> Unlocked strictly at session start (0:00). Timed intraday releases (2:30, 4:00) are classified under SEC embargo.</span>
+                </div>
+                <div class="briefing-news-pills">
+                    <button class="pill-btn active" id="briefing-news-pill-fixed" onclick="switchBriefingNewsSubTab('fixed', this)">
+                        ⚡ PHASE 1 FIXED NEWS (0:00 START)
+                    </button>
+                    <button class="pill-btn" id="briefing-news-pill-asset" onclick="switchBriefingNewsSubTab('asset', this)">
+                        📋 PRE-GAME ASSET BRIEFING
+                    </button>
+                    <button class="pill-btn" id="briefing-news-pill-all" onclick="switchBriefingNewsSubTab('all', this)">
+                        📑 ALL PRE-MARKET INTEL
+                    </button>
+                </div>
             </div>
 
-            <div class="timed-news-timeline">
-                <!-- 0:00 News -->
-                <div class="news-node-card">
-                    <div class="news-node-time">
+            <!-- VIEW 1: PHASE 1 FIXED NEWS (FROM START // 0:00) -->
+            <div id="briefing-news-view-fixed" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- 0:00 Macro Market News Card -->
+                <div class="news-node-card" style="border-left: 3px solid #10b981;">
+                    <div class="news-node-time" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: #10b981;">
                         <span>00:00</span>
-                        <span style="font-size: 8px; color: #10b981;">OPENING</span>
+                        <span style="font-size: 8px; color: #10b981; font-weight: 800;">START</span>
                     </div>
                     <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                            <h4 style="font-size: 0.95rem; color: #fff;">South Korea's Semiconductor Outlook Strengthens</h4>
-                            <span style="font-family: var(--font-mono); font-size: 8px; color: #10b981; font-weight: 700; background: rgba(16,185,129,0.1); padding: 2px 6px; border-radius: 3px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
+                            <h4 style="font-size: 0.95rem; color: #fff; font-weight: 800;">South Korea's Semiconductor Outlook Strengthens</h4>
+                            <span style="font-family: var(--font-mono); font-size: 8.5px; color: #10b981; font-weight: 800; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); padding: 2px 8px; border-radius: 3px;">
                                 BROAD MARKET CATALYST
                             </span>
                         </div>
-                        <p style="font-size: 0.76rem; color: #94a3b8; line-height: 1.45; margin-bottom: 6px;">
-                            Strong AI-related demand continues to support expectations for Korean semiconductor exports and memory-chip orders. Investors are watching technology bellwethers as global AI infrastructure spending remains resilient.
+                        <p style="font-size: 0.77rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                            Strong AI-related demand continues to support expectations for Korean semiconductor exports and memory-chip demand. Investors are watching major Korean technology stocks as the AI infrastructure cycle remains a key growth theme.
                         </p>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem;">
-                            <div style="background: rgba(16,185,129,0.08); padding: 5px 8px; border-radius: 4px; border-left: 2px solid #10b981;">
-                                <b style="color: #10b981;">Vintrumite (VNT):</b> AI Memory Demand Remains Key Growth Theme at Future Forum.
-                            </div>
-                            <div style="background: rgba(56,189,248,0.08); padding: 5px 8px; border-radius: 4px; border-left: 2px solid #38bdf8;">
-                                <b style="color: #38bdf8;">Samsung Electronics (SEC):</b> AI Strategic Partnership announced with Mistral AI across chip operations.
-                            </div>
+                        <div style="background: rgba(0,0,0,0.3); border-radius: 4px; padding: 6px 10px; font-size: 0.72rem; color: #94a3b8; font-family: var(--font-mono); border-left: 2px solid #10b981;">
+                            📊 <b>Market Impact:</b> Sets a bullish opening tone across the KOSPI tech sector. Liquidity concentrates on major semiconductor proxies.
                         </div>
                     </div>
                 </div>
 
-                <!-- 2:30 News -->
-                <div class="news-node-card">
-                    <div class="news-node-time" style="background: rgba(56,189,248,0.1); border-color: rgba(56,189,248,0.3); color: #38bdf8;">
-                        <span>02:30</span>
-                        <span style="font-size: 8px; color: #38bdf8;">MID-PHASE</span>
+                <!-- 0:00 Industry Intelligence Wire Card -->
+                <div class="news-node-card" style="border-left: 3px solid #38bdf8;">
+                    <div class="news-node-time" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
+                        <span>00:00</span>
+                        <span style="font-size: 8px; color: #38bdf8; font-weight: 800;">START</span>
                     </div>
                     <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                            <h4 style="font-size: 0.95rem; color: #fff;">AI Infrastructure Investment Supports Korean Chipmakers</h4>
-                            <span style="font-family: var(--font-mono); font-size: 8px; color: #38bdf8; font-weight: 700; background: rgba(56,189,248,0.1); padding: 2px 6px; border-radius: 3px;">
-                                INDUSTRY EXPANSION
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
+                            <h4 style="font-size: 0.95rem; color: #fff; font-weight: 800;">Korean Semiconductor Outlook Improves as AI Demand Remains Strong</h4>
+                            <span style="font-family: var(--font-mono); font-size: 8.5px; color: #38bdf8; font-weight: 800; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); padding: 2px 8px; border-radius: 3px;">
+                                INDUSTRY INTEL WIRE
                             </span>
                         </div>
-                        <p style="font-size: 0.76rem; color: #94a3b8; line-height: 1.45; margin-bottom: 6px;">
-                            Continued spending on hyperscale AI data centers is strengthening expectations for high-bandwidth memory (HBM) and advanced lithography. The positive sector outlook drives broad interest into semiconductor equities and ETFs.
+                        <p style="font-size: 0.77rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                            Korean semiconductor industry sentiment improves as global demand for AI-related computing equipment remains resilient. Analysts expect continued demand for advanced memory and semiconductor components.
                         </p>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem;">
-                            <div style="background: rgba(56,189,248,0.08); padding: 5px 8px; border-radius: 4px; border-left: 2px solid #38bdf8;">
-                                <b style="color: #38bdf8;">Samsung Electronics (SEC):</b> Deeper Next-Gen Collaboration announced with ASML on High NA EUV tools.
-                            </div>
-                            <div style="background: rgba(16,185,129,0.08); padding: 5px 8px; border-radius: 4px; border-left: 2px solid #10b981;">
-                                <b style="color: #10b981;">Vintrumite (VNT):</b> Blueprint unveiled for full-stack AI memory solutions & 3D stacked DRAM.
-                            </div>
+                        <div style="background: rgba(0,0,0,0.3); border-radius: 4px; padding: 6px 10px; font-size: 0.72rem; color: #94a3b8; font-family: var(--font-mono); border-left: 2px solid #38bdf8;">
+                            🏭 <b>Sector Focus:</b> Advanced lithography, HBM memory packaging, and hyperscale cloud data center capex cycles.
                         </div>
                     </div>
                 </div>
 
-                <!-- 4:00 News -->
-                <div class="news-node-card">
-                    <div class="news-node-time" style="background: rgba(192,132,252,0.1); border-color: rgba(192,132,252,0.3); color: #c084fc;">
-                        <span>04:00</span>
-                        <span style="font-size: 8px; color: #c084fc;">SENTIMENT</span>
+                <!-- 0:00 5 Core Asset Disclosures Grid -->
+                <div style="background: rgba(8, 14, 26, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 14px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px;">
+                        <span style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: #f8fafc; letter-spacing: 0.08em;">
+                            ⚡ 5 CORE ASSET OPENING DISCLOSURES [0:00 START]
+                        </span>
+                        <span style="font-size: 0.68rem; color: #10b981; font-family: var(--font-mono); font-weight: 700;">5/5 FIXED INTEL UNLOCKED</span>
                     </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                            <h4 style="font-size: 0.95rem; color: #fff;">Investor Sentiment Improves Across Korean Technology Stocks</h4>
-                            <span style="font-family: var(--font-mono); font-size: 8px; color: #c084fc; font-weight: 700; background: rgba(192,132,252,0.1); padding: 2px 6px; border-radius: 3px;">
-                                SPECULATIVE SURGE
-                            </span>
-                        </div>
-                        <p style="font-size: 0.76rem; color: #94a3b8; line-height: 1.45; margin-bottom: 6px;">
-                            Improving risk appetite is drawing aggressive retail and foreign momentum back to large-cap technology and semiconductor shares. Market participants remain optimistic as Phase 2 fundamentals approach.
-                        </p>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem;">
-                            <div style="background: rgba(56,189,248,0.08); padding: 5px 8px; border-radius: 4px; border-left: 2px solid #38bdf8;">
-                                <b style="color: #38bdf8;">Samsung Electronics (SEC):</b> OpenAI Cooperation talks reported on custom next-generation AI silicon.
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
+                        <!-- VNT -->
+                        <div style="background: rgba(16, 185, 129, 0.06); border-radius: 5px; border-left: 3px solid #10b981; padding: 8px 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                                <span style="font-family: var(--font-mono); font-weight: 800; font-size: 0.74rem; color: #10b981;">VNT // VINTRUMITE (000660)</span>
+                                <span style="font-size: 8px; color: #6ee7b7; background: rgba(16, 185, 129, 0.15); padding: 1px 5px; border-radius: 2px;">AI / HBM</span>
                             </div>
-                            <div style="background: rgba(239,68,68,0.08); padding: 5px 8px; border-radius: 4px; border-left: 2px solid #ef4444;">
-                                <b class="text-red">KODEX Leverage (KODEX 2X):</b> Leveraged ETF turnover surges on retail bullish momentum.
-                            </div>
+                            <div style="font-weight: 700; color: #f8fafc; font-size: 0.73rem; margin-bottom: 3px;">AI Memory Demand Remains a Key Growth Theme</div>
+                            <div style="font-size: 0.69rem; color: #94a3b8; line-height: 1.35;">SK hynix highlighted AI memory, HBM and future memory solutions as major areas of focus at its 2026 Future Forum.</div>
                         </div>
+                        <!-- SEC -->
+                        <div style="background: rgba(56, 189, 248, 0.06); border-radius: 5px; border-left: 3px solid #38bdf8; padding: 8px 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                                <span style="font-family: var(--font-mono); font-weight: 800; font-size: 0.74rem; color: #38bdf8;">SEC // SAMSUNG ELECTRONICS (005930)</span>
+                                <span style="font-size: 8px; color: #7dd3fc; background: rgba(56, 189, 248, 0.15); padding: 1px 5px; border-radius: 2px;">FOUNDRY</span>
+                            </div>
+                            <div style="font-weight: 700; color: #f8fafc; font-size: 0.73rem; margin-bottom: 3px;">AI Partnerships Strengthen Semiconductor Strategy</div>
+                            <div style="font-size: 0.69rem; color: #94a3b8; line-height: 1.35;">Samsung announced a strategic partnership with Mistral AI focused on AI technologies across its semiconductor operations.</div>
+                        </div>
+                        <!-- KODEX SEMI -->
+                        <div style="background: rgba(250, 204, 21, 0.06); border-radius: 5px; border-left: 3px solid #facc15; padding: 8px 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                                <span style="font-family: var(--font-mono); font-weight: 800; font-size: 0.74rem; color: #facc15;">KODEX // KODEX SEMICONDUCTOR (091160)</span>
+                                <span style="font-size: 8px; color: #fde047; background: rgba(250, 204, 21, 0.15); padding: 1px 5px; border-radius: 2px;">SECTOR ETF</span>
+                            </div>
+                            <div style="font-weight: 700; color: #f8fafc; font-size: 0.73rem; margin-bottom: 3px;">Semiconductor Sector Exposure Gains Attention</div>
+                            <div style="font-size: 0.69rem; color: #94a3b8; line-height: 1.35;">The ETF's Korean semiconductor basket is positioned to benefit from improving expectations for AI-driven memory and chip demand.</div>
+                        </div>
+                        <!-- KODEX 2X -->
+                        <div style="background: rgba(239, 68, 68, 0.06); border-radius: 5px; border-left: 3px solid #ef4444; padding: 8px 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                                <span style="font-family: var(--font-mono); font-weight: 800; font-size: 0.74rem; color: #ef4444;">KODEX 2X // KODEX LEVERAGE (122630)</span>
+                                <span style="font-size: 8px; color: #fca5a5; background: rgba(239, 68, 68, 0.15); padding: 1px 5px; border-radius: 2px;">2X LEVERAGE</span>
+                            </div>
+                            <div style="font-weight: 700; color: #f8fafc; font-size: 0.73rem; margin-bottom: 3px;">Korean Market Momentum Supports Leveraged Exposure</div>
+                            <div style="font-size: 0.69rem; color: #94a3b8; line-height: 1.35;">The fund targets approximately 2× daily return of KOSPI200, highly sensitive to broad improvement in equity sentiment.</div>
+                        </div>
+                        <!-- TIGER TOP10 -->
+                        <div style="background: rgba(168, 85, 247, 0.06); border-radius: 5px; border-left: 3px solid #a855f7; padding: 8px 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                                <span style="font-family: var(--font-mono); font-weight: 800; font-size: 0.74rem; color: #a855f7;">TIGER // TIGER SEMICONDUCTOR TOP10 (396500)</span>
+                                <span style="font-size: 8px; color: #d8b4fe; background: rgba(168, 85, 247, 0.15); padding: 1px 5px; border-radius: 2px;">TOP 10 ETF</span>
+                            </div>
+                            <div style="font-weight: 700; color: #f8fafc; font-size: 0.73rem; margin-bottom: 3px;">Major Korean Chipmakers Remain in Focus</div>
+                            <div style="font-size: 0.69rem; color: #94a3b8; line-height: 1.35;">The ETF provides concentrated exposure to leading semiconductor companies, linking performance to domestic chip strength.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Embargo Guard Notice -->
+                <div style="background: rgba(56, 189, 248, 0.04); border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 6px; padding: 10px 14px; display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.3rem;">🔒</span>
+                    <div style="font-size: 0.73rem; line-height: 1.45; color: #94a3b8;">
+                        <b style="color: #38bdf8;">TIMED NEWS EMBARGO ACTIVE:</b> Intraday wire releases scheduled for <b>02:30 (Mid-Phase)</b> and <b>04:00 (Closing Sentiment)</b> are confidential. They will broadcast via the live <b>Market Flash News</b> feed during active session trading.
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: PRE-GAME ASSET BRIEFING (5 STRATEGIC DOSSIERS) -->
+            <div id="briefing-news-view-asset" style="display: none; flex-direction: column; gap: 12px;">
+                <div style="font-size: 0.76rem; color: #94a3b8; margin-bottom: 4px;">
+                    Reference dossiers for the 5 primary assets before simulation commences. Authentic market baseline (Aug 31–Sep 11, 2026):
+                </div>
+
+                <!-- 1. VNT -->
+                <div style="background: rgba(8, 14, 26, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #10b981; border-radius: 8px; padding: 12px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div>
+                            <span style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: #10b981;">Vintrumite (000660)</span>
+                            <span style="font-size: 0.73rem; color: #94a3b8; margin-left: 8px;">Memory & HBM Leader</span>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 8px; color: #10b981; font-weight: 800; background: rgba(16,185,129,0.12); padding: 2px 6px; border-radius: 3px;">HIGH UPSIDE / HIGH VOLATILITY</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                        Major Korean semiconductor company focused on memory products including DRAM, NAND and high-bandwidth memory (HBM). Its exposure to AI infrastructure makes it highly sensitive to memory demand and semiconductor expectations.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem; margin-bottom: 8px;">
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Recent Trend:</b> <span style="color: #94a3b8;">Aug 31–Sep 11, 2026: rose from ₩1,674,000 to ₩1,812,000 (+8.2%). Sharp single-day gains (+8.26% on Sep 9) and pullbacks (-3.53% on Sep 11).</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Key Catalysts:</b> <span style="color: #94a3b8;">AI & HBM demand, DRAM/NAND pricing, major customer capex updates, export trends, geopolitical trade issues.</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(16,185,129,0.08); border-left: 2px solid #10b981; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; color: #6ee7b7; font-family: var(--font-mono);">
+                        🛡️ <b>Strategic Directive:</b> AI + HBM demand can move Vintrumite strongly. High upside potential comes with high volatility.
+                    </div>
+                </div>
+
+                <!-- 2. SEC -->
+                <div style="background: rgba(8, 14, 26, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #38bdf8; border-radius: 8px; padding: 12px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div>
+                            <span style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: #38bdf8;">Samsung Electronics (005930)</span>
+                            <span style="font-size: 0.73rem; color: #94a3b8; margin-left: 8px;">Tech Bellwether Anchor</span>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 8px; color: #38bdf8; font-weight: 800; background: rgba(56,189,248,0.12); padding: 2px 6px; border-radius: 3px;">DIVERSIFIED GIANT</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                        Diversified Korean technology company spanning semiconductors, smartphones, consumer electronics and foundry. Its semiconductor business is particularly relevant to the game's market theme.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem; margin-bottom: 8px;">
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Recent Trend:</b> <span style="color: #94a3b8;">Aug 31–Sep 11, 2026: roughly flat overall, ₩260,000 to ₩259,500 (-0.2%). Included +5.68% on Sep 7 and -3.53% on Sep 11.</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Key Catalysts:</b> <span style="color: #94a3b8;">Semiconductor earnings, AI-chip demand & investment, smartphone demand, global tech-market sentiment.</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(56,189,248,0.08); border-left: 2px solid #38bdf8; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; color: #7dd3fc; font-family: var(--font-mono);">
+                        🛡️ <b>Strategic Directive:</b> A diversified giant, but semiconductor news can still move the stock sharply. Excellent portfolio anchor.
+                    </div>
+                </div>
+
+                <!-- 3. KODEX SEMI -->
+                <div style="background: rgba(8, 14, 26, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #facc15; border-radius: 8px; padding: 12px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div>
+                            <span style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: #facc15;">KODEX Semiconductor (091160)</span>
+                            <span style="font-size: 0.73rem; color: #94a3b8; margin-left: 8px;">Chip Sector Basket ETF</span>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 8px; color: #facc15; font-weight: 800; background: rgba(250,204,21,0.12); padding: 2px 6px; border-radius: 3px;">BROAD SECTOR EXPOSURE</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                        ETF providing exposure to Korean semiconductor companies rather than a single stock. It gives the player a broader semiconductor-sector position less dependent on one company.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem; margin-bottom: 8px;">
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Recent Trend:</b> <span style="color: #94a3b8;">Aug 31–Sep 11, 2026: rose from ₩124,680 to ₩128,900 (+3.4%). Strong gains Sep 4–10 (+6.02% Sep 7) before pulling back -5.86%.</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Key Catalysts:</b> <span style="color: #94a3b8;">Korean semiconductor outlook, AI/HBM demand, export earnings, broad tech risk-off events.</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(250,204,21,0.08); border-left: 2px solid #facc15; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; color: #fde047; font-family: var(--font-mono);">
+                        🛡️ <b>Strategic Directive:</b> You are betting on the semiconductor sector as a whole, not just one company.
+                    </div>
+                </div>
+
+                <!-- 4. KODEX 2X -->
+                <div style="background: rgba(8, 14, 26, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #ef4444; border-radius: 8px; padding: 12px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div>
+                            <span style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: #ef4444;">KODEX Leverage (122630)</span>
+                            <span style="font-size: 0.73rem; color: #94a3b8; margin-left: 8px;">2× Leveraged KOSPI200 ETF</span>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 8px; color: #ef4444; font-weight: 800; background: rgba(239,68,68,0.12); padding: 2px 6px; border-radius: 3px;">HIGH AMPLIFICATION RISK</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                        Leveraged ETF designed to provide approximately 2× the daily return of the KOSPI200. It is inherently more sensitive to market movements than a normal broad-market ETF.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem; margin-bottom: 8px;">
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Recent Trend:</b> <span style="color: #94a3b8;">Aug 31–Sep 10, 2026: rose from ₩107,080 to ₩115,000 (+7.4%). Volatile: +12.37% on Aug 20 and -12.42% on Aug 19.</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Key Catalysts:</b> <span style="color: #94a3b8;">KOSPI200 direction, large-cap equity sentiment, interest rates, foreign capital flows, market shocks.</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(239,68,68,0.08); border-left: 2px solid #ef4444; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; color: #fca5a5; font-family: var(--font-mono);">
+                        🛡️ <b>Strategic Directive:</b> This asset can make gains fast — and losses faster. Watch leverage carefully.
+                    </div>
+                </div>
+
+                <!-- 5. TIGER TOP10 -->
+                <div style="background: rgba(8, 14, 26, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid #a855f7; border-radius: 8px; padding: 12px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div>
+                            <span style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: #a855f7;">TIGER Semiconductor TOP10 (396500)</span>
+                            <span style="font-size: 0.73rem; color: #94a3b8; margin-left: 8px;">Top 10 Chip Basket ETF</span>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 8px; color: #a855f7; font-weight: 800; background: rgba(168,85,247,0.12); padding: 2px 6px; border-radius: 3px;">CONCENTRATED BASKET</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                        ETF concentrated in 10 major Korean semiconductor companies, giving diversified but still concentrated exposure to the sector's leading firms.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem; margin-bottom: 8px;">
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Recent Trend:</b> <span style="color: #94a3b8;">Sep 8–Sep 11, 2026: moved from ₩37,230 to ₩36,595 (-1.7%). Gained on Sep 9 (+2.42%) and Sep 10 (+0.24%) before falling -4.25% on Sep 11.</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Key Catalysts:</b> <span style="color: #94a3b8;">Performance of major chipmakers, AI/HBM demand, earnings, index rebalancing, broad sector corrections.</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(168,85,247,0.08); border-left: 2px solid #a855f7; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; color: #d8b4fe; font-family: var(--font-mono);">
+                        🛡️ <b>Strategic Directive:</b> A basket of major chipmakers: more diversified than one stock, but still sector-heavy.
                     </div>
                 </div>
             </div>
@@ -7478,19 +7691,42 @@ function closeTaskbar() {
     }
 }
 
+function updateTaskbarActiveNav(activeId) {
+    const modeTabs = document.querySelectorAll('#main-left-taskbar .nav-item:not(#nav-item-portfolio):not(#nav-item-risk)');
+    modeTabs.forEach(i => i.classList.remove('active'));
+    if (activeId) {
+        const item = document.getElementById(activeId);
+        if (item) item.classList.add('active');
+    }
+}
+
 function navigateTo(screenNum) {
     closeTaskbar();
+
+    // Ensure overlays (News DB, Bank Vault) are cleanly closed on any screen navigation
+    const newsView = document.getElementById('news-db-view');
+    if (newsView && newsView.classList.contains('active')) {
+        newsView.classList.remove('active');
+        if (typeof resumeMarketTimer === 'function') resumeMarketTimer('NEWS DB');
+    }
+    const bankOverlay = document.getElementById('bank-modal-overlay');
+    if (bankOverlay && bankOverlay.classList.contains('active')) {
+        bankOverlay.classList.remove('active');
+        if (typeof resumeMarketTimer === 'function') resumeMarketTimer('BANK VAULT');
+    }
+
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(`screen-${screenNum}`);
 
-    if (screenNum === 4) {
+    if (screenNum === 4 || screenNum === '4') {
         // Display trading terminal in background as backdrop for interactive tutorial
         const s6 = document.getElementById('screen-6');
         if (s6) s6.classList.add('active');
         if (target) target.classList.add('active');
+        updateTaskbarActiveNav('nav-item-protocol');
         initChart();
         startTutorial();
-    } else if (screenNum === 5) {
+    } else if (screenNum === 5 || screenNum === '5') {
         if (gameState.difficultyLocked) {
             triggerNewsFlash('🔒 TARGET LOCKED: Target house cannot be re-chosen.');
             return;
@@ -7510,7 +7746,8 @@ function navigateTo(screenNum) {
         if (screenNum === 2 || screenNum === '2') {
             initScreen2Demon();
         }
-        if (screenNum === 6) {
+        if (screenNum === 6 || screenNum === '6') {
+            updateTaskbarActiveNav('nav-item-trading');
             initGameBackend();
             initChart();
             initCategoryNav();
@@ -7784,10 +8021,13 @@ const tutorialStepsData = [
 
 let currentTutIdx = 0;
 let isTutorialActive = false;
+let hasCompletedFirstTutorial = false;
+let tutorialOrigin = 'trading';
 
 function startTutorial() {
     isTutorialActive = true;
     currentTutIdx = 0;
+    if (typeof pauseMarketTimer === 'function') pauseMarketTimer('TUTORIAL');
     renderTutorialStep(0);
 }
 
@@ -7933,9 +8173,24 @@ function prevTutorialStep() {
 
 function finishTutorial() {
     isTutorialActive = false;
-    document.getElementById('screen-4').classList.remove('active');
-    // Guide player directly into Market Briefing so they read fixed news before trading floor starts
-    navigateTo('briefing');
+    if (typeof resumeMarketTimer === 'function') resumeMarketTimer('TUTORIAL');
+    const s4 = document.getElementById('screen-4');
+    if (s4) s4.classList.remove('active');
+
+    const origin = tutorialOrigin;
+    tutorialOrigin = 'trading';
+
+    if (origin === 'first_time' && !hasCompletedFirstTutorial) {
+        hasCompletedFirstTutorial = true;
+        // Guide player directly into Market Briefing so they read fixed news before trading floor starts
+        navigateTo('briefing');
+    } else if (origin === 'briefing') {
+        navigateTo('briefing');
+    } else {
+        // Return cleanly to trading floor without popping up briefing
+        hasCompletedFirstTutorial = true;
+        navigateTo(6);
+    }
 }
 
 function skipTutorial() {
@@ -8016,17 +8271,20 @@ function selectPropertyTarget(type, mult, cardEl) {
 
 function proceedToBriefingFromDifficulty() {
     gameState.difficultyLocked = true;
+    hasCompletedFirstTutorial = true;
     navigateTo('briefing');
 }
 
 function proceedToTutorialFromDifficulty() {
     gameState.difficultyLocked = true;
+    tutorialOrigin = 'first_time';
     onDifficultyLeave();
     navigateTo(4);
 }
 
 async function confirmTargetAndStart() {
     gameState.difficultyLocked = true;
+    hasCompletedFirstTutorial = true;
     const st = ClientEngine.init(10000, gameState.targetType, 0.25);
     updateHUD(st);
     try {
@@ -8181,21 +8439,14 @@ function switchNavTab(tab, el) {
             if (typeof renderNewsDB === 'function') renderNewsDB();
             pauseMarketTimer('NEWS DB');
         }
+        updateTaskbarActiveNav('nav-item-news');
     } else if (tab === 'home') {
         if (newsView) newsView.classList.remove('active');
         resumeMarketTimer('NEWS DB');
+        updateTaskbarActiveNav('nav-item-trading');
     } else if (tab === 'bank') {
         openBankDashboard();
         return;
-    }
-
-    const modeTabs = document.querySelectorAll('#main-left-taskbar .nav-item:not(#nav-item-portfolio):not(#nav-item-risk)');
-    modeTabs.forEach(i => i.classList.remove('active'));
-    if (el && !el.id.includes('portfolio') && !el.id.includes('risk')) {
-        el.classList.add('active');
-    } else if (tab === 'home') {
-        const homeItem = document.querySelector('#main-left-taskbar .nav-item');
-        if (homeItem) homeItem.classList.add('active');
     }
 }
 
@@ -9209,6 +9460,7 @@ function openBankDashboard() {
     closeTaskbar();
     const overlay = document.getElementById('bank-modal-overlay');
     if (overlay) overlay.classList.add('active');
+    updateTaskbarActiveNav('nav-item-bank');
     initGameBackend();
     pauseMarketTimer('BANK VAULT');
 }
@@ -9217,6 +9469,12 @@ function closeBankDashboard() {
     const overlay = document.getElementById('bank-modal-overlay');
     if (overlay) overlay.classList.remove('active');
     resumeMarketTimer('BANK VAULT');
+    const newsView = document.getElementById('news-db-view');
+    if (newsView && newsView.classList.contains('active')) {
+        updateTaskbarActiveNav('nav-item-news');
+    } else {
+        updateTaskbarActiveNav('nav-item-trading');
+    }
 }
 
 function setBankTransferAmt(val) {
@@ -9489,7 +9747,7 @@ function isNewsUnlocked(phaseNum, timeStr) {
     if (sessionSecondsRemaining === 0) {
         return true;
     }
-    if (!marketSessionStarted && sessionSecondsRemaining === 300) {
+    if (!marketSessionStarted) {
         return false;
     }
     const elapsed = 300 - sessionSecondsRemaining;
@@ -9863,6 +10121,15 @@ function switchBriefingTab(tabId, el) {
     if (targetPanel) targetPanel.classList.add('active');
 }
 
+function switchBriefingNewsSubTab(viewName, el) {
+    document.querySelectorAll('.briefing-news-pills .pill-btn').forEach(b => b.classList.remove('active'));
+    if (el) el.classList.add('active');
+    const fixedView = document.getElementById('briefing-news-view-fixed');
+    const assetView = document.getElementById('briefing-news-view-asset');
+    if (fixedView) fixedView.style.display = (viewName === 'fixed' || viewName === 'all') ? 'flex' : 'none';
+    if (assetView) assetView.style.display = (viewName === 'asset' || viewName === 'all') ? 'flex' : 'none';
+}
+
 function updateBriefingHUD() {
     const nameEl = document.getElementById('briefing-hud-name');
     if (nameEl) nameEl.textContent = (gameState.playerName || 'TRADER').toUpperCase();
@@ -9880,17 +10147,20 @@ function openBriefingScreen() {
 }
 
 function returnToTradingDesk() {
+    hasCompletedFirstTutorial = true;
     navigateTo(6);
 }
 
 async function launchTradingFromBriefing() {
     hasReadFixedNews = true;
+    hasCompletedFirstTutorial = true;
     await confirmTargetAndStart();
     updateMarketStartButton();
     triggerNewsFlash("Intel confirmed. Click 'START MARKET SESSION' on the top bar when you are ready to begin trading.");
 }
 
 function launchTutorialFromBriefing() {
+    tutorialOrigin = 'briefing';
     navigateTo(4);
 }
 
@@ -9967,6 +10237,30 @@ function getPhaseTimeSlotNews(phase, timeSlot) {
 
 function updateMarketFlashNews(forceSlot) {
     const curP = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
+    const container = document.getElementById('flash-news-container');
+    const badge = document.getElementById('flash-news-badge');
+
+    if (!marketSessionStarted) {
+        currentFlashSlot = 'standby';
+        if (container) {
+            container.innerHTML = `
+                <div style="padding: 10px 10px; background: rgba(56, 189, 248, 0.04); border-radius: 4px; border-left: 2px solid #38bdf8; font-size: 0.72rem; line-height: 1.45;">
+                    <div style="color: #38bdf8; font-weight: 800; font-size: 0.64rem; font-family: var(--font-mono); letter-spacing: 0.05em; margin-bottom: 4px;">
+                        📡 TRANSMISSION STANDBY // PHASE ${curP}
+                    </div>
+                    <div style="color: #94a3b8; font-size: 0.68rem;">
+                        Market intelligence wires are awaiting session launch. Press <b style="color: #38bdf8;">"START PHASE ${curP}"</b> to decrypt real-time phase broadcasts.
+                    </div>
+                </div>
+            `;
+        }
+        if (badge) {
+            badge.textContent = 'STANDBY';
+            badge.style.color = '#38bdf8';
+        }
+        return;
+    }
+
     let slot = forceSlot;
     if (!slot) {
         if (sessionSecondsRemaining > 150) {
@@ -9982,12 +10276,13 @@ function updateMarketFlashNews(forceSlot) {
     currentFlashSlot = slot;
 
     const newsItems = getPhaseTimeSlotNews(curP, slot);
-    const container = document.getElementById('flash-news-container');
     if (!container) return;
 
     container.innerHTML = '';
-    const badge = document.getElementById('flash-news-badge');
-    if (badge) badge.textContent = `UPDATE [${slot}]: ${newsItems.length} WIRES`;
+    if (badge) {
+        badge.textContent = `UPDATE [${slot}]: ${newsItems.length} WIRES`;
+        badge.style.color = '#10b981';
+    }
 
     if (newsItems.length === 0) {
         container.innerHTML = `<div style="padding: 6px 8px; font-size: 0.7rem; color: #94a3b8;">No wire broadcasts available for [${slot}].</div>`;
@@ -10088,10 +10383,10 @@ function onNewsScroll(el) {
 /* =========================================================================
    MARKET COUNTDOWN & PHASE CONTROLLER (PRE-MARKET PROTOCOL — NO PAUSE)
    ========================================================================= */
-let hasReadFixedNews = false;
-let marketSessionStarted = false;
-let sessionSecondsRemaining = 300;
-let marketTimerInterval = null;
+var hasReadFixedNews = false;
+var marketSessionStarted = false;
+var sessionSecondsRemaining = 300;
+var marketTimerInterval = null;
 
 let activePauseReasons = new Set();
 
@@ -10422,7 +10717,7 @@ async function advancePhaseAction() {
     if (el) el.textContent = `05:00 [PHASE ${ClientEngine.currentPhase} READY]`;
 
     currentFlashSlot = '';
-    updateMarketFlashNews('0:00');
+    updateMarketFlashNews();
     renderNewsDB();
 
     try {
@@ -10808,7 +11103,7 @@ window.ClientEngine = ClientEngine;
 async function initGameBackend() {
     const localState = ClientEngine.getState();
     updateHUD(localState);
-    if (typeof updateMarketFlashNews === 'function') updateMarketFlashNews('0:00');
+    if (typeof updateMarketFlashNews === 'function') updateMarketFlashNews();
     try {
         const res = await fetch('/api/state');
         const data = await res.json();
