@@ -6298,7 +6298,7 @@
                                 <select id="dock-stock-select" style="padding: 2px 6px; font-size: 0.72rem; font-weight: 700; height: 24px; background: rgba(15,23,42,0.95); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; border-radius: 4px; cursor: pointer; outline: none; flex-shrink: 0;" onchange="selectStockOnBoard(this.value)"></select>
                                 <span style="font-family: var(--font-mono); font-weight: 800; font-size: 0.88rem; color: #fff; flex-shrink: 0;" id="dock-stock-symbol">VNT</span>
                                 <span style="font-size: 0.72rem; color: #94a3b8; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 1;" id="dock-stock-name">Vintrumite (TECH)</span>
-                                <span class="text-green" style="font-family: var(--font-mono); font-weight: 800; font-size: 0.95rem; flex-shrink: 0; white-space: nowrap;" id="chart-live-price">$144.70</span>
+                                <span class="text-green" style="font-family: var(--font-mono); font-weight: 800; font-size: 0.95rem; flex-shrink: 0; white-space: nowrap;" id="chart-live-price">$1,033.57</span>
                                 <span class="text-green" style="font-family: var(--font-mono); font-size: 0.72rem; flex-shrink: 0; white-space: nowrap;" id="chart-live-change">+0.00%</span>
                             </div>
                             <div id="dock-chart-timeframes" style="display: flex; gap: 3px; align-items: center; flex-shrink: 0;">
@@ -6351,8 +6351,8 @@
                             </div>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 0.68rem; color: #94a3b8; margin: 1px 0;">
-                            <span>Est: <b style="font-family: var(--font-mono); font-weight: 700; color: #fff; font-size: 0.78rem;" id="trade-est-val">$1,447.00</b></span>
-                            <span id="trade-margin-breakdown" style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">Req: <b style="color:#10b981;">$361.75</b> | Debt: <b style="color:#f59e0b;">$1,085.25</b></span>
+                            <span>Est: <b style="font-family: var(--font-mono); font-weight: 700; color: #fff; font-size: 0.78rem;" id="trade-est-val">$10,335.70</b></span>
+                            <span id="trade-margin-breakdown" style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">Req: <b style="color:#10b981;">$2,583.93</b> | Debt: <b style="color:#f59e0b;">$7,751.78</b></span>
                         </div>
                         <button class="btn-order-exec" id="btn-exec-trade" onclick="openOrderConfirmModal()" style="padding: 6px; font-size: 0.82rem;">
                             CONFIRM BUY ORDER
@@ -6806,7 +6806,7 @@
                     </div>
 
                     <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; padding: 4px 6px; background: rgba(0,0,0,0.3); border-radius: 4px;">
-                        <span>Base Price: <b class="text-green">$144.70</b></span>
+                        <span>Base Price: <b class="text-green">$1,033.57</b></span>
                         <span style="color: #10b981;">Trend: +8.2% (₩1.674m→₩1.812m)</span>
                     </div>
 
@@ -7504,7 +7504,7 @@
             </div>
             <div class="badass-hero-price-wrap">
                 <div class="badass-hero-price-label">EXEC PRICE</div>
-                <div class="badass-hero-price-val" id="badass-exec-price">$144.70</div>
+                <div class="badass-hero-price-val" id="badass-exec-price">$1,033.57</div>
             </div>
         </div>
 
@@ -7513,8 +7513,8 @@
             <!-- Card 1: Volume & Est Value -->
             <div class="badass-card">
                 <div class="badass-card-label">ORDER VOLUME &amp; VALUE</div>
-                <div class="badass-card-primary" id="modal-order-val">$1,447.00</div>
-                <div class="badass-card-sub" id="badass-order-shares-sub">10 SHARES @ $144.70</div>
+                <div class="badass-card-primary" id="modal-order-val">$10,335.70</div>
+                <div class="badass-card-sub" id="badass-order-shares-sub">10 SHARES @ $1,033.57</div>
             </div>
 
             <!-- Card 2: Leverage Tier -->
@@ -8454,7 +8454,7 @@ function switchNavTab(tab, el) {
    MARKET PRICE BOARD DATA & ENGINE (5 CORE ASSETS + MARKET EXTENSIONS)
    ========================================================================= */
 let marketStocks = (window.MARKET_DATA && window.MARKET_DATA.stocks) ? window.MARKET_DATA.stocks : [
-    { code: 'VNT', name: 'Vintrumite', sector: 'tech', ref: 144.70, ceil: 188.11, floor: 101.29, price: 144.70, change: 0, pct: 0, bid3: 144.0, bvol3: '15.2K', bid2: 144.3, bvol2: '24.8K', bid1: 144.5, bvol1: '35.6K', ask1: 144.7, avol1: '18.4K', ask2: 144.9, avol2: '22.1K', ask3: 145.2, avol3: '40.5K', high: 144.7, avg: 144.7, low: 144.7, vol: '45.2M', spark: '0,6 8,6 16,6 24,6 32,6 40,6' },
+    { code: 'VNT', name: 'Vintrumite', sector: 'tech', ref: 1033.57, ceil: 1343.64, floor: 723.50, price: 1033.57, change: 0, pct: 0, bid3: 1028.92, bvol3: '15.0K', bid2: 1030.47, bvol2: '25.0K', bid1: 1032.02, bvol1: '45.0K', ask1: 1033.57, avol1: '20.0K', ask2: 1035.12, avol2: '30.0K', ask3: 1036.67, avol3: '50.0K', high: 1033.57, avg: 1033.57, low: 1033.57, vol: '45.2M', spark: '0,6 8,6 16,6 24,6 32,6 40,6' },
     { code: 'SEC', name: 'Samsung Electronics', sector: 'tech', ref: 166.07, ceil: 215.89, floor: 116.25, price: 166.07, change: 0, pct: 0, bid3: 165.3, bvol3: '120K', bid2: 165.6, bvol2: '180K', bid1: 165.8, bvol1: '95.0K', ask1: 166.1, avol1: '140K', ask2: 166.3, avol2: '210K', ask3: 166.6, avol3: '310K', high: 166.07, avg: 166.07, low: 166.07, vol: '128.4M', spark: '0,6 8,6 16,6 24,6 32,6 40,6' }
 ];
 
@@ -8882,7 +8882,7 @@ function getStockHistorySlice(stock, currentSec) {
     const maxPoints = 50;
 
     if (!tickArr || tickArr.length === 0) {
-        const base = stock.price || 144.70;
+        const base = stock.price || 1033.57;
         for (let i = 0; i < 10; i++) {
             labels.push(`00:${String(i * 5).padStart(2, '0')}`);
             prices.push(base * (0.98 + (i * 0.004)));
@@ -9192,7 +9192,7 @@ function toggleMarginCheckbox(checked) {
 
 function getCurrentSelectedStockPrice() {
     const stock = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock);
-    return stock ? stock.price : 144.70;
+    return stock ? stock.price : 1033.57;
 }
 
 function updateEstimatedVal() {
@@ -10919,7 +10919,7 @@ const ClientEngine = {
         for (const [t, sQty] of Object.entries(this.holdings)) {
             if (sQty > 0) {
                 const s = marketStocks.find(st => st.name === t || st.code === t);
-                const p = s ? s.price : (prices[t] || 144.70);
+                const p = s ? s.price : (prices[t] || 1033.57);
                 stockVal += sQty * p;
             }
         }
@@ -10982,7 +10982,7 @@ const ClientEngine = {
         if (this.isLiquidated) return { success: false, message: 'Account is liquidated.' };
         ensureMarketStocksLoaded();
         const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
-        const price = stock ? stock.price : 144.70;
+        const price = stock ? stock.price : 1033.57;
         const key = stock ? stock.name : ticker;
         const cost = shares * price;
 
@@ -11080,7 +11080,7 @@ const ClientEngine = {
         ensureMarketStocksLoaded();
         Object.keys(this.holdings).forEach(t => {
             const stock = marketStocks.find(s => s.name === t || s.code === t);
-            const p = stock ? stock.price : 144.70;
+            const p = stock ? stock.price : 1033.57;
             gross += (this.holdings[t] || 0) * p;
         });
         this.holdings = {};
@@ -11192,7 +11192,7 @@ function updateHUD(data) {
             hBody.innerHTML = tickers.map(t => {
                 const s = holdings[t];
                 const stock = marketStocks.find(st => st.name === t || st.code === t);
-                const p = stock ? stock.price : ((data.prices && data.prices[t]) ? data.prices[t] : 144.70);
+                const p = stock ? stock.price : ((data.prices && data.prices[t]) ? data.prices[t] : 1033.57);
                 const total = s * p;
                 const displayCode = stock ? stock.code : (t === 'Vintrumite' ? 'VNT' : t.substring(0, 6));
                 return `
