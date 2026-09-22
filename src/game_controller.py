@@ -79,10 +79,7 @@ class GameController:
                     if row[t] != "":
                         raw_p = float(row[t])
                         if is_usd_mode:
-                            if t == "Vintrumite":
-                                prices[t] = round(raw_p / 10000.0, 2)
-                            else:
-                                prices[t] = round(raw_p / 1400.0, 2)
+                            prices[t] = round(raw_p / 1400.0, 2)
                         else:
                             prices[t] = raw_p
                 ticker_alias_map = {
