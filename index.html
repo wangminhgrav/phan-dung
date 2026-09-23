@@ -1800,41 +1800,58 @@
             100% { transform: scale(2.6); opacity: 0; }
         }
 
-        /* Tactical Pointer Arrow */
+        /* Tactical Pointer Arrow & Cyber Badge */
         .tut-arrow-wrap {
             position: fixed;
             z-index: 10002;
             pointer-events: none;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: top 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-                        left 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 8px;
+            transition: top 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                        left 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: top, left;
         }
         .tut-arrow-badge {
-            background: #10b981;
-            color: #000000;
+            background: rgba(6, 12, 18, 0.94);
+            color: #34d399;
+            border: 1.5px solid #10b981;
             font-family: var(--font-mono);
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: 0.14em;
-            padding: 2.5px 8px;
-            border-radius: 3px;
+            letter-spacing: 0.16em;
+            padding: 3.5px 10px;
+            border-radius: 4px;
             text-transform: uppercase;
-            box-shadow: 0 0 14px rgba(16, 185, 129, 0.65);
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.45), inset 0 0 10px rgba(16, 185, 129, 0.18);
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-shadow: 0 0 8px rgba(52, 211, 153, 0.7);
+        }
+        .tut-badge-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: tutDotPulse 1.2s infinite ease-in-out;
+        }
+        @keyframes tutDotPulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.85); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         .tut-arrow-svg {
-            width: 32px;
-            height: 32px;
-            filter: drop-shadow(0 0 8px #10b981);
+            width: 28px;
+            height: 28px;
+            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.9));
             transition: transform 0.25s ease;
         }
 
-        /* Arrow Directions & Bouncing Keyframes */
+        /* PROPER FLEX ORDERS: Arrow tip is ALWAYS closest to target! */
         .tut-arrow-wrap.point-left {
-            flex-direction: row;
+            flex-direction: row-reverse;
             animation: tutBounceLeft 1.2s ease-in-out infinite;
         }
         .tut-arrow-wrap.point-left .tut-arrow-svg {
@@ -1842,7 +1859,7 @@
         }
 
         .tut-arrow-wrap.point-right {
-            flex-direction: row-reverse;
+            flex-direction: row;
             animation: tutBounceRight 1.2s ease-in-out infinite;
         }
         .tut-arrow-wrap.point-right .tut-arrow-svg {
@@ -1865,93 +1882,139 @@
             transform: rotate(90deg);
         }
 
+        /* Hardware-Accelerated Bouncing Animations (Zero Reflow / Zero Lag) */
         @keyframes tutBounceLeft {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-8px); }
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(-6px, 0, 0); }
         }
         @keyframes tutBounceRight {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(8px); }
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(6px, 0, 0); }
         }
         @keyframes tutBounceDown {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(8px); }
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(0, 6px, 0); }
         }
         @keyframes tutBounceUp {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(0, -6px, 0); }
         }
 
-        /* Floating Tutorial Tooltip Box */
+        /* Floating Tutorial Tooltip Box - Tactical Cyber Terminal */
         .tutorial-tooltip-box {
             position: fixed;
             z-index: 10003;
-            background: #09090b;
+            background: linear-gradient(180deg, rgba(8, 12, 19, 0.96) 0%, rgba(4, 7, 12, 0.98) 100%);
             border: 1px solid rgba(16, 185, 129, 0.4);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 35px rgba(16, 185, 129, 0.15);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 35px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            padding: 24px;
+            padding: 22px 24px;
             width: 390px;
-            max-width: calc(100vw - 40px);
-            transition: top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                        left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: calc(100vw - 32px);
+            transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                        left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             color: #ffffff;
+            will-change: top, left;
         }
+
+        /* Cyber Brackets on Tutorial Board Corners */
+        .tut-corner {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-color: #34d399;
+            border-style: solid;
+            pointer-events: none;
+        }
+        .tut-corner.tl { top: -2px; left: -2px; border-width: 2px 0 0 2px; }
+        .tut-corner.tr { top: -2px; right: -2px; border-width: 2px 2px 0 0; }
+        .tut-corner.bl { bottom: -2px; left: -2px; border-width: 0 0 2px 2px; }
+        .tut-corner.br { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; }
+
+        /* Step Header */
         .tut-header-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 12px;
-            border-bottom: 1px solid #18181b;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding-bottom: 10px;
         }
         .tut-step-badge {
             font-family: var(--font-mono);
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 0.18em;
-            color: #10b981;
-            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            background: rgba(16, 185, 129, 0.12);
             padding: 3px 8px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.4);
             border-radius: 3px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
         }
         .tut-target-tag {
             font-family: var(--font-mono);
             font-size: 9.5px;
             font-weight: 600;
-            color: #71717a;
-            letter-spacing: 0.12em;
+            color: #94a3b8;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
         }
+        .tut-btn-skip {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #64748b;
+            font-size: 10px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 3px 7px;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        .tut-btn-skip:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Title & Description */
         .tut-title-text {
             font-family: var(--font-display);
             font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: 0.04em;
+            font-weight: 900;
+            letter-spacing: 0.03em;
             color: #ffffff;
             margin-bottom: 8px;
             line-height: 1.3;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
         }
         .tut-desc-text {
             font-size: 13px;
-            color: #a1a1aa;
+            color: #cbd5e1;
             line-height: 1.55;
             margin-bottom: 14px;
         }
+
+        /* Tactical Intel Tip Box */
         .tut-tip-box {
-            background: #11141c;
+            background: rgba(16, 185, 129, 0.06);
+            border: 1px solid rgba(16, 185, 129, 0.22);
             border-left: 3px solid #10b981;
-            padding: 8px 12px;
+            padding: 9px 13px;
             border-radius: 0 4px 4px 0;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             font-size: 11.5px;
-            color: #cbd5e1;
+            color: #e2e8f0;
             line-height: 1.45;
             display: flex;
             gap: 8px;
             align-items: flex-start;
         }
+
+        /* Modern Progress Segments */
         .tut-dots-progress {
             display: flex;
             gap: 6px;
@@ -1959,18 +2022,19 @@
             margin-bottom: 16px;
         }
         .tut-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #27272a;
-            transition: all 0.25s;
+            height: 3.5px;
+            width: 14px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.12);
+            transition: all 0.25s ease;
         }
         .tut-dot.active {
             background: #10b981;
-            box-shadow: 0 0 8px #10b981;
-            width: 18px;
-            border-radius: 3px;
+            box-shadow: 0 0 10px #10b981;
+            width: 24px;
         }
+
+        /* Footer Buttons */
         .tut-footer-btns {
             display: flex;
             align-items: center;
@@ -1979,8 +2043,8 @@
         }
         .tut-btn-prev {
             background: transparent;
-            border: 1px solid #27272a;
-            color: #71717a;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #94a3b8;
             padding: 8px 14px;
             font-size: 11px;
             font-family: var(--font-mono);
@@ -1991,28 +2055,13 @@
             border-radius: 4px;
         }
         .tut-btn-prev:hover:not(:disabled) {
-            border-color: #52525b;
+            border-color: rgba(255, 255, 255, 0.35);
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
         }
         .tut-btn-prev:disabled {
-            opacity: 0.3;
+            opacity: 0.25;
             cursor: not-allowed;
-        }
-        .tut-btn-skip {
-            background: transparent;
-            border: none;
-            color: #71717a;
-            font-size: 11px;
-            font-family: var(--font-mono);
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            padding: 4px 6px;
-            transition: color 0.2s;
-        }
-        .tut-btn-skip:hover {
-            color: #e4e4e7;
         }
         .tut-btn-next {
             background: #ffffff;
@@ -2020,7 +2069,7 @@
             border: none;
             padding: 9px 18px;
             font-size: 11.5px;
-            font-weight: 700;
+            font-weight: 800;
             font-family: var(--font-mono);
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -2030,10 +2079,15 @@
             align-items: center;
             gap: 6px;
             transition: all 0.2s;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
         }
         .tut-btn-next:hover {
             background: #10b981;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+            color: #000000;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+        .tut-btn-next:active {
+            transform: scale(0.98);
         }
 
         /* SCREEN 5: TARGET SELECTION & CINEMATIC DIFFICULTY SHOWCASE */
@@ -5781,15 +5835,24 @@
 
     <!-- Directional Pointer Arrow with pulsing indicator -->
     <div id="tut-arrow-indicator" class="tut-arrow-wrap point-left">
-        <span class="tut-arrow-badge" id="tut-arrow-badge">TARGET</span>
-        <svg class="tut-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
+        <span class="tut-arrow-badge" id="tut-arrow-badge">
+            <span class="tut-badge-dot"></span>
+            <span id="tut-arrow-badge-text">TARGET</span>
+        </span>
+        <svg class="tut-arrow-svg" viewBox="0 0 28 28" fill="none">
+            <path d="M9 6L2 14L9 22" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 14H24" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 3"/>
+            <circle cx="24" cy="14" r="2.5" fill="#34d399"/>
         </svg>
     </div>
 
     <!-- Floating Tutorial Guidance Tooltip -->
     <div id="tutorial-box" class="tutorial-tooltip-box">
+        <div class="tut-corner tl"></div>
+        <div class="tut-corner tr"></div>
+        <div class="tut-corner bl"></div>
+        <div class="tut-corner br"></div>
+
         <div class="tut-header-row">
             <div style="display: flex; align-items: center; gap: 8px;">
                 <span class="tut-step-badge" id="tut-step-badge">STEP 1 / 7</span>
@@ -7969,7 +8032,13 @@ function renderTutorialStep(idx) {
     // Update Text Elements
     document.getElementById('tut-step-badge').textContent = step.badge;
     document.getElementById('tut-target-tag').textContent = step.targetTag;
-    document.getElementById('tut-arrow-badge').textContent = step.targetLabel;
+    const badgeTextEl = document.getElementById('tut-arrow-badge-text');
+    if (badgeTextEl) {
+        badgeTextEl.textContent = step.targetLabel;
+    } else {
+        const badgeEl = document.getElementById('tut-arrow-badge');
+        if (badgeEl) badgeEl.textContent = step.targetLabel;
+    }
     document.getElementById('tut-title').textContent = step.title;
     document.getElementById('tut-desc').textContent = step.desc;
     document.getElementById('tut-tip-text').textContent = step.tip;
@@ -8026,63 +8095,100 @@ function positionTutorialOnTarget(targetId, arrowDir) {
         spot.style.height = (rect.height + pad * 2) + 'px';
     }
 
-    // 2. Position Arrow and Tooltip
+    // 2. Position Arrow and Tooltip Board
     const arrow = document.getElementById('tut-arrow-indicator');
     const tip = document.getElementById('tutorial-box');
     if (!arrow || !tip) return;
 
-    const tipW = 390;
+    // Set directional class so dimensions reflect live flex-direction and rotations
+    arrow.className = 'tut-arrow-wrap point-' + arrowDir;
+
+    // Live measurements of indicator & tooltip
+    const arrowW = arrow.offsetWidth || 115;
+    const arrowH = arrow.offsetHeight || 32;
+    const tipW = tip.offsetWidth || 390;
     const tipH = tip.offsetHeight || 320;
     const winW = window.innerWidth;
     const winH = window.innerHeight;
 
-    arrow.className = 'tut-arrow-wrap point-' + arrowDir;
+    const spotLeft = rect.left - pad;
+    const spotRight = rect.right + pad;
+    const spotTop = rect.top - pad;
+    const spotBottom = rect.bottom + pad;
+
+    const gapIndicator = 10; // Clean air gap between spotlight border and arrow tip
+    const gapBoard = 20;     // Clean air gap between arrow indicator and tutorial board
 
     let arrowX = 0, arrowY = 0;
     let tipX = 0, tipY = 0;
 
     if (arrowDir === 'left') {
-        // Arrow points from right to left into target's right edge
-        arrowX = rect.right + 12;
-        arrowY = rect.top + rect.height / 2 - 16;
-        arrow.style.top = arrowY + 'px';
-        arrow.style.left = arrowX + 'px';
+        // Target is on left. Arrow is on right, pointing LEFT towards target.
+        arrowX = spotRight + gapIndicator;
+        arrowY = rect.top + (rect.height / 2) - (arrowH / 2);
 
-        tipX = arrowX + 56;
-        tipY = rect.top + rect.height / 2 - tipH / 2;
+        // Tutorial board is strictly to the right of the arrow indicator
+        tipX = arrowX + arrowW + gapBoard;
+        tipY = rect.top + (rect.height / 2) - (tipH / 2);
+
+        // Viewport bounds protection
+        if (tipX + tipW > winW - 16) {
+            tipX = Math.max(16, winW - tipW - 16);
+            if (tipX < arrowX + arrowW + 8) {
+                tipY = rect.bottom + pad + 16;
+            }
+        }
     } else if (arrowDir === 'right') {
-        // Arrow points from left to right into target's left edge
-        arrowX = rect.left - 68;
-        arrowY = rect.top + rect.height / 2 - 16;
-        arrow.style.top = arrowY + 'px';
-        arrow.style.left = arrowX + 'px';
+        // Target is on right. Arrow is on left, pointing RIGHT towards target.
+        arrowX = spotLeft - gapIndicator - arrowW;
+        arrowY = rect.top + (rect.height / 2) - (arrowH / 2);
 
-        tipX = arrowX - tipW - 14;
-        tipY = rect.top + rect.height / 2 - tipH / 2;
+        // Tutorial board is strictly to the left of the arrow indicator
+        tipX = arrowX - gapBoard - tipW;
+        tipY = rect.top + (rect.height / 2) - (tipH / 2);
+
+        // Viewport bounds protection
+        if (tipX < 16) {
+            tipX = 16;
+            if (tipX + tipW > arrowX - 8) {
+                tipY = rect.bottom + pad + 16;
+            }
+        }
     } else if (arrowDir === 'down') {
-        // Arrow points from above down into target's top edge
-        arrowX = rect.left + rect.width / 2 - 40;
-        arrowY = rect.top - 54;
-        arrow.style.top = arrowY + 'px';
-        arrow.style.left = arrowX + 'px';
+        // Target is below. Arrow is above, pointing DOWN towards target.
+        arrowY = spotTop - gapIndicator - arrowH;
+        arrowX = rect.left + (rect.width / 2) - (arrowW / 2);
 
-        tipX = rect.left + rect.width / 2 - tipW / 2;
-        tipY = arrowY - tipH - 12;
+        // Tutorial board is strictly above the arrow indicator
+        tipY = arrowY - gapBoard - tipH;
+        tipX = rect.left + (rect.width / 2) - (tipW / 2);
+
+        // If not enough vertical clearance above target, flip below
+        if (tipY < 16) {
+            arrow.className = 'tut-arrow-wrap point-up';
+            arrowY = spotBottom + gapIndicator;
+            tipY = arrowY + arrowH + gapBoard;
+        }
     } else if (arrowDir === 'up') {
-        // Arrow points from below up into target's bottom edge
-        arrowX = rect.left + rect.width / 2 - 40;
-        arrowY = rect.bottom + 12;
-        arrow.style.top = arrowY + 'px';
-        arrow.style.left = arrowX + 'px';
+        // Target is above. Arrow is below, pointing UP towards target.
+        arrowY = spotBottom + gapIndicator;
+        arrowX = rect.left + (rect.width / 2) - (arrowW / 2);
 
-        tipX = rect.left + rect.width / 2 - tipW / 2;
-        tipY = arrowY + 54;
+        // Tutorial board is strictly below the arrow indicator
+        tipY = arrowY + arrowH + gapBoard;
+        tipX = rect.left + (rect.width / 2) - (tipW / 2);
     }
 
-    // Clamp tooltip inside visible viewport bounds
-    tipX = Math.max(20, Math.min(winW - tipW - 20, tipX));
-    tipY = Math.max(20, Math.min(winH - tipH - 20, tipY));
+    // Clamp indicator within viewport
+    arrowX = Math.max(8, Math.min(winW - arrowW - 8, arrowX));
+    arrowY = Math.max(8, Math.min(winH - arrowH - 8, arrowY));
 
+    // Clamp tooltip inside visible viewport bounds
+    tipX = Math.max(16, Math.min(winW - tipW - 16, tipX));
+    tipY = Math.max(16, Math.min(winH - tipH - 16, tipY));
+
+    arrow.style.left = arrowX + 'px';
+    arrow.style.top = arrowY + 'px';
     tip.style.left = tipX + 'px';
     tip.style.top = tipY + 'px';
 }
