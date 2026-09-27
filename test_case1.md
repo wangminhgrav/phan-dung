@@ -8,7 +8,7 @@
 
 ## 1. Testing Framework and Methodology
 
-In accordance with Week 6 Clinic guidelines (*Slides 16–19*), testing verifies that the simulation is **both technically operational and financially explainable**:
+Testing verifies that the simulation is **both technically operational and financially explainable**:
 - **Technical Pass:** Buttons respond, state transitions occur, order executions mutate account attributes, and no runtime exceptions occur on valid inputs.
 - **Financial Consistency:** All accounting identities, leverage bounds, liquidation trigger thresholds, and settlement queues strictly match approved financial formulas.
 
@@ -17,7 +17,7 @@ $$\text{ID} \quad \vert \quad \text{Category} \quad \vert \quad \text{Input} \qu
 
 ---
 
-## 2. Master Test Table (Slide 18)
+## 2. Master Test Table
 
 | ID | Category | Test Case & Inputs | Expected Result | Actual Result | Status | Author | Fixer | Verifier |
 |:---:|:---:|---|---|---|:---:|:---:|:---:|:---:|
@@ -29,7 +29,7 @@ $$\text{ID} \quad \vert \quad \text{Category} \quad \vert \quad \text{Input} \qu
 | **T06** | **Invalid** | Player owns 0 shares of Samsung. Submit SELL order for 50 shares. | Order rejected with `False`. Cash remains untouched. Short selling blocked. | Order returns `False`; state unmodified. | **PASS** | QA Lead | Backend Dev | Team Tester |
 | **T07** | **Invalid** | Submit BUY order with negative quantity: `shares = -10.0`. | Engine raises `ValueError("Shares and price must be positive.")`. | `ValueError` raised and caught cleanly before state change. | **PASS** | QA Lead | Backend Dev | Team Tester |
 | **T08** | **Invalid** | Account is liquidated. Submit subsequent BUY order. | Engine raises `RuntimeError("Account is liquidated. Trading is disabled.")`. | `RuntimeError` raised and caught cleanly. | **PASS** | QA Lead | Core Dev | Team Tester |
-| **T09** | **Financial** | **Week 4 Spec High Leverage Wipeout:** Capital 10m KRW, Debt 30m KRW, -20% Market Shock, 5% Penalty. | Gross Proceeds: 32m; Penalty: 1.6m; Net Proceeds: 30.4m; Debt Repaid: 30m; Final Equity: 400k KRW. | Exact numeric match to approved hand calculation model. | **PASS** | Financial Analyst | Core Dev | QA Lead |
+| **T09** | **Financial** | **High Leverage Wipeout:** Capital 10m KRW, Debt 30m KRW, -20% Market Shock, 5% Penalty. | Gross Proceeds: 32m; Penalty: 1.6m; Net Proceeds: 30.4m; Debt Repaid: 30m; Final Equity: 400k KRW. | Exact numeric match to approved hand calculation model. | **PASS** | Financial Analyst | Core Dev | QA Lead |
 | **T10** | **Financial** | **Safe Haven Bank Protection:** Deposit $4,000 to Bank Savings. Stock market plunges -50%. | Savings balance remains $4,000 (100% nominal value preserved; immune to stock collapse). | Bank Savings = $4,000; Total Portfolio includes full savings balance. | **PASS** | Financial Analyst | Core Dev | QA Lead |
 | **T11** | **Workflow** | **T+0.5 Settlement Delay:** Order at Tick 50 (T < 150) vs Order at Tick 200 (T >= 150). | Tick 50 delivered in Phase 1 at Tick 80 (T+30); Tick 200 queued for Phase 2 entry. | Deliveries queued and converted at exact scheduled milestones. | **PASS** | Financial Analyst | Backend Dev | QA Lead |
 | **T12** | **Workflow** | **Bank Emergency Reserve Lock:** Savings $5,000, Reserve set to $2,000. Attempt withdraw $4,000. | Withdrawal rejected (Only $3,000 free above reserve). State unchanged. | Returns `False`; Bank balance remains $5,000. | **PASS** | Financial Analyst | Backend Dev | QA Lead |
@@ -47,7 +47,7 @@ $$\text{ID} \quad \vert \quad \text{Category} \quad \vert \quad \text{Input} \qu
 
 ---
 
-### T03 & T04: Maintenance Margin Boundary Analysis (Slide 17)
+### T03 & T04: Maintenance Margin Boundary Analysis
 - **Maintenance Threshold:** $20.00\%$ ($\text{Maintenance Margin Ratio} = 0.20$).
 - **Boundary Derivation:**
   $$\text{Margin Ratio} = \frac{\text{Stock Value} - \text{Debt}}{\text{Stock Value}} = 1 - \frac{\text{Debt}}{\text{Stock Value}}$$
@@ -63,8 +63,8 @@ $$\text{ID} \quad \vert \quad \text{Category} \quad \vert \quad \text{Input} \qu
 
 ---
 
-### T09: Financial Consistency Check with Approved Specification (Slide 19)
-- **Reference Document:** Approved Week 4 Core Financial Logic Specification.
+### T09: Financial Consistency Check with Approved Specification
+- **Reference Document:** Approved Core Financial Logic Specification.
 - **Inputs:**
   - Initial Capital: $10,000,000$ KRW
   - Initial Margin Tier: 4.0x (Initial Margin Ratio = 25%)

@@ -8,9 +8,9 @@
 
 ## 1. Overview and Severity Standards
 
-This bug log tracks defect discovery, root cause diagnosis, code resolution, and verification across the integrated simulation engine, client interface, and data transport layers (adhering to Week 6 Clinic Guidelines, Slides 20–22).
+This bug log tracks defect discovery, root cause diagnosis, code resolution, and verification across the integrated simulation engine, client interface, and data transport layers.
 
-### Severity Classification Standard (Slide 22)
+### Severity Classification Standard
 - **CRITICAL:** Core workflow blocked, wrong financial calculation/logic, deployment failure, or data loading crash.
 - **MAJOR:** Important secondary feature path failure, missing explanation/feedback, unhandled edge input.
 - **MINOR:** Cosmetic inconsistency, UI spacing/styling artifact, or non-blocking repo organization issues.
@@ -20,43 +20,23 @@ This bug log tracks defect discovery, root cause diagnosis, code resolution, and
 
 ---
 
-## 2. Bug Master Table (Slide 21)
+## 2. Bug Master Table
 
 | Bug ID | Severity | Component | Issue Summary | Status | Reported By | Fixed By | Verified By |
 |:---:|:---:|---|---|:---:|:---:|:---:|:---:|
-| **BUG-01** | **CRITICAL** | Web Deployment (`index.html`) | 404 image errors on GitHub Pages due to relative subpath routing | **VERIFIED** | QA Lead | Frontend Dev | Team Tester |
-| **BUG-02** | **CRITICAL** | Engine (`simulation_engine.py`) | Orders placed after Tick 150 failed to deliver upon Phase 2 transition | **VERIFIED** | Financial Analyst | Backend Dev | QA Lead |
-| **BUG-03** | **CRITICAL** | Engine (`simulation_engine.py`) | Uninitialized `margin_multiplier` attribute caused crash during BUY orders | **VERIFIED** | QA Lead | Core Dev | Team Tester |
-| **BUG-04** | **MAJOR** | UI / Engine | Floating point division produced trailing decimal artifacts in Margin Ratio | **VERIFIED** | Team Tester | Frontend Dev | Financial Analyst |
-| **BUG-05** | **MAJOR** | Engine / API | Post-liquidation trading attempts produced unhandled state corruption | **VERIFIED** | QA Lead | Core Dev | Financial Analyst |
-| **BUG-06** | **MAJOR** | UI / HUD | Margin Ratio for pure cash positions displayed 200% instead of capped 100% | **VERIFIED** | Financial Analyst | Backend Dev | QA Lead |
-| **BUG-07** | **MINOR** | Repository Root | Loose background PNG images cluttered repository root folder | **VERIFIED** | Team Tester | Repo Admin | QA Lead |
+| **BUG-01** | **CRITICAL** | Engine (`simulation_engine.py`) | Orders placed after Tick 150 failed to deliver upon Phase 2 transition | **VERIFIED** | Financial Analyst | Backend Dev | QA Lead |
+| **BUG-02** | **CRITICAL** | Engine (`simulation_engine.py`) | Uninitialized `margin_multiplier` attribute caused crash during BUY orders | **VERIFIED** | QA Lead | Core Dev | Team Tester |
+| **BUG-03** | **MAJOR** | UI / Engine | Floating point division produced trailing decimal artifacts in Margin Ratio | **VERIFIED** | Team Tester | Frontend Dev | Financial Analyst |
+| **BUG-04** | **MAJOR** | Engine / API | Post-liquidation trading attempts produced unhandled state corruption | **VERIFIED** | QA Lead | Core Dev | Financial Analyst |
+| **BUG-05** | **MAJOR** | Engine Valuation | Margin Ratio for pure cash positions displayed 200% instead of capped 100% | **VERIFIED** | Financial Analyst | Backend Dev | QA Lead |
+| **BUG-06** | **MINOR** | Repository Root | Loose background PNG images cluttered repository root folder | **VERIFIED** | Team Tester | Repo Admin | QA Lead |
 
 ---
 
 ## 3. Detailed Bug Diagnostic Reports
 
-### BUG-01: GitHub Pages Asset Path Resolution Failure
+### BUG-01: Intra-phase Delivery Queue Reset on Tick Advancement
 - **Bug ID:** `BUG-01`
-- **Severity:** `CRITICAL` (Blocks standalone deployment)
-- **Component:** Client Web App (`index.html`, `assets/`)
-- **Reported By:** QA Lead | **Fixed By:** Frontend Dev | **Verified By:** Team Tester
-- **What Happened:** When deploying to GitHub Pages, static asset requests to `assets/house_small.jpg`, `assets/house_normal.jpg`, and `assets/house_villa.jpg` resolved to 404 HTTP errors. The browser evaluated the relative path from the root domain (`https://username.github.io/assets/...`) instead of the project subdirectory (`https://username.github.io/repo-name/assets/...`).
-- **Steps to Reproduce:**
-  1. Push project build to GitHub repository.
-  2. Enable GitHub Pages from `main` branch.
-  3. Load public URL on an external mobile device or private browsing window.
-  4. Inspect Housing Target display modal.
-- **Actual Behavior:** Broken image icons displayed; housing goal graphics failed to render.
-- **Expected Behavior:** Housing graphics must render immediately on any static web host without path breakages.
-- **Root Cause:** Standard relative URLs fail in subfolder repository deployments without a static site base-href build step.
-- **Fix Applied:** Encoded all required graphic assets into self-contained Base64 Data URIs (`data:image/jpeg;base64,...`) and embedded them directly within the standalone client engine in `index.html`.
-- **Verification:** Verified across desktop Google Chrome, Safari, and mobile browsers on GitHub Pages. Images display instantaneously with zero external network requests.
-
----
-
-### BUG-02: Intra-phase Delivery Queue Reset on Tick Advancement
-- **Bug ID:** `BUG-02`
 - **Severity:** `CRITICAL` (Breaks T+0.5 settlement workflow)
 - **Component:** Core Simulation Engine (`src/simulation_engine.py`, `process_deliveries`)
 - **Reported By:** Financial Analyst | **Fixed By:** Backend Dev | **Verified By:** QA Lead
@@ -75,12 +55,12 @@ This bug log tracks defect discovery, root cause diagnosis, code resolution, and
       current_phase == item.deliver_in_phase and (current_tick >= item.delivery_tick or item.deliver_in_phase > 1)
   )
   ```
-- **Verification:** Automated unit test `test_settlement_delay_holding_pen` and `test_t10_settlement_workflow_holding_pen` pass successfully.
+- **Verification:** Automated unit tests `test_settlement_delay_holding_pen` and `test_t11_settlement_workflow_holding_pen` pass successfully.
 
 ---
 
-### BUG-03: Uninitialized `margin_multiplier` Attribute on Engine Initialization
-- **Bug ID:** `BUG-03`
+### BUG-02: Uninitialized `margin_multiplier` Attribute on Engine Initialization
+- **Bug ID:** `BUG-02`
 - **Severity:** `CRITICAL` (Runtime crash on order execution)
 - **Component:** Core Engine (`src/simulation_engine.py`, `MarginEngine.__init__`)
 - **Reported By:** QA Lead | **Fixed By:** Core Dev | **Verified By:** Team Tester
@@ -103,8 +83,8 @@ This bug log tracks defect discovery, root cause diagnosis, code resolution, and
 
 ---
 
-### BUG-04: Floating-Point Division Display Precision Artifacts
-- **Bug ID:** `BUG-04`
+### BUG-03: Floating-Point Division Display Precision Artifacts
+- **Bug ID:** `BUG-03`
 - **Severity:** `MAJOR` (Degrades financial readability)
 - **Component:** Financial HUD (`index.html` & `src/simulation_engine.py`)
 - **Reported By:** Team Tester | **Fixed By:** Frontend Dev | **Verified By:** Financial Analyst
@@ -121,8 +101,8 @@ This bug log tracks defect discovery, root cause diagnosis, code resolution, and
 
 ---
 
-### BUG-05: Missing Pre-Trade Guard on Liquidated Account State
-- **Bug ID:** `BUG-05`
+### BUG-04: Missing Pre-Trade Guard on Liquidated Account State
+- **Bug ID:** `BUG-04`
 - **Severity:** `MAJOR` (Financial rule violation)
 - **Component:** Core Engine (`src/simulation_engine.py`, `execute_order`)
 - **Reported By:** QA Lead | **Fixed By:** Core Dev | **Verified By:** Financial Analyst
@@ -138,12 +118,12 @@ This bug log tracks defect discovery, root cause diagnosis, code resolution, and
   if self.state.is_liquidated:
       raise RuntimeError("Account is liquidated. Trading is disabled.")
   ```
-- **Verification:** Unit test `test_t09_post_liquidation_lockout` verifies `RuntimeError` is raised.
+- **Verification:** Unit test `test_t08_post_liquidation_lockout` verifies `RuntimeError` is raised.
 
 ---
 
-### BUG-06: Margin Ratio Definition for Pure Cash Positions
-- **Bug ID:** `BUG-06`
+### BUG-05: Margin Ratio Definition for Pure Cash Positions
+- **Bug ID:** `BUG-05`
 - **Severity:** `MAJOR` (Financial interpretation ambiguity)
 - **Component:** Engine Valuation (`evaluate` method)
 - **Reported By:** Financial Analyst | **Fixed By:** Backend Dev | **Verified By:** QA Lead
@@ -154,17 +134,17 @@ This bug log tracks defect discovery, root cause diagnosis, code resolution, and
 - **Actual Behavior:** Ratio was $2.0$, and status was `HEALTHY`.
 - **Expected Behavior:** Status must clearly reflect `HEALTHY` (no debt), and test assertions must explicitly document that $\text{Equity} > \text{Stock Value}$ represents an unleveraged cash cushion.
 - **Fix Applied:** Updated documentation and test case `test_t01_normal_cash_trading` with explicit financial comments explaining the cash cushion ratio.
-- **Verification:** Test passed and documentation verified against Week 4 specification.
+- **Verification:** Test passed and documentation verified against core specifications.
 
 ---
 
-### BUG-07: Repository Root Clutter from Loose Asset Files
-- **Bug ID:** `BUG-07`
+### BUG-06: Repository Root Clutter from Loose Asset Files
+- **Bug ID:** `BUG-06`
 - **Severity:** `MINOR` (Repository cleanliness & maintainability)
 - **Component:** Repository Structure
 - **Reported By:** Team Tester | **Fixed By:** Repo Admin | **Verified By:** QA Lead
 - **What Happened:** Background test images (`bg_base.png`, `bg_reveal.png`) remained in the repository root directory after initial testing.
-- **Steps to Reproduce:** Check `git status` or inspect root folder listing.
+- **Steps to Reproduce:** Check directory listing in project root.
 - **Actual Behavior:** Root directory contained orphan PNG files.
 - **Expected Behavior:** All media assets organized cleanly inside `assets/` subfolder.
 - **Fix Applied:** Moved images into `assets/` and updated all HTML reference paths.
@@ -174,10 +154,10 @@ This bug log tracks defect discovery, root cause diagnosis, code resolution, and
 
 ## 4. Triage Summary & Release Sign-Off
 
-- **Total Defects Logged:** 7
-- **Critical Defects Resolved:** 3 / 3 (100%)
+- **Total Defects Logged:** 6
+- **Critical Defects Resolved:** 2 / 2 (100%)
 - **Major Defects Resolved:** 3 / 3 (100%)
 - **Minor Defects Resolved:** 1 / 1 (100%)
 - **Open Defects Blocking Core Flow:** 0
-- **Regression Testing Status:** PASSED (All 14 automated unit tests pass cleanly)
+- **Regression Testing Status:** PASSED (All automated unit tests pass cleanly)
 - **Sign-Off Decision:** Approved for Checkpoint 6 Scope Freeze.
