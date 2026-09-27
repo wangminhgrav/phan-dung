@@ -1,0 +1,53 @@
+﻿{
+  "scenario_id": 1,
+  "title": "2026 Korea Margin Crisis Simulation",
+  "base_prices": {
+    "VINTRUMITE": 100000.0,
+    "SAMSUNG_ELEC": 80000.0,
+    "KOSPI_ETF": 30000.0
+  },
+  "phases": [
+    {
+      "phase_id": 1,
+      "name": "Phase 1 - Deceptive Green & Hype",
+      "description": "Tech stocks gain modest positive momentum. Margin borrowing power looks very attractive.",
+      "multipliers": { "VINTRUMITE": 1.10, "SAMSUNG_ELEC": 1.05, "KOSPI_ETF": 1.03 },
+      "news": ["Analyst upgrade on AI chip suppliers.", "Retail margin loan volumes reach new monthly record."]
+    },
+    {
+      "phase_id": 2,
+      "name": "Phase 2 - Fundamental Shift & Building Confidence",
+      "description": "Earnings outperform expectations. Leveraged traders experience rapid equity expansion.",
+      "multipliers": { "VINTRUMITE": 1.35, "SAMSUNG_ELEC": 1.20, "KOSPI_ETF": 1.12 },
+      "news": ["Export data surges by 18%.", "Online retail communities advocate 3x and 4x leverage."]
+    },
+    {
+      "phase_id": 3,
+      "name": "Phase 3 - Market Euphoria & Peak Leverage",
+      "description": "Extreme retail FOMO. Maximum buying power utilized across CFD and margin accounts.",
+      "multipliers": { "VINTRUMITE": 1.80, "SAMSUNG_ELEC": 1.45, "KOSPI_ETF": 1.25 },
+      "news": ["Market indexes hit all-time highs.", "Property price targets appear within reach for leveraged traders."]
+    },
+    {
+      "phase_id": 4,
+      "name": "Phase 4 - Minor Correction & Complacency",
+      "description": "A sharp 8-12% pullback occurs. Inexperienced investors dismiss it as a healthy dip.",
+      "multipliers": { "VINTRUMITE": 1.55, "SAMSUNG_ELEC": 1.32, "KOSPI_ETF": 1.18 },
+      "news": ["Foreign institutional funds trim exposure.", "Retail investors buy the dip aggressively on margin."]
+    },
+    {
+      "phase_id": 5,
+      "name": "Phase 5 - Crisis Begins & Bull Traps",
+      "description": "Early morning bounce turns into afternoon dumping. Margin health begins flashing warning alerts.",
+      "multipliers": { "VINTRUMITE": 1.40, "SAMSUNG_ELEC": 1.22, "KOSPI_ETF": 1.10 },
+      "news": ["Regulators issue margin warning on tech conglomerates.", "Exchange raises collateral hair-cut rates."]
+    },
+    {
+      "phase_id": 6,
+      "name": "Phase 6 - Margin Cascade & Forced Liquidation",
+      "description": "Systemic crash. Broker liquidation waves trigger limit-down cascades across holdings.",
+      "multipliers": { "VINTRUMITE": 0.60, "SAMSUNG_ELEC": 0.55, "KOSPI_ETF": 0.65 },
+      "news": ["Cascade margin calls overwhelm clearinghouses.", "Unprecedented forced sales trigger account wipeouts."]
+    }
+  ]
+}
