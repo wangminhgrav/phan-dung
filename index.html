@@ -744,6 +744,11 @@
             gap: 8px;
             color: #94a3b8;
         }
+        .badass-telemetry-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
         .badass-radar-pip {
             width: 6px;
             height: 6px;
@@ -1485,6 +1490,12 @@
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
         }
 
+        .settlement-toast.type-danger,
+        .settlement-toast.type-error {
+            border: 1px solid rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
+        }
+
         @keyframes settleToastIn {
             0% { opacity: 0; transform: translateY(16px) scale(0.96); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -1508,6 +1519,8 @@
 
         .settlement-toast.type-clearing .settle-toast-title { color: #fbbf24; }
         .settlement-toast.type-delivered .settle-toast-title { color: #10b981; }
+        .settlement-toast.type-danger .settle-toast-title,
+        .settlement-toast.type-error .settle-toast-title { color: #f87171; }
 
         .settle-toast-msg {
             font-size: 0.72rem;
@@ -3616,20 +3629,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 14px;
+            padding: 0 10px;
             z-index: 30;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
-            gap: 10px;
+            gap: 8px;
             overflow: hidden;
             contain: paint;
         }
         .phase-brand-group {
             display: flex;
             align-items: center;
-            gap: 10px;
-            min-width: max-content;
-            flex-shrink: 0;
+            gap: 8px;
+            min-width: 0;
+            flex-shrink: 1;
             overflow: visible;
         }
 
@@ -3637,22 +3650,23 @@
         .admin-scenario-note {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            padding: 3px 10px;
+            gap: 5px;
+            padding: 2px 8px;
             border-radius: 4px;
             background: rgba(168, 85, 247, 0.12);
             border: 1px solid rgba(168, 85, 247, 0.4);
             color: #d8b4fe;
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             cursor: pointer;
             user-select: none;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
             white-space: nowrap;
-            margin-left: 6px;
+            margin-left: 2px;
+            flex-shrink: 0;
         }
         .admin-scenario-note:hover {
             background: rgba(168, 85, 247, 0.22);
@@ -3896,7 +3910,7 @@
             line-height: 1.2;
         }
         .phase-progress-track {
-            width: 110px;
+            width: 80px;
             height: 9px;
             background: rgba(3, 7, 18, 0.95);
             border: 1px solid rgba(56, 189, 248, 0.35);
@@ -3907,7 +3921,7 @@
             display: flex;
             align-items: center;
             flex-shrink: 0;
-            min-width: 110px;
+            min-width: 65px;
         }
         .phase-progress-fill {
             height: 100%;
@@ -3953,21 +3967,22 @@
         .phase-actions-group {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             flex-shrink: 0;
         }
         .phase-timer {
             font-family: var(--font-mono);
-            font-size: 0.95rem;
+            font-size: 0.80rem;
             font-weight: 700;
             color: #f1f5f9;
             background: rgba(12, 18, 30, 0.85);
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
             white-space: nowrap;
             flex-shrink: 0;
+            letter-spacing: 0.02em;
         }
 
         /* Cyber-Reactor Phase Launch Button */
@@ -3976,13 +3991,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 4px 12px;
-            height: 31px;
+            padding: 3px 9px;
+            height: 29px;
             border-radius: 4px;
             font-family: var(--font-mono);
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             cursor: pointer;
             overflow: hidden;
             border: 1px solid rgba(56, 189, 248, 0.4);
@@ -4852,44 +4867,192 @@
         }
 
         /* Bank Liquidity Dashboard View */
+        /* =========================================================================
+           BADASS SAFE HAVEN BANK VAULT (ZERO-LAG CYBER UPGRADE)
+           ========================================================================= */
         .bank-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(1, 3, 8, 0.9);
-            backdrop-filter: blur(14px);
+            background: rgba(1, 4, 10, 0.9);
+            backdrop-filter: blur(16px);
             z-index: 10050;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
+            animation: badassModalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .bank-modal-overlay.active { display: flex; }
         .bank-dashboard-card {
-            background: rgba(6, 11, 22, 0.96);
-            border: 1px solid rgba(56, 189, 248, 0.28);
-            border-radius: 8px;
-            width: 860px;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, rgba(6, 40, 28, 0.98) 0%, rgba(3, 10, 16, 0.99) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            border-radius: 12px;
+            width: 880px;
             max-width: 96vw;
             max-height: 92vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 30px 90px rgba(0,0,0,0.95), 0 0 50px rgba(56, 189, 248, 0.12);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 50px rgba(16, 185, 129, 0.18);
             overflow: hidden;
         }
-        .bank-dash-header {
-            padding: 14px 18px;
-            background: rgba(8, 14, 28, 0.95);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        .bank-dashboard-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 255, 255, 0.012) 3px, rgba(255, 255, 255, 0.012) 6px);
+            pointer-events: none;
+            z-index: 1;
         }
+
+        .bank-dashboard-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .bank-dashboard-card .badass-corner {
+            border-color: #10b981;
+        }
+
+        .bank-dashboard-card .badass-telemetry-header {
+            padding: 12px 18px 10px;
+            margin-bottom: 0;
+            background: rgba(0, 0, 0, 0.35);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .bank-radar-pip {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: radarPing 1.8s infinite ease-out;
+        }
+
+        .bank-telemetry-protocol {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            color: #34d399;
+            font-weight: 700;
+        }
+
+        .bank-ticket-tag {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #10b981;
+            font-weight: 700;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+        }
+
+        .bank-btn-close-header {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 4px;
+            color: #94a3b8;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .bank-btn-close-header:hover {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: rgba(239, 68, 68, 0.6);
+            color: #fca5a5;
+            transform: scale(1.08);
+        }
+
+        .bank-hero-row {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(16, 185, 129, 0.06);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            margin-bottom: 4px;
+        }
+
+        .bank-hero-badge {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.6);
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+            white-space: nowrap;
+        }
+
+        .bank-hero-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .bank-hero-title {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #f8fafc;
+        }
+
+        .bank-hero-desc {
+            font-size: 0.66rem;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .bank-hero-shield-wrap {
+            text-align: right;
+        }
+
+        .bank-hero-shield-label {
+            font-size: 0.58rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+            color: #64748b;
+        }
+
+        .bank-hero-shield-val {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
         .bank-dash-body {
-            padding: 18px;
+            position: relative;
+            z-index: 3;
+            padding: 14px 18px 18px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
         .bank-metrics-grid {
             display: grid;
@@ -4897,27 +5060,126 @@
             gap: 10px;
         }
         .bank-metric-box {
-            background: rgba(10, 16, 30, 0.85);
+            background: rgba(10, 20, 32, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 10px 12px;
             display: flex;
             flex-direction: column;
             gap: 3px;
+            transition: border-color 0.2s;
+        }
+        .bank-metric-box:hover {
+            border-color: rgba(16, 185, 129, 0.35);
         }
         .bank-ops-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 12px;
         }
         .bank-op-card {
-            background: rgba(10, 16, 28, 0.85);
+            background: rgba(10, 20, 32, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            padding: 14px;
+            padding: 12px 14px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
+            transition: border-color 0.2s;
+        }
+        .bank-op-card:hover {
+            border-color: rgba(56, 189, 248, 0.25);
+        }
+
+        .bank-transfer-btn-deposit {
+            flex: 1;
+            padding: 9px 12px;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s ease;
+        }
+        .bank-transfer-btn-deposit:hover {
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .bank-transfer-btn-withdraw {
+            flex: 1;
+            padding: 9px 12px;
+            background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+            transition: all 0.2s ease;
+        }
+        .bank-transfer-btn-withdraw:hover {
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .bank-repay-btn-bank {
+            flex: 1;
+            padding: 9px 12px;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.35);
+            transition: all 0.2s ease;
+        }
+        .bank-repay-btn-bank:hover {
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .bank-repay-btn-cash {
+            flex: 1;
+            padding: 9px 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: #f8fafc;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .bank-repay-btn-cash:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .bank-advisory-box {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            padding: 8px 12px;
+            background: rgba(16, 185, 129, 0.06);
+            border-left: 3px solid #10b981;
+            border-radius: 4px;
+            font-size: 0.66rem;
+            line-height: 1.4;
+            color: #cbd5e1;
         }
 
         .trade-tabs {
@@ -5623,10 +5885,10 @@
             .target-select-bar { padding: 5px 8px; font-size: 9.5px; }
 
             /* Screen 6: Main Trading Platform */
-            :root { --phase-bar-h: 40px; }
-            .persistent-phase-bar { height: 40px; padding: 0 12px; }
-            .phase-badge { font-size: 0.68rem; padding: 2px 8px; }
-            .phase-timer { font-size: 0.92rem; padding: 3px 10px; }
+            :root { --phase-bar-h: 38px; }
+            .persistent-phase-bar { height: 38px; padding: 0 8px; gap: 6px; }
+            .phase-badge { font-size: 0.68rem; padding: 2px 7px; }
+            .phase-timer { font-size: 0.78rem; padding: 2px 6px; }
             .index-strip-container { padding: 3px 8px; gap: 6px; }
             .index-card { padding: 3px 6px; min-width: 115px; }
             .trading-dock-bar { height: 184px; min-height: 184px; max-height: 184px; }
@@ -5643,6 +5905,29 @@
             .widget-big-val { font-size: 1.12rem; }
             .col-header { padding: 6px 10px; }
             .news-flash-widget { min-height: 120px; padding: 6px 8px; }
+        }
+
+        @media (max-width: 1366px) {
+            .persistent-phase-bar { padding: 0 8px; gap: 6px; }
+            .phase-brand-group { gap: 6px; }
+            .phase-progress-track { width: 70px; min-width: 60px; }
+            .phase-actions-group { gap: 4px; }
+            .btn-phase-launch { padding: 3px 7px; font-size: 0.70rem; }
+            .phase-timer { font-size: 0.78rem; padding: 2px 6px; }
+            .admin-scenario-note { padding: 2px 6px; font-size: 0.62rem; }
+        }
+
+        @media (max-width: 1280px) {
+            .admin-scenario-note .admin-tag-label { display: none; }
+            .top-bank-btn .bank-long-label { display: none; }
+            .phase-timer { font-size: 0.76rem; padding: 2px 5px; }
+        }
+
+        @media (max-width: 1150px) {
+            .phase-progress-track { width: 55px; min-width: 50px; }
+            .phase-actions-group { gap: 3px; }
+            .btn-phase-launch { padding: 2px 5px; font-size: 0.68rem; }
+            .phase-timer { font-size: 0.72rem; padding: 2px 4px; }
         }
 
         @media (max-height: 720px) {
@@ -6570,8 +6855,8 @@
                         <span class="launch-icon">🔒</span> <span class="launch-text">READ FIXED NEWS TO START</span>
                     </span>
                 </button>
-                <button class="toggle-btn" style="border-color: #10b981; color: #10b981; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 4px 9px;" onclick="openBankDashboard()">🏦 Safe Haven Bank ($<span id="top-bar-bank-val">0</span>)</button>
-                <button class="toggle-btn admin-btn" id="btn-advance-phase" style="border-color: #a855f7; color: #d8b4fe; background: rgba(168,85,247,0.12); font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 4px 9px;" onclick="advancePhaseAction()" title="[ADMIN TOOL] Immediately fast-forward to the end of the phase. Not present in final game release.">⚙️ [ADMIN] Advance Phase</button>
+                <button class="toggle-btn top-bank-btn" id="top-bank-btn" style="border-color: #10b981; color: #10b981; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="openBankDashboard()">🏦 <span class="bank-long-label">Safe Haven </span>Bank ($<span id="top-bar-bank-val">0</span>)</button>
+                <button class="toggle-btn admin-btn" id="btn-advance-phase" style="border-color: #a855f7; color: #d8b4fe; background: rgba(168,85,247,0.12); font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="advancePhaseAction()" title="[ADMIN TOOL] Immediately fast-forward to the end of the phase. Not present in final game release.">⚙️ [ADMIN] Advance Phase</button>
                 <div class="phase-timer" id="hud-timer">05:00 [PRE-MARKET]</div>
             </div>
         </div>
@@ -7854,52 +8139,65 @@
 </div>
 
 <!-- =========================================================================
-     BANK LIQUIDITY MANAGEMENT DASHBOARD MODAL (ENGLISH LOCALIZED)
+     BANK LIQUIDITY MANAGEMENT DASHBOARD MODAL (BADASS CYBER VAULT)
      ========================================================================= -->
-<div id="bank-modal-overlay" class="bank-modal-overlay">
+<div id="bank-modal-overlay" class="bank-modal-overlay" onclick="if(event.target===this) closeBankDashboard()">
     <div class="bank-dashboard-card">
-        <div class="bank-dash-header">
-            <div>
-                <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #10b981; letter-spacing: 0.16em; font-weight: 800;">
-                    SAFE HAVEN PROTOCOL // LIQUIDITY MANAGEMENT CENTER
-                </div>
-                <h2 style="font-family: var(--font-display); font-size: 1.35rem; color: #ffffff; margin-top: 2px;">
-                    SAFE HAVEN BANK (IMMUNE LIQUIDITY VAULT)
-                </h2>
+        <!-- Corner Cyber Brackets -->
+        <div class="badass-corner top-left"></div>
+        <div class="badass-corner top-right"></div>
+        <div class="badass-corner bottom-left"></div>
+        <div class="badass-corner bottom-right"></div>
+
+        <!-- Telemetry Header Strip -->
+        <div class="badass-telemetry-header">
+            <div class="badass-telemetry-left">
+                <span class="bank-radar-pip"></span>
+                <span class="bank-telemetry-protocol">SAFE HAVEN PROTOCOL // SOVEREIGN COLD STORAGE [CLASS-AAA VAULT]</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #10b981; padding: 4px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 800; font-family: var(--font-mono);">
-                    🛡️ 100% LIQUIDATION IMMUNE
-                </span>
-                <button class="toggle-btn" style="padding: 6px 12px; font-size: 0.8rem;" onclick="closeBankDashboard()">✕ Close [ESC]</button>
+            <div class="badass-telemetry-right">
+                <span class="bank-ticket-tag">VAULT-SHIELD // 100% IMMUNE TO LIQUIDATION</span>
+                <button class="bank-btn-close-header" onclick="closeBankDashboard()" title="Close Vault [ESC]">✕</button>
             </div>
         </div>
 
         <div class="bank-dash-body">
-            <!-- 4 Metric Cards -->
+            <!-- Hero Row -->
+            <div class="bank-hero-row">
+                <div class="bank-hero-badge">🛡️ IMMUNE VAULT</div>
+                <div class="bank-hero-info">
+                    <div class="bank-hero-title">SAFE HAVEN BANK // LIQUIDITY VAULT</div>
+                    <div class="bank-hero-desc">Independent Sovereign Depository • Zero Broker Custody • Anti-Liquidation Firewall</div>
+                </div>
+                <div class="bank-hero-shield-wrap">
+                    <div class="bank-hero-shield-label">COLLATERAL STATUS</div>
+                    <div class="bank-hero-shield-val text-green">100% UNENCUMBERED</div>
+                </div>
+            </div>
+
+            <!-- 4 Metric Cards (Cyber Matrix) -->
             <div class="bank-metrics-grid">
                 <div class="bank-metric-box">
                     <span class="widget-label">Total Bank Savings</span>
                     <span class="widget-big-val text-green" id="bank-metric-total">$0.00</span>
-                    <span style="font-size: 0.65rem; color: #10b981;">100% Protected from Market Crashes</span>
+                    <span style="font-size: 0.62rem; color: #10b981;">🛡️ 100% Protected from Market Crashes</span>
                 </div>
                 <div class="bank-metric-box">
                     <span class="widget-label">Emergency Reserve (Locked)</span>
                     <span class="widget-big-val" style="color: #facc15;" id="bank-metric-reserve">$0.00</span>
-                    <span style="font-size: 0.65rem; color: #94a3b8;">Cannot be transferred to trading</span>
+                    <span style="font-size: 0.62rem; color: #94a3b8;">🔒 Cannot be transferred to trading</span>
                 </div>
                 <div class="bank-metric-box">
                     <span class="widget-label">Available for Transfer</span>
                     <span class="widget-big-val" style="color: #38bdf8;" id="bank-metric-available">$0.00</span>
-                    <span style="font-size: 0.65rem; color: #94a3b8;">Deployable to trading or margin defense</span>
+                    <span style="font-size: 0.62rem; color: #94a3b8;">⚡ Deployable to trading or debt defense</span>
                 </div>
                 <div class="bank-metric-box">
                     <span class="widget-label">Trading Account Risk</span>
                     <div style="font-family: var(--font-mono); font-size: 0.82rem; margin-top: 2px;">
-                        Cash: <b class="text-green" id="bank-metric-cash">$10,000.00</b><br>
-                        Debt: <b class="text-red" id="bank-metric-debt">$0.00</b>
+                        Cash: <b class="text-green" id="bank-metric-cash">$10,000.00</b> • Debt: <b class="text-red" id="bank-metric-debt">$0.00</b>
                     </div>
-                    <span style="font-size: 0.65rem; color: #94a3b8;">Margin Health: <b id="bank-metric-health" class="text-green">100.0%</b></span>
+                    <span style="font-size: 0.62rem; color: #94a3b8;">Margin Health: <b id="bank-metric-health" class="text-green">100.0%</b></span>
                 </div>
             </div>
 
@@ -7908,71 +8206,74 @@
                 <!-- Op 1: Transfer Liquidity -->
                 <div class="bank-op-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="font-size: 0.85rem; color: #fff;">1. LIQUIDITY ALLOCATION (TRANSFER)</h4>
-                        <span style="font-size: 0.68rem; color: #94a3b8;">Flexible Capital Movement</span>
+                        <h4 style="font-size: 0.82rem; color: #fff; font-family: var(--font-mono); letter-spacing: 0.05em;">1. LIQUIDITY ALLOCATION (TRANSFER)</h4>
+                        <span style="font-size: 0.65rem; color: #94a3b8; font-family: var(--font-mono);">CAPITAL MOVEMENT</span>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <span style="font-size: 0.72rem; color: #94a3b8;">Enter Transfer Amount ($ USD):</span>
+                        <span style="font-size: 0.68rem; color: #94a3b8;">Enter Transfer Amount ($ USD):</span>
                         <input type="number" id="bank-transfer-amt" class="form-input" placeholder="e.g. 1000" min="100" step="100" value="1000">
                         <div style="display: flex; gap: 6px; margin-top: 2px;">
-                            <button class="toggle-btn" style="flex: 1;" onclick="setBankTransferAmt(500)">$500</button>
-                            <button class="toggle-btn" style="flex: 1;" onclick="setBankTransferAmt(1000)">$1,000</button>
-                            <button class="toggle-btn" style="flex: 1;" onclick="setBankTransferAmt(2000)">$2,000</button>
-                            <button class="toggle-btn" style="flex: 1; border-color: #38bdf8; color: #38bdf8;" onclick="setBankTransferAmt('MAX')">MAX AVAIL</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setBankTransferAmt(500)">$500</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setBankTransferAmt(1000)">$1,000</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setBankTransferAmt(2000)">$2,000</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px; border-color: #38bdf8; color: #38bdf8;" onclick="setBankTransferAmt('MAX')">MAX AVAIL</button>
                         </div>
                     </div>
 
                     <div style="display: flex; gap: 8px; margin-top: 4px;">
-                        <button class="btn-primary" style="flex: 1; background: #059669;" onclick="execTransferToTrading()">
+                        <button class="bank-transfer-btn-deposit" onclick="execTransferToTrading()">
                             📥 Transfer to Trading Cash
                         </button>
-                        <button class="btn-primary" style="flex: 1; background: #2563eb;" onclick="execTransferToBank()">
+                        <button class="bank-transfer-btn-withdraw" onclick="execTransferToBank()">
                             🏦 Withdraw to Safe Haven Bank
                         </button>
                     </div>
-                    <span style="font-size: 0.66rem; color: #64748b;">* Withdrawing to the Bank preserves profits and eliminates wipeout risk.</span>
+                    <span style="font-size: 0.62rem; color: #64748b;">* Withdrawing to Bank preserves gains and removes wipeout risk.</span>
                 </div>
 
                 <!-- Op 2: Direct Margin Debt Repayment -->
                 <div class="bank-op-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="font-size: 0.85rem; color: #ef4444;">2. DIRECT MARGIN DEBT REPAYMENT</h4>
-                        <span style="font-size: 0.68rem; color: #facc15; font-weight: 700;">De-leverage & Boost Margin</span>
+                        <h4 style="font-size: 0.82rem; color: #ef4444; font-family: var(--font-mono); letter-spacing: 0.05em;">2. DIRECT MARGIN DEBT REPAYMENT</h4>
+                        <span style="font-size: 0.65rem; color: #facc15; font-weight: 700; font-family: var(--font-mono);">DEBT DEFENSE</span>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <span style="font-size: 0.72rem; color: #94a3b8;">Repayment Amount ($ USD):</span>
+                        <span style="font-size: 0.68rem; color: #94a3b8;">Repayment Amount ($ USD):</span>
                         <input type="number" id="bank-repay-amt" class="form-input" placeholder="Amount to pay down debt..." min="100" step="100">
                         <div style="display: flex; gap: 6px; margin-top: 2px;">
-                            <button class="toggle-btn" style="flex: 1;" onclick="setRepayAmt('FULL')">Repay 100% Full Debt</button>
-                            <button class="toggle-btn" style="flex: 1;" onclick="setRepayAmt('HALF')">Repay 50% Half Debt</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setRepayAmt('FULL')">Repay 100% Full Debt</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setRepayAmt('HALF')">Repay 50% Half Debt</button>
                         </div>
                     </div>
 
                     <div style="display: flex; gap: 8px; margin-top: 4px;">
-                        <button class="btn-primary" style="flex: 1; background: #dc2626;" onclick="execRepayDebt('bank')">
+                        <button class="bank-repay-btn-bank" onclick="execRepayDebt('bank')">
                             💳 Repay from Bank Savings
                         </button>
-                        <button class="btn-secondary" style="flex: 1;" onclick="execRepayDebt('cash')">
+                        <button class="bank-repay-btn-cash" onclick="execRepayDebt('cash')">
                             💵 Repay from Trading Cash
                         </button>
                     </div>
-                    <span style="font-size: 0.66rem; color: #64748b;">* Restores Margin Health above the 20% floor to defend against forced liquidation.</span>
+                    <span style="font-size: 0.62rem; color: #64748b;">* Restores Margin Health above the 20% floor to defend against forced liquidation.</span>
                 </div>
 
                 <!-- Op 3: Emergency Reserve Lock -->
                 <div class="bank-op-card" style="grid-column: span 2;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="font-size: 0.85rem; color: #facc15;">3. EMERGENCY RESERVE LOCK</h4>
-                        <span style="font-size: 0.68rem; color: #10b981;">Disciplined Capital Defense</span>
+                        <h4 style="font-size: 0.82rem; color: #facc15; font-family: var(--font-mono); letter-spacing: 0.05em;">3. EMERGENCY RESERVE LOCK</h4>
+                        <span style="font-size: 0.65rem; color: #10b981; font-family: var(--font-mono);">CAPITAL DEFENSE</span>
                     </div>
-                    <p style="font-size: 0.72rem; color: #94a3b8; line-height: 1.45;">
+                    <p style="font-size: 0.68rem; color: #94a3b8; line-height: 1.4; margin: 0;">
                         Funds locked in the Emergency Reserve cannot be transferred to trading during euphoric FOMO phases, ensuring you always retain capital toward your property goal.
                     </p>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span style="font-size: 0.72rem; color: #94a3b8; white-space: nowrap;">Lock Amount ($):</span>
-                        <input type="number" id="bank-reserve-amt" class="form-input" style="max-width: 200px;" placeholder="0">
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span style="font-size: 0.68rem; color: #94a3b8; white-space: nowrap;">Lock Amount ($):</span>
+                        <input type="number" id="bank-reserve-amt" class="form-input" style="max-width: 180px;" placeholder="0">
+                        <button class="toggle-btn" style="padding: 4px 8px; font-size: 0.68rem;" onclick="setReserveAmt(1000)">$1,000</button>
+                        <button class="toggle-btn" style="padding: 4px 8px; font-size: 0.68rem;" onclick="setReserveAmt(5000)">$5,000</button>
+                        <button class="toggle-btn" style="padding: 4px 8px; font-size: 0.68rem; border-color: #facc15; color: #facc15;" onclick="setReserveAmt('MAX')">MAX RESERVE</button>
                         <button class="toggle-btn" style="border-color: #facc15; color: #facc15; font-weight: 700; padding: 6px 14px;" onclick="execSetEmergencyReserve()">
                             🔒 LOCK RESERVE
                         </button>
@@ -7984,10 +8285,21 @@
             </div>
 
             <!-- Simulation Rules Info -->
-            <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; padding: 10px 14px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.45;">
-                <b style="color: #10b981;">Safe Haven Bank Protocol Rules:</b><br>
-                1. Bank savings are held outside broker custody and do not serve as collateral for margin loans.<br>
-                2. If Margin Ratio reaches or breaches the 20.0% floor, the broker liquidates stock inventory and trading cash, but <b>Bank Savings remain 100% intact</b>.
+            <div class="bank-advisory-box">
+                <span style="font-size: 1rem; line-height: 1;">🛡️</span>
+                <div style="flex: 1;">
+                    <b style="color: #10b981;">SAFE HAVEN PROTOCOL RULES:</b>
+                    Bank savings are held outside broker custody and <b>never serve as collateral for margin loans</b>.
+                    If your Margin Ratio breaches the 20.0% liquidation threshold, open stock inventory and trading cash are liquidated, but <b>100% of your Bank Savings remain intact</b>.
+                </div>
+            </div>
+
+            <!-- Bottom Action Row -->
+            <div class="badass-actions-row">
+                <button class="badass-btn-abort" onclick="closeBankDashboard()">
+                    <span class="badass-btn-kbd">ESC</span>
+                    <span>DISMISS &amp; RETURN TO TRADING</span>
+                </button>
             </div>
         </div>
     </div>
@@ -7996,8 +8308,9 @@
 <!-- =========================================================================
      FORCED LIQUIDATION ALERT MODAL (ENGLISH LOCALIZED)
      ========================================================================= -->
-<div id="liquidation-alert-modal" class="s1-modal-backdrop">
-    <div class="s1-modal-box" style="max-width: 480px; border-color: #ef4444; box-shadow: 0 0 50px rgba(239, 68, 68, 0.4);">
+<div id="liquidation-alert-modal" class="s1-modal-backdrop" onclick="if(event.target===this) closeLiquidationModal()">
+    <div class="s1-modal-box" style="position: relative; max-width: 480px; border-color: #ef4444; box-shadow: 0 0 50px rgba(239, 68, 68, 0.4);">
+        <button class="settle-toast-close" style="position: absolute; top: 12px; right: 14px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.2); color: #cbd5e1; border-radius: 4px; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem;" onclick="closeLiquidationModal()" title="Close [ESC]">✕</button>
         <div style="font-size: 2rem; margin-bottom: 8px;">🚨</div>
         <h3 style="font-size: 1.3rem; font-weight: 800; color: #ef4444; margin-bottom: 8px;">
             FORCED LIQUIDATION EXECUTED!
@@ -10314,7 +10627,10 @@ function setBankTransferAmt(val) {
     const input = document.getElementById('bank-transfer-amt');
     if (!input) return;
     if (val === 'MAX') {
-        input.value = Math.max(0, Math.floor(currentBankState.available_transfer));
+        const avail = (currentBankState && currentBankState.available_transfer !== undefined)
+            ? currentBankState.available_transfer
+            : (ClientEngine ? Math.max(0, ClientEngine.bankSavings - ClientEngine.emergencyReserve) : 0);
+        input.value = Math.max(0, Math.floor(avail));
     } else {
         input.value = val;
     }
@@ -10322,18 +10638,38 @@ function setBankTransferAmt(val) {
 
 function setRepayAmt(type) {
     const input = document.getElementById('bank-repay-amt');
-    const debtStr = document.getElementById('val-debt-sub').textContent.replace(/[^0-9.]/g, '');
-    const debt = parseFloat(debtStr) || 0;
     if (!input) return;
+    const debtStr = document.getElementById('val-debt-sub')?.textContent.replace(/[^0-9.]/g, '') || '0';
+    const debt = (ClientEngine ? ClientEngine.marginDebt : 0) || parseFloat(debtStr) || 0;
     if (type === 'FULL') input.value = Math.ceil(debt);
     else if (type === 'HALF') input.value = Math.ceil(debt / 2);
+    else input.value = type;
+}
+
+function setReserveAmt(val) {
+    const input = document.getElementById('bank-reserve-amt');
+    if (!input) return;
+    if (val === 'MAX') {
+        const total = (currentBankState && currentBankState.balance !== undefined)
+            ? currentBankState.balance
+            : (ClientEngine ? ClientEngine.bankSavings : 0);
+        input.value = Math.max(0, Math.floor(total));
+    } else {
+        input.value = val;
+    }
 }
 
 async function execTransferToTrading() {
     const amt = parseFloat(document.getElementById('bank-transfer-amt').value) || 0;
-    if (amt <= 0) return alert('Please enter a valid amount.');
+    if (amt <= 0) {
+        showSettlementToast('INVALID AMOUNT', 'Please enter a valid transfer amount greater than $0.', 'danger');
+        return;
+    }
     const localRes = ClientEngine.transferToTrading(amt);
-    if (!localRes.success) return alert(localRes.message || 'Transfer failed');
+    if (!localRes.success) {
+        showSettlementToast('TRANSFER REJECTED', localRes.message || 'Transfer failed.', 'danger');
+        return;
+    }
     updateHUD(localRes.state);
 
     try {
@@ -10347,14 +10683,20 @@ async function execTransferToTrading() {
             updateHUD(ClientEngine.getState());
         }
     } catch(e) {}
-    alert(`✓ Successfully deposited $${amt.toLocaleString()} to Trading Cash.`);
+    showSettlementToast('VAULT TRANSFER COMPLETE', `Successfully transferred $${amt.toLocaleString()} to Trading Cash.`, 'delivered');
 }
 
 async function execTransferToBank() {
     const amt = parseFloat(document.getElementById('bank-transfer-amt').value) || 0;
-    if (amt <= 0) return alert('Please enter a valid amount.');
+    if (amt <= 0) {
+        showSettlementToast('INVALID AMOUNT', 'Please enter a valid transfer amount greater than $0.', 'danger');
+        return;
+    }
     const localRes = ClientEngine.transferToBank(amt);
-    if (!localRes.success) return alert(localRes.message || 'Transfer failed');
+    if (!localRes.success) {
+        showSettlementToast('TRANSFER REJECTED', localRes.message || 'Transfer failed.', 'danger');
+        return;
+    }
     updateHUD(localRes.state);
 
     try {
@@ -10368,14 +10710,20 @@ async function execTransferToBank() {
             updateHUD(ClientEngine.getState());
         }
     } catch(e) {}
-    alert(`✓ Successfully transferred $${amt.toLocaleString()} to Safe Haven Bank.`);
+    showSettlementToast('SAFE HAVEN DEPOSIT COMPLETE', `Successfully secured $${amt.toLocaleString()} in Sovereign Vault. Immune to liquidation!`, 'delivered');
 }
 
 async function execRepayDebt(source) {
     const amt = parseFloat(document.getElementById('bank-repay-amt').value) || 0;
-    if (amt <= 0) return alert('Please enter a repayment amount.');
+    if (amt <= 0) {
+        showSettlementToast('INVALID AMOUNT', 'Please enter a valid repayment amount greater than $0.', 'danger');
+        return;
+    }
     const localRes = ClientEngine.repayDebt(amt, source);
-    if (!localRes.success) return alert(localRes.message || 'Repayment failed');
+    if (!localRes.success) {
+        showSettlementToast('REPAYMENT REJECTED', localRes.message || 'Repayment failed.', 'danger');
+        return;
+    }
     updateHUD(localRes.state);
 
     try {
@@ -10389,13 +10737,17 @@ async function execRepayDebt(source) {
             updateHUD(ClientEngine.getState());
         }
     } catch(e) {}
-    alert(`✓ Successfully repaid $${amt.toLocaleString()} margin debt from ${source === 'bank' ? 'Bank Balance' : 'Trading Cash'}.`);
+    const sourceLabel = source === 'bank' ? 'Safe Haven Bank' : 'Trading Cash';
+    showSettlementToast('DEBT DEFENSE EXECUTED', `Successfully repaid $${amt.toLocaleString()} margin debt from ${sourceLabel}. Margin health restored.`, 'delivered');
 }
 
 async function execSetEmergencyReserve() {
     const amt = parseFloat(document.getElementById('bank-reserve-amt').value) || 0;
     const localRes = ClientEngine.setEmergencyReserve(amt);
-    if (!localRes.success) return alert(localRes.message || 'Could not set reserve');
+    if (!localRes.success) {
+        showSettlementToast('LOCK REJECTED', localRes.message || 'Could not set emergency reserve.', 'danger');
+        return;
+    }
     updateHUD(localRes.state);
 
     try {
@@ -10409,12 +10761,15 @@ async function execSetEmergencyReserve() {
             updateHUD(ClientEngine.getState());
         }
     } catch(e) {}
-    alert(`🔒 Successfully locked $${amt.toLocaleString()} into Emergency Reserve.`);
+    showSettlementToast('EMERGENCY RESERVE LOCKED', `🔒 $${amt.toLocaleString()} locked into Sovereign Cold Storage. Protected against FOMO transfers.`, 'delivered');
 }
 
 async function execUnlockEmergencyReserve() {
     const localRes = ClientEngine.setEmergencyReserve(0);
-    if (!localRes.success) return alert(localRes.message || 'Could not unlock reserve');
+    if (!localRes.success) {
+        showSettlementToast('UNLOCK REJECTED', localRes.message || 'Could not unlock reserve.', 'danger');
+        return;
+    }
     updateHUD(localRes.state);
 
     try {
@@ -10428,7 +10783,7 @@ async function execUnlockEmergencyReserve() {
             updateHUD(ClientEngine.getState());
         }
     } catch(e) {}
-    alert(`🔓 Successfully unlocked all funds in Safe Haven Bank.`);
+    showSettlementToast('RESERVE UNLOCKED', '🔓 All funds in Safe Haven Bank are unlocked and deployable.', 'delivered');
 }
 
 function showLiquidationModal(data) {
@@ -11307,14 +11662,14 @@ function updateAdvancePhaseButton() {
     if (!btn) return;
     const curP = (ClientEngine && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
     if (sessionSecondsRemaining > 0) {
-        btn.innerHTML = `⚙️ [ADMIN] End Phase ${curP}`;
+        btn.innerHTML = `⚙️ [ADMIN] End P${curP}`;
         btn.title = `[ADMIN TOOL] Immediately fast-forward to the end of Phase ${curP} and settle stock prices. Not present in final game release.`;
     } else {
         if (curP < 6) {
-            btn.innerHTML = `⚙️ [ADMIN] Start Phase ${curP + 1}`;
+            btn.innerHTML = `⚙️ [ADMIN] Start P${curP + 1}`;
             btn.title = `[ADMIN TOOL] Advance to Phase ${curP + 1}. Not present in final game release.`;
         } else {
-            btn.innerHTML = `⚙️ [ADMIN] Solvency Audit`;
+            btn.innerHTML = `⚙️ [ADMIN] Audit`;
             btn.title = `[ADMIN TOOL] View final simulation audit report. Not present in final game release.`;
         }
     }
@@ -11813,7 +12168,7 @@ const ClientEngine = {
 
         const state = this.getState();
         // Check liquidation trigger if margin floor breached
-        if (!this.isLiquidated && this.marginDebt > 0 && state.metrics.margin_ratio <= this.maintenanceMarginRatio * 100) {
+        if (!this.isLiquidated && this.marginDebt > 0 && state.metrics.margin_ratio < this.maintenanceMarginRatio * 100) {
             this.triggerLiquidation();
             return this.getState();
         }
@@ -11849,13 +12204,18 @@ const ClientEngine = {
         }
 
         const totalPortfolio = stockVal + this.bankSavings;
+        // Total Net Worth / Global Equity (includes bank savings toward property goal)
         const equity = this.cash + totalPortfolio - this.marginDebt;
-        const leverage = stockVal > 0 && equity > 0 ? stockVal / equity : 0.0;
-        const marginRatio = stockVal > 0 ? (equity / stockVal) * 100 : 100.0;
+
+        // Trading Equity: cash + stock value - margin debt (excludes bank savings to prevent artificial margin inflation)
+        // Bank savings are 100% immune from broker custody & liquidation, so they do NOT act as margin collateral!
+        const tradingEquity = this.cash + stockVal - this.marginDebt;
+        const leverage = stockVal > 0 && tradingEquity > 0 ? stockVal / tradingEquity : 0.0;
+        const marginRatio = stockVal > 0 ? Math.max(0, (tradingEquity / stockVal) * 100) : 100.0;
 
         let status = 'HEALTHY';
         if (stockVal > 0 && this.marginDebt > 0) {
-            if (marginRatio <= this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
+            if (marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
             else if (marginRatio < this.initialMarginRatio * 100) status = 'WARNING';
             else status = 'NORMAL';
         }
@@ -11869,6 +12229,7 @@ const ClientEngine = {
                 margin_debt: Math.round(this.marginDebt * 100) / 100,
                 cash: Math.round(this.cash * 100) / 100,
                 equity: Math.round(equity * 100) / 100,
+                trading_equity: Math.round(tradingEquity * 100) / 100,
                 leverage: Math.round(leverage * 100) / 100,
                 margin_ratio: Math.round(marginRatio * 10) / 10,
                 margin_status: status,
@@ -12047,7 +12408,7 @@ const ClientEngine = {
         const payAmt = Math.min(this.marginDebt, amt);
         if (source === 'bank') {
             const avail = Math.max(0, this.bankSavings - this.emergencyReserve);
-            if (payAmt > avail) return { success: false, message: 'Insufficient bank balance.' };
+            if (payAmt > avail) return { success: false, message: 'Insufficient unlocked bank balance. Unlock emergency reserve if needed.' };
             this.bankSavings -= payAmt;
         } else {
             if (payAmt > this.cash) return { success: false, message: 'Insufficient cash balance.' };
@@ -12344,7 +12705,10 @@ function showSettlementToast(title, msg, type = 'clearing') {
     if (!container) return;
     const toast = document.createElement('div');
     toast.className = `settlement-toast type-${type}`;
-    const icon = type === 'delivered' ? '⚡' : '⏳';
+    let icon = '⏳';
+    if (type === 'delivered' || type === 'success') icon = '🛡️';
+    else if (type === 'danger' || type === 'error') icon = '⚠️';
+    else if (type === 'clearing') icon = '⏳';
     toast.innerHTML = `
         <span class="settle-toast-icon">${icon}</span>
         <div class="settle-toast-body">
