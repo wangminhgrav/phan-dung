@@ -3629,7 +3629,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 10px;
+            padding: 0 14px;
             z-index: 30;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
@@ -3910,7 +3910,7 @@
             line-height: 1.2;
         }
         .phase-progress-track {
-            width: 80px;
+            width: 110px;
             height: 9px;
             background: rgba(3, 7, 18, 0.95);
             border: 1px solid rgba(56, 189, 248, 0.35);
@@ -3921,7 +3921,8 @@
             display: flex;
             align-items: center;
             flex-shrink: 0;
-            min-width: 65px;
+            min-width: 75px;
+            max-width: 140px;
         }
         .phase-progress-fill {
             height: 100%;
@@ -5908,26 +5909,25 @@
         }
 
         @media (max-width: 1366px) {
-            .persistent-phase-bar { padding: 0 8px; gap: 6px; }
-            .phase-brand-group { gap: 6px; }
-            .phase-progress-track { width: 70px; min-width: 60px; }
-            .phase-actions-group { gap: 4px; }
-            .btn-phase-launch { padding: 3px 7px; font-size: 0.70rem; }
+            .persistent-phase-bar { padding: 0 10px; gap: 6px; }
+            .phase-progress-track { width: 95px; min-width: 65px; }
+            .btn-phase-launch { padding: 3px 8px; font-size: 0.70rem; }
             .phase-timer { font-size: 0.78rem; padding: 2px 6px; }
-            .admin-scenario-note { padding: 2px 6px; font-size: 0.62rem; }
+            .admin-scenario-note { padding: 2px 7px; font-size: 0.65rem; }
         }
 
         @media (max-width: 1280px) {
-            .admin-scenario-note .admin-tag-label { display: none; }
             .top-bank-btn .bank-long-label { display: none; }
             .phase-timer { font-size: 0.76rem; padding: 2px 5px; }
+            .phase-progress-track { width: 85px; min-width: 60px; }
         }
 
         @media (max-width: 1150px) {
-            .phase-progress-track { width: 55px; min-width: 50px; }
-            .phase-actions-group { gap: 3px; }
-            .btn-phase-launch { padding: 2px 5px; font-size: 0.68rem; }
+            .persistent-phase-bar { padding: 0 6px; gap: 4px; }
+            .phase-progress-track { width: 70px; min-width: 50px; }
+            .btn-phase-launch { padding: 2px 6px; font-size: 0.68rem; }
             .phase-timer { font-size: 0.72rem; padding: 2px 4px; }
+            .admin-scenario-note { padding: 2px 5px; font-size: 0.62rem; }
         }
 
         @media (max-height: 720px) {
@@ -6832,33 +6832,32 @@
     <div class="viewport-wrapper">
         <!-- Persistent Phase Status Bar -->
         <div class="persistent-phase-bar">
-            <div class="phase-brand-group">
-                <span class="phase-badge" id="hud-phase-badge">PHASE 1 / 6</span>
-                <span id="hud-phase-name" style="display: none;"></span>
-                <div class="phase-progress-track">
-                    <div id="hud-phase-track-fill" class="phase-progress-fill"></div>
-                    <div class="phase-progress-grid">
-                        <span></span><span></span><span></span><span></span><span></span><span></span>
-                    </div>
+            <span class="phase-badge" id="hud-phase-badge">PHASE 1 / 6</span>
+            <span id="hud-phase-name" style="display: none;"></span>
+            <div class="phase-progress-track">
+                <div id="hud-phase-track-fill" class="phase-progress-fill"></div>
+                <div class="phase-progress-grid">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
                 </div>
+            </div>
 
-                <!-- Admin Viewed Only Scenario Note (in the blank space) -->
-                <div id="admin-scenario-indicator" class="admin-scenario-note" title="[ADMIN ONLY] Game is running on Market Scenario 1. Click to toggle between Scenario 1 and Scenario 2." onclick="toggleAdminScenario()">
-                    <span class="admin-tag-pip"></span>
-                    <span class="admin-tag-label">[ADMIN ONLY]</span>
-                    <span class="admin-scenario-name" id="admin-scenario-text">SCENARIO 1</span>
-                </div>
+            <!-- Admin Scenario Indicator Button -->
+            <div id="admin-scenario-indicator" class="admin-scenario-note" title="[ADMIN ONLY] Game is running on Market Scenario 1. Click to toggle between Scenario 1 and Scenario 2." onclick="toggleAdminScenario()">
+                <span class="admin-tag-pip"></span>
+                <span class="admin-scenario-name" id="admin-scenario-text">SCENARIO 1 (ADMIN)</span>
             </div>
-            <div class="phase-actions-group">
-                <button id="btn-market-start" class="btn-phase-launch" data-state="locked" data-phase="1" onclick="onMarketStartButtonClick()">
-                    <span id="market-start-btn-label" class="market-start-btn-inner">
-                        <span class="launch-icon">🔒</span> <span class="launch-text">READ FIXED NEWS TO START</span>
-                    </span>
-                </button>
-                <button class="toggle-btn top-bank-btn" id="top-bank-btn" style="border-color: #10b981; color: #10b981; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="openBankDashboard()">🏦 <span class="bank-long-label">Safe Haven </span>Bank ($<span id="top-bar-bank-val">0</span>)</button>
-                <button class="toggle-btn admin-btn" id="btn-advance-phase" style="border-color: #a855f7; color: #d8b4fe; background: rgba(168,85,247,0.12); font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="advancePhaseAction()" title="[ADMIN TOOL] Immediately fast-forward to the end of the phase. Not present in final game release.">⚙️ [ADMIN] Advance Phase</button>
-                <div class="phase-timer" id="hud-timer">05:00 [PRE-MARKET]</div>
-            </div>
+
+            <!-- Centerpiece: Phase Launch / Live Session Button (Always in the middle) -->
+            <button id="btn-market-start" class="btn-phase-launch" data-state="locked" data-phase="1" onclick="onMarketStartButtonClick()">
+                <span id="market-start-btn-label" class="market-start-btn-inner">
+                    <span class="launch-icon">🔒</span> <span class="launch-text">READ FIXED NEWS TO START</span>
+                </span>
+            </button>
+
+            <!-- Right-Hand Controls: Bank, Admin Advance, Timer -->
+            <button class="toggle-btn top-bank-btn" id="top-bank-btn" style="border-color: #10b981; color: #10b981; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="openBankDashboard()">🏦 Bank ($<span id="top-bar-bank-val">0</span>)</button>
+            <button class="toggle-btn admin-btn" id="btn-advance-phase" style="border-color: #a855f7; color: #d8b4fe; background: rgba(168,85,247,0.12); font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="advancePhaseAction()" title="[ADMIN TOOL] Immediately fast-forward to the end of the phase. Not present in final game release.">⚙️ [ADMIN] Advance Phase</button>
+            <div class="phase-timer" id="hud-timer">05:00 [PRE-MARKET]</div>
         </div>
 
         <!-- Emergency Margin Warning Banner (Triggers when Margin Ratio < 25%) -->
@@ -9537,7 +9536,7 @@ function selectMarketScenario(scenarioId, notify = false) {
     // Update the Admin Note in the blank space
     const adminTextEl = document.getElementById('admin-scenario-text');
     if (adminTextEl) {
-        adminTextEl.textContent = `SCENARIO ${scenarioId}`;
+        adminTextEl.textContent = `SCENARIO ${scenarioId} (ADMIN)`;
     }
     const adminNoteEl = document.getElementById('admin-scenario-indicator');
     if (adminNoteEl) {
@@ -9588,7 +9587,7 @@ function ensureMarketStocksLoaded() {
     }
     const adminTextEl = document.getElementById('admin-scenario-text');
     if (adminTextEl && window.activeScenarioId) {
-        adminTextEl.textContent = `SCENARIO ${window.activeScenarioId}`;
+        adminTextEl.textContent = `SCENARIO ${window.activeScenarioId} (ADMIN)`;
     }
 }
 
