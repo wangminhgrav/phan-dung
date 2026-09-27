@@ -1052,6 +1052,501 @@
             color: #f59e0b !important;
         }
 
+        /* =========================================================================
+           BADASS KRX T+0.5 SETTLEMENT LOCK MODAL (CLEARINGHOUSE GATEWAY)
+           ========================================================================= */
+        .badass-settlement-box {
+            position: relative;
+            width: 100%;
+            max-width: 780px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(30, 24, 12, 0.98) 0%, rgba(6, 7, 12, 0.99) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.55);
+            border-radius: 12px;
+            padding: 18px 22px 18px 22px;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), 0 0 45px rgba(245, 158, 11, 0.25);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            animation: badassModalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .badass-settlement-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 255, 255, 0.012) 3px, rgba(255, 255, 255, 0.012) 6px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .badass-settlement-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .badass-settlement-box .badass-corner {
+            border-color: #f59e0b;
+        }
+
+        .settle-radar-pip {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #f59e0b;
+            box-shadow: 0 0 8px #f59e0b;
+            animation: radarPing 1.8s infinite ease-out;
+        }
+
+        .settle-telemetry-protocol {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .settle-ticket-tag {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #f59e0b;
+            font-weight: 700;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Hero Row */
+        .settle-hero-row {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: rgba(245, 158, 11, 0.06);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .settle-hero-badge {
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.6);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+            white-space: nowrap;
+        }
+
+        .settle-hero-asset-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .settle-hero-asset-code {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #f8fafc;
+        }
+
+        .settle-hero-asset-name {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .settle-hero-price-wrap {
+            text-align: right;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .settle-hero-price-label {
+            font-size: 0.58rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+            color: #64748b;
+        }
+
+        .settle-hero-price-val {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+
+        /* 2-Column Split Body Layout */
+        .settle-body-columns {
+            position: relative;
+            z-index: 3;
+            display: grid;
+            grid-template-columns: 1fr 1.08fr;
+            gap: 12px;
+            align-items: stretch;
+            margin-bottom: 12px;
+        }
+
+        .settle-col-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .settle-col-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #settlement-lock-modal .settle-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 8px;
+            height: 100%;
+            margin-bottom: 0;
+        }
+
+        #settlement-lock-modal .settle-matrix .badass-card {
+            padding: 8px 10px;
+            background: rgba(15, 23, 42, 0.65);
+        }
+
+        #settlement-lock-modal .settle-matrix .badass-card-label {
+            font-size: 0.58rem;
+            margin-bottom: 3px;
+        }
+
+        #settlement-lock-modal .settle-matrix .badass-card-primary {
+            font-size: 0.95rem;
+            line-height: 1.15;
+        }
+
+        #settlement-lock-modal .settle-matrix .badass-card-sub {
+            font-size: 0.6rem;
+            margin-top: 3px;
+        }
+
+        /* Clearing Pipeline */
+        .settle-pipeline-container {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+
+        .settle-pipe-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+        }
+
+        .settle-pipe-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .settle-pipe-step.step-done .settle-pipe-dot {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+
+        .settle-pipe-step.step-active .settle-pipe-dot {
+            background: rgba(245, 158, 11, 0.25);
+            border: 1px solid #f59e0b;
+            color: #fbbf24;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .settle-pipe-step.step-target .settle-pipe-dot {
+            background: rgba(100, 116, 139, 0.15);
+            border: 1px solid rgba(100, 116, 139, 0.4);
+            color: #64748b;
+        }
+
+        .settle-pipe-label {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #cbd5e1;
+        }
+
+        .settle-pipe-sub {
+            font-size: 0.52rem;
+            color: #64748b;
+            margin-top: 1px;
+        }
+
+        .settle-pipe-connector {
+            flex: 1;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 4px 10px 4px;
+        }
+
+        .settle-pipe-connector.active {
+            background: linear-gradient(90deg, #10b981, #f59e0b);
+        }
+
+        /* Countdown Panel */
+        .settle-countdown-panel {
+            position: relative;
+            z-index: 3;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-bottom: 0;
+        }
+
+        .settle-countdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .settle-countdown-title {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #94a3b8;
+            letter-spacing: 0.05em;
+        }
+
+        .settle-countdown-desc {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .settle-countdown-bar-wrap {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .settle-countdown-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+            transition: width 0.4s linear;
+        }
+
+        .settle-countdown-clock-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settle-countdown-digits {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: #fbbf24;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .settle-countdown-pill {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            font-weight: 800;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #f59e0b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.06em;
+        }
+
+        /* Advisory Box */
+        .settle-advisory-box {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            padding: 6px 10px;
+            background: rgba(245, 158, 11, 0.05);
+            border-left: 3px solid #f59e0b;
+            border-radius: 4px;
+            font-size: 0.62rem;
+            line-height: 1.35;
+            color: #cbd5e1;
+            margin-bottom: 0;
+        }
+
+        .settle-advisory-icon {
+            font-size: 0.85rem;
+            line-height: 1;
+        }
+
+        .settle-advisory-text {
+            flex: 1;
+        }
+
+        .settle-btn-partial {
+            flex: 1.4;
+            padding: 10px 14px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .settle-btn-partial:hover {
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.7);
+            transform: translateY(-1px);
+        }
+
+        /* Floating Cyber Toast Container */
+        #settlement-toast-container {
+            position: fixed;
+            bottom: 32px;
+            right: 28px;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+            max-width: 380px;
+        }
+
+        .settlement-toast {
+            pointer-events: auto;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            animation: settleToastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .settlement-toast.type-clearing {
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
+        }
+
+        .settlement-toast.type-delivered {
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
+        }
+
+        @keyframes settleToastIn {
+            0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .settle-toast-icon {
+            font-size: 1.15rem;
+        }
+
+        .settle-toast-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .settle-toast-title {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        .settlement-toast.type-clearing .settle-toast-title { color: #fbbf24; }
+        .settlement-toast.type-delivered .settle-toast-title { color: #10b981; }
+
+        .settle-toast-msg {
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+
+        .settle-toast-close {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 4px;
+            color: #94a3b8;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 8px;
+            flex-shrink: 0;
+            align-self: flex-start;
+            transition: all 0.15s ease;
+        }
+
+        .settle-toast-close:hover {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: rgba(239, 68, 68, 0.6);
+            color: #fca5a5;
+            transform: scale(1.08);
+        }
+
+        .settle-toast-close:active {
+            transform: scale(0.92);
+        }
+
         /* SCREEN 2: APOCALYPTIC DEMON ENTER NAME THEATER */
         #screen-2 {
             flex-direction: column;
@@ -3136,6 +3631,60 @@
             min-width: max-content;
             flex-shrink: 0;
             overflow: visible;
+        }
+
+        /* Tactical Admin-Viewed Only Scenario Note */
+        .admin-scenario-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            background: rgba(168, 85, 247, 0.12);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #d8b4fe;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+            white-space: nowrap;
+            margin-left: 6px;
+        }
+        .admin-scenario-note:hover {
+            background: rgba(168, 85, 247, 0.22);
+            border-color: rgba(168, 85, 247, 0.7);
+            color: #f5f3ff;
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.35);
+            transform: translateY(-1px);
+        }
+        .admin-scenario-note .admin-tag-pip {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #c084fc;
+            box-shadow: 0 0 8px #c084fc;
+            animation: adminPipPulse 1.8s infinite ease-in-out;
+        }
+        .admin-scenario-note .admin-tag-label {
+            color: #c084fc;
+            font-weight: 800;
+            font-size: 0.62rem;
+            padding: 1px 4px;
+            background: rgba(168, 85, 247, 0.2);
+            border-radius: 2px;
+            letter-spacing: 0.06em;
+        }
+        .admin-scenario-note .admin-scenario-name {
+            color: #ffffff;
+            font-weight: 800;
+        }
+        @keyframes adminPipPulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.85); box-shadow: 0 0 4px #c084fc; }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px #e9d5ff; }
         }
 
         /* Symmetrical Cyber Wings Flanking the Market Index Strip */
@@ -6007,6 +6556,13 @@
                         <span></span><span></span><span></span><span></span><span></span><span></span>
                     </div>
                 </div>
+
+                <!-- Admin Viewed Only Scenario Note (in the blank space) -->
+                <div id="admin-scenario-indicator" class="admin-scenario-note" title="[ADMIN ONLY] Game is running on Market Scenario 1. Click to toggle between Scenario 1 and Scenario 2." onclick="toggleAdminScenario()">
+                    <span class="admin-tag-pip"></span>
+                    <span class="admin-tag-label">[ADMIN ONLY]</span>
+                    <span class="admin-scenario-name" id="admin-scenario-text">SCENARIO 1</span>
+                </div>
             </div>
             <div class="phase-actions-group">
                 <button id="btn-market-start" class="btn-phase-launch" data-state="locked" data-phase="1" onclick="onMarketStartButtonClick()">
@@ -7569,6 +8125,138 @@
     </div>
 </div>
 
+<!-- KRX CLEARINGHOUSE // T+0.5 SETTLEMENT LOCK MODAL -->
+<div id="settlement-lock-modal" class="s1-modal-backdrop" onclick="if(event.target===this) closeSettlementLockModal()">
+    <div class="badass-settlement-box" id="badass-settlement-box">
+        <!-- Corner Cyber Brackets -->
+        <div class="badass-corner top-left"></div>
+        <div class="badass-corner top-right"></div>
+        <div class="badass-corner bottom-left"></div>
+        <div class="badass-corner bottom-right"></div>
+
+        <!-- Telemetry Header Strip -->
+        <div class="badass-telemetry-header">
+            <div class="badass-telemetry-left">
+                <span class="settle-radar-pip"></span>
+                <span class="settle-telemetry-protocol">KRX CLEARINGHOUSE // T+0.5 SETTLEMENT REGULATION</span>
+            </div>
+            <div class="badass-telemetry-right">
+                <span class="settle-ticket-tag" id="settle-ticket-code">GATE-T05 // CLEARING LOCK</span>
+            </div>
+        </div>
+
+        <!-- Hero Asset Row -->
+        <div class="settle-hero-row">
+            <div class="settle-hero-badge">⏳ T+0.5 LOCK</div>
+            <div class="settle-hero-asset-info">
+                <div class="settle-hero-asset-code" id="settle-asset-code">VNT</div>
+                <div class="settle-hero-asset-name" id="settle-asset-name">Vintrumite Corporation • KRX DEPOSITORY PIPELINE</div>
+            </div>
+            <div class="settle-hero-price-wrap">
+                <div class="settle-hero-price-label">MARKET PRICE</div>
+                <div class="settle-hero-price-val text-amber" id="settle-live-price">$1,033.57</div>
+            </div>
+        </div>
+
+        <!-- 2-Column Split Body Layout -->
+        <div class="settle-body-columns">
+            <!-- Left Column: Pipeline, Countdown, Advisory Notice -->
+            <div class="settle-col-left">
+                <!-- Clearing Pipeline Diagram -->
+                <div class="settle-pipeline-container">
+                    <div class="settle-pipe-step step-done">
+                        <div class="settle-pipe-dot">✓</div>
+                        <div class="settle-pipe-label">ORDER FILLED</div>
+                        <div class="settle-pipe-sub" id="settle-pipe-order-time">SEC 42</div>
+                    </div>
+                    <div class="settle-pipe-connector active"></div>
+                    <div class="settle-pipe-step step-active">
+                        <div class="settle-pipe-dot pulse">⏳</div>
+                        <div class="settle-pipe-label">T+0.5 CLEARING</div>
+                        <div class="settle-pipe-sub" id="settle-pipe-status">IN HOLDING PEN</div>
+                    </div>
+                    <div class="settle-pipe-connector"></div>
+                    <div class="settle-pipe-step step-target" id="settle-pipe-step-target">
+                        <div class="settle-pipe-dot" id="settle-pipe-dest-dot">📦</div>
+                        <div class="settle-pipe-label">ACTIVE INVENTORY</div>
+                        <div class="settle-pipe-sub" id="settle-pipe-target-time">SEC 72</div>
+                    </div>
+                </div>
+
+                <!-- Live Progress & Big Digital Countdown Clock -->
+                <div class="settle-countdown-panel">
+                    <div class="settle-countdown-header">
+                        <span class="settle-countdown-title">DEPOSITORY DELIVERY COUNTDOWN</span>
+                        <span class="settle-countdown-desc" id="settle-delivery-dest-desc">Matures in 30s (Phase 1)</span>
+                    </div>
+                    <div class="settle-countdown-bar-wrap">
+                        <div class="settle-countdown-bar-fill" id="settle-countdown-bar" style="width: 35%;"></div>
+                    </div>
+                    <div class="settle-countdown-clock-row">
+                        <div class="settle-countdown-digits" id="settle-countdown-clock">00:24 REMAINING</div>
+                        <div class="settle-countdown-pill" id="settle-countdown-pill">TRANSIT ACTIVE</div>
+                    </div>
+                </div>
+
+                <!-- Regulatory Notice Box -->
+                <div class="settle-advisory-box">
+                    <span class="settle-advisory-icon">⚠️</span>
+                    <div class="settle-advisory-text">
+                        <b>KRX MANDATE:</b> Equity &amp; margin collateral are 100% active in real-time. Shares unlock for sale immediately upon delivery.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Tactical Matrix Cards (2x2 Grid) -->
+            <div class="settle-col-right">
+                <div class="badass-grid-matrix settle-matrix">
+                    <!-- Card 1: Locked Shares -->
+                    <div class="badass-card">
+                        <div class="badass-card-label">PENDING CLEARING SHARES</div>
+                        <div class="badass-card-primary text-amber" id="settle-card-shares">10 SHARES</div>
+                        <div class="badass-card-sub" id="settle-card-active-sub">0 Delivered (Available to sell)</div>
+                    </div>
+
+                    <!-- Card 2: Market Valuation -->
+                    <div class="badass-card">
+                        <div class="badass-card-label">LOCKED ASSET VALUE</div>
+                        <div class="badass-card-primary" id="settle-card-val">$10,335.70</div>
+                        <div class="badass-card-sub text-green">🛡️ 100% INCLUDED IN EQUITY</div>
+                    </div>
+
+                    <!-- Card 3: Unrealized Live P&L -->
+                    <div class="badass-card">
+                        <div class="badass-card-label">UNREALIZED P&amp;L (LIVE SWINGS)</div>
+                        <div class="badass-card-primary" id="settle-card-pnl">+$0.00 (+0.0%)</div>
+                        <div class="badass-card-sub" id="settle-card-pnl-sub">Acquisition: $1,033.57</div>
+                    </div>
+
+                    <!-- Card 4: Clearing Rule Status -->
+                    <div class="badass-card">
+                        <div class="badass-card-label">LIQUIDATION RESTRICTION</div>
+                        <div class="badass-card-primary text-red" id="settle-card-lock-status">LOCKED (T+0.5)</div>
+                        <div class="badass-card-sub" id="settle-card-lock-sub">Unlocked upon clearing completion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Badass Actions Row -->
+        <div class="badass-actions-row">
+            <button class="badass-btn-abort" onclick="closeSettlementLockModal()">
+                <span class="badass-btn-kbd">ESC</span>
+                <span>DISMISS &amp; MONITOR</span>
+            </button>
+            <button class="settle-btn-partial" id="settle-btn-partial" style="display:none;" onclick="sellAvailableSharesFromModal()">
+                <span id="settle-btn-partial-text">SELL AVAILABLE DELIVERED SHARES</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- FLOATING CYBER TOAST CONTAINER -->
+<div id="settlement-toast-container"></div>
+
 <script>
 // Universal asset auto-healer for GitHub Pages & Localhost
 window.addEventListener('error', (e) => {
@@ -7856,6 +8544,13 @@ function startS2Embers() {
 window.addEventListener('DOMContentLoaded', () => {
     try {
         const params = new URLSearchParams(window.location.search);
+        const scenParam = params.get('scenario');
+        if (scenParam === '1' || scenParam === '2') {
+            selectMarketScenario(parseInt(scenParam), false);
+        } else {
+            selectMarketScenario('random', false);
+        }
+
         const sParam = params.get('screen');
         if (sParam) {
             if (sParam === '6') {
@@ -8321,13 +9016,21 @@ function proceedToTutorialFromDifficulty() {
 async function confirmTargetAndStart() {
     gameState.difficultyLocked = true;
     hasCompletedFirstTutorial = true;
+    if (!window.activeScenarioId) {
+        selectMarketScenario('random', false);
+    }
     const st = ClientEngine.init(10000, gameState.targetType, 0.25);
     updateHUD(st);
     try {
         await fetch('/api/init', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ initial_capital: 10000, target_house_type: gameState.targetType, initial_margin_ratio: 0.25 })
+            body: JSON.stringify({
+                initial_capital: 10000,
+                target_house_type: gameState.targetType,
+                initial_margin_ratio: 0.25,
+                scenario: window.activeScenarioId
+            })
         });
     } catch(e) {}
     navigateTo(6);
@@ -8426,6 +9129,15 @@ window.addEventListener('keydown', (e) => {
         }
     }
 
+    const settleModal = document.getElementById('settlement-lock-modal');
+    if (settleModal && settleModal.classList.contains('active')) {
+        if (e.key === 'Escape' || e.key === 'Enter') {
+            e.preventDefault();
+            closeSettlementLockModal();
+            return;
+        }
+    }
+
     if (e.key === 'Escape') {
         const bankModal = document.getElementById('bank-modal-overlay');
         if (bankModal && bankModal.classList.contains('active')) {
@@ -8487,6 +9199,69 @@ function switchNavTab(tab, el) {
 }
 
 /* =========================================================================
+   DUAL MARKET SCENARIO MANAGEMENT (SCENARIO 1 vs SCENARIO 2)
+   ========================================================================= */
+let activeScenarioId = 1;
+window.activeScenarioId = 1;
+
+function selectMarketScenario(scenarioId, notify = false) {
+    if (scenarioId === undefined || scenarioId === null || scenarioId === 'random') {
+        scenarioId = Math.random() < 0.5 ? 1 : 2;
+    } else {
+        scenarioId = parseInt(scenarioId, 10);
+        if (scenarioId !== 1 && scenarioId !== 2) scenarioId = 1;
+    }
+    activeScenarioId = scenarioId;
+    window.activeScenarioId = scenarioId;
+
+    if (window.MARKET_SCENARIOS && window.MARKET_SCENARIOS[scenarioId]) {
+        window.MARKET_DATA = window.MARKET_SCENARIOS[scenarioId];
+    }
+    if (window.MARKET_DATA && window.MARKET_DATA.stocks) {
+        marketStocks = window.MARKET_DATA.stocks;
+    }
+
+    // Update the Admin Note in the blank space
+    const adminTextEl = document.getElementById('admin-scenario-text');
+    if (adminTextEl) {
+        adminTextEl.textContent = `SCENARIO ${scenarioId}`;
+    }
+    const adminNoteEl = document.getElementById('admin-scenario-indicator');
+    if (adminNoteEl) {
+        adminNoteEl.title = `[ADMIN ONLY] Simulation running on Market Scenario ${scenarioId}. Click to toggle between Scenario 1 and Scenario 2.`;
+    }
+
+    // Recalibrate ClientEngine if available
+    if (typeof ClientEngine !== 'undefined') {
+        ClientEngine.activeScenarioId = scenarioId;
+        if (typeof ClientEngine.updatePhaseReferencePrices === 'function') {
+            ClientEngine.updatePhaseReferencePrices(ClientEngine.currentPhase || 1);
+        }
+        if (typeof ClientEngine.setGlobalSecond === 'function') {
+            ClientEngine.setGlobalSecond(ClientEngine.currentGlobalSecond || 1);
+        }
+    }
+
+    // Update Price Board & Chart & Dock
+    if (typeof renderPriceBoard === 'function') renderPriceBoard();
+    const curStockName = (typeof gameState !== 'undefined' && gameState.currentStock) ? gameState.currentStock : 'Vintrumite';
+    const curStock = marketStocks.find(s => s.name === curStockName || s.code === curStockName) || marketStocks[0];
+    if (curStock && typeof selectStockOnBoard === 'function') {
+        selectStockOnBoard(curStock.code);
+    }
+
+    if (notify && typeof triggerNewsFlash === 'function') {
+        triggerNewsFlash(`⚙️ [ADMIN] Switched to Market Scenario ${scenarioId} (${scenarioId === 1 ? 'High Tech Volatility' : 'Alternative Market Path'}).`);
+    }
+    return scenarioId;
+}
+
+function toggleAdminScenario() {
+    const nextScenario = (activeScenarioId === 1) ? 2 : 1;
+    selectMarketScenario(nextScenario, true);
+}
+
+/* =========================================================================
    MARKET PRICE BOARD DATA & ENGINE (5 CORE ASSETS + MARKET EXTENSIONS)
    ========================================================================= */
 let marketStocks = (window.MARKET_DATA && window.MARKET_DATA.stocks) ? window.MARKET_DATA.stocks : [
@@ -8497,6 +9272,10 @@ let marketStocks = (window.MARKET_DATA && window.MARKET_DATA.stocks) ? window.MA
 function ensureMarketStocksLoaded() {
     if (window.MARKET_DATA && window.MARKET_DATA.stocks && window.MARKET_DATA.stocks.length) {
         marketStocks = window.MARKET_DATA.stocks;
+    }
+    const adminTextEl = document.getElementById('admin-scenario-text');
+    if (adminTextEl && window.activeScenarioId) {
+        adminTextEl.textContent = `SCENARIO ${window.activeScenarioId}`;
     }
 }
 
@@ -9434,6 +10213,19 @@ async function executeConfirmedOrder() {
     const resLocal = ClientEngine.trade(gameState.currentStock, gameState.orderAction, qty, useMargin, marginMult);
     if (resLocal.state) {
         updateHUD(resLocal.state);
+        if (resLocal.isPending && resLocal.deliveryItem) {
+            const del = resLocal.deliveryItem;
+            const destText = (del.deliverPhase === ClientEngine.currentPhase) ? `clears in 30s (Sec ${del.deliverGlobalSec})` : `clears at Phase ${del.deliverPhase} open`;
+            showSettlementToast(
+                'KRX T+0.5 CLEARING TRANSIT',
+                `${qty} shares of ${del.code} routed to T+0.5 holding pen (${destText}).`,
+                'clearing'
+            );
+            triggerNewsFlash(`📦 [T+0.5 CLEARING] ${qty} shares of ${del.code} purchased. In settlement holding pen (${destText}).`);
+        }
+    } else if (resLocal.isSettlementLocked) {
+        showSettlementLockModal(resLocal);
+        return;
     } else if (resLocal.message) {
         alert(resLocal.message);
         return;
@@ -9457,14 +10249,11 @@ async function executeConfirmedOrder() {
         });
         const data = await res.json();
         if (data && data.state && data.status === 'success') {
-            const serverHoldings = { ...(data.state.holdings || {}) };
-            if (data.state.pending_shares) {
-                for (const [pt, ps] of Object.entries(data.state.pending_shares)) {
-                    if (ps > 0) serverHoldings[pt] = (serverHoldings[pt] || 0) + ps;
-                }
+            if (data.state.holdings) {
+                ClientEngine.holdings = { ...data.state.holdings };
             }
-            if (Object.keys(serverHoldings).length > 0) {
-                ClientEngine.holdings = { ...serverHoldings };
+            if (data.state.pending_shares) {
+                ClientEngine.pendingHoldings = { ...data.state.pending_shares };
             }
             if (data.state.metrics) {
                 ClientEngine.cash = data.state.metrics.cash;
@@ -9472,6 +10261,8 @@ async function executeConfirmedOrder() {
                 ClientEngine.marginDebt = data.state.metrics.margin_debt;
             }
             updateHUD(ClientEngine.getState());
+        } else if (data && data.is_settlement_locked) {
+            showSettlementLockModalForTicker(gameState.currentStock);
         }
     } catch(e) {
         console.warn("Trade API offline or sync error, running standalone:", e);
@@ -9479,10 +10270,16 @@ async function executeConfirmedOrder() {
 }
 
 function quickSellHolding(ticker, shares) {
+    const active = ClientEngine.getActiveShares ? ClientEngine.getActiveShares(ticker) : (ClientEngine.holdings[ticker] || 0);
+    const pending = ClientEngine.getPendingShares ? ClientEngine.getPendingShares(ticker) : (ClientEngine.pendingHoldings ? ClientEngine.pendingHoldings[ticker] || 0 : 0);
+    if (active <= 0 && pending > 0) {
+        showSettlementLockModalForTicker(ticker);
+        return;
+    }
     selectStockOnBoard(ticker);
     setOrderTab('SELL');
     const qtyEl = document.getElementById('trade-qty');
-    if (qtyEl) qtyEl.value = shares;
+    if (qtyEl) qtyEl.value = Math.min(shares, active > 0 ? active : shares);
     updateEstimatedVal();
     openOrderConfirmModal();
 }
@@ -10795,6 +11592,8 @@ const ClientEngine = {
     emergencyReserve: 0.0,
     marginDebt: 0.0,
     holdings: {},
+    pendingHoldings: {},
+    pendingQueue: [],
     marginMultiplier: 4.0,
     initialMarginRatio: 0.25,
     maintenanceMarginRatio: 0.20,
@@ -10847,12 +11646,18 @@ const ClientEngine = {
     },
 
     init(capital, houseType, marginRatio) {
+        if (!window.activeScenarioId && typeof selectMarketScenario === 'function') {
+            selectMarketScenario('random', false);
+        }
+        this.activeScenarioId = window.activeScenarioId || 1;
         this.initialCapital = capital || 10000.0;
         this.cash = this.initialCapital;
         this.bankSavings = 0.0;
         this.emergencyReserve = 0.0;
         this.marginDebt = 0.0;
         this.holdings = {};
+        this.pendingHoldings = {};
+        this.pendingQueue = [];
         this.initialMarginRatio = marginRatio || 0.25;
         this.marginMultiplier = Math.round((1.0 / this.initialMarginRatio) * 10) / 10;
         this.maintenanceMarginRatio = Math.min(0.20, this.initialMarginRatio * 0.80);
@@ -10868,6 +11673,70 @@ const ClientEngine = {
         this._activePhaseRef = 1;
         this.setGlobalSecond(1);
         return this.getState();
+    },
+
+    getActiveShares(ticker) {
+        ensureMarketStocksLoaded();
+        const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
+        const name = stock ? stock.name : ticker;
+        const code = stock ? stock.code : ticker;
+        if (this.holdings[name] !== undefined) return this.holdings[name];
+        if (this.holdings[code] !== undefined) return this.holdings[code];
+        if (this.holdings[ticker] !== undefined) return this.holdings[ticker];
+        return 0;
+    },
+
+    getPendingShares(ticker) {
+        ensureMarketStocksLoaded();
+        const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
+        const name = stock ? stock.name : ticker;
+        const code = stock ? stock.code : ticker;
+        if (this.pendingHoldings[name] !== undefined) return this.pendingHoldings[name];
+        if (this.pendingHoldings[code] !== undefined) return this.pendingHoldings[code];
+        if (this.pendingHoldings[ticker] !== undefined) return this.pendingHoldings[ticker];
+        return 0;
+    },
+
+    getTotalShares(ticker) {
+        return this.getActiveShares(ticker) + this.getPendingShares(ticker);
+    },
+
+    getPendingDeliveriesForTicker(ticker) {
+        ensureMarketStocksLoaded();
+        const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
+        const name = stock ? stock.name : ticker;
+        const code = stock ? stock.code : ticker;
+        return (this.pendingQueue || []).filter(item => 
+            item.ticker === name || item.ticker === code || item.ticker === ticker ||
+            item.code === code || item.code === ticker
+        );
+    },
+
+    processSettlementDeliveries(globalSec, currentPhase) {
+        if (!this.pendingQueue || this.pendingQueue.length === 0) return [];
+        const delivered = [];
+        const remainingQueue = [];
+        const phaseSec = ((globalSec - 1) % 300) + 1;
+
+        for (const item of this.pendingQueue) {
+            const shouldDeliver = (currentPhase > item.deliverPhase) || 
+                                  (currentPhase === item.deliverPhase && (globalSec >= item.deliverGlobalSec || phaseSec >= item.deliverPhaseSec));
+            if (shouldDeliver) {
+                // Promote matured pending shares into active delivered holdings
+                this.holdings[item.ticker] = (this.holdings[item.ticker] || 0) + item.shares;
+                if (this.pendingHoldings[item.ticker] !== undefined) {
+                    this.pendingHoldings[item.ticker] -= item.shares;
+                    if (this.pendingHoldings[item.ticker] <= 0.0001) {
+                        delete this.pendingHoldings[item.ticker];
+                    }
+                }
+                delivered.push(item);
+            } else {
+                remainingQueue.push(item);
+            }
+        }
+        this.pendingQueue = remainingQueue;
+        return delivered;
     },
 
     setGlobalSecond(sec) {
@@ -10932,8 +11801,18 @@ const ClientEngine = {
             });
         }
 
+        // Process KRX T+0.5 matured deliveries
+        const delivered = this.processSettlementDeliveries(sec, newPhase);
+        if (delivered && delivered.length > 0) {
+            delivered.forEach(item => {
+                if (typeof onSettlementDelivered === 'function') {
+                    onSettlementDelivered(item);
+                }
+            });
+        }
+
         const state = this.getState();
-        // Check liquidation trigger if in Phase 6 or margin floor breached
+        // Check liquidation trigger if margin floor breached
         if (!this.isLiquidated && this.marginDebt > 0 && state.metrics.margin_ratio <= this.maintenanceMarginRatio * 100) {
             this.triggerLiquidation();
             return this.getState();
@@ -10951,8 +11830,17 @@ const ClientEngine = {
             prices[s.code] = s.price;
         });
 
-        // Compute stock value across all active positions in holdings
+        // 1. Compute stock value across active delivered holdings
         for (const [t, sQty] of Object.entries(this.holdings)) {
+            if (sQty > 0) {
+                const s = marketStocks.find(st => st.name === t || st.code === t);
+                const p = s ? s.price : (prices[t] || 1033.57);
+                stockVal += sQty * p;
+            }
+        }
+
+        // 2. Compute stock value across pending T+0.5 holding pen (Full mark-to-market risk exposure)
+        for (const [t, sQty] of Object.entries(this.pendingHoldings)) {
             if (sQty > 0) {
                 const s = marketStocks.find(st => st.name === t || st.code === t);
                 const p = s ? s.price : (prices[t] || 1033.57);
@@ -11006,6 +11894,8 @@ const ClientEngine = {
                 global_second: this.currentGlobalSecond
             },
             holdings: { ...this.holdings },
+            pending_shares: { ...this.pendingHoldings },
+            pending_queue: (this.pendingQueue || []).map(q => ({ ...q })),
             is_liquidated: this.isLiquidated,
             prices: prices
         };
@@ -11037,11 +11927,81 @@ const ClientEngine = {
                 this.cash = Math.max(0, this.cash - reqCash);
                 this.marginDebt += newDebt;
             }
-            this.holdings[key] = (this.holdings[key] || 0) + shares;
-            return { success: true, state: this.getState() };
+
+            // T+0.5 Settlement Delay Holding Pen
+            const phaseSec = ((this.currentGlobalSecond - 1) % 300) + 1;
+            let deliverPhase, deliverPhaseSec, deliverGlobalSec;
+
+            if (phaseSec < 150) {
+                // AM Session: Settles in 30 seconds
+                deliverPhase = this.currentPhase;
+                deliverPhaseSec = phaseSec + 30;
+                deliverGlobalSec = this.currentGlobalSecond + 30;
+            } else {
+                // PM Session: Settles at start of next phase
+                deliverPhase = this.currentPhase + 1;
+                deliverPhaseSec = 1;
+                deliverGlobalSec = this.currentPhase * 300 + 1;
+            }
+
+            this.pendingHoldings[key] = (this.pendingHoldings[key] || 0) + shares;
+            const deliveryItem = {
+                id: 'SETTLE-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+                ticker: key,
+                code: stock ? stock.code : key,
+                name: stock ? stock.name : key,
+                shares: shares,
+                buyPrice: price,
+                orderGlobalSec: this.currentGlobalSecond,
+                orderPhase: this.currentPhase,
+                orderPhaseSec: phaseSec,
+                deliverPhase: deliverPhase,
+                deliverPhaseSec: deliverPhaseSec,
+                deliverGlobalSec: deliverGlobalSec
+            };
+            this.pendingQueue.push(deliveryItem);
+
+            return {
+                success: true,
+                action: 'BUY',
+                isPending: true,
+                deliveryItem: deliveryItem,
+                state: this.getState()
+            };
         } else if (action === 'SELL') {
-            const curShares = (this.holdings[key] !== undefined) ? this.holdings[key] : ((this.holdings[ticker] !== undefined) ? this.holdings[ticker] : (stock && this.holdings[stock.code] !== undefined ? this.holdings[stock.code] : 0));
-            if (shares > curShares + 0.0001) return { success: false, message: 'Insufficient shares to sell.' };
+            const activeShares = this.getActiveShares(key);
+            const pendingShares = this.getPendingShares(key);
+            const totalShares = activeShares + pendingShares;
+
+            if (shares > activeShares + 0.0001) {
+                if (totalShares >= shares - 0.0001) {
+                    // Shares exist, but locked in T+0.5!
+                    const queueItems = this.getPendingDeliveriesForTicker(key);
+                    const earliest = queueItems[0] || null;
+                    const remSec = earliest ? Math.max(1, earliest.deliverGlobalSec - this.currentGlobalSecond) : 30;
+                    return {
+                        success: false,
+                        isSettlementLocked: true,
+                        ticker: key,
+                        code: stock ? stock.code : key,
+                        name: stock ? stock.name : key,
+                        price: price,
+                        requestedShares: shares,
+                        activeShares: activeShares,
+                        lockedShares: pendingShares,
+                        deliverPhase: earliest ? earliest.deliverPhase : this.currentPhase,
+                        remainingSec: remSec,
+                        queueItems: queueItems,
+                        message: `Cannot sell ${shares} shares of ${stock ? stock.code : key}: ${pendingShares} shares are currently locked in T+0.5 settlement clearing.`
+                    };
+                } else {
+                    return {
+                        success: false,
+                        message: `Insufficient shares to sell. You have ${totalShares} total shares (${activeShares} active, ${pendingShares} pending T+0.5).`
+                    };
+                }
+            }
+
             let proceeds = cost;
             if (this.marginDebt > 0) {
                 const repay = Math.min(this.marginDebt, proceeds);
@@ -11049,6 +12009,8 @@ const ClientEngine = {
                 proceeds -= repay;
             }
             this.cash += proceeds;
+
+            // Deduct strictly from active holdings
             if (this.holdings[key] !== undefined) {
                 this.holdings[key] -= shares;
                 if (this.holdings[key] <= 0.0001) delete this.holdings[key];
@@ -11059,7 +12021,8 @@ const ClientEngine = {
                 this.holdings[ticker] -= shares;
                 if (this.holdings[ticker] <= 0.0001) delete this.holdings[ticker];
             }
-            return { success: true, state: this.getState() };
+
+            return { success: true, action: 'SELL', state: this.getState() };
         }
         return { success: false, message: 'Invalid action.' };
     },
@@ -11107,6 +12070,7 @@ const ClientEngine = {
         this.currentGlobalSecond = (this.currentPhase - 1) * 300 + 1;
         this.updatePhaseReferencePrices(this.currentPhase);
         this._activePhaseRef = this.currentPhase;
+        this.processSettlementDeliveries(this.currentGlobalSecond, this.currentPhase);
         this.setGlobalSecond(this.currentGlobalSecond);
         return { success: true, state: this.getState() };
     },
@@ -11114,12 +12078,18 @@ const ClientEngine = {
     triggerLiquidation() {
         let gross = 0.0;
         ensureMarketStocksLoaded();
-        Object.keys(this.holdings).forEach(t => {
+        const allShares = { ...this.holdings };
+        Object.keys(this.pendingHoldings).forEach(t => {
+            allShares[t] = (allShares[t] || 0) + (this.pendingHoldings[t] || 0);
+        });
+        Object.keys(allShares).forEach(t => {
             const stock = marketStocks.find(s => s.name === t || s.code === t);
             const p = stock ? stock.price : 1033.57;
-            gross += (this.holdings[t] || 0) * p;
+            gross += (allShares[t] || 0) * p;
         });
         this.holdings = {};
+        this.pendingHoldings = {};
+        this.pendingQueue = [];
         const penalty = gross * 0.05;
         const net = Math.max(0, gross - penalty);
         const tradingFunds = this.cash + net;
@@ -11143,6 +12113,9 @@ async function initGameBackend() {
     try {
         const res = await fetch('/api/state');
         const data = await res.json();
+        if (data && data.scenario_id && data.scenario_id !== window.activeScenarioId) {
+            selectMarketScenario(data.scenario_id, false);
+        }
         if (data && data.metrics) {
             if (data.holdings && Object.keys(data.holdings).length > 0) {
                 ClientEngine.holdings = { ...data.holdings };
@@ -11207,42 +12180,91 @@ function updateHUD(data) {
         showLiquidationModal(data);
     }
 
-    // Active Holdings Inventory
+    // Active Holdings & Pending T+0.5 Inventory
     const hBody = document.getElementById('holdings-tbody');
     const badgeCount = document.getElementById('holdings-count-badge');
     if (hBody) {
-        const holdings = { ...(data.holdings || {}) };
-        if (data.pending_shares) {
-            for (const [pt, ps] of Object.entries(data.pending_shares)) {
-                if (ps > 0) holdings[pt] = (holdings[pt] || 0) + ps;
-            }
-        }
-        const tickers = Object.keys(holdings).filter(t => holdings[t] > 0);
-        if (badgeCount) {
-            badgeCount.textContent = `${tickers.length} ${tickers.length === 1 ? 'POSITION' : 'POSITIONS'}`;
-            badgeCount.style.color = tickers.length > 0 ? '#10b981' : '#64748b';
-        }
-        if (tickers.length === 0) {
-            hBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #64748b; padding: 16px 0;">No active stock holdings</td></tr>';
-        } else {
-            hBody.innerHTML = tickers.map(t => {
-                const s = holdings[t];
-                const stock = marketStocks.find(st => st.name === t || st.code === t);
-                const p = stock ? stock.price : ((data.prices && data.prices[t]) ? data.prices[t] : 1033.57);
-                const total = s * p;
-                const displayCode = stock ? stock.code : (t === 'Vintrumite' ? 'VNT' : t.substring(0, 6));
-                return `
-                <tr>
+        const activeHoldings = data.holdings || {};
+        const pendingHoldings = data.pending_shares || (ClientEngine ? ClientEngine.pendingHoldings : {}) || {};
+        const allTickers = Array.from(new Set([...Object.keys(activeHoldings), ...Object.keys(pendingHoldings)]))
+            .filter(t => (activeHoldings[t] > 0) || (pendingHoldings[t] > 0));
+
+        let totalActiveCount = 0;
+        let totalPendingCount = 0;
+        let rowsHtml = '';
+
+        allTickers.forEach(t => {
+            const stock = marketStocks.find(st => st.name === t || st.code === t);
+            const p = stock ? stock.price : ((data.prices && data.prices[t]) ? data.prices[t] : 1033.57);
+            const displayCode = stock ? stock.code : (t === 'Vintrumite' ? 'VNT' : t.substring(0, 6));
+            const activeQty = activeHoldings[t] || 0;
+            const pendingQty = pendingHoldings[t] || 0;
+
+            if (activeQty > 0) {
+                totalActiveCount++;
+                const totalActiveVal = activeQty * p;
+                rowsHtml += `
+                <tr class="holding-row-active">
                     <td class="text-green" style="font-weight:700;" title="${stock ? stock.name : t}">
                         ${displayCode}
                     </td>
-                    <td>${s.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
-                    <td>$${total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                    <td><button class="toggle-btn" style="border-color:#ef4444; color:#ef4444; padding:2px 6px; font-size:0.62rem;" onclick="quickSellHolding('${t}', ${s})">SELL</button></td>
+                    <td>${activeQty.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                    <td>$${totalActiveVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td><button class="toggle-btn" style="border-color:#ef4444; color:#ef4444; padding:2px 6px; font-size:0.62rem;" onclick="quickSellHolding('${t}', ${activeQty})">SELL</button></td>
                 </tr>
                 `;
-            }).join('');
+            }
+
+            if (pendingQty > 0) {
+                totalPendingCount++;
+                const totalPendingVal = pendingQty * p;
+                const queueItems = ClientEngine ? ClientEngine.getPendingDeliveriesForTicker(t) : [];
+                const earliest = queueItems[0] || null;
+                let badgeLabel = 'LOCK';
+                if (earliest) {
+                    if (earliest.deliverPhase > (ClientEngine ? ClientEngine.currentPhase : 1)) {
+                        badgeLabel = `P${earliest.deliverPhase}`;
+                    } else {
+                        const rem = Math.max(1, earliest.deliverGlobalSec - (ClientEngine ? ClientEngine.currentGlobalSecond : 1));
+                        badgeLabel = `${rem}s`;
+                    }
+                }
+                rowsHtml += `
+                <tr class="holding-row-pending" style="background: rgba(245, 158, 11, 0.04);">
+                    <td style="font-weight:700; color:#fbbf24;" title="${stock ? stock.name : t} (KRX T+0.5 Settlement Lock)">
+                        ${displayCode}
+                    </td>
+                    <td style="color:#fde68a;">${pendingQty.toLocaleString(undefined, {maximumFractionDigits: 2})}</td>
+                    <td style="color:#fde68a;">$${totalPendingVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td><button class="toggle-btn" style="border-color:#f59e0b; color:#fbbf24; background:rgba(245,158,11,0.12); padding:2px 6px; font-size:0.62rem; font-weight:700; cursor:pointer;" onclick="showSettlementLockModalForTicker('${t}')" title="KRX T+0.5 Settlement Lock: Click to inspect clearing status">⏳ ${badgeLabel}</button></td>
+                </tr>
+                `;
+            }
+        });
+
+        if (badgeCount) {
+            if (totalActiveCount === 0 && totalPendingCount === 0) {
+                badgeCount.textContent = '0 POSITIONS';
+                badgeCount.style.color = '#64748b';
+            } else if (totalPendingCount > 0) {
+                badgeCount.textContent = `${totalActiveCount} ACTIVE • ${totalPendingCount} PENDING`;
+                badgeCount.style.color = '#f59e0b';
+            } else {
+                badgeCount.textContent = `${totalActiveCount} ${totalActiveCount === 1 ? 'POSITION' : 'POSITIONS'}`;
+                badgeCount.style.color = '#10b981';
+            }
         }
+
+        if (allTickers.length === 0) {
+            hBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #64748b; padding: 16px 0;">No active stock holdings</td></tr>';
+        } else {
+            hBody.innerHTML = rowsHtml;
+        }
+    }
+
+    // Live update for settlement lock modal if open (Zero Lag!)
+    if (typeof updateSettlementLockModalLive === 'function') {
+        updateSettlementLockModalLive();
     }
 
     // Bank Dashboard Modal Metrics
@@ -11295,6 +12317,253 @@ function updateHUD(data) {
             else if (data.prices[s.code] !== undefined) s.price = data.prices[s.code];
         });
         renderPriceBoard();
+    }
+}
+
+/* =========================================================================
+   KRX T+0.5 CLEARINGHOUSE & SETTLEMENT CONTROLLERS (ZERO-LAG ARCHITECTURE)
+   ========================================================================= */
+let currentSettlementLockData = null;
+
+function dismissSettlementToast(elOrBtn) {
+    const toast = (elOrBtn && elOrBtn.classList && elOrBtn.classList.contains('settlement-toast')) 
+        ? elOrBtn 
+        : (elOrBtn && elOrBtn.closest ? elOrBtn.closest('.settlement-toast') : null);
+    if (!toast || toast.dataset.dismissed === 'true') return;
+    toast.dataset.dismissed = 'true';
+    if (toast._dismissTimeout) clearTimeout(toast._dismissTimeout);
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(12px) scale(0.92)';
+    setTimeout(() => {
+        if (toast.parentNode) toast.remove();
+    }, 220);
+}
+
+function showSettlementToast(title, msg, type = 'clearing') {
+    const container = document.getElementById('settlement-toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `settlement-toast type-${type}`;
+    const icon = type === 'delivered' ? '⚡' : '⏳';
+    toast.innerHTML = `
+        <span class="settle-toast-icon">${icon}</span>
+        <div class="settle-toast-body">
+            <div class="settle-toast-title">${title}</div>
+            <div class="settle-toast-msg">${msg}</div>
+        </div>
+        <button class="settle-toast-close" title="Dismiss notification" onclick="dismissSettlementToast(this)" aria-label="Close">✕</button>
+    `;
+    container.appendChild(toast);
+    toast._dismissTimeout = setTimeout(() => {
+        dismissSettlementToast(toast);
+    }, 5000);
+}
+
+function onSettlementDelivered(item) {
+    const code = item.code || item.ticker;
+    showSettlementToast(
+        'KRX CLEARING COMPLETE // ASSET DELIVERED',
+        `${item.shares} shares of ${code} have settled depository clearance and are now active in inventory!`,
+        'delivered'
+    );
+    if (typeof triggerNewsFlash === 'function') {
+        triggerNewsFlash(`⚡ [SETTLEMENT COMPLETE] ${item.shares} shares of ${code} delivered to active holdings.`);
+    }
+    // If the modal is currently showing this ticker, refresh it live
+    if (currentSettlementLockData && (currentSettlementLockData.ticker === item.ticker || currentSettlementLockData.code === code)) {
+        showSettlementLockModalForTicker(item.ticker);
+    }
+}
+
+function showSettlementLockModal(lockData) {
+    currentSettlementLockData = lockData;
+    const modal = document.getElementById('settlement-lock-modal');
+    if (!modal) return;
+    modal.classList.add('active');
+
+    const stock = marketStocks.find(s => s.name === lockData.ticker || s.code === lockData.ticker) || lockData.stock;
+    const code = stock ? stock.code : (lockData.code || lockData.ticker);
+    const name = stock ? stock.name : (lockData.name || lockData.ticker);
+    const curPrice = stock ? stock.price : (lockData.price || 1033.57);
+
+    document.getElementById('settle-asset-code').textContent = code;
+    document.getElementById('settle-asset-name').textContent = `${name} • KRX DEPOSITORY PIPELINE`;
+    document.getElementById('settle-live-price').textContent = `$${curPrice.toFixed(2)}`;
+
+    updateSettlementLockModalLive();
+
+    const partialBtn = document.getElementById('settle-btn-partial');
+    const partialBtnText = document.getElementById('settle-btn-partial-text');
+    if (partialBtn) {
+        if (lockData.activeShares > 0) {
+            partialBtn.style.display = 'inline-block';
+            if (partialBtnText) partialBtnText.textContent = `SELL DELIVERED SHARES (${lockData.activeShares})`;
+        } else {
+            partialBtn.style.display = 'none';
+        }
+    }
+}
+
+function showSettlementLockModalForTicker(ticker) {
+    const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
+    const key = stock ? stock.name : ticker;
+    const active = ClientEngine.getActiveShares(key);
+    const pending = ClientEngine.getPendingShares(key);
+    const queue = ClientEngine.getPendingDeliveriesForTicker(key);
+    const earliest = queue[0] || null;
+    const curPrice = stock ? stock.price : 1033.57;
+    const rem = earliest ? Math.max(1, earliest.deliverGlobalSec - ClientEngine.currentGlobalSecond) : 30;
+
+    const lockData = {
+        ticker: key,
+        code: stock ? stock.code : key,
+        name: stock ? stock.name : key,
+        price: curPrice,
+        stock: stock,
+        requestedShares: pending,
+        activeShares: active,
+        lockedShares: pending,
+        deliverPhase: earliest ? earliest.deliverPhase : ClientEngine.currentPhase,
+        deliverGlobalSec: earliest ? earliest.deliverGlobalSec : ClientEngine.currentGlobalSecond + 30,
+        remainingSec: rem,
+        queueItems: queue
+    };
+    showSettlementLockModal(lockData);
+}
+
+function closeSettlementLockModal() {
+    const modal = document.getElementById('settlement-lock-modal');
+    if (modal) modal.classList.remove('active');
+    currentSettlementLockData = null;
+}
+
+function sellAvailableSharesFromModal() {
+    if (!currentSettlementLockData) return;
+    const t = currentSettlementLockData.ticker;
+    const active = currentSettlementLockData.activeShares;
+    closeSettlementLockModal();
+    if (active > 0) {
+        quickSellHolding(t, active);
+    }
+}
+
+function updateSettlementLockModalLive() {
+    const modal = document.getElementById('settlement-lock-modal');
+    if (!modal || !modal.classList.contains('active') || !currentSettlementLockData) return;
+
+    const t = currentSettlementLockData.ticker;
+    const stock = marketStocks.find(s => s.name === t || s.code === t);
+    const curPrice = stock ? stock.price : (currentSettlementLockData.price || 1033.57);
+    const curGlobalSec = ClientEngine ? ClientEngine.currentGlobalSecond : 1;
+    const curPhase = ClientEngine ? ClientEngine.currentPhase : 1;
+    const activeShares = ClientEngine ? ClientEngine.getActiveShares(t) : (currentSettlementLockData ? currentSettlementLockData.activeShares : 0);
+    const pendingShares = ClientEngine ? ClientEngine.getPendingShares(t) : (currentSettlementLockData ? currentSettlementLockData.lockedShares : 0);
+    const queue = ClientEngine ? ClientEngine.getPendingDeliveriesForTicker(t) : [];
+    const earliest = queue[0] || (currentSettlementLockData && currentSettlementLockData.queueItems && currentSettlementLockData.queueItems[0]) || (currentSettlementLockData && currentSettlementLockData.deliverPhase ? currentSettlementLockData : null);
+
+    // Price
+    const priceEl = document.getElementById('settle-live-price');
+    if (priceEl) priceEl.textContent = `$${curPrice.toFixed(2)}`;
+
+    // Valuation Card
+    const valCard = document.getElementById('settle-card-val');
+    if (valCard) {
+        const val = pendingShares * curPrice;
+        valCard.textContent = `$${val.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    }
+
+    // Shares Card
+    const sharesCard = document.getElementById('settle-card-shares');
+    if (sharesCard) {
+        sharesCard.textContent = `${pendingShares.toLocaleString()} SHARES`;
+    }
+    const activeSub = document.getElementById('settle-card-active-sub');
+    if (activeSub) {
+        activeSub.textContent = `${activeShares.toLocaleString()} Delivered (Available to sell)`;
+    }
+
+    // Live P&L Card
+    const pnlCard = document.getElementById('settle-card-pnl');
+    const pnlSub = document.getElementById('settle-card-pnl-sub');
+    if (pnlCard && earliest) {
+        const buyPrice = earliest.buyPrice || curPrice;
+        const diff = (curPrice - buyPrice) * pendingShares;
+        const pct = ((curPrice - buyPrice) / (buyPrice || 1)) * 100;
+        const sign = diff >= 0 ? '+' : '';
+        pnlCard.textContent = `${sign}$${diff.toFixed(2)} (${sign}${pct.toFixed(2)}%)`;
+        pnlCard.className = `badass-card-primary ${diff >= 0 ? 'text-green' : 'text-red'}`;
+        if (pnlSub) pnlSub.textContent = `Acquisition: $${buyPrice.toFixed(2)}`;
+    }
+
+    // Pipeline Steps & Countdown
+    const orderTimeEl = document.getElementById('settle-pipe-order-time');
+    const targetTimeEl = document.getElementById('settle-pipe-target-time');
+    const destDescEl = document.getElementById('settle-delivery-dest-desc');
+    const clockEl = document.getElementById('settle-countdown-clock');
+    const barEl = document.getElementById('settle-countdown-bar');
+    const pillEl = document.getElementById('settle-countdown-pill');
+
+    if (pendingShares <= 0) {
+        // All settled!
+        if (clockEl) clockEl.textContent = '00:00 [DELIVERED]';
+        if (barEl) barEl.style.width = '100%';
+        if (pillEl) {
+            pillEl.textContent = 'SETTLEMENT CLEAR';
+            pillEl.style.borderColor = '#10b981';
+            pillEl.style.color = '#10b981';
+        }
+        if (destDescEl) destDescEl.textContent = 'All shares delivered to active inventory.';
+        const lockStatusEl = document.getElementById('settle-card-lock-status');
+        if (lockStatusEl) {
+            lockStatusEl.textContent = 'UNLOCKED';
+            lockStatusEl.className = 'badass-card-primary text-green';
+        }
+        const lockSubEl = document.getElementById('settle-card-lock-sub');
+        if (lockSubEl) lockSubEl.textContent = 'Ready for liquidations and sales';
+        return;
+    }
+
+    // Reset lock status elements if previously delivered
+    const lockStatusEl = document.getElementById('settle-card-lock-status');
+    if (lockStatusEl) {
+        lockStatusEl.textContent = 'LOCKED (T+0.5)';
+        lockStatusEl.className = 'badass-card-primary text-red';
+    }
+    const lockSubEl = document.getElementById('settle-card-lock-sub');
+    if (lockSubEl) lockSubEl.textContent = 'Unlocked upon clearing completion';
+    if (pillEl) {
+        pillEl.style.borderColor = '';
+        pillEl.style.color = '';
+    }
+
+    if (earliest) {
+        const orderSec = earliest.orderPhaseSec || ((earliest.orderGlobalSec - 1) % 300 + 1);
+        if (orderTimeEl) orderTimeEl.textContent = `SEC ${orderSec}`;
+
+        const isRollover = earliest.deliverPhase > curPhase;
+        if (isRollover) {
+            if (targetTimeEl) targetTimeEl.textContent = `PHASE ${earliest.deliverPhase} (OPEN)`;
+            if (destDescEl) destDescEl.textContent = `Scheduled delivery at Phase ${earliest.deliverPhase} opening bell`;
+            if (clockEl) clockEl.textContent = `DELIVERS IN PHASE ${earliest.deliverPhase}`;
+            if (pillEl) pillEl.textContent = 'CROSS-PHASE CLEARING';
+            // Compute progress across current phase
+            const phaseRemaining = 300 - ((curGlobalSec - 1) % 300);
+            const phaseProgress = Math.max(0, Math.min(100, Math.round(((300 - phaseRemaining) / 300) * 100)));
+            if (barEl) barEl.style.width = `${phaseProgress}%`;
+        } else {
+            const deliverSec = earliest.deliverPhaseSec || ((earliest.deliverGlobalSec - 1) % 300 + 1);
+            if (targetTimeEl) targetTimeEl.textContent = `SEC ${deliverSec}`;
+            const remSec = Math.max(0, earliest.deliverGlobalSec - curGlobalSec);
+            const totalWait = Math.max(30, earliest.deliverGlobalSec - earliest.orderGlobalSec);
+            const progress = Math.max(0, Math.min(100, Math.round(((totalWait - remSec) / totalWait) * 100)));
+
+            if (destDescEl) destDescEl.textContent = `Matures in ${remSec}s (at Phase ${curPhase} Sec ${deliverSec})`;
+            const minsStr = String(Math.floor(remSec / 60)).padStart(2, '0');
+            const secsStr = String(remSec % 60).padStart(2, '0');
+            if (clockEl) clockEl.textContent = `${minsStr}:${secsStr} REMAINING`;
+            if (barEl) barEl.style.width = `${progress}%`;
+            if (pillEl) pillEl.textContent = 'TRANSIT ACTIVE';
+        }
     }
 }
 
