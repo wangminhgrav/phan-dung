@@ -4886,22 +4886,23 @@
         .bank-modal-overlay.active { display: flex; }
         .bank-dashboard-card {
             position: relative;
-            background: radial-gradient(ellipse at 50% 0%, rgba(6, 40, 28, 0.98) 0%, rgba(3, 10, 16, 0.99) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.45);
+            background: radial-gradient(ellipse at 50% 0%, rgba(4, 28, 42, 0.98) 0%, rgba(2, 8, 16, 0.99) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.55);
             border-radius: 12px;
-            width: 880px;
-            max-width: 96vw;
+            width: 940px;
+            max-width: 95vw;
             max-height: 92vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 50px rgba(16, 185, 129, 0.18);
-            overflow: hidden;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95), 0 0 50px rgba(56, 189, 248, 0.22), inset 0 0 30px rgba(56, 189, 248, 0.08);
+            overflow: visible;
         }
 
         .bank-dashboard-card::before {
             content: '';
             position: absolute;
             inset: 0;
+            border-radius: 12px;
             background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 255, 255, 0.012) 3px, rgba(255, 255, 255, 0.012) 6px);
             pointer-events: none;
             z-index: 1;
@@ -4911,23 +4912,110 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 10%;
-            right: 10%;
+            left: 8%;
+            right: 8%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #10b981, transparent);
-            opacity: 0.85;
+            background: linear-gradient(90deg, transparent, #38bdf8, #e0f2fe, #38bdf8, transparent);
+            opacity: 0.9;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
             pointer-events: none;
+            z-index: 10;
         }
 
         .bank-dashboard-card .badass-corner {
-            border-color: #10b981;
+            border-color: #38bdf8;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
         }
 
         .bank-dashboard-card .badass-telemetry-header {
-            padding: 12px 18px 10px;
+            padding: 12px 24px 10px;
             margin-bottom: 0;
-            background: rgba(0, 0, 0, 0.35);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+            background: rgba(0, 0, 0, 0.45);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.28);
+            border-top-left-radius: 11px;
+            border-top-right-radius: 11px;
+            position: relative;
+            z-index: 30;
+        }
+
+        /* FROZEN CLAW OVERLAYS (Holding the Bank Card, Slow Zero-Lag Cold Grip Breath) */
+        @keyframes bankClawBreatheLeft {
+            0%, 100% {
+                transform: translateY(-50%) translateX(0) scale(1);
+            }
+            50% {
+                transform: translateY(-50%) translateX(3px) scale(1.015);
+            }
+        }
+        @keyframes bankClawBreatheRight {
+            0%, 100% {
+                transform: translateY(-50%) translateX(0) scale(1);
+            }
+            50% {
+                transform: translateY(-50%) translateX(-3px) scale(1.015);
+            }
+        }
+        .bank-frozen-claw-wrap {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 35;
+            pointer-events: none;
+            user-select: none;
+            height: auto;
+            will-change: transform;
+        }
+        .bank-frozen-claw-wrap.left-side {
+            left: -195px;
+            width: 235px;
+            animation: bankClawBreatheLeft 6s ease-in-out infinite;
+        }
+        .bank-frozen-claw-wrap.right-side {
+            right: -195px;
+            width: 235px;
+            animation: bankClawBreatheRight 6s ease-in-out infinite;
+        }
+        .bank-frozen-claw-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            mix-blend-mode: normal;
+            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.35)) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.7));
+        }
+
+        /* FALLING SNOW EFFECT OVERLAY */
+        .bank-snow-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 5;
+        }
+        @keyframes bankSnowFall {
+            0% {
+                transform: translateY(-20px) translateX(0);
+            }
+            50% {
+                transform: translateY(50vh) translateX(16px);
+            }
+            100% {
+                transform: translateY(105vh) translateX(-12px);
+            }
+        }
+        .bank-snowflake {
+            position: absolute;
+            top: -20px;
+            background: #ffffff;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.9), 0 0 10px rgba(56, 189, 248, 0.7);
+            animation: bankSnowFall linear infinite;
+        }
+        .bank-snowflake.crystal {
+            border-radius: 0;
+            transform: rotate(45deg);
+            background: #bae6fd;
+            box-shadow: 0 0 7px rgba(56, 189, 248, 0.9), 0 0 14px rgba(14, 165, 233, 0.7);
         }
 
         .bank-radar-pip {
@@ -5049,7 +5137,7 @@
         .bank-dash-body {
             position: relative;
             z-index: 3;
-            padding: 14px 18px 18px;
+            padding: 14px 28px 18px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -5853,6 +5941,8 @@
             .s2-launch-btn { padding: 12px; font-size: 12px; }
             .demon-claw-wrap.left-side { width: 200px; left: -176px; }
             .demon-claw-wrap.right-side { width: 205px; right: -182px; }
+            .bank-frozen-claw-wrap.left-side { width: 200px; left: -170px; }
+            .bank-frozen-claw-wrap.right-side { width: 200px; right: -170px; }
 
             /* Screen 3: High-Intensity Market Crash Intro */
             .intro-telemetry-header { height: 38px; padding: 0 18px; }
@@ -5950,6 +6040,8 @@
             .s2-launch-btn { padding: 9px; font-size: 11px; }
             .demon-claw-wrap.left-side { width: 170px; left: -150px; }
             .demon-claw-wrap.right-side { width: 175px; right: -155px; }
+            .bank-frozen-claw-wrap.left-side { width: 160px; left: -135px; }
+            .bank-frozen-claw-wrap.right-side { width: 160px; right: -135px; }
 
             /* Screen 3 */
             .intro-telemetry-header { height: 32px; font-size: 10px; }
@@ -8141,7 +8233,18 @@
      BANK LIQUIDITY MANAGEMENT DASHBOARD MODAL (BADASS CYBER VAULT)
      ========================================================================= -->
 <div id="bank-modal-overlay" class="bank-modal-overlay" onclick="if(event.target===this) closeBankDashboard()">
+    <!-- FROZEN SNOW EFFECT OVERLAY -->
+    <div class="bank-snow-overlay" id="bank-snow-overlay"></div>
+
     <div class="bank-dashboard-card">
+        <!-- FROZEN CLAWS (Holding the bank screen, static, frozen solid) -->
+        <div class="bank-frozen-claw-wrap left-side" id="bank-claw-left">
+            <img src="assets/frozen_hand_left.png" onerror="this.onerror=null; this.src='web/assets/frozen_hand_left.png';" alt="Frozen Claws Left Grip" class="bank-frozen-claw-img">
+        </div>
+        <div class="bank-frozen-claw-wrap right-side" id="bank-claw-right">
+            <img src="assets/frozen_hand_right.png" onerror="this.onerror=null; this.src='web/assets/frozen_hand_right.png';" alt="Frozen Claws Right Grip" class="bank-frozen-claw-img">
+        </div>
+
         <!-- Corner Cyber Brackets -->
         <div class="badass-corner top-left"></div>
         <div class="badass-corner top-right"></div>
@@ -10601,10 +10704,31 @@ function quickSellHolding(ticker, shares) {
    ========================================================================= */
 let currentBankState = { balance: 0, emergency_reserve: 0, available_transfer: 0 };
 
+function initBankSnow() {
+    const container = document.getElementById('bank-snow-overlay');
+    if (!container || container.children.length > 0) return;
+    const flakeCount = 42;
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < flakeCount; i++) {
+        const flake = document.createElement('div');
+        flake.className = 'bank-snowflake';
+        if (i % 4 === 0) flake.classList.add('crystal');
+        const size = (Math.random() * 4 + 2.5).toFixed(1);
+        const left = (Math.random() * 100).toFixed(1);
+        const duration = (Math.random() * 5 + 4.5).toFixed(1);
+        const delay = (Math.random() * 6).toFixed(1);
+        const opacity = (Math.random() * 0.45 + 0.35).toFixed(2);
+        flake.style.cssText = `left:${left}%;width:${size}px;height:${size}px;animation-duration:${duration}s;animation-delay:-${delay}s;opacity:${opacity};`;
+        fragment.appendChild(flake);
+    }
+    container.appendChild(fragment);
+}
+
 function openBankDashboard() {
     closeTaskbar();
     const overlay = document.getElementById('bank-modal-overlay');
     if (overlay) overlay.classList.add('active');
+    initBankSnow();
     updateTaskbarActiveNav('nav-item-bank');
     initGameBackend();
     pauseMarketTimer('BANK VAULT');
