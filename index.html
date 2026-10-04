@@ -773,6 +773,21 @@
             color: #38bdf8;
             font-weight: 700;
         }
+        .badass-clock-paused-tag {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #10b981;
+            font-size: 0.68rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            letter-spacing: 0.04em;
+            animation: timerPausedPulse 1.2s infinite ease-in-out;
+        }
 
         /* Hero Row: Action Badge + Ticker & Name + Unit Price */
         .badass-hero-row {
@@ -6096,6 +6111,1306 @@
             }
             .index-card { min-width: 110px; }
         }
+
+        /* =========================================================================
+           CINEMATIC GAME ENDING SYSTEM (F, D, C, B, A)
+           Pixel-perfect replica of reference ENDING 1 layout with zero video blackout.
+           ========================================================================= */
+        .ending-screen-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 999999;
+            display: none;
+            background: #020408;
+            overflow: hidden;
+            box-sizing: border-box;
+            font-family: var(--font-sans);
+        }
+
+        .ending-screen-overlay.active {
+            display: block;
+            animation: endingFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes endingFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Ambient Edge Glow Layer (Hidden: video fills 100% window screen) */
+        .ending-ambient-backdrop {
+            display: none !important;
+        }
+
+        /* 
+           FULL-WINDOW CINEMATIC STAGE:
+           Fits 100% of the window screen with zero black bars or letterboxing.
+           Pure responsive coordinate grid that never spills out at any screen size or zoom level.
+        */
+        .ending-stage-sync {
+            position: absolute;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* Seamless backdrop curtain: blends video into right tactical column with zero seams or ghost text */
+        .ending-stage-sync::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 55%;
+            background: linear-gradient(to right, transparent 0%, rgba(2, 6, 14, 0.85) 12%, rgba(2, 6, 14, 0.98) 28%, #02060e 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .ending-bg-video-wrap {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+            background: #000;
+        }
+
+        .ending-bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+            opacity: 1;
+            filter: none;
+        }
+
+        .ending-bottom-vignette {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 48px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 1.0) 0%, rgba(0, 0, 0, 1.0) 50%, rgba(0, 0, 0, 0.75) 75%, transparent 100%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .ending-bg-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            z-index: 1;
+            display: none;
+            opacity: 1;
+            filter: none;
+        }
+
+        /* Ending A: Victory Still (Fades in over video when demon collapses) */
+        .ending-victory-still {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            z-index: 2;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.2s;
+        }
+        .ending-victory-still.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Ending A: Cinematic Golden Dawn Radiance & Lens Flare Effect */
+        .ending-sunlight-bloom {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.8s;
+        }
+        .ending-sunlight-bloom.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 1. Subtle opening golden flash when the demon shatters */
+        .sunlight-dawn-flash {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                circle at 62% 48%,
+                rgba(255, 245, 200, 0.5) 0%,
+                rgba(255, 210, 110, 0.25) 35%,
+                transparent 70%
+            );
+            mix-blend-mode: screen;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .ending-sunlight-bloom.active .sunlight-dawn-flash {
+            animation: dawnFlashFade 2.4s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+        }
+
+        /* 2. Warm ambient morning radiance centered on the Seoul sunrise */
+        .sunlight-dawn-burst {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                circle at 64% 50%,
+                rgba(255, 230, 140, 0.32) 0%,
+                rgba(255, 185, 70, 0.18) 30%,
+                rgba(255, 130, 20, 0.08) 60%,
+                transparent 80%
+            );
+            mix-blend-mode: screen;
+            animation: dawnBurstBreathe 4.5s ease-in-out infinite alternate;
+        }
+
+        /* 3. Soft atmospheric sunbeams slanting down naturally across the Han River */
+        .sunlight-god-beams {
+            position: absolute;
+            inset: -5%;
+            background: repeating-linear-gradient(
+                -28deg,
+                transparent 0px,
+                transparent 50px,
+                rgba(255, 230, 150, 0.06) 50px,
+                rgba(255, 240, 180, 0.12) 80px,
+                transparent 80px,
+                transparent 140px
+            );
+            mask-image: radial-gradient(ellipse at 60% 48%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at 60% 48%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 80%);
+            mix-blend-mode: screen;
+            filter: blur(10px);
+            animation: godBeamsShimmer 5.5s ease-in-out infinite alternate;
+        }
+
+        /* 4. Elegant horizontal anamorphic lens glint on the horizon */
+        .sunlight-anamorphic-flare {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 0;
+            height: clamp(50px, 10vh, 100px);
+            transform: translateY(-50%);
+            background: radial-gradient(
+                ellipse at 58% 50%,
+                rgba(255, 255, 240, 0.75) 0%,
+                rgba(255, 225, 130, 0.35) 25%,
+                rgba(255, 180, 50, 0.12) 50%,
+                transparent 75%
+            );
+            mix-blend-mode: screen;
+            filter: blur(8px);
+            animation: anamorphicGlint 4.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes dawnFlashFade {
+            0% { opacity: 0; transform: scale(0.96); }
+            20% { opacity: 0.9; transform: scale(1.02); }
+            100% { opacity: 0; transform: scale(1.05); }
+        }
+
+        @keyframes dawnBurstBreathe {
+            0% { opacity: 0.75; transform: scale(0.98); }
+            100% { opacity: 1.0; transform: scale(1.03); }
+        }
+
+        @keyframes godBeamsShimmer {
+            0% { opacity: 0.55; transform: translateY(-3px); }
+            100% { opacity: 0.95; transform: translateY(3px); }
+        }
+
+        @keyframes anamorphicGlint {
+            0% { opacity: 0.65; transform: translateY(-50%) scaleX(0.95); }
+            100% { opacity: 1.0; transform: translateY(-50%) scaleX(1.05); }
+        }
+
+        /* Ambient 4-Corner Telemetry HUD (Shown when tier is not F) */
+        .ending-corner-hud {
+            position: absolute;
+            z-index: 5;
+            font-family: var(--font-mono);
+            font-size: clamp(8px, 1.2vh, 11px);
+            color: #94a3b8;
+            pointer-events: none;
+            letter-spacing: 0.12em;
+            line-height: 1.4;
+        }
+        .ending-corner-hud.top-left {
+            top: clamp(10px, 2vh, 24px);
+            left: clamp(14px, 2vw, 32px);
+        }
+        .ending-corner-hud.top-left .corner-title {
+            font-size: clamp(10px, 1.6vh, 14px);
+            font-weight: 800;
+            color: #f8fafc;
+            letter-spacing: 0.14em;
+        }
+        .ending-corner-hud.top-left .corner-sub {
+            font-size: clamp(7.5px, 1.1vh, 9.5px);
+            color: #64748b;
+        }
+        .ending-corner-hud.top-right {
+            top: clamp(10px, 2vh, 24px);
+            right: clamp(14px, 2vw, 32px);
+            text-align: right;
+        }
+        .ending-corner-hud.top-right .corner-status {
+            font-size: clamp(9px, 1.4vh, 12px);
+            font-weight: 800;
+            color: var(--ending-accent, #ef4444);
+        }
+        .ending-corner-hud.top-right .corner-sub {
+            font-size: clamp(7.5px, 1.1vh, 9.5px);
+            color: #94a3b8;
+        }
+        .ending-corner-hud.bottom-left {
+            bottom: clamp(10px, 2vh, 20px);
+            left: clamp(14px, 2vw, 32px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #64748b;
+            font-size: clamp(8px, 1.2vh, 10.5px);
+            font-weight: 700;
+        }
+        .ending-corner-hud.bottom-left .corner-bars {
+            color: var(--ending-accent, #ef4444);
+            font-weight: 900;
+        }
+        .ending-corner-hud.bottom-right {
+            bottom: clamp(10px, 2vh, 20px);
+            right: clamp(14px, 2vw, 32px);
+            text-align: right;
+            font-size: clamp(8px, 1.2vh, 10.5px);
+            font-weight: 700;
+            color: #64748b;
+        }
+        .ending-corner-hud.bottom-right .corner-tag {
+            color: var(--ending-accent, #ef4444);
+        }
+
+        /* Hide all corner HUD layers so no stray text is ever blocked behind the right tactical column */
+        .ending-corner-hud {
+            display: none !important;
+        }
+
+        /* 
+           TACTICAL COLUMN:
+           Unified AAA Miracle Edition for all tiers (F, D, C, B, A).
+           Starts at top: 4.5%, height: 90.5%, leaving clearance at bottom.
+           Width 46%, positioned right: 3.5%.
+        */
+        .ending-tactical-column {
+            position: absolute;
+            top: 4.5%;
+            right: 2.2%;
+            width: 49.5%;
+            height: 90.5%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: rgba(4, 8, 16, 0.96);
+            padding: clamp(6px, 1.2vh, 12px);
+            border-radius: 6px;
+            border: 1px solid var(--ending-border);
+            box-shadow: -45px 0 65px rgba(0, 0, 0, 0.98), 0 8px 32px rgba(0, 0, 0, 0.85);
+            gap: 1.2%;
+            box-sizing: border-box;
+        }
+
+        /* Hero Title Block (Active for all tiers F, D, C, B, A) */
+        .ending-hero-block {
+            display: flex;
+            position: relative;
+            width: 100%;
+            background: #040e16;
+            border: 1.5px solid var(--ending-accent, #ef4444);
+            border-radius: 6px;
+            padding: clamp(6px, 1vh, 10px) clamp(10px, 1.5vw, 18px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.85), 0 0 16px var(--ending-glow-subtle);
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
+            min-height: 0;
+        }
+        .ending-hero-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ending-hero-main-title {
+            font-family: 'Impact', 'Arial Black', var(--font-sans), sans-serif;
+            font-size: clamp(1.8rem, 3.2vw, 3.4rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: #f8fafc;
+            text-transform: uppercase;
+            line-height: 1;
+            background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 55%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.95));
+        }
+        .ending-grade-bracket-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: clamp(48px, 4.2vw, 78px);
+            height: clamp(48px, 4.2vw, 78px);
+            border: 2px solid var(--ending-accent, #ef4444);
+            background: rgba(239, 68, 68, 0.12);
+            box-shadow: 0 0 22px var(--ending-glow, rgba(239, 68, 68, 0.65)), inset 0 0 12px rgba(239, 68, 68, 0.3);
+            border-radius: 4px;
+            color: #fff;
+            font-family: 'Impact', 'Arial Black', var(--font-mono), sans-serif;
+            font-size: clamp(1.8rem, 3vw, 3.2rem);
+            font-weight: 900;
+            line-height: 1;
+            text-shadow: 0 0 16px rgba(255, 255, 255, 0.85);
+        }
+        .ending-hero-tagline {
+            font-family: var(--font-mono);
+            font-size: clamp(0.65rem, 0.8vw, 0.9rem);
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            color: var(--ending-accent, #ef4444);
+            text-shadow: 0 0 10px var(--ending-glow, rgba(239, 68, 68, 0.65));
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* AAA Holographic Cyber Chassis Panels */
+        .ending-cyber-panel {
+            position: relative;
+            background: linear-gradient(135deg, rgba(8, 14, 24, 0.96) 0%, rgba(4, 8, 16, 0.98) 55%, rgba(18, 5, 12, 0.95) 100%);
+            border: 1px solid var(--ending-border, rgba(255, 42, 75, 0.35));
+            border-radius: 5px;
+            box-sizing: border-box;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.9),
+                inset 0 1px 0 rgba(255, 255, 255, 0.14),
+                inset 0 0 20px rgba(255, 42, 75, 0.05),
+                0 0 15px var(--ending-glow-subtle, rgba(255, 42, 75, 0.12));
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            min-height: 0;
+        }
+        .ending-cyber-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        /* Glowing Neon L-Brackets */
+        .panel-corner-bracket {
+            position: absolute;
+            width: clamp(6px, 1vh, 10px);
+            height: clamp(6px, 1vh, 10px);
+            pointer-events: none;
+            z-index: 3;
+        }
+        .panel-bracket-tl {
+            top: -1px; left: -1px;
+            border-top: 2px solid var(--ending-accent);
+            border-left: 2px solid var(--ending-accent);
+            box-shadow: -1px -1px 8px var(--ending-glow);
+        }
+        .panel-bracket-tr {
+            top: -1px; right: -1px;
+            border-top: 2px solid #38bdf8;
+            border-right: 2px solid #38bdf8;
+            box-shadow: 1px -1px 6px rgba(56, 189, 248, 0.6);
+        }
+        .panel-bracket-bl {
+            bottom: -1px; left: -1px;
+            border-bottom: 2px solid #38bdf8;
+            border-left: 2px solid #38bdf8;
+            box-shadow: -1px 1px 6px rgba(56, 189, 248, 0.6);
+        }
+        .panel-bracket-br {
+            bottom: -1px; right: -1px;
+            border-bottom: 2px solid var(--ending-accent);
+            border-right: 2px solid var(--ending-accent);
+            box-shadow: 1px 1px 8px var(--ending-glow);
+        }
+
+        /* Clean Non-Blocking Tactical Panel Topline (Inside flow, no border overlap) */
+        .panel-header-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font-family: var(--font-mono);
+            font-size: clamp(7.5px, 1.15vh, 9.5px);
+            color: rgba(148, 163, 184, 0.7);
+            letter-spacing: 0.12em;
+            margin-bottom: clamp(3px, 0.6vh, 6px);
+            padding-bottom: 2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 2;
+        }
+        .panel-tag-code {
+            color: rgba(148, 163, 184, 0.75);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .hud-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--ending-accent);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: clamp(7px, 1.1vh, 9px);
+        }
+        .hud-dot-pulse {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--ending-accent);
+            box-shadow: 0 0 8px var(--ending-accent);
+            animation: ledPulse 1.4s ease-in-out infinite;
+        }
+        @keyframes ledPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        /* Box 1: Final Portfolio Value (15.5% of column) */
+        .ending-cyber-panel.box1-container {
+            height: 15.5%;
+            padding: clamp(6px, 1vh, 10px) clamp(10px, 1.5vw, 18px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .panel-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        .panel-label-wrap {
+            display: flex;
+            align-items: center;
+            gap: clamp(6px, 1vw, 12px);
+            min-width: 0;
+        }
+        .panel-icon-badge {
+            width: clamp(26px, 4.2vh, 38px);
+            height: clamp(26px, 4.2vh, 38px);
+            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(255, 42, 75, 0.22) 0%, rgba(255, 42, 75, 0.05) 100%);
+            border: 1px solid var(--ending-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ending-accent);
+            box-shadow: 0 0 14px var(--ending-glow-subtle);
+            flex-shrink: 0;
+        }
+        .panel-icon-badge svg {
+            width: clamp(14px, 2.4vh, 22px);
+            height: clamp(14px, 2.4vh, 22px);
+        }
+        .panel-label-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+        }
+        .panel-main-label {
+            font-family: var(--font-mono);
+            font-size: clamp(10px, 1.6vh, 13.5px);
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            color: #e0f2fe;
+            text-shadow: 0 0 10px rgba(224, 242, 254, 0.5);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .panel-sub-label {
+            font-family: var(--font-mono);
+            font-size: clamp(7.5px, 1.2vh, 10px);
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+        .panel-val-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .panel-big-number {
+            font-family: var(--font-mono);
+            font-size: clamp(18px, 3.8vh, 32px);
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            line-height: 1;
+            background: linear-gradient(180deg, #ffffff 0%, #ff6b7e 45%, var(--ending-accent, #ff1744) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 16px var(--ending-glow, rgba(255, 23, 68, 0.85)));
+        }
+        .panel-sub-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 2px;
+            padding: 1px clamp(4px, 0.6vw, 8px);
+            border-radius: 3px;
+            background: rgba(255, 23, 68, 0.15);
+            border: 1px solid rgba(255, 23, 68, 0.4);
+            font-family: var(--font-mono);
+            font-size: clamp(8px, 1.3vh, 11px);
+            font-weight: 800;
+            color: #ff4d6d;
+            letter-spacing: 0.08em;
+        }
+
+        /* Box 2: Progress (30.0% of column) */
+        .ending-cyber-panel.box2-container {
+            height: 30.0%;
+            padding: clamp(6px, 1.2vh, 12px) clamp(10px, 1.5vw, 18px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+        .box2-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .box2-container .panel-val-column {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .box2-container .panel-big-number {
+            font-size: clamp(16px, 3.2vh, 28px);
+        }
+        .box2-container .panel-sub-number {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            box-shadow: none;
+            color: var(--ending-accent);
+            text-shadow: 0 0 8px var(--ending-glow);
+            font-size: clamp(9px, 1.3vh, 11.5px);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* Capsule Progress Bar: Cyber Rail with Threshold Ticks */
+        .ending-capsule-track {
+            position: relative;
+            width: 100%;
+            height: clamp(14px, 2.5vh, 20px);
+            background: #02060b;
+            border: 1.5px solid #1c2b3a;
+            border-radius: 9999px;
+            padding: 2px;
+            box-sizing: border-box;
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.4);
+            overflow: visible;
+            margin: clamp(2px, 0.4vh, 4px) 0;
+            z-index: 2;
+        }
+        .track-threshold-tick {
+            position: absolute;
+            top: -2px;
+            bottom: -2px;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.18);
+            z-index: 3;
+            pointer-events: none;
+        }
+        .track-threshold-tick.tick-25 { left: 25%; }
+        .track-threshold-tick.tick-50 { left: 50%; }
+        .track-threshold-tick.tick-75 { left: 75%; }
+        .track-threshold-tick.tick-100 { left: 100%; }
+
+        .ending-capsule-fill {
+            height: 100%;
+            width: 12.4%;
+            min-width: 14px;
+            border-radius: 9999px;
+            position: relative;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .capsule-head-spark {
+            position: absolute;
+            top: 0; right: 0;
+            width: 8px; height: 100%;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff, 0 0 18px var(--ending-accent);
+            opacity: 0.9;
+        }
+
+        /* TIER-TAILORED COOL PROGRESS BARS */
+        /* Tier A: Sovereign Gold & Emerald Radiant Reactor */
+        .ending-capsule-fill.tier-fill-a {
+            background: linear-gradient(90deg, #10b981 0%, #059669 35%, #eab308 75%, #fde047 100%);
+            box-shadow: 0 0 18px rgba(234, 179, 8, 0.85), 0 0 32px rgba(16, 185, 129, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+        }
+        .ending-capsule-fill.tier-fill-a::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.9) 50%, transparent 100%);
+            animation: goldShimmerSweep 2.2s infinite linear;
+        }
+        @keyframes goldShimmerSweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        /* Tier B: High-Voltage Electric Purple & Cyan Laser Overdrive */
+        .ending-capsule-fill.tier-fill-b {
+            background: linear-gradient(90deg, #7c3aed 0%, #a855f7 35%, #06b6d4 75%, #22d3ee 100%);
+            box-shadow: 0 0 18px rgba(6, 182, 212, 0.85), 0 0 28px rgba(168, 85, 247, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+            background-size: 200% 100%;
+        }
+        .ending-capsule-fill.tier-fill-b::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.22) 0px, rgba(255, 255, 255, 0.22) 8px, transparent 8px, transparent 16px);
+            animation: laserStripes 1.5s infinite linear;
+        }
+        @keyframes laserStripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 32px 0; }
+        }
+
+        /* Tier C: Cryo-Shield Glacial Azure & Emerald Resilience Matrix */
+        .ending-capsule-fill.tier-fill-c {
+            background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 55%, #10b981 90%, #34d399 100%);
+            box-shadow: 0 0 16px rgba(14, 165, 233, 0.8), 0 0 24px rgba(52, 211, 153, 0.45);
+        }
+        .ending-capsule-fill.tier-fill-c::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+            animation: cryoShieldPulse 2.8s infinite ease-in-out;
+        }
+        @keyframes cryoShieldPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.85; }
+        }
+
+        /* Tier D: Strained Core Warning / Caution Amber Hazard */
+        .ending-capsule-fill.tier-fill-d {
+            background: linear-gradient(90deg, #c2410c 0%, #ea580c 50%, #f97316 85%, #fb923c 100%);
+            box-shadow: 0 0 16px rgba(234, 88, 12, 0.8), 0 0 24px rgba(239, 68, 68, 0.45);
+        }
+        .ending-capsule-fill.tier-fill-d::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.35) 0px, rgba(0, 0, 0, 0.35) 6px, transparent 6px, transparent 12px);
+            animation: hazardStripes 2s infinite linear;
+        }
+        @keyframes hazardStripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 24px 0; }
+        }
+
+        /* Tier F: Meltdown Critical Alert Crimson Strobe */
+        .ending-capsule-fill.tier-fill-f {
+            background: linear-gradient(90deg, #450a0a 0%, #991b1b 40%, #dc2626 80%, #ef4444 100%);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.95), 0 0 32px rgba(220, 38, 38, 0.65);
+            animation: criticalAlarmStrobe 1.2s infinite ease-in-out;
+        }
+        @keyframes criticalAlarmStrobe {
+            0%, 100% { filter: brightness(1.0); }
+            50% { filter: brightness(1.35) drop-shadow(0 0 10px #ef4444); }
+        }
+
+        .ending-tiers-scale-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: clamp(3px, 0.5vw, 6px);
+            position: relative;
+            z-index: 2;
+            margin-top: 1px;
+        }
+        .tier-scale-box {
+            position: relative;
+            padding: clamp(2px, 0.5vh, 4px) 2px;
+            border-radius: 4px;
+            background: rgba(10, 18, 30, 0.6);
+            border: 1px solid rgba(30, 48, 70, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+        .tier-scale-range {
+            font-family: var(--font-mono);
+            font-size: clamp(7.5px, 1.2vh, 10px);
+            font-weight: 700;
+            color: #64748b;
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
+        .tier-scale-letter {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(11px, 2vh, 16px);
+            font-weight: 900;
+            color: #94a3b8;
+            line-height: 1;
+            margin-top: 2px;
+        }
+        .tier-scale-box.active {
+            background: linear-gradient(180deg, rgba(255, 42, 75, 0.25) 0%, rgba(255, 42, 75, 0.06) 100%);
+            border: 1.5px solid var(--ending-accent);
+            box-shadow: 0 0 16px var(--ending-glow-subtle), inset 0 0 10px rgba(255, 42, 75, 0.25);
+            transform: translateY(-1px);
+        }
+        .tier-scale-box.active .tier-scale-range {
+            color: #ff6b7e;
+            text-shadow: 0 0 8px var(--ending-glow);
+            font-weight: 800;
+        }
+        .tier-scale-box.active .tier-scale-letter {
+            color: #ffffff;
+            text-shadow: 0 0 12px var(--ending-accent);
+            font-weight: 900;
+        }
+
+        /* Box 3: RUN DIAGNOSIS (Target Property & Detailed Casualty/Performance Audit - Matches Image 5) */
+        .ending-cyber-panel.box3-container.diagnosis-container {
+            height: 35.5%;
+            padding: clamp(6px, 1.1vh, 10px) clamp(8px, 1.2vw, 14px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .diagnosis-topline {
+            margin-bottom: clamp(3px, 0.6vh, 6px);
+        }
+        .diagnosis-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .diagnosis-icon-badge {
+            width: 22px; height: 22px;
+            border-radius: 4px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid #a855f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c084fc;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        }
+        .diagnosis-heading-text {
+            font-family: var(--font-mono);
+            font-size: clamp(9px, 1.4vh, 12px);
+            font-weight: 900;
+            color: #c084fc;
+            letter-spacing: 0.14em;
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.6);
+        }
+
+        .diagnosis-grid-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.55fr) minmax(0, 1.35fr);
+            gap: clamp(6px, 0.8vw, 10px);
+            align-items: stretch;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Col 1: KEY METRICS */
+        .diagnosis-col-metrics {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: rgba(2, 6, 12, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: clamp(4px, 0.8vh, 8px) clamp(6px, 0.8vw, 10px);
+            box-sizing: border-box;
+        }
+        .diag-col-header {
+            font-family: var(--font-mono);
+            font-size: clamp(8px, 1.2vh, 10.5px);
+            font-weight: 800;
+            color: #f472b6;
+            letter-spacing: 0.14em;
+            padding-bottom: 2px;
+            border-bottom: 1px solid rgba(244, 114, 182, 0.25);
+            margin-bottom: 2px;
+        }
+        .diag-metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: clamp(7.5px, 1.15vh, 10px);
+            line-height: 1.25;
+        }
+        .diag-metric-name {
+            color: #38bdf8;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+        .diag-metric-val {
+            color: #f8fafc;
+            font-weight: 800;
+        }
+        .diag-metric-val.metric-negative {
+            color: #ff3366 !important;
+            text-shadow: 0 0 8px rgba(255, 51, 102, 0.6);
+        }
+        .diag-metric-val.metric-positive {
+            color: #10b981 !important;
+            text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+
+        /* Col 2: ASSESSMENT & VERDICT */
+        .diagnosis-col-assessment {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: rgba(2, 6, 12, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: clamp(4px, 0.8vh, 8px) clamp(6px, 0.8vw, 10px);
+            box-sizing: border-box;
+            min-width: 0;
+        }
+        .diag-assessment-top {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .diag-alert-badge {
+            width: 22px; height: 22px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .diag-alert-badge.alert {
+            background: rgba(255, 42, 75, 0.15);
+            border: 1px solid #ff2a4b;
+            color: #ff2a4b;
+            box-shadow: 0 0 8px rgba(255, 42, 75, 0.4);
+        }
+        .diag-alert-badge.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+            color: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+        }
+        .diag-assessment-titles {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+        }
+        .diag-assess-category {
+            font-family: var(--font-mono);
+            font-size: clamp(7px, 1vh, 8.5px);
+            font-weight: 800;
+            color: #f472b6;
+            letter-spacing: 0.12em;
+        }
+        .diag-assess-headline {
+            font-family: var(--font-mono);
+            font-size: clamp(8.5px, 1.3vh, 11px);
+            font-weight: 900;
+            color: var(--ending-accent);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+        }
+        .diag-narrative-p {
+            font-family: var(--font-mono);
+            font-size: clamp(7.5px, 1.1vh, 9.5px);
+            line-height: 1.32;
+            color: #cbd5e1;
+            margin: 2px 0;
+            overflow: hidden;
+            text-overflow: clip;
+        }
+        .diag-verdict-block {
+            margin-top: 1px;
+        }
+        .diag-verdict-kicker {
+            font-family: var(--font-mono);
+            font-size: clamp(6.5px, 0.95vh, 8px);
+            font-weight: 800;
+            color: #a855f7;
+            letter-spacing: 0.14em;
+        }
+        .diag-verdict-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(13px, 2.2vh, 19px);
+            font-weight: 900;
+            color: #c084fc;
+            text-shadow: 0 0 12px rgba(192, 132, 252, 0.7);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            display: block;
+        }
+
+        /* Col 3: TARGET PROPERTY SHOWCASE VIEWPORT */
+        .diagnosis-col-house {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .diag-house-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            border: 1px solid rgba(168, 85, 247, 0.75);
+            overflow: hidden;
+            background: #02060a;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(168, 85, 247, 0.2);
+            box-sizing: border-box;
+        }
+        .diag-house-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            filter: contrast(1.1) brightness(0.96);
+        }
+        .diag-house-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 6, 12, 0.05) 30%, rgba(2, 6, 12, 0.85) 100%);
+            pointer-events: none;
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            box-sizing: border-box;
+        }
+        .diag-house-tag {
+            position: absolute;
+            top: 4px; left: 5px;
+            font-family: var(--font-mono);
+            font-size: clamp(6px, 0.85vh, 7.5px);
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: #38bdf8;
+            background: rgba(4, 10, 18, 0.92);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            padding: 1px 4px;
+            border-radius: 2px;
+            z-index: 2;
+        }
+        .diag-house-label-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 2px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: clamp(6.5px, 0.95vh, 8.5px);
+            background: linear-gradient(to top, rgba(2, 6, 14, 0.96) 0%, rgba(2, 6, 14, 0.82) 75%, transparent 100%);
+            z-index: 2;
+            box-sizing: border-box;
+            gap: 4px;
+        }
+        .diag-house-name {
+            color: #f1f5f9;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+        .diag-house-val {
+            color: #38bdf8;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-left: 4px;
+        }
+
+        /* Action Buttons Row (12.0% of column, guaranteed bottom clearance!) */
+        .ending-buttons-row {
+            height: 12.0%;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: clamp(6px, 1vw, 12px);
+            padding: clamp(3px, 0.5vh, 5px);
+            background: #040810;
+            border: 1.5px solid var(--ending-border);
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95), inset 0 0 15px rgba(255, 42, 75, 0.08);
+            align-items: stretch;
+            min-height: 0;
+        }
+        .cyber-action-btn {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: clamp(9px, 1.5vh, 13px);
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .cyber-action-btn.primary {
+            background: linear-gradient(135deg, rgba(255, 42, 75, 0.16) 0%, rgba(16, 6, 10, 0.95) 100%);
+            border: 1.5px solid var(--ending-accent);
+            color: #ffe4e6;
+            box-shadow: 0 0 16px var(--ending-glow-subtle);
+        }
+        .cyber-action-btn.primary:hover {
+            background: linear-gradient(135deg, rgba(255, 42, 75, 0.35) 0%, rgba(159, 18, 57, 0.95) 100%);
+            box-shadow: 0 0 28px var(--ending-glow);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .cyber-action-btn.secondary {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.16) 0%, rgba(6, 18, 30, 0.95) 100%);
+            border: 1.5px solid #38bdf8;
+            color: #e0f2fe;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+        }
+        .cyber-action-btn.secondary:hover {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(14, 116, 144, 0.95) 100%);
+            box-shadow: 0 0 28px rgba(56, 189, 248, 0.8);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .cyber-action-btn.admin {
+            flex: 0 0 clamp(90px, 9vw, 130px);
+            background: rgba(168, 85, 247, 0.14);
+            border: 1.5px solid #a855f7;
+            color: #d8b4fe;
+            font-size: clamp(8px, 1.2vh, 11px);
+        }
+        .cyber-action-btn.admin:hover {
+            background: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+        .cyber-action-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Themes for 5 Ending Tiers */
+        .ending-tier-f { 
+            --ending-accent: #ff2a4b; 
+            --ending-glow: rgba(255, 42, 75, 0.7); 
+            --ending-glow-subtle: rgba(255, 42, 75, 0.18); 
+            --ending-border: rgba(255, 42, 75, 0.35); 
+        }
+        .ending-tier-d { 
+            --ending-accent: #f59e0b; 
+            --ending-glow: rgba(245, 158, 11, 0.7); 
+            --ending-glow-subtle: rgba(245, 158, 11, 0.18); 
+            --ending-border: rgba(245, 158, 11, 0.35); 
+        }
+        .ending-tier-c { 
+            --ending-accent: #38bdf8; 
+            --ending-glow: rgba(56, 189, 248, 0.7); 
+            --ending-glow-subtle: rgba(56, 189, 248, 0.18); 
+            --ending-border: rgba(56, 189, 248, 0.35); 
+        }
+        .ending-tier-b { 
+            --ending-accent: #a855f7; 
+            --ending-glow: rgba(168, 85, 247, 0.7); 
+            --ending-glow-subtle: rgba(168, 85, 247, 0.18); 
+            --ending-border: rgba(168, 85, 247, 0.35); 
+        }
+        .ending-tier-a { 
+            --ending-accent: #10b981; 
+            --ending-glow: rgba(16, 185, 129, 0.7); 
+            --ending-glow-subtle: rgba(16, 185, 129, 0.18); 
+            --ending-border: rgba(16, 185, 129, 0.35); 
+        }
+
+        /* =========================================================================
+           ADMIN ENDINGS TEST SUITE MODAL (ADMIN ONLY)
+           ========================================================================= */
+        .admin-endings-modal-box {
+            position: relative;
+            max-width: 680px;
+            width: 95%;
+            background: #090b10;
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.25), 0 20px 40px rgba(0,0,0,0.85);
+            border-radius: 8px;
+            padding: 22px 24px;
+            color: #e2e8f0;
+            font-family: var(--font-sans);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .admin-endings-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .admin-ending-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+        .admin-ending-card:hover {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        .admin-ending-card.tier-f { border-left: 4px solid #ef4444; }
+        .admin-ending-card.tier-d { border-left: 4px solid #f59e0b; }
+        .admin-ending-card.tier-c { border-left: 4px solid #38bdf8; }
+        .admin-ending-card.tier-b { border-left: 4px solid #a855f7; }
+        .admin-ending-card.tier-a { border-left: 4px solid #10b981; }
+
+        .admin-ending-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+        }
+        .admin-ending-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .admin-ending-badge {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 1px 7px;
+            border-radius: 3px;
+        }
+        .admin-ending-badge.tier-f { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+        .admin-ending-badge.tier-d { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b; }
+        .admin-ending-badge.tier-c { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+        .admin-ending-badge.tier-b { background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid #a855f7; }
+        .admin-ending-badge.tier-a { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }
+
+        .admin-ending-title {
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #f8fafc;
+        }
+        .admin-ending-desc {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+        .admin-ending-btns {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .admin-preview-btn {
+            padding: 6px 10px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+            transition: all 0.2s ease;
+        }
+        .admin-preview-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        .admin-taskbar-item:hover {
+            border-color: rgba(239, 68, 68, 0.5) !important;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.25) !important;
+        }
     </style>
 </head>
 <body>
@@ -6907,6 +8222,16 @@
                 </div>
                 <span class="nav-label"><span class="nav-idx">06</span> PROTOCOL</span>
             </div>
+
+            <!-- 07 [ADMIN] ENDINGS TEST SUITE (ADMIN ONLY - REMOVED ON PUBLISH) -->
+            <div class="nav-item admin-taskbar-item" id="nav-item-admin-endings" onclick="openAdminEndingsModal()" data-tooltip="07 // [ADMIN] ENDINGS" title="[ADMIN ONLY] Preview & Test All 5 Game Endings">
+                <div class="nav-svg-wrap">
+                    <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                </div>
+                <span class="nav-label"><span class="nav-idx" style="color: #ef4444;">07</span> [ADMIN] ENDINGS</span>
+            </div>
         </div>
 
         <div class="taskbar-profile">
@@ -6946,8 +8271,9 @@
                 </span>
             </button>
 
-            <!-- Right-Hand Controls: Bank, Admin Advance, Timer -->
+            <!-- Right-Hand Controls: Bank, Admin Endings, Admin Advance, Timer -->
             <button class="toggle-btn top-bank-btn" id="top-bank-btn" style="border-color: #10b981; color: #10b981; font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="openBankDashboard()">🏦 Bank ($<span id="top-bar-bank-val">0</span>)</button>
+            <button class="toggle-btn admin-btn" id="btn-admin-endings" style="border-color: #ef4444; color: #fca5a5; background: rgba(239,68,68,0.12); font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="openAdminEndingsModal()" title="[ADMIN TOOL] Preview and test all 5 game endings (F, D, C, B, A).">🎬 [ADMIN] Endings</button>
             <button class="toggle-btn admin-btn" id="btn-advance-phase" style="border-color: #a855f7; color: #d8b4fe; background: rgba(168,85,247,0.12); font-weight: 700; white-space: nowrap; flex-shrink: 0; padding: 3px 8px; font-size: 0.72rem;" onclick="advancePhaseAction()" title="[ADMIN TOOL] Immediately fast-forward to the end of the phase. Not present in final game release.">⚙️ [ADMIN] Advance Phase</button>
             <div class="phase-timer" id="hud-timer">05:00 [PRE-MARKET]</div>
         </div>
@@ -7254,7 +8580,7 @@
                             <div class="margin-ctrl-header">
                                 <div style="display: flex; align-items: center; gap: 4px;">
                                     <span class="margin-ctrl-title">LEVERAGE:</span>
-                                    <span id="margin-mult-badge" class="margin-badge-tier tier-4" onclick="promptCustomMargin()" title="Click to set custom multiplier">4.0×</span>
+                                    <span id="margin-mult-badge" class="margin-badge-tier tier-1" onclick="promptCustomMargin()" title="Click to set custom multiplier">1.0×</span>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 4px;">
                                     <div class="margin-stepper-wrap">
@@ -7262,22 +8588,22 @@
                                         <button type="button" class="margin-step-btn" onclick="stepMarginMultiplier(0.5)" title="Increase Multiplier (+0.5×)">+</button>
                                     </div>
                                     <label class="margin-chk-wrap" title="Toggle Margin Borrowing on/off">
-                                        <input type="checkbox" id="margin-toggle-chk" checked onchange="toggleMarginCheckbox(this.checked)">
-                                        <span class="margin-chk-text">ON</span>
+                                        <input type="checkbox" id="margin-toggle-chk" onchange="toggleMarginCheckbox(this.checked)">
+                                        <span class="margin-chk-text off">OFF</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="margin-presets-row">
-                                <button type="button" class="mult-pill" data-mult="1" onclick="setMarginMultiplier(1, this)" title="1x Cash Only (No Borrowing)">1×</button>
+                                <button type="button" class="mult-pill active" data-mult="1" onclick="setMarginMultiplier(1, this)" title="1x Cash Only (No Borrowing)">1×</button>
                                 <button type="button" class="mult-pill" data-mult="2" onclick="setMarginMultiplier(2, this)" title="2x Leverage (50% Margin)">2×</button>
                                 <button type="button" class="mult-pill" data-mult="3" onclick="setMarginMultiplier(3, this)" title="3x Leverage (33% Margin)">3×</button>
-                                <button type="button" class="mult-pill mult-pill-danger active" data-mult="4" onclick="setMarginMultiplier(4, this)" title="4x Maximum Legal Margin Ceiling (KRX 25% Requirement)">4× MAX</button>
+                                <button type="button" class="mult-pill mult-pill-danger" data-mult="4" onclick="setMarginMultiplier(4, this)" title="4x Maximum Legal Margin Ceiling (KRX 25% Requirement)">4× MAX</button>
                                 <button type="button" class="mult-pill mult-pill-custom" id="btn-custom-margin" onclick="promptCustomMargin()" title="Set Custom Multiplier (1.0x to 4.0x MAX)">SET</button>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 0.68rem; color: #94a3b8; margin: 1px 0;">
                             <span>Est: <b style="font-family: var(--font-mono); font-weight: 700; color: #fff; font-size: 0.78rem;" id="trade-est-val">$10,335.70</b></span>
-                            <span id="trade-margin-breakdown" style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">Req: <b style="color:#10b981;">$2,583.93</b> | Debt: <b style="color:#f59e0b;">$7,751.78</b></span>
+                            <span id="trade-margin-breakdown" style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">Req: <b style="color:#10b981;">$10,335.70</b> | Debt: <b style="color:#f59e0b;">$0.00</b></span>
                         </div>
                         <button class="btn-order-exec" id="btn-exec-trade" onclick="openOrderConfirmModal()" style="padding: 6px; font-size: 0.82rem;">
                             CONFIRM BUY ORDER
@@ -8449,7 +9775,8 @@
                 <span class="badass-radar-pip"></span>
                 <span class="badass-telemetry-protocol">KRX DIRECT ORDER ROUTING // L2 PROTOCOL</span>
             </div>
-            <div class="badass-telemetry-right">
+            <div class="badass-telemetry-right" style="display: flex; align-items: center; gap: 8px;">
+                <span class="badass-clock-paused-tag" id="badass-order-clock-status"><span style="font-size:0.65rem;">⏸</span> MARKET CLOCK FROZEN</span>
                 <span class="badass-ticket-tag" id="badass-order-ticket">TICKET #KRX-8821</span>
             </div>
         </div>
@@ -8672,6 +9999,386 @@
 <!-- FLOATING CYBER TOAST CONTAINER -->
 <div id="settlement-toast-container"></div>
 
+<!-- =========================================================================
+     FREE FALL 2.0 // CINEMATIC ENDING SCREEN OVERLAY
+     Displays animated video loop, rating tier (F, D, C, B, A), house progress,
+     solvency audit breakdown, and restart/menu navigation.
+     ========================================================================= -->
+<!-- =========================================================================
+     FREE FALL 2.0 // CINEMATIC ENDING SCREEN OVERLAY
+     Matches ENDING 1 reference layout with zero blackout & full video soul.
+     ========================================================================= -->
+<div id="ending-screen-overlay" class="ending-screen-overlay ending-tier-f" style="display:none;">
+    <!-- Ambient blurred background video for seamless ultrawide / letterbox immersion -->
+    <video class="ending-ambient-backdrop" id="ending-ambient-video" autoplay loop muted playsinline poster="assets/ending/ENDING 1 - image.png">
+        <source id="ending-ambient-source" src="assets/ending/ENDING 1 - vid.mp4" type="video/mp4">
+        <source src="web/assets/ending/ENDING 1 - vid.mp4" type="video/mp4">
+    </video>
+
+    <div class="ending-stage-sync">
+        <!-- Looping Background Video / Fallback Image (100% Brightness & Zero Vignette) -->
+        <div class="ending-bg-video-wrap">
+            <video id="ending-video-element" class="ending-bg-video" autoplay loop muted playsinline poster="assets/ending/ENDING 1 - image.png">
+                <source id="ending-video-source" src="assets/ending/ENDING 1 - vid.mp4" type="video/mp4">
+                <source src="web/assets/ending/ENDING 1 - vid.mp4" type="video/mp4">
+            </video>
+            <img id="ending-fallback-img" class="ending-bg-image" src="assets/ending/ENDING 1 - image.png" onerror="this.onerror=null; this.src='web/assets/ending/ENDING 1 - image.png';" alt="Ending Background" />
+            <img id="ending-victory-still" class="ending-victory-still" src="assets/ending/ENDING A - 2.png" onerror="this.onerror=null; this.src='web/assets/ending/ENDING A - 2.png';" alt="Victory Dawn" />
+            <div id="ending-sunlight-bloom" class="ending-sunlight-bloom">
+                <div class="sunlight-dawn-flash"></div>
+                <div class="sunlight-dawn-burst"></div>
+                <div class="sunlight-god-beams"></div>
+                <div class="sunlight-anamorphic-flare"></div>
+            </div>
+            <div class="ending-bottom-vignette"></div>
+        </div>
+
+        <!-- 4-Corner Ambient Telemetry HUD (Matching reference image) -->
+        <div class="ending-corner-hud top-left">
+            <div class="corner-title">FREE FALL 2.0</div>
+            <div class="corner-sub">FINANCIAL SURVIVAL SIMULATOR</div>
+        </div>
+        <div class="ending-corner-hud top-right">
+            <div class="corner-status" id="ending-corner-tag">// ENDING: F - SUPER FAIL</div>
+            <div class="corner-sub" id="ending-corner-sub">SESSION TERMINATED</div>
+        </div>
+        <div class="ending-corner-hud bottom-left">
+            <span class="corner-bars">||</span> CAPITAL ERASES EVERYTHING
+        </div>
+        <div class="ending-corner-hud bottom-right">
+            <div>YOU PLAYED THE MARKET.</div>
+            <div class="corner-tag">THE MARKET WON.</div>
+        </div>
+
+        <!-- Right-Hand Tactical Column: AAA Miracle Edition -->
+        <div class="ending-tactical-column" id="ending-tactical-column">
+            <!-- Hero Title Block: SUPER FAIL [F] -->
+            <div class="ending-hero-block">
+                <div class="ending-hero-title-row">
+                    <span class="ending-hero-main-title" id="ending-title-text">SUPER FAIL</span>
+                    <span class="ending-grade-bracket-box" id="ending-bracket-grade">F</span>
+                </div>
+                <div class="ending-hero-tagline" id="ending-subtitle">— THE MARKET DOESN'T FORGIVE. —</div>
+            </div>
+
+            <!-- Box 1: FINAL PORTFOLIO VALUE (REKT CAPITAL SETTLEMENT) -->
+            <div class="ending-cyber-panel box1-container">
+                <div class="panel-corner-bracket panel-bracket-tl"></div>
+                <div class="panel-corner-bracket panel-bracket-tr"></div>
+                <div class="panel-corner-bracket panel-bracket-bl"></div>
+                <div class="panel-corner-bracket panel-bracket-br"></div>
+                
+                <div class="panel-header-topline">
+                    <span class="panel-tag-code" id="ending-box1-hud-title">// CAPITAL AUDIT: SETTLEMENT</span>
+                    <span class="hud-status-badge"><span class="hud-dot-pulse"></span><span id="ending-box1-hud-status">TERMINAL REKT</span></span>
+                </div>
+
+                <div class="panel-header-flex">
+                    <div class="panel-label-wrap">
+                        <div class="panel-icon-badge">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                <polyline points="17 6 23 6 23 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="panel-label-column">
+                            <span class="panel-main-label">FINAL PORTFOLIO VALUE</span>
+                            <span class="panel-sub-label" id="ending-box1-sub-telemetry">KRX SETTLEMENT // LEVERAGE: 4.0X FATAL</span>
+                        </div>
+                    </div>
+                    <div class="panel-val-column">
+                        <span class="panel-big-number" id="ending-val-portfolio">$0.00</span>
+                        <span class="panel-sub-number" id="ending-val-pnl">(-100.00%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Box 2: PROGRESS (REACTOR PLASMA TRACK & CYBER CARDS) -->
+            <div class="ending-cyber-panel box2-container">
+                <div class="panel-corner-bracket panel-bracket-tl"></div>
+                <div class="panel-corner-bracket panel-bracket-tr"></div>
+                <div class="panel-corner-bracket panel-bracket-bl"></div>
+                <div class="panel-corner-bracket panel-bracket-br"></div>
+
+                <div class="panel-header-topline">
+                    <span class="panel-tag-code">// SOLVENCY HORIZON: 30-MIN AUDIT</span>
+                    <span class="hud-status-badge" id="ending-box2-hud-target">TARGET: NORMAL HOUSE</span>
+                </div>
+
+                <div class="box2-header-flex">
+                    <div class="panel-label-wrap">
+                        <div class="panel-icon-badge">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="12" cy="12" r="8"></circle>
+                                <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+                                <path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>
+                            </svg>
+                        </div>
+                        <div class="panel-label-column">
+                            <span class="panel-main-label" id="ending-progress-label">TARGET PROGRESS</span>
+                            <span class="panel-sub-label" id="ending-box2-sub-target">REQUIRED ASSETS: $200,000.00</span>
+                        </div>
+                    </div>
+                    <div class="panel-val-column">
+                        <span class="panel-big-number" id="ending-val-progress">12.4%</span>
+                        <span class="panel-sub-number" id="ending-val-tier-name">[ SUPER FAIL ]</span>
+                    </div>
+                </div>
+
+                <!-- Capsule Progress Bar with Tier-Tailored Energy Reactor & Segment Ticks -->
+                <div class="ending-capsule-track">
+                    <div class="track-threshold-tick tick-25" title="Tier D Floor"></div>
+                    <div class="track-threshold-tick tick-50" title="Tier C Floor"></div>
+                    <div class="track-threshold-tick tick-75" title="Tier B Floor"></div>
+                    <div class="track-threshold-tick tick-100" title="Tier A Goal"></div>
+                    <div class="ending-capsule-fill" id="ending-capsule-fill" style="width: 12.4%;">
+                        <div class="capsule-head-spark"></div>
+                    </div>
+                </div>
+
+                <!-- 5-Tier Scale Divider -->
+                <div class="ending-tiers-scale-grid">
+                    <div class="tier-scale-box active" id="ending-scale-f">
+                        <span class="tier-scale-range">0-24%</span>
+                        <span class="tier-scale-letter">F</span>
+                    </div>
+                    <div class="tier-scale-box" id="ending-scale-d">
+                        <span class="tier-scale-range">25-49%</span>
+                        <span class="tier-scale-letter">D</span>
+                    </div>
+                    <div class="tier-scale-box" id="ending-scale-c">
+                        <span class="tier-scale-range">50-74%</span>
+                        <span class="tier-scale-letter">C</span>
+                    </div>
+                    <div class="tier-scale-box" id="ending-scale-b">
+                        <span class="tier-scale-range">75-99%</span>
+                        <span class="tier-scale-letter">B</span>
+                    </div>
+                    <div class="tier-scale-box" id="ending-scale-a">
+                        <span class="tier-scale-range">100%</span>
+                        <span class="tier-scale-letter">A</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Box 3: RUN DIAGNOSIS (Target Property & Detailed Casualty/Performance Audit - Matches Image 5) -->
+            <div class="ending-cyber-panel box3-container diagnosis-container">
+                <div class="panel-corner-bracket panel-bracket-tl"></div>
+                <div class="panel-corner-bracket panel-bracket-tr"></div>
+                <div class="panel-corner-bracket panel-bracket-bl"></div>
+                <div class="panel-corner-bracket panel-bracket-br"></div>
+
+                <div class="panel-header-topline diagnosis-topline">
+                    <div class="diagnosis-title-wrap">
+                        <div class="diagnosis-icon-badge">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <span class="diagnosis-heading-text">// RUN DIAGNOSIS</span>
+                    </div>
+                    <span class="hud-status-badge"><span class="hud-dot-pulse"></span><span id="ending-box3-hud-status">SYSTEM AUDIT ACTIVE</span></span>
+                </div>
+
+                <div class="diagnosis-grid-layout">
+                    <!-- Column 1: KEY METRICS -->
+                    <div class="diagnosis-col-metrics">
+                        <div class="diag-col-header">KEY METRICS</div>
+                        <div class="diag-metric-row">
+                            <span class="diag-metric-name">PEAK EQUITY</span>
+                            <span class="diag-metric-val" id="ending-diag-peak">$1,062,000</span>
+                        </div>
+                        <div class="diag-metric-row">
+                            <span class="diag-metric-name">FINAL EQUITY</span>
+                            <span class="diag-metric-val" id="ending-diag-final">$750,000</span>
+                        </div>
+                        <div class="diag-metric-row">
+                            <span class="diag-metric-name">MAX LEVERAGE</span>
+                            <span class="diag-metric-val" id="ending-diag-leverage">4.0&times;</span>
+                        </div>
+                        <div class="diag-metric-row">
+                            <span class="diag-metric-name">PROPERTY GAP</span>
+                            <span class="diag-metric-val metric-negative" id="ending-diag-gap">-$250,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: ASSESSMENT & VERDICT -->
+                    <div class="diagnosis-col-assessment">
+                        <div class="diag-assessment-top">
+                            <div class="diag-alert-badge alert" id="ending-diag-alert-icon">
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div class="diag-assessment-titles">
+                                <span class="diag-assess-category" id="ending-diag-category">PRIMARY FAILURE</span>
+                                <span class="diag-assess-headline" id="ending-diag-headline">INSUFFICIENT FINAL CAPITAL</span>
+                            </div>
+                        </div>
+                        <p class="diag-narrative-p" id="ending-diag-desc">
+                            You reached high returns, but couldn't secure enough capital to claim the property. One final push was needed.
+                        </p>
+                        <div class="diag-verdict-block">
+                            <span class="diag-verdict-kicker">// FINAL VERDICT</span>
+                            <span class="diag-verdict-title" id="ending-status-title">ONE FINAL GAP.</span>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: CHOSEN TARGET HOUSE SHOWCASE VIEWPORT -->
+                    <div class="diagnosis-col-house">
+                        <div class="diag-house-frame">
+                            <img class="diag-house-img" id="ending-status-img" src="assets/house_normal.jpg" alt="Target House Goal" onerror="this.onerror=null; this.src='web/assets/house_normal.jpg';" />
+                            <div class="diag-house-overlay"></div>
+                            <div class="diag-house-tag" id="ending-diag-house-tag">TARGET PROPERTY</div>
+                            <div class="diag-house-label-bar">
+                                <span class="diag-house-name" id="ending-diag-house-name">NORMAL HOUSE</span>
+                                <span class="diag-house-val" id="ending-diag-house-val">$200,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons Row (AAA Tactical Cockpit Dock) -->
+            <div class="ending-buttons-row">
+                <button class="cyber-action-btn primary" id="btn-ending-menu" onclick="returnToMainMenuFromEnding()">
+                    <span>&larr;</span>
+                    <span>BACK TO MAIN MENU</span>
+                </button>
+                <button class="cyber-action-btn secondary" id="btn-ending-restart" onclick="restartSimulationFromEnding()">
+                    <span>&#x21bb;</span>
+                    <span>RESTART SIMULATION</span>
+                </button>
+                <button class="cyber-action-btn admin" id="ending-btn-admin-close" style="display:none;" onclick="closeEndingScreen()">
+                    <span>[ADMIN] CLOSE</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     [ADMIN] ENDING SYSTEM TEST SUITE MODAL (ADMIN ONLY)
+     Removable when game gets published. Accessible via Left Taskbar 07 & Topbar.
+     ========================================================================= -->
+<div id="admin-endings-modal" class="s1-modal-backdrop" style="display:none;" onclick="if(event.target===this) closeAdminEndingsModal()">
+    <div class="admin-endings-modal-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(239,68,68,0.3); padding-bottom:10px;">
+            <div>
+                <div style="font-family:var(--font-mono); font-size:1.1rem; font-weight:800; color:#ef4444; letter-spacing:0.08em; display:flex; align-items:center; gap:8px;">
+                    <span>🎮 [ADMIN] ENDING SYSTEM TEST BENCH</span>
+                </div>
+                <div style="font-size:0.75rem; color:#94a3b8; font-family:var(--font-mono); margin-top:3px;">
+                    Directly trigger &amp; test all 5 endings (F, D, C, B, A) with looping video background &amp; live cards
+                </div>
+            </div>
+            <button onclick="closeAdminEndingsModal()" style="background:transparent; border:none; color:#94a3b8; font-size:1.4rem; cursor:pointer; line-height:1;">&times;</button>
+        </div>
+
+        <div style="margin-top:12px; font-size:0.75rem; color:#fca5a5; background:rgba(239,68,68,0.1); border:1px dashed #ef4444; padding:8px 12px; border-radius:4px; font-family:var(--font-mono);">
+            ⚠️ <strong>Admin Environment Notice:</strong> This panel is rendered for testing only and will be stripped prior to official production release.
+        </div>
+
+        <div class="admin-endings-grid">
+            <!-- Tier F: Super fail -->
+            <div class="admin-ending-card" style="border-left: 4px solid #ef4444;">
+                <div style="flex:1;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-weight:800; font-family:var(--font-mono); color:#ef4444; font-size:0.95rem;">TIER F: SUPER FAIL (0–24%)</span>
+                        <span style="font-size:0.65rem; background:rgba(239,68,68,0.2); color:#fca5a5; padding:2px 6px; border-radius:3px; font-family:var(--font-mono);">VIDEO INCLUDED</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">
+                        Triggers at progress 0–24% OR instantly when liquidity risk falls below 20.0%. Features animated demon/crash scene video in continuous loop.
+                    </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                    <button class="toggle-btn" style="border-color:#ef4444; color:#ef4444; background:rgba(239,68,68,0.15); font-weight:800; font-size:0.75rem; padding:6px 12px; white-space:nowrap;" onclick="previewAdminEnding('F', { reason: 'completion' })">
+                        ▶ PREVIEW ENDING F
+                    </button>
+                    <button class="toggle-btn" style="border-color:#f87171; color:#fca5a5; font-size:0.7rem; padding:4px 8px; white-space:nowrap;" onclick="simulateLiquidityCrashTest()">
+                        💥 TEST &lt;20% RISK CRASH
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tier D: Fail -->
+            <div class="admin-ending-card" style="border-left: 4px solid #f59e0b;">
+                <div style="flex:1;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-weight:800; font-family:var(--font-mono); color:#f59e0b; font-size:0.95rem;">TIER D: FAIL (25–49%)</span>
+                        <span style="font-size:0.65rem; background:rgba(245,158,11,0.2); color:#fde68a; padding:2px 6px; border-radius:3px; font-family:var(--font-mono);">VIDEO INCLUDED</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">
+                        "DEBT WON. D" — Capital depleted, missed target house, forced into distant suburban relocation. Features animated frost demon video.
+                    </div>
+                </div>
+                <button class="toggle-btn" style="border-color:#f59e0b; color:#f59e0b; background:rgba(245,158,11,0.15); font-weight:800; font-size:0.75rem; padding:6px 12px; white-space:nowrap;" onclick="previewAdminEnding('D')">
+                    ▶ PREVIEW ENDING D
+                </button>
+            </div>
+
+            <!-- Tier C: Neutral -->
+            <div class="admin-ending-card" style="border-left: 4px solid #38bdf8;">
+                <div style="flex:1;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-weight:800; font-family:var(--font-mono); color:#38bdf8; font-size:0.95rem;">TIER C: NEUTRAL ENDING (50–74%)</span>
+                        <span style="font-size:0.65rem; background:rgba(56,189,248,0.2); color:#bae6fd; padding:2px 6px; border-radius:3px; font-family:var(--font-mono);">VIDEO INCLUDED</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">
+                        "STILL STANDING. C" — Survived the market plunge with principal intact. Features animated crystal golem video.
+                    </div>
+                </div>
+                <button class="toggle-btn" style="border-color:#38bdf8; color:#38bdf8; background:rgba(56,189,248,0.15); font-weight:800; font-size:0.75rem; padding:6px 12px; white-space:nowrap;" onclick="previewAdminEnding('C')">
+                    ▶ PREVIEW ENDING C
+                </button>
+            </div>
+
+            <!-- Tier B: Almost -->
+            <div class="admin-ending-card" style="border-left: 4px solid #a855f7;">
+                <div style="flex:1;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-weight:800; font-family:var(--font-mono); color:#a855f7; font-size:0.95rem;">TIER B: ALMOST (75–99%)</span>
+                        <span style="font-size:0.65rem; background:rgba(168,85,247,0.2); color:#e9d5ff; padding:2px 6px; border-radius:3px; font-family:var(--font-mono);">VIDEO INCLUDED</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">
+                        "ALMOST THERE. B" — High performance; within striking distance of house target with conditional mortgage clearance. Features animated volcanic titan video.
+                    </div>
+                </div>
+                <button class="toggle-btn" style="border-color:#a855f7; color:#a855f7; background:rgba(168,85,247,0.15); font-weight:800; font-size:0.75rem; padding:6px 12px; white-space:nowrap;" onclick="previewAdminEnding('B')">
+                    ▶ PREVIEW ENDING B
+                </button>
+            </div>
+
+            <!-- Tier A: Win -->
+            <div class="admin-ending-card" style="border-left: 4px solid #10b981;">
+                <div style="flex:1;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-weight:800; font-family:var(--font-mono); color:#10b981; font-size:0.95rem;">TIER A: WIN (100%+)</span>
+                        <span style="font-size:0.65rem; background:rgba(16,185,129,0.2); color:#a7f3d0; padding:2px 6px; border-radius:3px; font-family:var(--font-mono);">VIDEO INCLUDED</span>
+                        <span style="font-size:0.65rem; background:rgba(234,179,8,0.2); color:#fef08a; padding:2px 6px; border-radius:3px; font-family:var(--font-mono);">SPECIAL: COLLAPSE &amp; SUNLIGHT</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">
+                        "MARKET CONQUERED. A" — Goal fully achieved! Features non-looping demon collapse video, transition to victory dawn still, and radiant sunlight shining FX.
+                    </div>
+                </div>
+                <button class="toggle-btn" style="border-color:#10b981; color:#10b981; background:rgba(16,185,129,0.15); font-weight:800; font-size:0.75rem; padding:6px 12px; white-space:nowrap;" onclick="previewAdminEnding('A')">
+                    ▶ PREVIEW ENDING A
+                </button>
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:14px; border-top:1px solid rgba(255,255,255,0.08); padding-top:12px;">
+            <button class="toggle-btn" onclick="closeAdminEndingsModal()" style="padding:6px 16px; font-size:0.8rem;">CLOSE TEST BENCH</button>
+        </div>
+    </div>
+</div>
+
 <script>
 // Universal asset auto-healer for GitHub Pages & Localhost
 window.addEventListener('error', (e) => {
@@ -8758,7 +10465,11 @@ function openS1Modal(type) {
 }
 
 function closeS1Modals() {
-    document.querySelectorAll('.s1-modal-backdrop').forEach(m => m.classList.remove('active'));
+    const orderModal = document.getElementById('order-confirm-modal');
+    if (orderModal && orderModal.classList.contains('active')) {
+        closeOrderConfirmModal();
+    }
+    document.querySelectorAll('.s1-modal-backdrop:not(#order-confirm-modal)').forEach(m => m.classList.remove('active'));
 }
 
 window.addEventListener('keydown', (e) => {
@@ -9434,7 +11145,7 @@ async function confirmTargetAndStart() {
     if (!window.activeScenarioId) {
         selectMarketScenario('random', false);
     }
-    const st = ClientEngine.init(10000, gameState.targetType, 0.25);
+    const st = ClientEngine.init(10000, gameState.targetType, 1.0);
     updateHUD(st);
     try {
         await fetch('/api/init', {
@@ -9443,7 +11154,7 @@ async function confirmTargetAndStart() {
             body: JSON.stringify({
                 initial_capital: 10000,
                 target_house_type: gameState.targetType,
-                initial_margin_ratio: 0.25,
+                initial_margin_ratio: 1.0,
                 scenario: window.activeScenarioId
             })
         });
@@ -10309,14 +12020,14 @@ function setOrderQtyMax() {
         const curHolding = (ClientEngine && ClientEngine.holdings) ? (ClientEngine.holdings[gameState.currentStock] || 0) : 0;
         const qtyEl = document.getElementById('trade-qty');
         if (qtyEl) {
-            qtyEl.value = Math.max(1, Math.floor(curHolding));
+            qtyEl.value = Math.max(0, Math.floor(curHolding));
             updateEstimatedVal();
         }
     } else {
         const mult = (useMargin && ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
         const cash = (ClientEngine && ClientEngine.cash) ? ClientEngine.cash : 10000;
         const maxCash = cash * mult;
-        const maxShares = Math.max(1, Math.floor(maxCash / price));
+        const maxShares = Math.max(0, Math.floor(maxCash / price));
         const qtyEl = document.getElementById('trade-qty');
         if (qtyEl) {
             qtyEl.value = maxShares;
@@ -10382,13 +12093,13 @@ function setMarginMultiplier(mult, el) {
 }
 
 function stepMarginMultiplier(delta) {
-    const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
+    const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 1.0;
     const next = Math.max(1.0, Math.min(4.0, Math.round((cur + delta) * 10) / 10));
     setMarginMultiplier(next);
 }
 
 function promptCustomMargin() {
-    const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
+    const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 1.0;
     const input = prompt(`Enter custom margin multiplier (1.0× to 4.0× MAX):\nCurrently: ${cur}×`, cur);
     if (input !== null) {
         const val = parseFloat(input);
@@ -10414,7 +12125,7 @@ function toggleMarginCheckbox(checked) {
         });
     } else {
         if (chkText) { chkText.textContent = 'ON'; chkText.classList.remove('off'); }
-        const restoreMult = (ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 4.0;
+        const restoreMult = (ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 2.0;
         setMarginMultiplier(restoreMult);
     }
     updateEstimatedVal();
@@ -10453,14 +12164,25 @@ document.getElementById('trade-qty').addEventListener('input', updateEstimatedVa
 
 function openOrderConfirmModal() {
     pauseMarketTimer('ORDERING');
-    const qty = parseFloat(document.getElementById('trade-qty').value) || 1;
+    let qty = parseFloat(document.getElementById('trade-qty').value) || 1;
     const useMargin = document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false;
     const price = getCurrentSelectedStockPrice();
-    const est = qty * price;
     const marginMult = (useMargin && ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
     const isBuy = (gameState.orderAction === 'BUY');
     const curStockObj = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock) || { code: gameState.currentStock, name: gameState.currentStock, sector: 'Equities' };
 
+    // Auto-clamp if max buy was requested or if quantity exceeds purchasing power at current price
+    if (isBuy && ClientEngine && price > 0) {
+        const availCash = ClientEngine.cash || 0;
+        const maxCashPower = availCash * marginMult;
+        if (qty * price > maxCashPower + 0.10) {
+            qty = Math.max(1, Math.floor(maxCashPower / price));
+            const tradeQtyInput = document.getElementById('trade-qty');
+            if (tradeQtyInput) tradeQtyInput.value = qty;
+        }
+    }
+
+    const est = qty * price;
     const fmt = (n) => '$' + Number(n || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
     let reqCash = est;
@@ -10475,6 +12197,20 @@ function openOrderConfirmModal() {
         newDebt = 0;
     }
 
+    // Lock ticket quote specifications so execution price and quantity are completely frozen
+    gameState.pendingOrderQuote = {
+        ticker: gameState.currentStock,
+        code: curStockObj.code || gameState.currentStock,
+        action: gameState.orderAction,
+        qty: qty,
+        price: price,
+        est: est,
+        reqCash: reqCash,
+        newDebt: newDebt,
+        useMargin: useMargin,
+        marginMult: marginMult
+    };
+
     const modalBox = document.getElementById('badass-order-box');
     if (modalBox) {
         modalBox.className = 'badass-order-box ' + (isBuy ? 'theme-buy' : 'theme-sell');
@@ -10484,6 +12220,13 @@ function openOrderConfirmModal() {
     if (ticketEl) {
         const randHex = Math.floor(1000 + Math.random() * 9000);
         ticketEl.textContent = `TICKET #KRX-${randHex}`;
+    }
+
+    const clockStatusEl = document.getElementById('badass-order-clock-status');
+    if (clockStatusEl) {
+        const mins = String(Math.floor(sessionSecondsRemaining / 60)).padStart(2, '0');
+        const secs = String(sessionSecondsRemaining % 60).padStart(2, '0');
+        clockStatusEl.innerHTML = `<span style="font-size:0.65rem;">⏸</span> MARKET CLOCK FROZEN [${mins}:${secs}]`;
     }
 
     const badgeEl = document.getElementById('badass-action-badge');
@@ -10548,8 +12291,8 @@ function openOrderConfirmModal() {
     // Projected Margin Health Gauge
     const curState = (typeof ClientEngine !== 'undefined') ? ClientEngine.getState() : { metrics: { equity: 10000, margin_ratio: 100, margin_debt: 0, cash: 10000 }, bank: { balance: 0 }, holdings: {} };
     const curMetrics = curState.metrics || {};
-    const curEquity = (curMetrics.equity !== undefined) ? curMetrics.equity : 0;
-    const curMarginRatio = (curMetrics.margin_ratio !== undefined) ? curMetrics.margin_ratio : 100;
+    const curEquity = (curMetrics.equity !== undefined && curMetrics.equity > 0) ? curMetrics.equity : ((typeof ClientEngine !== 'undefined' && ClientEngine.cash !== undefined) ? ClientEngine.cash : 10000);
+    const curMarginRatio = (curMetrics.margin_ratio !== undefined && curMetrics.margin_ratio > 0) ? curMetrics.margin_ratio : 100;
     const curCash = (curMetrics.cash !== undefined) ? curMetrics.cash : ((typeof ClientEngine !== 'undefined') ? ClientEngine.cash : 10000);
     const curBank = (curState.bank && curState.bank.balance !== undefined) ? curState.bank.balance : ((typeof ClientEngine !== 'undefined') ? ClientEngine.bankSavings : 0);
     let postDebt = (curMetrics.margin_debt !== undefined) ? curMetrics.margin_debt : ((typeof ClientEngine !== 'undefined') ? ClientEngine.marginDebt : 0);
@@ -10573,16 +12316,22 @@ function openOrderConfirmModal() {
         postEquity = Math.max(0, curCash + (est - repay) + postStockVal + curBank - postDebt);
     }
 
-    const postRatio = postStockVal > 0 ? Math.max(0, Math.min(100, (postEquity / postStockVal) * 100)) : 100;
+    const postRatio = (postDebt <= 0) ? 100 : (postStockVal > 0 ? Math.max(0, Math.min(100, (postEquity / postStockVal) * 100)) : 100);
     const ratioTextEl = document.getElementById('badass-gauge-ratio-text');
-    if (ratioTextEl) ratioTextEl.textContent = `${curMarginRatio.toFixed(1)}% → ${postRatio.toFixed(1)}%`;
+    if (ratioTextEl) {
+        if (postDebt <= 0 && (!useMargin || marginMult <= 1.0)) {
+            ratioTextEl.textContent = '100% (Cash Settled)';
+        } else {
+            ratioTextEl.textContent = `${curMarginRatio.toFixed(1)}% → ${postRatio.toFixed(1)}%`;
+        }
+    }
     const barEl = document.getElementById('badass-gauge-bar');
     if (barEl) barEl.style.width = `${Math.max(5, Math.min(100, postRatio))}%`;
 
     const gaugeSub = document.getElementById('badass-gauge-sub');
     if (gaugeSub) {
         const buffer = postRatio - 20;
-        if (buffer < 5 && postDebt > 0) {
+        if (postDebt > 0 && buffer < 5) {
             gaugeSub.innerHTML = `⚠️ <b style="color:#ef4444;">CRITICAL DANGER:</b> Only ${buffer.toFixed(1)}% buffer before 20% forced liquidation!`;
         } else if (postDebt > 0) {
             gaugeSub.innerHTML = `🛡️ Solvency Buffer: <b style="color:#10b981;">+${buffer.toFixed(1)}%</b> above 20% liquidation threshold.`;
@@ -10618,14 +12367,20 @@ function closeOrderConfirmModal() {
 }
 
 async function executeConfirmedOrder() {
-    closeOrderConfirmModal();
-    const qty = parseFloat(document.getElementById('trade-qty').value) || 1;
-    const useMargin = document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false;
-    const marginMult = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0;
-    const price = getCurrentSelectedStockPrice();
+    const quote = gameState.pendingOrderQuote;
+    const qty = (quote && quote.qty) || parseFloat(document.getElementById('trade-qty').value) || 1;
+    const useMargin = (quote !== undefined && quote.useMargin !== undefined) ? quote.useMargin : (document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false);
+    const marginMult = (quote && quote.marginMult) || ((ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0);
+    const lockedPrice = (quote && quote.price) || getCurrentSelectedStockPrice();
+    const ticker = (quote && quote.ticker) || gameState.currentStock;
+    const action = (quote && quote.action) || gameState.orderAction;
 
-    // 1. Client-side immediate update
-    const resLocal = ClientEngine.trade(gameState.currentStock, gameState.orderAction, qty, useMargin, marginMult);
+    // 1. Client-side immediate update with locked quoted price
+    const resLocal = ClientEngine.trade(ticker, action, qty, useMargin, marginMult, lockedPrice);
+    
+    // Close modal and resume market timer now that trade matching has taken place
+    closeOrderConfirmModal();
+
     if (resLocal.state) {
         updateHUD(resLocal.state);
         if (resLocal.isPending && resLocal.deliveryItem) {
@@ -10646,18 +12401,18 @@ async function executeConfirmedOrder() {
         return;
     }
 
-    // 2. Server-side API update with complete state synchronization
+    // 2. Server-side API update with complete state synchronization and price lock
     try {
-        const curStock = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock);
+        const curStock = marketStocks.find(s => s.name === ticker || s.code === ticker);
         const res = await fetch('/api/trade', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ 
-                ticker: gameState.currentStock, 
-                code: curStock ? curStock.code : '',
-                action: gameState.orderAction, 
+                ticker: ticker, 
+                code: curStock ? curStock.code : (quote ? quote.code : ''),
+                action: action, 
                 shares: qty, 
-                price: price,
+                price: lockedPrice,
                 use_margin: useMargin,
                 margin_multiplier: marginMult
             })
@@ -10677,7 +12432,7 @@ async function executeConfirmedOrder() {
             }
             updateHUD(ClientEngine.getState());
         } else if (data && data.is_settlement_locked) {
-            showSettlementLockModalForTicker(gameState.currentStock);
+            showSettlementLockModalForTicker(ticker);
         }
     } catch(e) {
         console.warn("Trade API offline or sync error, running standalone:", e);
@@ -11702,30 +13457,43 @@ var marketTimerInterval = null;
 let activePauseReasons = new Set();
 
 function isMarketTimerPaused() {
-    return activePauseReasons.size > 0;
+    const orderModal = document.getElementById('order-confirm-modal');
+    const isOrderModalActive = orderModal && orderModal.classList.contains('active');
+    return activePauseReasons.size > 0 || isOrderModalActive;
 }
 
 function pauseMarketTimer(reason) {
-    if (!marketSessionStarted || sessionSecondsRemaining <= 0) return;
     activePauseReasons.add(reason);
-    updatePausedTimerDisplay();
+    if (marketSessionStarted && sessionSecondsRemaining > 0) {
+        updatePausedTimerDisplay();
+    }
 }
 
 function resumeMarketTimer(reason) {
     activePauseReasons.delete(reason);
-    if (activePauseReasons.size === 0) {
+    if (!isMarketTimerPaused()) {
         updateActiveTimerDisplay();
     }
 }
 
 function updatePausedTimerDisplay() {
     const el = document.getElementById('hud-timer');
-    if (!el) return;
     const mins = String(Math.floor(sessionSecondsRemaining / 60)).padStart(2, '0');
     const secs = String(sessionSecondsRemaining % 60).padStart(2, '0');
-    const reasonStr = Array.from(activePauseReasons).join(', ') || 'PAUSED';
-    el.textContent = `${mins}:${secs} [⏸ PAUSED // ${reasonStr}]`;
-    el.classList.add('timer-paused-blink');
+    const reasons = new Set(activePauseReasons);
+    const orderModal = document.getElementById('order-confirm-modal');
+    if (orderModal && orderModal.classList.contains('active')) {
+        reasons.add('ORDERING');
+    }
+    const reasonStr = Array.from(reasons).join(', ') || 'PAUSED';
+    if (el) {
+        el.textContent = `${mins}:${secs} [⏸ PAUSED // ${reasonStr}]`;
+        el.classList.add('timer-paused-blink');
+    }
+    const modalClock = document.getElementById('badass-order-clock-status');
+    if (modalClock && orderModal && orderModal.classList.contains('active')) {
+        modalClock.innerHTML = `<span style="font-size:0.65rem;">⏸</span> MARKET CLOCK FROZEN [${mins}:${secs}]`;
+    }
 }
 
 function updateActiveTimerDisplay() {
@@ -11865,7 +13633,7 @@ function startMarketSession() {
 
     if (marketTimerInterval) clearInterval(marketTimerInterval);
     marketTimerInterval = setInterval(() => {
-        if (activePauseReasons.size > 0) {
+        if (isMarketTimerPaused()) {
             updatePausedTimerDisplay();
             return;
         }
@@ -12038,24 +13806,540 @@ async function advancePhaseAction() {
     } catch(e) {}
 }
 
+/* =========================================================================
+   FREE FALL 2.0 // 5-TIER ENDING SYSTEM (F, D, C, B, A)
+   - 0 – 24%: F - Super fail
+   - 25 – 49%: D - Fail
+   - 50 – 74%: C - Neutral ending
+   - 75 – 99%: B - Almost
+   - 100%+: A - Win
+   Percentage is progress bar to target house.
+   Ending F also triggers instantly if player falls below 20% liquidity risk.
+   Includes animated looping video and admin preview bench.
+   ========================================================================= */
+const ENDINGS_CONFIG = {
+    'F': {
+        tier: 'F',
+        minPct: 0,
+        maxPct: 24.99,
+        title: 'SUPER FAIL',
+        bracket: 'F',
+        tagline: "— THE MARKET DOESN'T FORGIVE. —",
+        tierName: 'SUPER FAIL',
+        codeTag: 'ENDING [F]',
+        statusTitle: 'SYSTEMS OFFLINE',
+        accentColor: '#ef4444',
+        glowColor: 'rgba(239, 68, 68, 0.7)',
+        badgeClass: 'ending-tier-f',
+        videoSrc: 'assets/ending/ENDING 1 - vid.mp4',
+        imageSrc: 'assets/ending/ENDING 1 - image.png',
+        diagCategory: 'PRIMARY FAILURE',
+        diagHeadline: 'TOTAL LIQUIDATION CASCADE',
+        finalVerdict: 'TOTAL WIPEOUT.',
+        defaultNarrative: 'Your capital was liquidated in the panic crash. Unhedged margin wiped out your portfolio before the market could rebound.',
+        liquidationNarrative: 'Critical liquidity breach (<20% risk). Maintenance margin floor was broken, triggering an immediate algorithmic fire-sale.'
+    },
+    'D': {
+        tier: 'D',
+        minPct: 25,
+        maxPct: 49.99,
+        title: 'DEBT WON.',
+        bracket: 'D',
+        tagline: '— THE MARKET DIDN’T DESTROY YOU. YOUR LEVERAGE DID. —',
+        tierName: 'CRITICAL',
+        codeTag: 'ENDING [D]',
+        statusTitle: 'SUBURBAN RELOCATION // PANGYO',
+        accentColor: '#f59e0b',
+        glowColor: 'rgba(245, 158, 11, 0.7)',
+        badgeClass: 'ending-tier-d',
+        videoSrc: 'assets/ending/ENDING D vid.mp4',
+        imageSrc: 'assets/ending/ENDING 2 - image.png',
+        diagCategory: 'PRIMARY FAILURE',
+        diagHeadline: 'DEBT OVERRUN DRAIN',
+        finalVerdict: 'DEBT WON.',
+        defaultNarrative: 'Heavy debt and sharp drawdowns drained your equity. Falling well short of your goal, you are forced into suburban commuter housing.',
+        liquidationNarrative: 'Severe borrowing costs compressed your portfolio under market strain, leaving you far behind your Seoul property target.'
+    },
+    'C': {
+        tier: 'C',
+        minPct: 50,
+        maxPct: 74.99,
+        title: 'STILL STANDING.',
+        bracket: 'C',
+        tagline: '— THE MARKET DIDN’T BREAK YOU. YOU JUST DIDN’T GO FAR ENOUGH. —',
+        tierName: 'NEUTRAL',
+        codeTag: 'ENDING [C]',
+        statusTitle: 'MAPO DISTRICT // CAPITAL PRESERVED',
+        accentColor: '#38bdf8',
+        glowColor: 'rgba(56, 189, 248, 0.7)',
+        badgeClass: 'ending-tier-c',
+        videoSrc: 'assets/ending/ENDING C vid.mp4',
+        imageSrc: 'assets/ending/ENDING C img.png',
+        diagCategory: 'CAPITAL PRESERVED',
+        diagHeadline: 'SAFE HAVEN DEFENSE',
+        finalVerdict: 'STILL STANDING.',
+        defaultNarrative: 'Disciplined cash reserves protected your principal. Your capital survived intact, but purchasing your target property remains out of reach.',
+        liquidationNarrative: 'Defensive bank deposits saved your core capital during market volatility. Property acquisition must wait for another season.'
+    },
+    'B': {
+        tier: 'B',
+        minPct: 75,
+        maxPct: 99.99,
+        title: 'ALMOST THERE.',
+        bracket: 'B',
+        tagline: '— ONE FINAL GAP. WITHIN STRIKING DISTANCE. —',
+        tierName: 'ALMOST',
+        codeTag: 'ENDING [B]',
+        statusTitle: 'CONDITIONAL APPROVAL // PENDING MORTGAGE',
+        accentColor: '#a855f7',
+        glowColor: 'rgba(168, 85, 247, 0.7)',
+        badgeClass: 'ending-tier-b',
+        videoSrc: 'assets/ending/ENDING B - VID.mp4',
+        imageSrc: 'assets/ending/ENDING B - IMG.png',
+        diagCategory: 'PRIMARY FAILURE',
+        diagHeadline: 'INSUFFICIENT FINAL CAPITAL',
+        finalVerdict: 'ONE FINAL GAP.',
+        defaultNarrative: 'High-momentum trading brought you within inches of your goal. A modest mortgage bridge will cover the gap to secure your property deed.',
+        liquidationNarrative: 'Tremendous momentum brought your equity tantalizingly close to full cash settlement, establishing strong credit standing.'
+    },
+    'A': {
+        tier: 'A',
+        minPct: 100,
+        maxPct: Infinity,
+        title: 'MARKET CONQUERED.',
+        bracket: 'A',
+        tagline: '— THE KEYS ARE YOURS. DEBT-FREE SOVEREIGNTY. —',
+        tierName: 'WIN',
+        codeTag: 'ENDING [A]',
+        statusTitle: 'KEY TRANSFERRED // SOVEREIGN OWNER',
+        accentColor: '#10b981',
+        glowColor: 'rgba(168, 85, 129, 0.7)',
+        badgeClass: 'ending-tier-a',
+        videoSrc: 'assets/ending/ENDING A - VID.mp4',
+        imageSrc: 'assets/ending/ENDING A - 1.png',
+        image2Src: 'assets/ending/ENDING A - 2.png',
+        noLoop: true,
+        diagCategory: 'PRIMARY SUCCESS',
+        diagHeadline: 'SOVEREIGN ACQUISITION',
+        finalVerdict: 'SOVEREIGN OWNER.',
+        defaultNarrative: 'Total market mastery! You cleared every debt obligation and bought the property with sovereign cash. The keys are yours.',
+        liquidationNarrative: 'Target fully surpassed! You conquered the 2026 crash and claimed complete debt-free property ownership in Seoul.'
+    }
+};
+
+let isEndingActive = false;
+let endingAdminPreviewMode = false;
+let endingSunlightTimeout = null;
+
+function evaluateEndingCode(state) {
+    const s = state || (typeof ClientEngine !== 'undefined' ? ClientEngine.getState() : null);
+    if (!s) return 'F';
+    // If liquidated or margin ratio < 20% with active debt -> F
+    if (s.is_liquidated) return 'F';
+    const m = s.metrics || {};
+    if (m.margin_debt > 0 && m.margin_ratio < 20.0) return 'F';
+
+    const pct = typeof m.target_progress === 'number' ? m.target_progress : 0;
+    if (pct >= 100) return 'A';
+    if (pct >= 75) return 'B';
+    if (pct >= 50) return 'C';
+    if (pct >= 25) return 'D';
+    return 'F';
+}
+
+function showEndingScreen(tierCode, options = {}) {
+    const code = (tierCode || 'F').toUpperCase();
+    const cfg = ENDINGS_CONFIG[code] || ENDINGS_CONFIG['F'];
+    const state = options.state || (typeof ClientEngine !== 'undefined' ? ClientEngine.getState() : null);
+    const reason = options.reason || 'completion';
+    endingAdminPreviewMode = !!options.isAdminPreview;
+
+    const overlay = document.getElementById('ending-screen-overlay');
+    if (!overlay) return;
+
+    isEndingActive = true;
+
+    // Halt game timer
+    if (typeof marketTimerInterval !== 'undefined' && marketTimerInterval) {
+        clearInterval(marketTimerInterval);
+        marketTimerInterval = null;
+    }
+
+    // Set tier theme class
+    overlay.className = `ending-screen-overlay active ${cfg.badgeClass}`;
+    overlay.style.display = 'block';
+
+    // Looping background video & Ending A transition elements
+    const vid = document.getElementById('ending-video-element');
+    const vidSrc = document.getElementById('ending-video-source');
+    const fallbackImg = document.getElementById('ending-fallback-img');
+    const ambientVid = document.getElementById('ending-ambient-video');
+    const ambientSrc = document.getElementById('ending-ambient-source');
+    const victoryStill = document.getElementById('ending-victory-still');
+    const sunlightBloom = document.getElementById('ending-sunlight-bloom');
+
+    if (endingSunlightTimeout) {
+        clearTimeout(endingSunlightTimeout);
+        endingSunlightTimeout = null;
+    }
+
+    // Reset victory still & sunlight bloom
+    if (victoryStill) {
+        victoryStill.classList.remove('active');
+        if (cfg.image2Src) {
+            victoryStill.src = cfg.image2Src;
+        }
+    }
+    if (sunlightBloom) {
+        sunlightBloom.classList.remove('active');
+    }
+
+    const isNoLoop = !!cfg.noLoop;
+
+    if (ambientVid) {
+        ambientVid.loop = !isNoLoop;
+        if (cfg.videoSrc) {
+            ambientVid.src = cfg.videoSrc;
+            if (ambientSrc) ambientSrc.src = cfg.videoSrc;
+            ambientVid.load();
+            const ambPromise = ambientVid.play();
+            if (ambPromise !== undefined) ambPromise.catch(() => {});
+        }
+        if (cfg.imageSrc) {
+            ambientVid.poster = cfg.imageSrc;
+        }
+    }
+
+    if (vid) {
+        vid.loop = !isNoLoop;
+        vid.onended = null;
+        vid.ontimeupdate = null;
+
+        if (isNoLoop) {
+            let transitionTriggered = false;
+            const triggerVictoryTransition = () => {
+                if (transitionTriggered) return;
+                transitionTriggered = true;
+                if (victoryStill) {
+                    victoryStill.classList.add('active');
+                }
+                endingSunlightTimeout = setTimeout(() => {
+                    if (sunlightBloom && isEndingActive) {
+                        sunlightBloom.classList.add('active');
+                    }
+                }, 400);
+            };
+
+            vid.onended = triggerVictoryTransition;
+            vid.ontimeupdate = () => {
+                if (vid.duration && vid.currentTime >= (vid.duration - 0.25)) {
+                    triggerVictoryTransition();
+                }
+            };
+        }
+
+        if (cfg.videoSrc) {
+            vid.src = cfg.videoSrc;
+            if (vidSrc) vidSrc.src = cfg.videoSrc;
+            vid.load();
+            const playPromise = vid.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(err => {
+                    console.warn('Ending video autoplay blocked:', err);
+                    if (fallbackImg) fallbackImg.style.display = 'block';
+                });
+            }
+        }
+        if (cfg.imageSrc) {
+            vid.poster = cfg.imageSrc;
+        }
+    }
+    if (fallbackImg && cfg.imageSrc) {
+        fallbackImg.src = cfg.imageSrc;
+    }
+
+    // Corner Telemetry HUD
+    const cornerTag = document.getElementById('ending-corner-tag');
+    const cornerSub = document.getElementById('ending-corner-sub');
+    if (cornerTag) cornerTag.textContent = `// ENDING: ${cfg.bracket} - ${cfg.tierName}`;
+    if (cornerSub) cornerSub.textContent = reason === 'liquidation' ? 'FORCED LIQUIDATION AUDIT' : 'SESSION TERMINATED';
+
+    // Hero Title
+    const titleEl = document.getElementById('ending-title-text');
+    const bracketEl = document.getElementById('ending-bracket-grade');
+    const subEl = document.getElementById('ending-subtitle');
+    if (titleEl) titleEl.textContent = cfg.title;
+    if (bracketEl) bracketEl.textContent = cfg.bracket;
+    if (subEl) subEl.textContent = reason === 'liquidation' ? '— FORCED LIQUIDATION (<20% RISK) —' : cfg.tagline;
+
+    // Compute progress & metrics
+    let m = state ? state.metrics : { equity: 0, cash: 0, margin_debt: 0, margin_ratio: 0, target_progress: cfg.minPct };
+    const targetObj = (state && state.target)
+        || (typeof ClientEngine !== 'undefined' && ClientEngine.targetHouseType ? { house_type: ClientEngine.targetHouseType, target_value: ClientEngine.targetValue } : null)
+        || (typeof gameState !== 'undefined' && gameState.targetType ? { house_type: gameState.targetType, target_value: (gameState.targetType === 'Small House' ? 30000 : (gameState.targetType === 'ToLam Villa' ? 1000000 : 200000)) } : null)
+        || { house_type: 'Normal House', target_value: 200000 };
+    const tgtVal = targetObj.target_value || 200000;
+
+    let displayPct = (typeof options.customPct === 'number') ? options.customPct : (m.target_progress || 0);
+    if (endingAdminPreviewMode && typeof options.customPct !== 'number') {
+        displayPct = cfg.minPct;
+    }
+    displayPct = Math.max(0, Math.min(100, displayPct));
+
+    if (endingAdminPreviewMode && reason !== 'liquidation') {
+        const mockEquity = Math.round((displayPct / 100) * tgtVal);
+        m = {
+            equity: mockEquity,
+            cash: Math.round(mockEquity * 0.6),
+            margin_debt: 0,
+            margin_ratio: 100.0,
+            target_progress: displayPct
+        };
+    }
+
+    // Box 1: FINAL PORTFOLIO VALUE
+    const portValEl = document.getElementById('ending-val-portfolio');
+    const pnlEl = document.getElementById('ending-val-pnl');
+    const box1HudStatus = document.getElementById('ending-box1-hud-status');
+    const box1SubTelemetry = document.getElementById('ending-box1-sub-telemetry');
+
+    if (portValEl) {
+        portValEl.textContent = '$' + Math.round(m.equity || 0).toLocaleString(undefined, {minimumFractionDigits: 2});
+    }
+    if (pnlEl) {
+        if (reason === 'liquidation' || (m.equity <= 0)) {
+            pnlEl.textContent = '(-100.00%)';
+            pnlEl.style.color = '#ef4444';
+        } else {
+            const initCap = (ClientEngine ? ClientEngine.initialCapital : 10000) || 10000;
+            const pnlPct = ((m.equity - initCap) / initCap) * 100;
+            const sign = pnlPct >= 0 ? '+' : '';
+            pnlEl.textContent = `(${sign}${pnlPct.toFixed(2)}%)`;
+            pnlEl.style.color = pnlPct >= 0 ? '#10b981' : '#ef4444';
+        }
+    }
+    if (box1HudStatus) {
+        box1HudStatus.textContent = reason === 'liquidation' ? 'TERMINAL REKT' : (code === 'F' ? 'TERMINAL REKT' : (code === 'A' ? 'GOAL ACHIEVED' : 'VERIFIED'));
+    }
+    if (box1SubTelemetry) {
+        box1SubTelemetry.textContent = reason === 'liquidation' ? 'KRX SETTLEMENT // LEVERAGE: 4.0X FATAL' : `KRX SETTLEMENT // TIER: ${cfg.bracket} AUDIT`;
+    }
+
+    // Box 2: PROGRESS
+    const progValEl = document.getElementById('ending-val-progress');
+    const tierNameEl = document.getElementById('ending-val-tier-name');
+    const capsuleFill = document.getElementById('ending-capsule-fill');
+    const box2HudTarget = document.getElementById('ending-box2-hud-target');
+    const box2SubTarget = document.getElementById('ending-box2-sub-target');
+
+    if (progValEl) progValEl.textContent = displayPct.toFixed(1) + '%';
+    if (tierNameEl) tierNameEl.textContent = `[ ${cfg.tierName.toUpperCase()} ]`;
+    if (capsuleFill) {
+        capsuleFill.style.width = displayPct + '%';
+        capsuleFill.style.background = '';
+        capsuleFill.style.boxShadow = '';
+        capsuleFill.className = `ending-capsule-fill tier-fill-${code.toLowerCase()}`;
+    }
+    if (box2HudTarget && targetObj && targetObj.house_type) {
+        box2HudTarget.textContent = `TARGET: ${targetObj.house_type.toUpperCase()}`;
+    }
+    if (box2SubTarget && tgtVal) {
+        box2SubTarget.textContent = `REQUIRED ASSETS: $${tgtVal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+    }
+
+    // 5-Tier Scale Highlight
+    ['f', 'd', 'c', 'b', 'a'].forEach(t => {
+        const el = document.getElementById(`ending-scale-${t}`);
+        if (el) {
+            if (t.toUpperCase() === cfg.bracket) el.classList.add('active');
+            else el.classList.remove('active');
+        }
+    });
+
+    // Box 3: RUN DIAGNOSIS (Target Property & Tactical Assessment - Matches Image 5)
+    let peakEq = (state && state.metrics && state.metrics.peak_equity);
+    let finalEq = m.equity;
+    let maxLev = (state && state.metrics && state.metrics.max_leverage);
+
+    if (typeof peakEq !== 'number') {
+        if (endingAdminPreviewMode) {
+            // High-fidelity aesthetic presets matching user Image 5 exactly
+            if (code === 'A') { peakEq = tgtVal * 1.15; finalEq = tgtVal * 1.05; maxLev = 2.5; }
+            else if (code === 'B') { peakEq = 1062000; finalEq = 750000; maxLev = 4.0; } // Matches user Image 5!
+            else if (code === 'C') { peakEq = tgtVal * 0.85; finalEq = tgtVal * 0.65; maxLev = 3.2; }
+            else if (code === 'D') { peakEq = tgtVal * 0.60; finalEq = tgtVal * 0.35; maxLev = 5.0; }
+            else { peakEq = 240000; finalEq = 0; maxLev = 8.5; }
+        } else {
+            peakEq = Math.max(m.equity, m.portfolio_value, 10000);
+            finalEq = m.equity;
+            maxLev = m.leverage > 0 ? m.leverage : 1.0;
+        }
+    }
+    let propGap = finalEq - tgtVal;
+
+    const peakEl = document.getElementById('ending-diag-peak');
+    const finalEl = document.getElementById('ending-diag-final');
+    const levEl = document.getElementById('ending-diag-leverage');
+    const gapEl = document.getElementById('ending-diag-gap');
+
+    if (peakEl) peakEl.textContent = '$' + Math.round(peakEq).toLocaleString();
+    if (finalEl) finalEl.textContent = '$' + Math.round(finalEq).toLocaleString();
+    if (levEl) levEl.textContent = (typeof maxLev === 'number' ? maxLev.toFixed(1) : '1.0') + '×';
+    if (gapEl) {
+        if (propGap >= 0) {
+            gapEl.textContent = '+$' + Math.round(propGap).toLocaleString();
+            gapEl.className = 'diag-metric-val metric-positive';
+        } else {
+            gapEl.textContent = '-$' + Math.abs(Math.round(propGap)).toLocaleString();
+            gapEl.className = 'diag-metric-val metric-negative';
+        }
+    }
+
+    // Assessment & Verdict Content
+    const catEl = document.getElementById('ending-diag-category');
+    const headEl = document.getElementById('ending-diag-headline');
+    const descEl = document.getElementById('ending-diag-desc');
+    const verdictEl = document.getElementById('ending-status-title');
+    const alertIcon = document.getElementById('ending-diag-alert-icon');
+    const statusImg = document.getElementById('ending-status-img');
+    const houseNameEl = document.getElementById('ending-diag-house-name');
+    const houseValEl = document.getElementById('ending-diag-house-val');
+
+    if (catEl) catEl.textContent = cfg.diagCategory || 'PRIMARY EVALUATION';
+    if (headEl) headEl.textContent = reason === 'liquidation' ? 'FORCED LIQUIDATION CASCADE' : (cfg.diagHeadline || 'CAPITAL EVALUATION');
+    if (descEl) descEl.textContent = reason === 'liquidation' ? cfg.liquidationNarrative : cfg.defaultNarrative;
+    if (verdictEl) verdictEl.textContent = reason === 'liquidation' ? 'SYSTEMS OFFLINE.' : (cfg.finalVerdict || cfg.title);
+    if (alertIcon) {
+        alertIcon.className = code === 'A' ? 'diag-alert-badge success' : 'diag-alert-badge alert';
+        alertIcon.innerHTML = code === 'A' ? `
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>` : `
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>`;
+    }
+
+    // Always show the target house chosen by the player (User Request: "plus the image is the target house that the player chose")
+    let houseSrc = 'assets/house_normal.jpg';
+    let houseName = 'NORMAL HOUSE';
+    let houseVal = '$200,000';
+
+    if (targetObj && targetObj.house_type) {
+        const hLow = targetObj.house_type.toLowerCase();
+        if (hLow.includes('penthouse') || hLow.includes('tolam') || hLow.includes('villa')) {
+            houseSrc = 'assets/house_tolam.jpg';
+            houseName = 'TO-LAM VILLA';
+            houseVal = '$1,000,000';
+        } else if (hLow.includes('small')) {
+            houseSrc = 'assets/house_small.jpg';
+            houseName = 'SMALL HOUSE';
+            houseVal = '$30,000';
+        } else {
+            houseSrc = 'assets/house_normal.jpg';
+            houseName = 'NORMAL HOUSE';
+            houseVal = '$200,000';
+        }
+    }
+    if (statusImg) {
+        statusImg.src = houseSrc;
+        statusImg.onerror = () => { statusImg.src = 'web/' + houseSrc; };
+    }
+    if (houseNameEl) houseNameEl.textContent = houseName;
+    if (houseValEl) houseValEl.textContent = houseVal;
+
+    // Admin Close Button Visibility
+    const adminCloseBtn = document.getElementById('ending-btn-admin-close');
+    if (adminCloseBtn) {
+        adminCloseBtn.style.display = endingAdminPreviewMode ? 'inline-flex' : 'none';
+    }
+}
+
+function closeEndingScreen() {
+    const overlay = document.getElementById('ending-screen-overlay');
+    if (overlay) {
+        overlay.classList.remove('active');
+        overlay.style.display = 'none';
+    }
+    if (endingSunlightTimeout) {
+        clearTimeout(endingSunlightTimeout);
+        endingSunlightTimeout = null;
+    }
+    const victoryStill = document.getElementById('ending-victory-still');
+    if (victoryStill) {
+        victoryStill.classList.remove('active');
+    }
+    const sunlightBloom = document.getElementById('ending-sunlight-bloom');
+    if (sunlightBloom) {
+        sunlightBloom.classList.remove('active');
+    }
+    const vid = document.getElementById('ending-video-element');
+    if (vid) {
+        vid.onended = null;
+        vid.ontimeupdate = null;
+        vid.loop = true;
+        vid.pause();
+    }
+    const ambientVid = document.getElementById('ending-ambient-video');
+    if (ambientVid) {
+        ambientVid.loop = true;
+        ambientVid.pause();
+    }
+    isEndingActive = false;
+}
+
+function restartSimulationFromEnding() {
+    closeEndingScreen();
+    window.location.reload();
+}
+
+function returnToMainMenuFromEnding() {
+    closeEndingScreen();
+    if (typeof openBriefingScreen === 'function') {
+        openBriefingScreen();
+    } else {
+        window.location.reload();
+    }
+}
+
+function openAdminEndingsModal() {
+    const modal = document.getElementById('admin-endings-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('active');
+    }
+}
+
+function closeAdminEndingsModal() {
+    const modal = document.getElementById('admin-endings-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+    }
+}
+
+function previewAdminEnding(tierCode, options = {}) {
+    closeAdminEndingsModal();
+    showEndingScreen(tierCode, { isAdminPreview: true, ...options });
+}
+
+function simulateLiquidityCrashTest() {
+    closeAdminEndingsModal();
+    if (typeof ClientEngine !== 'undefined') {
+        ClientEngine.cash = 500;
+        ClientEngine.marginDebt = 25000;
+        ClientEngine.holdings = { 'Vintrumite': 15 };
+        ClientEngine.isLiquidated = true;
+    }
+    showEndingScreen('F', { reason: 'liquidation', isAdminPreview: true, customPct: 0 });
+}
+
 function showFinalAuditModal() {
     const state = ClientEngine.getState();
-    const m = state.metrics;
-    const b = state.bank;
-    const targetVal = state.target.target_value;
-    const isGoalMet = (b.balance >= targetVal) || (m.equity >= targetVal && !state.is_liquidated);
-
-    let statusMsg = isGoalMet ? 
-        `🎉 MISSION SUCCESS! You accumulated $${(b.balance + m.cash).toLocaleString(undefined, {minimumFractionDigits: 2})} in capital and secured your ${state.target.house_type.toUpperCase()}!` :
-        `⚠️ MISSION COMPLETE: You survived the 2026 Seoul Crash. Safe Haven Bank protected $${b.balance.toLocaleString(undefined, {minimumFractionDigits: 2})} from market wipeouts.`;
-
-    alert(`=========================================\nFREE FALL 2.0 // FINAL SOLVENCY REPORT\n=========================================\n\n` +
-          `• Target House: ${state.target.house_type} ($${targetVal.toLocaleString()})\n` +
-          `• Safe Haven Bank Balance: $${b.balance.toLocaleString(undefined, {minimumFractionDigits: 2})} (100% IMMUNE)\n` +
-          `• Trading Cash: $${m.cash.toLocaleString(undefined, {minimumFractionDigits: 2})}\n` +
-          `• Final Net Worth: $${m.equity.toLocaleString(undefined, {minimumFractionDigits: 2})}\n` +
-          `• Liquidation Status: ${state.is_liquidated ? 'LIQUIDATED (Bank Preserved)' : 'SOLVENT'}\n\n` +
-          `${statusMsg}\n\nThank you for playing Free Fall 2.0!`);
+    const endingCode = evaluateEndingCode(state);
+    showEndingScreen(endingCode, { reason: 'completion', state: state });
 }
 
 /* =========================================================================
@@ -12072,8 +14356,8 @@ const ClientEngine = {
     holdings: {},
     pendingHoldings: {},
     pendingQueue: [],
-    marginMultiplier: 4.0,
-    initialMarginRatio: 0.25,
+    marginMultiplier: 1.0,
+    initialMarginRatio: 1.0,
     maintenanceMarginRatio: 0.20,
     targetHouseType: 'Normal House',
     targetValue: 200000.0,
@@ -12130,13 +14414,15 @@ const ClientEngine = {
         this.activeScenarioId = window.activeScenarioId || 1;
         this.initialCapital = capital || 10000.0;
         this.cash = this.initialCapital;
+        this.peakEquity = this.initialCapital;
+        this.maxLeverage = 1.0;
         this.bankSavings = 0.0;
         this.emergencyReserve = 0.0;
         this.marginDebt = 0.0;
         this.holdings = {};
         this.pendingHoldings = {};
         this.pendingQueue = [];
-        this.initialMarginRatio = marginRatio || 0.25;
+        this.initialMarginRatio = (marginRatio !== undefined && marginRatio !== null) ? marginRatio : 1.0;
         this.marginMultiplier = Math.round((1.0 / this.initialMarginRatio) * 10) / 10;
         this.maintenanceMarginRatio = Math.min(0.20, this.initialMarginRatio * 0.80);
         this.targetHouseType = houseType || 'Normal House';
@@ -12290,9 +14576,12 @@ const ClientEngine = {
         }
 
         const state = this.getState();
-        // Check liquidation trigger if margin floor breached
+        // Check liquidation trigger if margin floor breached (< 20% liquidity risk)
         if (!this.isLiquidated && this.marginDebt > 0 && state.metrics.margin_ratio < this.maintenanceMarginRatio * 100) {
             this.triggerLiquidation();
+            if (typeof showEndingScreen === 'function' && !isEndingActive) {
+                showEndingScreen('F', { reason: 'liquidation', state: this.getState() });
+            }
             return this.getState();
         }
         if (typeof renderChartPhaseButtons === 'function') renderChartPhaseButtons();
@@ -12336,6 +14625,13 @@ const ClientEngine = {
         const leverage = stockVal > 0 && tradingEquity > 0 ? stockVal / tradingEquity : 0.0;
         const marginRatio = stockVal > 0 ? Math.max(0, (tradingEquity / stockVal) * 100) : 100.0;
 
+        if (typeof this.peakEquity !== 'number' || equity > this.peakEquity) {
+            this.peakEquity = equity;
+        }
+        if (typeof this.maxLeverage !== 'number' || leverage > this.maxLeverage) {
+            this.maxLeverage = leverage;
+        }
+
         let status = 'HEALTHY';
         if (stockVal > 0 && this.marginDebt > 0) {
             if (marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
@@ -12352,6 +14648,8 @@ const ClientEngine = {
                 margin_debt: Math.round(this.marginDebt * 100) / 100,
                 cash: Math.round(this.cash * 100) / 100,
                 equity: Math.round(equity * 100) / 100,
+                peak_equity: Math.round(this.peakEquity * 100) / 100,
+                max_leverage: Math.round(this.maxLeverage * 10) / 10,
                 trading_equity: Math.round(tradingEquity * 100) / 100,
                 leverage: Math.round(leverage * 100) / 100,
                 margin_ratio: Math.round(marginRatio * 10) / 10,
@@ -12385,28 +14683,46 @@ const ClientEngine = {
         };
     },
 
-    trade(ticker, action, shares, useMargin, customMultiplier) {
+    trade(ticker, action, shares, useMargin, customMultiplier, execPrice) {
+        if (!isFinite(shares) || isNaN(shares) || shares <= 0) {
+            return { success: false, message: 'Invalid share quantity: must be a positive finite number.' };
+        }
         if (customMultiplier !== undefined && customMultiplier > 0) {
             this.setMarginMultiplier(customMultiplier);
         }
         if (this.isLiquidated) return { success: false, message: 'Account is liquidated.' };
         ensureMarketStocksLoaded();
         const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
-        const price = stock ? stock.price : 1033.57;
+        const price = (typeof execPrice === 'number' && execPrice > 0) ? execPrice : (stock ? stock.price : 1033.57);
         const key = stock ? stock.name : ticker;
-        const cost = shares * price;
+        let cost = shares * price;
 
         if (action === 'BUY') {
             if (!useMargin || this.marginMultiplier <= 1.0) {
-                if (cost > this.cash + 0.05) return { success: false, message: 'Insufficient cash balance.' };
+                if (cost > this.cash + 0.10) {
+                    const affordable = Math.floor(this.cash / price);
+                    if (affordable > 0 && Math.abs(shares - affordable) <= 1) {
+                        shares = affordable;
+                        cost = shares * price;
+                    } else {
+                        return { success: false, message: 'Insufficient cash balance.' };
+                    }
+                }
                 this.cash = Math.max(0, this.cash - cost);
             } else {
                 const mult = (this.marginMultiplier && this.marginMultiplier > 1.0) ? this.marginMultiplier : (1.0 / this.initialMarginRatio);
-                const reqCash = cost / mult;
-                const newDebt = Math.max(0, cost - reqCash);
-                if (this.cash < reqCash - 0.05) {
+                let reqCash = cost / mult;
+                let newDebt = Math.max(0, cost - reqCash);
+                if (this.cash < reqCash - 0.10) {
                     const maxAffordable = Math.floor((this.cash * mult) / price);
-                    return { success: false, message: `Order exceeds allowable purchasing power at ${mult}× margin leverage. Max affordable: ${maxAffordable} shares.` };
+                    if (maxAffordable > 0 && Math.abs(shares - maxAffordable) <= 1) {
+                        shares = maxAffordable;
+                        cost = shares * price;
+                        reqCash = cost / mult;
+                        newDebt = Math.max(0, cost - reqCash);
+                    } else {
+                        return { success: false, message: `Order exceeds allowable purchasing power at ${mult}× margin leverage. Max affordable: ${maxAffordable} shares.` };
+                    }
                 }
                 this.cash = Math.max(0, this.cash - reqCash);
                 this.marginDebt += newDebt;
@@ -12512,7 +14828,7 @@ const ClientEngine = {
     },
 
     transferToBank(amt) {
-        if (amt <= 0 || amt > this.cash) return { success: false, message: 'Invalid transfer amount.' };
+        if (!isFinite(amt) || isNaN(amt) || amt <= 0 || amt > this.cash) return { success: false, message: 'Invalid transfer amount.' };
         this.cash -= amt;
         this.bankSavings += amt;
         return { success: true, state: this.getState() };
@@ -12520,14 +14836,14 @@ const ClientEngine = {
 
     transferToTrading(amt) {
         const avail = Math.max(0, this.bankSavings - this.emergencyReserve);
-        if (amt <= 0 || amt > avail) return { success: false, message: 'Insufficient unlocked bank balance.' };
+        if (!isFinite(amt) || isNaN(amt) || amt <= 0 || amt > avail) return { success: false, message: 'Insufficient unlocked bank balance.' };
         this.bankSavings -= amt;
         this.cash += amt;
         return { success: true, state: this.getState() };
     },
 
     repayDebt(amt, source) {
-        if (amt <= 0 || this.marginDebt <= 0) return { success: false, message: 'No debt to repay.' };
+        if (!isFinite(amt) || isNaN(amt) || amt <= 0 || this.marginDebt <= 0) return { success: false, message: 'No debt to repay.' };
         const payAmt = Math.min(this.marginDebt, amt);
         if (source === 'bank') {
             const avail = Math.max(0, this.bankSavings - this.emergencyReserve);
@@ -12542,7 +14858,7 @@ const ClientEngine = {
     },
 
     setEmergencyReserve(amt) {
-        if (amt < 0 || amt > this.bankSavings) return { success: false, message: 'Invalid reserve amount.' };
+        if (!isFinite(amt) || isNaN(amt) || amt < 0 || amt > this.bankSavings) return { success: false, message: 'Invalid reserve amount.' };
         this.emergencyReserve = amt;
         return { success: true, state: this.getState() };
     },
@@ -12659,9 +14975,11 @@ function updateHUD(data) {
         if (banner) banner.classList.remove('active');
     }
 
-    // Check Forced Liquidation Trigger
-    if (data.is_liquidated) {
-        showLiquidationModal(data);
+    // Check Forced Liquidation Trigger (Liquidity Risk Floor < 20% or Broker Liquidation)
+    if (data.is_liquidated || (m && m.margin_debt > 0 && m.margin_ratio < 20.0)) {
+        if (!isEndingActive && typeof showEndingScreen === 'function') {
+            showEndingScreen('F', { reason: 'liquidation', state: data });
+        }
     }
 
     // Active Holdings & Pending T+0.5 Inventory
