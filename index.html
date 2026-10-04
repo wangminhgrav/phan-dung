@@ -13998,6 +13998,9 @@ function showEndingScreen(tierCode, options = {}) {
 
     if (ambientVid) {
         ambientVid.loop = !isNoLoop;
+        ambientVid.muted = true;
+        ambientVid.defaultMuted = true;
+        ambientVid.playsInline = true;
         if (cfg.videoSrc) {
             ambientVid.src = cfg.videoSrc;
             if (ambientSrc) ambientSrc.src = cfg.videoSrc;
@@ -14012,8 +14015,20 @@ function showEndingScreen(tierCode, options = {}) {
 
     if (vid) {
         vid.loop = !isNoLoop;
+        vid.muted = true;
+        vid.defaultMuted = true;
+        vid.playsInline = true;
         vid.onended = null;
         vid.ontimeupdate = null;
+        if (fallbackImg) fallbackImg.style.display = 'none';
+
+        vid.onloadeddata = () => {
+            if (fallbackImg) fallbackImg.style.display = 'none';
+        };
+        vid.onerror = () => {
+            console.warn('Ending video failed to load, falling back to image');
+            if (fallbackImg) fallbackImg.style.display = 'block';
+        };
 
         if (isNoLoop) {
             let transitionTriggered = false;
@@ -14045,8 +14060,11 @@ function showEndingScreen(tierCode, options = {}) {
             const playPromise = vid.play();
             if (playPromise !== undefined) {
                 playPromise.catch(err => {
-                    console.warn('Ending video autoplay blocked:', err);
-                    if (fallbackImg) fallbackImg.style.display = 'block';
+                    console.warn('Ending video autoplay blocked, retrying muted:', err);
+                    vid.muted = true;
+                    vid.play().catch(() => {
+                        if (fallbackImg) fallbackImg.style.display = 'block';
+                    });
                 });
             }
         }
