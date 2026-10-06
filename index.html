@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="data/market_ticks.js" onerror="this.onerror=null; this.src='web/data/market_ticks.js';"></script>
-    <script src="data/free_fall_2_news_all_phases.js" onerror="this.onerror=null; this.src='web/data/free_fall_2_news_all_phases.js';"></script>
+    <script src="data/market_ticks.js" defer onerror="this.onerror=null; this.src='web/data/market_ticks.js';"></script>
+    <script src="data/free_fall_2_news_all_phases.js" defer onerror="this.onerror=null; this.src='web/data/free_fall_2_news_all_phases.js';"></script>
     <style>
         :root {
             --bg-base: #030712;
@@ -106,6 +106,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* VIS-10: Allow text selection on financial & telemetry data elements */
+        .card-value, .metric-value, pre, code, .order-id, .trade-qty {
+            user-select: text;
+        }
+
         /* Screen Manager */
         .screen {
             position: fixed;
@@ -118,9 +123,10 @@
             animation: fadeIn 0.35s ease forwards;
         }
 
+        /* VIS-05: Avoid transform on fadeIn so position:fixed descendants are not trapped */
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.99); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* =========================================================================
@@ -130,7 +136,6 @@
             background-color: #000000;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
             overflow: hidden;
         }
 
@@ -291,8 +296,14 @@
             box-shadow: 0 0 8px #ef4444;
             animation: pulseDot 2s infinite ease-in-out;
         }
+        /* VIS-01: Define pulseDot keyframe animation */
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
         .s1-title {
             display: inline-flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: center;
             gap: clamp(14px, 2.2vw, 32px);
@@ -304,6 +315,12 @@
             user-select: none;
             margin-bottom: 20px;
             position: relative;
+        }
+        /* VIS-03: Prevent title overflow on narrow viewports */
+        @media (max-width: 480px) {
+            .s1-title {
+                font-size: clamp(2.4rem, 10vw, 3.8rem);
+            }
         }
         .s1-title-word-free {
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 35%, #94a3b8 70%, #cbd5e1 100%);
@@ -328,7 +345,8 @@
                 filter: drop-shadow(0 0 50px rgba(239, 68, 68, 1)) drop-shadow(0 0 100px rgba(239, 68, 68, 0.75)) drop-shadow(0 4px 18px rgba(0, 0, 0, 0.9));
             }
         }
-        .s1-title-badge-20 {
+        /* VIS-06: Move background-color fill to ::before so background-clip: text does not clip badge fill */
+        .s1-title-badge-20, .s1-version-badge {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -339,17 +357,25 @@
             background: linear-gradient(135deg, #ff4444 0%, #ff7828 50%, #ffcc00 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             padding: 4px 16px;
             border: 2px solid rgba(239, 68, 68, 0.6);
             border-radius: 8px;
-            background-color: rgba(239, 68, 68, 0.1);
             box-shadow: 0 0 30px rgba(239, 68, 68, 0.5), inset 0 0 15px rgba(255, 100, 50, 0.2);
             position: relative;
             top: -6px;
             transform: rotate(-1.5deg);
             transition: all 0.3s ease;
         }
-        .s1-title:hover .s1-title-badge-20 {
+        .s1-title-badge-20::before, .s1-version-badge::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(239, 68, 68, 0.1);
+            border-radius: inherit;
+            z-index: -1;
+        }
+        .s1-title:hover .s1-title-badge-20, .s1-title:hover .s1-version-badge {
             transform: rotate(0deg) scale(1.05);
             box-shadow: 0 0 45px rgba(239, 68, 68, 0.8), inset 0 0 25px rgba(255, 100, 50, 0.35);
             border-color: #ef4444;
@@ -493,11 +519,12 @@
             margin-top: 8px;
         }
 
-        /* Hover & Active states */
+        /* Hover & Active states (VIS-02: pause cyberFrameBreath on hover/active so filter takes effect) */
         .s1-cyber-launch-btn:hover {
             transform: scale(1.03);
         }
         .s1-cyber-launch-btn:hover .s1-cyber-btn-frame {
+            animation-play-state: paused;
             filter: drop-shadow(0 0 22px rgba(239, 68, 68, 0.95)) drop-shadow(0 0 50px rgba(239, 68, 68, 0.7));
         }
         .s1-cyber-launch-btn:hover .s1-cyber-btn-glow {
@@ -524,6 +551,7 @@
             transform: scale(0.98);
         }
         .s1-cyber-launch-btn:active .s1-cyber-btn-frame {
+            animation-play-state: paused;
             filter: drop-shadow(0 0 30px #ef4444) brightness(1.25);
         }
 
@@ -633,6 +661,7 @@
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(12px);
             padding: 24px;
+            overflow-y: auto;
         }
         .s1-modal-backdrop.active {
             display: flex;
@@ -1064,7 +1093,7 @@
 
         /* Paused Timer Animation */
         @keyframes timerPausedPulse {
-            0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(245, 158, 11, 0.6); }
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); }
             50% { opacity: 0.45; text-shadow: none; }
         }
         .timer-paused-blink {
@@ -3649,7 +3678,10 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
             gap: 8px;
+            flex-shrink: 1;
+            min-width: 0;
             overflow: hidden;
+            text-overflow: ellipsis;
             contain: paint;
         }
         .phase-brand-group {
@@ -4645,31 +4677,31 @@
         /* Primary Flash: MATCHED -> Price (Cyan-Emerald Hyper-Laser UP - 1s Badass Snap) */
         @keyframes matchedPricePrimaryUp {
             0% {
-                background: radial-gradient(circle at center, rgba(0, 255, 196, 0.45) 0%, rgba(16, 185, 129, 0.32) 50%, rgba(2, 6, 15, 0.85) 100%) !important;
-                color: #ffffff !important;
+                background: radial-gradient(circle at center, rgba(0, 255, 196, 0.45) 0%, rgba(16, 185, 129, 0.32) 50%, rgba(2, 6, 15, 0.85) 100%);
+                color: #ffffff;
                 text-shadow: 0 0 2px #ffffff, 0 0 8px #00ffc4, 0 0 16px #00ffc4, 0 0 24px rgba(0, 255, 196, 0.85);
                 box-shadow: inset 0 0 0 1.5px #00ffc4, 0 0 18px rgba(0, 255, 196, 0.8), inset 0 0 12px rgba(0, 255, 196, 0.45);
                 transform: scale(1.08);
                 filter: brightness(1.35);
             }
             25% {
-                background: radial-gradient(circle at center, rgba(0, 255, 196, 0.28) 0%, rgba(16, 185, 129, 0.18) 60%, rgba(2, 6, 15, 0.4) 100%) !important;
-                color: #e6fff9 !important;
+                background: radial-gradient(circle at center, rgba(0, 255, 196, 0.28) 0%, rgba(16, 185, 129, 0.18) 60%, rgba(2, 6, 15, 0.4) 100%);
+                color: #e6fff9;
                 text-shadow: 0 0 4px #00ffc4, 0 0 10px rgba(0, 255, 196, 0.75);
                 box-shadow: inset 0 0 0 1px rgba(0, 255, 196, 0.7), 0 0 10px rgba(0, 255, 196, 0.4);
                 transform: scale(1.03);
                 filter: brightness(1.15);
             }
             60% {
-                background: rgba(16, 185, 129, 0.12) !important;
-                color: #a7f3d0 !important;
+                background: rgba(16, 185, 129, 0.12);
+                color: #a7f3d0;
                 text-shadow: 0 0 6px rgba(0, 255, 196, 0.5);
                 box-shadow: inset 0 0 0 1px rgba(0, 255, 196, 0.3), 0 0 6px rgba(0, 255, 196, 0.2);
                 transform: scale(1.01);
                 filter: brightness(1.05);
             }
             100% {
-                background-color: rgba(255, 255, 255, 0.04) !important;
+                background-color: rgba(255, 255, 255, 0.04);
                 text-shadow: none;
                 box-shadow: none;
                 transform: scale(1);
@@ -4680,31 +4712,31 @@
         /* Primary Flash: MATCHED -> Price (Crimson Blood-Laser DOWN - 1s Badass Snap) */
         @keyframes matchedPricePrimaryDown {
             0% {
-                background: radial-gradient(circle at center, rgba(255, 0, 60, 0.45) 0%, rgba(239, 68, 68, 0.32) 50%, rgba(2, 6, 15, 0.85) 100%) !important;
-                color: #ffffff !important;
+                background: radial-gradient(circle at center, rgba(255, 0, 60, 0.45) 0%, rgba(239, 68, 68, 0.32) 50%, rgba(2, 6, 15, 0.85) 100%);
+                color: #ffffff;
                 text-shadow: 0 0 2px #ffffff, 0 0 8px #ff003c, 0 0 16px #ff003c, 0 0 24px rgba(255, 0, 60, 0.85);
                 box-shadow: inset 0 0 0 1.5px #ff003c, 0 0 18px rgba(255, 0, 60, 0.8), inset 0 0 12px rgba(255, 0, 60, 0.45);
                 transform: scale(1.08);
                 filter: brightness(1.35);
             }
             25% {
-                background: radial-gradient(circle at center, rgba(255, 0, 60, 0.28) 0%, rgba(239, 68, 68, 0.18) 60%, rgba(2, 6, 15, 0.4) 100%) !important;
-                color: #ffe6eb !important;
+                background: radial-gradient(circle at center, rgba(255, 0, 60, 0.28) 0%, rgba(239, 68, 68, 0.18) 60%, rgba(2, 6, 15, 0.4) 100%);
+                color: #ffe6eb;
                 text-shadow: 0 0 4px #ff003c, 0 0 10px rgba(255, 0, 60, 0.75);
                 box-shadow: inset 0 0 0 1px rgba(255, 0, 60, 0.7), 0 0 10px rgba(255, 0, 60, 0.4);
                 transform: scale(1.03);
                 filter: brightness(1.15);
             }
             60% {
-                background: rgba(239, 68, 68, 0.12) !important;
-                color: #fecaca !important;
+                background: rgba(239, 68, 68, 0.12);
+                color: #fecaca;
                 text-shadow: 0 0 6px rgba(255, 0, 60, 0.5);
                 box-shadow: inset 0 0 0 1px rgba(255, 0, 60, 0.3), 0 0 6px rgba(255, 0, 60, 0.2);
                 transform: scale(1.01);
                 filter: brightness(1.05);
             }
             100% {
-                background-color: rgba(255, 255, 255, 0.04) !important;
+                background-color: rgba(255, 255, 255, 0.04);
                 text-shadow: none;
                 box-shadow: none;
                 transform: scale(1);
@@ -4715,21 +4747,21 @@
         /* Companion Flash: MATCHED -> +/- and % (Laser Green/Teal UP - 1s) */
         @keyframes matchedSecondaryUp {
             0% {
-                background: linear-gradient(90deg, rgba(0, 255, 196, 0.32) 0%, rgba(16, 185, 129, 0.22) 100%) !important;
-                color: #ffffff !important;
+                background: linear-gradient(90deg, rgba(0, 255, 196, 0.32) 0%, rgba(16, 185, 129, 0.22) 100%);
+                color: #ffffff;
                 text-shadow: 0 0 2px #fff, 0 0 8px #00ffc4;
                 box-shadow: inset 0 0 0 1px rgba(0, 255, 196, 0.7), 0 0 8px rgba(0, 255, 196, 0.35);
                 transform: scale(1.04);
             }
             30% {
-                background: rgba(16, 185, 129, 0.16) !important;
-                color: #a7f3d0 !important;
+                background: rgba(16, 185, 129, 0.16);
+                color: #a7f3d0;
                 text-shadow: 0 0 5px rgba(0, 255, 196, 0.6);
                 box-shadow: inset 0 0 0 1px rgba(0, 255, 196, 0.4);
                 transform: scale(1.01);
             }
             100% {
-                background-color: transparent !important;
+                background-color: transparent;
                 text-shadow: none;
                 box-shadow: none;
                 transform: scale(1);
@@ -4739,21 +4771,21 @@
         /* Companion Flash: MATCHED -> +/- and % (Laser Crimson Red DOWN - 1s) */
         @keyframes matchedSecondaryDown {
             0% {
-                background: linear-gradient(90deg, rgba(255, 0, 60, 0.32) 0%, rgba(239, 68, 68, 0.22) 100%) !important;
-                color: #ffffff !important;
+                background: linear-gradient(90deg, rgba(255, 0, 60, 0.32) 0%, rgba(239, 68, 68, 0.22) 100%);
+                color: #ffffff;
                 text-shadow: 0 0 2px #fff, 0 0 8px #ff003c;
                 box-shadow: inset 0 0 0 1px rgba(255, 0, 60, 0.7), 0 0 8px rgba(255, 0, 60, 0.35);
                 transform: scale(1.04);
             }
             30% {
-                background: rgba(239, 68, 68, 0.16) !important;
-                color: #fecaca !important;
+                background: rgba(239, 68, 68, 0.16);
+                color: #fecaca;
                 text-shadow: 0 0 5px rgba(255, 0, 60, 0.6);
                 box-shadow: inset 0 0 0 1px rgba(255, 0, 60, 0.4);
                 transform: scale(1.01);
             }
             100% {
-                background-color: transparent !important;
+                background-color: transparent;
                 text-shadow: none;
                 box-shadow: none;
                 transform: scale(1);
@@ -4996,6 +5028,33 @@
             display: block;
             mix-blend-mode: normal;
             filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.35)) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.7));
+        }
+
+        /* Liquidation State UI Lock (M-5) */
+        .liquidated .trade-button,
+        .liquidated .btn-order-exec,
+        .liquidated #btn-exec-trade,
+        .liquidated #order-confirm-btn,
+        .liquidated .holding-row-active button {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        /* Tutorial Overlay Click-Through Control (V-4) */
+        #screen-4.overlay-active {
+            pointer-events: none;
+        }
+
+        /* Phase Completion Overlay Centering (V-5) */
+        .phase-overlay {
+            position: relative;
+        }
+        .phase-overlay .next-button {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         /* FALLING SNOW EFFECT OVERLAY */
@@ -5992,7 +6051,7 @@
 
             /* Screen 6: Main Trading Platform */
             :root { --phase-bar-h: 38px; }
-            .persistent-phase-bar { height: 38px; padding: 0 8px; gap: 6px; }
+            .persistent-phase-bar { padding: 0 8px; gap: 6px; }
             .phase-badge { font-size: 0.68rem; padding: 2px 7px; }
             .phase-timer { font-size: 0.78rem; padding: 2px 6px; }
             .index-strip-container { padding: 3px 8px; gap: 6px; }
@@ -6086,7 +6145,7 @@
             .target-desc-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
             /* Screen 6 */
-            .persistent-phase-bar { height: 36px; }
+            :root { --phase-bar-h: 36px; }
             .trading-dock-bar { height: 176px; min-height: 176px; max-height: 176px; }
             .dock-order-box { width: 260px; min-width: 260px; padding: 4px 8px; gap: 3px; }
             .trade-tab-btn { padding: 3px; font-size: 0.74rem; }
@@ -11823,7 +11882,7 @@ function getStockHistorySlice(stock, currentSec) {
     const maxPoints = 50;
 
     if (!tickArr || tickArr.length === 0) {
-        const base = stock.price || 1033.57;
+        const base = (stock && typeof stock.price === 'number' && stock.price > 0) ? stock.price : 0.0;
         for (let i = 0; i < 10; i++) {
             labels.push(`00:${String(i * 5).padStart(2, '0')}`);
             prices.push(base * (0.98 + (i * 0.004)));
@@ -11970,7 +12029,8 @@ function appendPriceToChart(stock, globalSec) {
     labels.push(label);
     ds.data.push(stock.price);
 
-    if (labels.length > 60) {
+    // V-2: Preserve full 300-second phase chart data without premature truncation
+    if (labels.length > 300) {
         labels.shift();
         ds.data.shift();
     }
@@ -12025,7 +12085,7 @@ function setOrderQtyMax() {
         }
     } else {
         const mult = (useMargin && ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
-        const cash = (ClientEngine && ClientEngine.cash) ? ClientEngine.cash : 10000;
+        const cash = (ClientEngine && typeof ClientEngine.cash === 'number') ? Math.max(0, ClientEngine.cash) : 0;
         const maxCash = cash * mult;
         const maxShares = Math.max(0, Math.floor(maxCash / price));
         const qtyEl = document.getElementById('trade-qty');
@@ -12102,11 +12162,16 @@ function promptCustomMargin() {
     const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 1.0;
     const input = prompt(`Enter custom margin multiplier (1.0× to 4.0× MAX):\nCurrently: ${cur}×`, cur);
     if (input !== null) {
-        const val = parseFloat(input);
-        if (!isNaN(val) && val >= 1.0 && val <= 4.0) {
+        const trimmed = input.trim();
+        if (trimmed === '') {
+            // Empty input: revert to previous multiplier
+            return;
+        }
+        const val = parseFloat(trimmed);
+        if (!isNaN(val) && isFinite(val) && val >= 1.0 && val <= 4.0) {
             setMarginMultiplier(val);
-        } else if (!isNaN(val)) {
-            alert("Margin multiplier must be between 1.0× and 4.0× (Maximum legal limit).");
+        } else {
+            alert("Please enter a valid margin multiplier between 1.0× and 4.0×.");
         }
     }
 }
@@ -12133,7 +12198,7 @@ function toggleMarginCheckbox(checked) {
 
 function getCurrentSelectedStockPrice() {
     const stock = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock);
-    return stock ? stock.price : 1033.57;
+    return (stock && typeof stock.price === 'number') ? stock.price : 0.0;
 }
 
 function updateEstimatedVal() {
@@ -13632,85 +13697,100 @@ function startMarketSession() {
     renderNewsDB();
 
     if (marketTimerInterval) clearInterval(marketTimerInterval);
+    let lastWallClockTime = Date.now();
+    let accumulatedElapsedMs = 0;
+
     marketTimerInterval = setInterval(() => {
+        const now = Date.now();
+        const deltaMs = now - lastWallClockTime;
+        lastWallClockTime = now;
+
         if (isMarketTimerPaused()) {
             updatePausedTimerDisplay();
             return;
         }
 
-        if (sessionSecondsRemaining > 0) {
-            sessionSecondsRemaining--;
-            const globalSec = (ClientEngine.currentPhase - 1) * 300 + (300 - sessionSecondsRemaining);
+        accumulatedElapsedMs += deltaMs;
+        const secondsToAdvance = Math.floor(accumulatedElapsedMs / 1000);
+        if (secondsToAdvance <= 0) return;
+        accumulatedElapsedMs -= secondsToAdvance * 1000;
 
-            // 1. Advance ClientEngine by global second (updates all 50 stocks)
-            const st = ClientEngine.setGlobalSecond(globalSec);
+        for (let step = 0; step < secondsToAdvance; step++) {
+            if (sessionSecondsRemaining > 0) {
+                sessionSecondsRemaining--;
+                const globalSec = (ClientEngine.currentPhase - 1) * 300 + (300 - sessionSecondsRemaining);
 
-            // 2. Update timer display
-            const mins = String(Math.floor(sessionSecondsRemaining / 60)).padStart(2, '0');
-            const secs = String(sessionSecondsRemaining % 60).padStart(2, '0');
-            const el = document.getElementById('hud-timer');
-            if (el) el.textContent = `${mins}:${secs} [SEC ${globalSec}/1800]`;
+                // 1. Advance ClientEngine by global second (updates all 50 stocks)
+                const st = ClientEngine.setGlobalSecond(globalSec);
 
-            // 3. Update Price Board (all 50 companies with live bids, asks, sparks)
-            renderPriceBoard();
+                // 2. Update timer display
+                const mins = String(Math.floor(sessionSecondsRemaining / 60)).padStart(2, '0');
+                const secs = String(sessionSecondsRemaining % 60).padStart(2, '0');
+                const el = document.getElementById('hud-timer');
+                if (el) el.textContent = `${mins}:${secs} [SEC ${globalSec}/1800]`;
 
-            // 4. Update live dock and stream price to interactive chart
-            const curStock = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock);
-            if (curStock) {
-                const priceEl = document.getElementById('chart-live-price');
-                const changeEl = document.getElementById('chart-live-change');
-                if (priceEl) priceEl.textContent = `$${curStock.price.toFixed(2)}`;
-                if (changeEl) {
-                    const sign = curStock.change > 0 ? '+' : '';
-                    changeEl.textContent = `${sign}${curStock.pct.toFixed(2)}%`;
-                    changeEl.className = curStock.change >= 0 ? 'text-green' : 'text-red';
+                // 3. Update Price Board (all 50 companies with live bids, asks, sparks)
+                renderPriceBoard();
+
+                // 4. Update live dock and stream price to interactive chart
+                const curStock = marketStocks.find(s => s.name === gameState.currentStock || s.code === gameState.currentStock);
+                if (curStock) {
+                    const priceEl = document.getElementById('chart-live-price');
+                    const changeEl = document.getElementById('chart-live-change');
+                    if (priceEl) priceEl.textContent = `$${curStock.price.toFixed(2)}`;
+                    if (changeEl) {
+                        const sign = curStock.change > 0 ? '+' : '';
+                        changeEl.textContent = `${sign}${curStock.pct.toFixed(2)}%`;
+                        changeEl.className = curStock.change >= 0 ? 'text-green' : 'text-red';
+                    }
+                    updateEstimatedVal();
+                    appendPriceToChart(curStock, globalSec);
                 }
-                updateEstimatedVal();
-                appendPriceToChart(curStock, globalSec);
-            }
 
-            // 5. Update HUD metrics (Equity, Margin Gauge, Portfolio Value)
-            updateHUD(st);
+                // 5. Update HUD metrics (Equity, Margin Gauge, Portfolio Value)
+                updateHUD(st);
 
-            // 6. Background async sync with server
-            syncTickToServer(globalSec);
+                // 6. Background async sync with server
+                syncTickToServer(globalSec);
 
-            // 7. Check timed news queue & dynamic News DB unlock
-            const elapsedSecs = 300 - sessionSecondsRemaining;
-            if (elapsedSecs === 150) {
-                updateMarketFlashNews('2:30');
-                renderNewsDB();
-            } else if (elapsedSecs === 240) {
-                updateMarketFlashNews('4:00');
-                renderNewsDB();
-            } else if (sessionSecondsRemaining === 300 || !currentFlashSlot) {
-                updateMarketFlashNews('0:00');
-            }
-        } else {
-            // Phase Complete
-            activePauseReasons.clear();
-            MarketFlashEngine.stop();
-            clearInterval(marketTimerInterval);
-            marketTimerInterval = null;
-            marketSessionStarted = false;
-            const el = document.getElementById('hud-timer');
-            if (el) {
-                el.classList.remove('timer-paused-blink');
-                el.style.color = '';
-                el.textContent = `00:00 [PHASE ${ClientEngine.currentPhase} COMPLETE]`;
-            }
-            updateMarketStartButton();
-            updateAdvancePhaseButton();
-            renderChartPhaseButtons();
-            renderNewsDB();
-            if (ClientEngine.currentPhase === 6) {
-                triggerNewsFlash('🏁 30-MINUTE SIMULATION CONCLUDED: Final solvency audit ready.');
-                showFinalAuditModal();
+                // 7. Check timed news queue & dynamic News DB unlock
+                const elapsedSecs = 300 - sessionSecondsRemaining;
+                if (elapsedSecs === 150) {
+                    updateMarketFlashNews('2:30');
+                    renderNewsDB();
+                } else if (elapsedSecs === 240) {
+                    updateMarketFlashNews('4:00');
+                    renderNewsDB();
+                } else if (sessionSecondsRemaining === 300 || !currentFlashSlot) {
+                    updateMarketFlashNews('0:00');
+                }
             } else {
-                triggerNewsFlash(`🔔 PHASE ${ClientEngine.currentPhase} COMPLETE. Fixed news archived in News DB. Advance when ready.`);
+                // Phase Complete
+                activePauseReasons.clear();
+                MarketFlashEngine.stop();
+                clearInterval(marketTimerInterval);
+                marketTimerInterval = null;
+                marketSessionStarted = false;
+                const el = document.getElementById('hud-timer');
+                if (el) {
+                    el.classList.remove('timer-paused-blink');
+                    el.style.color = '';
+                    el.textContent = `00:00 [PHASE ${ClientEngine.currentPhase} COMPLETE]`;
+                }
+                updateMarketStartButton();
+                updateAdvancePhaseButton();
+                renderChartPhaseButtons();
+                renderNewsDB();
+                if (ClientEngine.currentPhase === 6) {
+                    triggerNewsFlash('🏁 30-MINUTE SIMULATION CONCLUDED: Final solvency audit ready.');
+                    showFinalAuditModal();
+                } else {
+                    triggerNewsFlash(`🔔 PHASE ${ClientEngine.currentPhase} COMPLETE. Fixed news archived in News DB. Advance when ready.`);
+                }
+                break;
             }
         }
-    }, 1000);
+    }, 250);
 }
 
 async function syncTickToServer(globalSec) {
@@ -14619,7 +14699,7 @@ const ClientEngine = {
         for (const [t, sQty] of Object.entries(this.holdings)) {
             if (sQty > 0) {
                 const s = marketStocks.find(st => st.name === t || st.code === t);
-                const p = s ? s.price : (prices[t] || 1033.57);
+                const p = (s && typeof s.price === 'number') ? s.price : (prices[t] || 0.0);
                 stockVal += sQty * p;
             }
         }
@@ -14628,7 +14708,7 @@ const ClientEngine = {
         for (const [t, sQty] of Object.entries(this.pendingHoldings)) {
             if (sQty > 0) {
                 const s = marketStocks.find(st => st.name === t || st.code === t);
-                const p = s ? s.price : (prices[t] || 1033.57);
+                const p = (s && typeof s.price === 'number') ? s.price : (prices[t] || 0.0);
                 stockVal += sQty * p;
             }
         }
@@ -14640,8 +14720,13 @@ const ClientEngine = {
         // Trading Equity: cash + stock value - margin debt (excludes bank savings to prevent artificial margin inflation)
         // Bank savings are 100% immune from broker custody & liquidation, so they do NOT act as margin collateral!
         const tradingEquity = this.cash + stockVal - this.marginDebt;
-        const leverage = stockVal > 0 && tradingEquity > 0 ? stockVal / tradingEquity : 0.0;
-        const marginRatio = stockVal > 0 ? Math.max(0, (tradingEquity / stockVal) * 100) : 100.0;
+        const leverage = stockVal > 0 ? (tradingEquity > 0 ? stockVal / tradingEquity : 999.9) : 0.0;
+        let marginRatio = 100.0;
+        if (stockVal > 0) {
+            marginRatio = Math.max(0, (tradingEquity / stockVal) * 100);
+        } else if (this.marginDebt > 0) {
+            marginRatio = tradingEquity >= 0 ? (tradingEquity / this.marginDebt) * 100 : 0.0;
+        }
 
         if (typeof this.peakEquity !== 'number' || equity > this.peakEquity) {
             this.peakEquity = equity;
@@ -14651,8 +14736,8 @@ const ClientEngine = {
         }
 
         let status = 'HEALTHY';
-        if (stockVal > 0 && this.marginDebt > 0) {
-            if (marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
+        if (this.marginDebt > 0) {
+            if (tradingEquity < 0 || marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
             else if (marginRatio < this.initialMarginRatio * 100) status = 'WARNING';
             else status = 'NORMAL';
         }
@@ -14711,7 +14796,11 @@ const ClientEngine = {
         if (this.isLiquidated) return { success: false, message: 'Account is liquidated.' };
         ensureMarketStocksLoaded();
         const stock = marketStocks.find(s => s.name === ticker || s.code === ticker);
-        const price = (typeof execPrice === 'number' && execPrice > 0) ? execPrice : (stock ? stock.price : 1033.57);
+        const price = (typeof execPrice === 'number' && execPrice > 0) ? execPrice : (stock && typeof stock.price === 'number' && stock.price > 0 ? stock.price : null);
+        if (!price || price <= 0 || !isFinite(price)) {
+            console.error(`Missing or invalid price for ${ticker}`);
+            return { success: false, message: `Market price unavailable for ${ticker}` };
+        }
         const key = stock ? stock.name : ticker;
         let cost = shares * price;
 
@@ -14742,8 +14831,17 @@ const ClientEngine = {
                         return { success: false, message: `Order exceeds allowable purchasing power at ${mult}× margin leverage. Max affordable: ${maxAffordable} shares.` };
                     }
                 }
-                this.cash = Math.max(0, this.cash - reqCash);
-                this.marginDebt += newDebt;
+                const preState = this.getState();
+                const currentStockVal = Math.max(0, preState.metrics.portfolio_value - preState.metrics.bank_savings);
+                const postCash = Math.max(0, this.cash - reqCash);
+                const postDebt = this.marginDebt + newDebt;
+                const postStockVal = currentStockVal + cost;
+                const postTradingEquity = postCash + postStockVal - postDebt;
+                if (postStockVal > 0 && (postTradingEquity / postStockVal) < this.initialMarginRatio - 1e-9) {
+                    return { success: false, message: `Order rejected: post-trade margin ratio would fall below the ${(this.initialMarginRatio * 100).toFixed(0)}% initial margin requirement.` };
+                }
+                this.cash = postCash;
+                this.marginDebt = postDebt;
             }
 
             // T+0.5 Settlement Delay Holding Pen
@@ -14840,7 +14938,12 @@ const ClientEngine = {
                 if (this.holdings[ticker] <= 0.0001) delete this.holdings[ticker];
             }
 
-            return { success: true, action: 'SELL', state: this.getState() };
+            let postState = this.getState();
+            if (!this.isLiquidated && this.marginDebt > 0 && postState.metrics.margin_status === 'MARGIN_CALL') {
+                this.triggerLiquidation();
+                postState = this.getState();
+            }
+            return { success: true, action: 'SELL', state: postState };
         }
         return { success: false, message: 'Invalid action.' };
     },
@@ -14849,7 +14952,12 @@ const ClientEngine = {
         if (!isFinite(amt) || isNaN(amt) || amt <= 0 || amt > this.cash) return { success: false, message: 'Invalid transfer amount.' };
         this.cash -= amt;
         this.bankSavings += amt;
-        return { success: true, state: this.getState() };
+        let postState = this.getState();
+        if (!this.isLiquidated && this.marginDebt > 0 && postState.metrics.margin_status === 'MARGIN_CALL') {
+            this.triggerLiquidation();
+            postState = this.getState();
+        }
+        return { success: true, state: postState };
     },
 
     transferToTrading(amt) {
@@ -14902,7 +15010,7 @@ const ClientEngine = {
         });
         Object.keys(allShares).forEach(t => {
             const stock = marketStocks.find(s => s.name === t || s.code === t);
-            const p = stock ? stock.price : 1033.57;
+            const p = (stock && typeof stock.price === 'number') ? stock.price : 0.0;
             gross += (allShares[t] || 0) * p;
         });
         this.holdings = {};
@@ -14995,6 +15103,10 @@ function updateHUD(data) {
 
     // Check Forced Liquidation Trigger (Liquidity Risk Floor < 20% or Broker Liquidation)
     if (data.is_liquidated || (m && m.margin_debt > 0 && m.margin_ratio < 20.0)) {
+        document.querySelectorAll('.trade-button, .btn-order-exec, #btn-exec-trade, #order-confirm-btn, .holding-row-active button').forEach(btn => {
+            btn.disabled = true;
+        });
+        document.body.classList.add('liquidated');
         if (!isEndingActive && typeof showEndingScreen === 'function') {
             showEndingScreen('F', { reason: 'liquidation', state: data });
         }
@@ -15015,7 +15127,7 @@ function updateHUD(data) {
 
         allTickers.forEach(t => {
             const stock = marketStocks.find(st => st.name === t || st.code === t);
-            const p = stock ? stock.price : ((data.prices && data.prices[t]) ? data.prices[t] : 1033.57);
+            const p = (stock && typeof stock.price === 'number') ? stock.price : ((data.prices && typeof data.prices[t] === 'number') ? data.prices[t] : 0.0);
             const displayCode = stock ? stock.code : (t === 'Vintrumite' ? 'VNT' : t.substring(0, 6));
             const activeQty = activeHoldings[t] || 0;
             const pendingQty = pendingHoldings[t] || 0;
@@ -15207,7 +15319,7 @@ function showSettlementLockModal(lockData) {
     const stock = marketStocks.find(s => s.name === lockData.ticker || s.code === lockData.ticker) || lockData.stock;
     const code = stock ? stock.code : (lockData.code || lockData.ticker);
     const name = stock ? stock.name : (lockData.name || lockData.ticker);
-    const curPrice = stock ? stock.price : (lockData.price || 1033.57);
+    const curPrice = (stock && typeof stock.price === 'number') ? stock.price : (typeof lockData.price === 'number' ? lockData.price : 0.0);
 
     document.getElementById('settle-asset-code').textContent = code;
     document.getElementById('settle-asset-name').textContent = `${name} • KRX DEPOSITORY PIPELINE`;
@@ -15234,7 +15346,7 @@ function showSettlementLockModalForTicker(ticker) {
     const pending = ClientEngine.getPendingShares(key);
     const queue = ClientEngine.getPendingDeliveriesForTicker(key);
     const earliest = queue[0] || null;
-    const curPrice = stock ? stock.price : 1033.57;
+    const curPrice = (stock && typeof stock.price === 'number') ? stock.price : 0.0;
     const rem = earliest ? Math.max(1, earliest.deliverGlobalSec - ClientEngine.currentGlobalSecond) : 30;
 
     const lockData = {
@@ -15276,7 +15388,7 @@ function updateSettlementLockModalLive() {
 
     const t = currentSettlementLockData.ticker;
     const stock = marketStocks.find(s => s.name === t || s.code === t);
-    const curPrice = stock ? stock.price : (currentSettlementLockData.price || 1033.57);
+    const curPrice = (stock && typeof stock.price === 'number') ? stock.price : (typeof currentSettlementLockData.price === 'number' ? currentSettlementLockData.price : 0.0);
     const curGlobalSec = ClientEngine ? ClientEngine.currentGlobalSecond : 1;
     const curPhase = ClientEngine ? ClientEngine.currentPhase : 1;
     const activeShares = ClientEngine ? ClientEngine.getActiveShares(t) : (currentSettlementLockData ? currentSettlementLockData.activeShares : 0);
@@ -15475,6 +15587,11 @@ function initChart() {
     renderPriceBoard();
     renderChartPhaseButtons();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    ensureMarketStocksLoaded();
+    if (typeof renderPriceBoard === 'function') renderPriceBoard();
+});
 </script>
 </body>
 </html>
