@@ -5208,6 +5208,26 @@
             font-weight: 800;
         }
 
+        @keyframes bankGuidePulse {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(250, 204, 21, 0.45), 0 0 18px rgba(56, 189, 248, 0.35), inset 0 0 8px rgba(250, 204, 21, 0.2);
+                transform: scale(1);
+                border-color: #facc15;
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(250, 204, 21, 0.9), 0 0 28px rgba(56, 189, 248, 0.65), inset 0 0 14px rgba(250, 204, 21, 0.35);
+                transform: scale(1.05);
+                border-color: #38bdf8;
+            }
+        }
+
+        .bank-guide-btn-highlight {
+            background: linear-gradient(135deg, rgba(250, 204, 21, 0.22) 0%, rgba(56, 189, 248, 0.22) 100%);
+            border: 1.5px solid #facc15;
+            color: #fef08a;
+            animation: bankGuidePulse 1.5s infinite ease-in-out;
+        }
+
         .bank-dash-body {
             position: relative;
             z-index: 3;
@@ -9654,37 +9674,68 @@
                 <div class="bank-hero-badge">🛡️ IMMUNE VAULT</div>
                 <div class="bank-hero-info">
                     <div class="bank-hero-title">SAFE HAVEN BANK // LIQUIDITY VAULT</div>
-                    <div class="bank-hero-desc">Independent Sovereign Depository • Zero Broker Custody • Anti-Liquidation Firewall</div>
+                    <div class="bank-hero-desc">Counts 100% Toward House Goal • 100% Immune to 20% Forced Liquidation • Zero Broker Custody</div>
                 </div>
-                <div class="bank-hero-shield-wrap">
-                    <div class="bank-hero-shield-label">COLLATERAL STATUS</div>
-                    <div class="bank-hero-shield-val text-green">100% UNENCUMBERED</div>
+                <div class="bank-hero-shield-wrap" style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" id="bank-guide-toggle-btn" class="toggle-btn bank-guide-btn-highlight" style="padding: 5px 10px; font-size: 0.66rem; font-weight: 800; white-space: nowrap;" onclick="toggleBankGuide()">
+                        📖 HOW IT WORKS ▼
+                    </button>
+                    <div>
+                        <div class="bank-hero-shield-label">COLLATERAL STATUS</div>
+                        <div class="bank-hero-shield-val text-green">100% UNENCUMBERED</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collapsible Step-by-Step Instructions Banner -->
+            <div id="bank-how-it-works-guide" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(6, 78, 59, 0.25) 100%); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 8px; padding: 11px 14px; display: none; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px;">
+                    <span style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: #38bdf8; letter-spacing: 0.05em;">
+                        📖 HOW THE SAFE HAVEN BANK WORKS (3-STEP SURVIVAL GUIDE)
+                    </span>
+                    <span style="font-family: var(--font-mono); font-size: 0.64rem; color: #10b981; font-weight: 700;">
+                        💡 GOAL: LOCK IN PROFITS &amp; SURVIVE MARKET CRASHES
+                    </span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.68rem; color: #cbd5e1; line-height: 1.45;">
+                    <div style="background: rgba(10, 20, 32, 0.75); border-left: 3px solid #10b981; padding: 7px 10px; border-radius: 4px;">
+                        <div style="font-family: var(--font-mono); font-weight: 800; color: #34d399; margin-bottom: 3px;">STEP 1: DEPOSIT PROFITS (PANEL 1)</div>
+                        Move idle <b>Trading Cash → Bank Vault</b>. Money in the Bank <b>counts 100% toward your House Goal</b> and is <b>100% immune</b> if a crash liquidates your brokerage account.
+                    </div>
+                    <div style="background: rgba(10, 20, 32, 0.75); border-left: 3px solid #ef4444; padding: 7px 10px; border-radius: 4px;">
+                        <div style="font-family: var(--font-mono); font-weight: 800; color: #f87171; margin-bottom: 3px;">STEP 2: DEFEND MARGIN (PANEL 2)</div>
+                        Borrowed on margin (`&gt; 1.0×`) and crashing toward the <b>20% Liquidation Floor</b>? Pay off <b>Margin Debt</b> directly from Bank or Cash to boost Margin Health <b>without selling stocks</b>.
+                    </div>
+                    <div style="background: rgba(10, 20, 32, 0.75); border-left: 3px solid #facc15; padding: 7px 10px; border-radius: 4px;">
+                        <div style="font-family: var(--font-mono); font-weight: 800; color: #facc15; margin-bottom: 3px;">STEP 3: ANTI-FOMO LOCK (PANEL 3)</div>
+                        Once money is in the Bank, <b>Lock</b> a portion as an <b>Emergency Reserve</b> so you don't impulsively transfer your house savings back into a market bubble.
+                    </div>
                 </div>
             </div>
 
             <!-- 4 Metric Cards (Cyber Matrix) -->
             <div class="bank-metrics-grid">
                 <div class="bank-metric-box">
-                    <span class="widget-label">Total Bank Savings</span>
+                    <span class="widget-label">1. Total Bank Savings (In Vault)</span>
                     <span class="widget-big-val text-green" id="bank-metric-total">$0.00</span>
-                    <span style="font-size: 0.62rem; color: #10b981;">🛡️ 100% Protected from Market Crashes</span>
+                    <span style="font-size: 0.62rem; color: #10b981;">🛡️ Immune to Liquidation • Counts toward House</span>
                 </div>
                 <div class="bank-metric-box">
-                    <span class="widget-label">Emergency Reserve (Locked)</span>
+                    <span class="widget-label">2. Emergency Reserve (Locked)</span>
                     <span class="widget-big-val" style="color: #facc15;" id="bank-metric-reserve">$0.00</span>
-                    <span style="font-size: 0.62rem; color: #94a3b8;">🔒 Cannot be transferred to trading</span>
+                    <span style="font-size: 0.62rem; color: #94a3b8;">🔒 Part of Bank Savings locked against withdrawal</span>
                 </div>
                 <div class="bank-metric-box">
-                    <span class="widget-label">Available for Transfer</span>
+                    <span class="widget-label">3. Unlocked Vault Balance</span>
                     <span class="widget-big-val" style="color: #38bdf8;" id="bank-metric-available">$0.00</span>
-                    <span style="font-size: 0.62rem; color: #94a3b8;">⚡ Deployable to trading or debt defense</span>
+                    <span style="font-size: 0.62rem; color: #94a3b8;">⚡ Total Bank minus Locked Reserve (Ready to withdraw)</span>
                 </div>
                 <div class="bank-metric-box">
-                    <span class="widget-label">Trading Account Risk</span>
+                    <span class="widget-label">4. Brokerage Account Status</span>
                     <div style="font-family: var(--font-mono); font-size: 0.82rem; margin-top: 2px;">
                         Cash: <b class="text-green" id="bank-metric-cash">$10,000.00</b> • Debt: <b class="text-red" id="bank-metric-debt">$0.00</b>
                     </div>
-                    <span style="font-size: 0.62rem; color: #94a3b8;">Margin Health: <b id="bank-metric-health" class="text-green">100.0%</b></span>
+                    <span style="font-size: 0.62rem; color: #94a3b8;">Margin Health: <b id="bank-metric-health" class="text-green">100.0%</b> (Liquidation ≤ 20.0%)</span>
                 </div>
             </div>
 
@@ -9693,9 +9744,13 @@
                 <!-- Op 1: Transfer Liquidity -->
                 <div class="bank-op-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="font-size: 0.82rem; color: #fff; font-family: var(--font-mono); letter-spacing: 0.05em;">1. LIQUIDITY ALLOCATION (TRANSFER)</h4>
-                        <span style="font-size: 0.65rem; color: #94a3b8; font-family: var(--font-mono);">CAPITAL MOVEMENT</span>
+                        <h4 style="font-size: 0.82rem; color: #fff; font-family: var(--font-mono); letter-spacing: 0.05em;">1. DEPOSIT &amp; WITHDRAW FUNDS</h4>
+                        <span style="font-size: 0.65rem; color: #34d399; font-family: var(--font-mono); font-weight: 700;">CASH ⇄ BANK VAULT</span>
                     </div>
+                    <p style="font-size: 0.66rem; color: #94a3b8; line-height: 1.35; margin: 0;">
+                        <b>Deposit (Green):</b> Move Trading Cash into the Bank Vault to protect it from crashes.<br>
+                        <b>Withdraw (Blue):</b> Move Unlocked Bank funds back to Trading Cash to buy stocks.
+                    </p>
 
                     <div style="display: flex; flex-direction: column; gap: 6px;">
                         <span style="font-size: 0.68rem; color: #94a3b8;">Enter Transfer Amount ($ USD):</span>
@@ -9703,28 +9758,31 @@
                         <div style="display: flex; gap: 6px; margin-top: 2px;">
                             <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setBankTransferAmt(500)">$500</button>
                             <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setBankTransferAmt(1000)">$1,000</button>
-                            <button class="toggle-btn" style="flex: 1; padding: 4px;" onclick="setBankTransferAmt(2000)">$2,000</button>
-                            <button class="toggle-btn" style="flex: 1; padding: 4px; border-color: #38bdf8; color: #38bdf8;" onclick="setBankTransferAmt('MAX')">MAX AVAIL</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px; border-color: #10b981; color: #10b981;" onclick="setBankTransferAmt('MAX_CASH')" title="Fill all available Trading Cash to deposit into Bank">MAX CASH</button>
+                            <button class="toggle-btn" style="flex: 1; padding: 4px; border-color: #38bdf8; color: #38bdf8;" onclick="setBankTransferAmt('MAX_BANK')" title="Fill all unlocked Bank Savings to withdraw to Trading">MAX VAULT</button>
                         </div>
                     </div>
 
                     <div style="display: flex; gap: 8px; margin-top: 4px;">
-                        <button class="bank-transfer-btn-deposit" onclick="execTransferToTrading()">
-                            📥 Transfer to Trading Cash
+                        <button class="bank-transfer-btn-deposit" onclick="execTransferToBank()">
+                            🏦 Deposit to Bank (Cash → Vault)
                         </button>
-                        <button class="bank-transfer-btn-withdraw" onclick="execTransferToBank()">
-                            🏦 Withdraw to Safe Haven Bank
+                        <button class="bank-transfer-btn-withdraw" onclick="execTransferToTrading()">
+                            📥 Withdraw to Trading (Vault → Cash)
                         </button>
                     </div>
-                    <span style="font-size: 0.62rem; color: #64748b;">* Withdrawing to Bank preserves gains and removes wipeout risk.</span>
+                    <span style="font-size: 0.62rem; color: #64748b;">* Tip: Click <b>MAX CASH</b> then <b>Deposit to Bank</b> to move your Trading Cash into the Vault.</span>
                 </div>
 
                 <!-- Op 2: Direct Margin Debt Repayment -->
                 <div class="bank-op-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h4 style="font-size: 0.82rem; color: #ef4444; font-family: var(--font-mono); letter-spacing: 0.05em;">2. DIRECT MARGIN DEBT REPAYMENT</h4>
-                        <span style="font-size: 0.65rem; color: #facc15; font-weight: 700; font-family: var(--font-mono);">DEBT DEFENSE</span>
+                        <span style="font-size: 0.65rem; color: #facc15; font-weight: 700; font-family: var(--font-mono);">EMERGENCY DEBT DEFENSE</span>
                     </div>
+                    <p style="font-size: 0.66rem; color: #94a3b8; line-height: 1.35; margin: 0;">
+                        Only needed when <b>Debt &gt; $0</b> (from buying on `&gt; 1.0×` leverage). Paying down debt immediately raises your <b>Margin Health %</b> above the 20% liquidation floor <b>without selling stocks</b>.
+                    </p>
 
                     <div style="display: flex; flex-direction: column; gap: 6px;">
                         <span style="font-size: 0.68rem; color: #94a3b8;">Repayment Amount ($ USD):</span>
@@ -9737,30 +9795,30 @@
 
                     <div style="display: flex; gap: 8px; margin-top: 4px;">
                         <button class="bank-repay-btn-bank" onclick="execRepayDebt('bank')">
-                            💳 Repay from Bank Savings
+                            💳 Repay Using Bank Savings
                         </button>
                         <button class="bank-repay-btn-cash" onclick="execRepayDebt('cash')">
-                            💵 Repay from Trading Cash
+                            💵 Repay Using Trading Cash
                         </button>
                     </div>
-                    <span style="font-size: 0.62rem; color: #64748b;">* Restores Margin Health above the 20% floor to defend against forced liquidation.</span>
+                    <span style="font-size: 0.62rem; color: #64748b;">* Lifesaver when stocks are locked in T+0.5 settlement during a crash!</span>
                 </div>
 
                 <!-- Op 3: Emergency Reserve Lock -->
                 <div class="bank-op-card" style="grid-column: span 2;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="font-size: 0.82rem; color: #facc15; font-family: var(--font-mono); letter-spacing: 0.05em;">3. EMERGENCY RESERVE LOCK</h4>
-                        <span style="font-size: 0.65rem; color: #10b981; font-family: var(--font-mono);">CAPITAL DEFENSE</span>
+                        <h4 style="font-size: 0.82rem; color: #facc15; font-family: var(--font-mono); letter-spacing: 0.05em;">3. EMERGENCY RESERVE LOCK (SELF-CONTROL SHIELD)</h4>
+                        <span style="font-size: 0.65rem; color: #10b981; font-family: var(--font-mono);">STEP 1 FIRST → THEN LOCK HERE</span>
                     </div>
                     <p style="font-size: 0.68rem; color: #94a3b8; line-height: 1.4; margin: 0;">
-                        Funds locked in the Emergency Reserve cannot be transferred to trading during euphoric FOMO phases, ensuring you always retain capital toward your property goal.
+                        <b>How this works:</b> First deposit money into the Bank in <b>Panel 1</b>. Then enter an amount below and click <b>🔒 LOCK RESERVE</b>. Locked Bank funds cannot be withdrawn back to Trading Cash during FOMO bubbles (unless you click <b>🔓 UNLOCK ALL</b>), protecting your house down payment.
                     </p>
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                        <span style="font-size: 0.68rem; color: #94a3b8; white-space: nowrap;">Lock Amount ($):</span>
+                        <span style="font-size: 0.68rem; color: #94a3b8; white-space: nowrap;">Target Lock Amount ($):</span>
                         <input type="number" id="bank-reserve-amt" class="form-input" style="max-width: 180px;" placeholder="0">
                         <button class="toggle-btn" style="padding: 4px 8px; font-size: 0.68rem;" onclick="setReserveAmt(1000)">$1,000</button>
                         <button class="toggle-btn" style="padding: 4px 8px; font-size: 0.68rem;" onclick="setReserveAmt(5000)">$5,000</button>
-                        <button class="toggle-btn" style="padding: 4px 8px; font-size: 0.68rem; border-color: #facc15; color: #facc15;" onclick="setReserveAmt('MAX')">MAX RESERVE</button>
+                        <button class="toggle-btn" style="padding: 4px 8px; font-size: 0.68rem; border-color: #facc15; color: #facc15;" onclick="setReserveAmt('MAX')" title="Set to 100% of your current Total Bank Savings">MAX BANK</button>
                         <button class="toggle-btn" style="border-color: #facc15; color: #facc15; font-weight: 700; padding: 6px 14px;" onclick="execSetEmergencyReserve()">
                             🔒 LOCK RESERVE
                         </button>
@@ -9775,9 +9833,8 @@
             <div class="bank-advisory-box">
                 <span style="font-size: 1rem; line-height: 1;">🛡️</span>
                 <div style="flex: 1;">
-                    <b style="color: #10b981;">SAFE HAVEN PROTOCOL RULES:</b>
-                    Bank savings are held outside broker custody and <b>never serve as collateral for margin loans</b>.
-                    If your Margin Ratio breaches the 20.0% liquidation threshold, open stock inventory and trading cash are liquidated, but <b>100% of your Bank Savings remain intact</b>.
+                    <b style="color: #10b981;">KEY RULE TO REMEMBER:</b>
+                    Money in the Safe Haven Bank is held outside broker custody—it <b>does NOT count as margin collateral</b> while in the Vault, so depositing Cash while holding Margin Debt will lower your Margin Health %. However, if a crash triggers <b>20.0% Forced Liquidation</b>, <b>100% of your Bank Savings survive untouched</b> and count toward your final House Goal!
                 </div>
             </div>
 
@@ -12768,10 +12825,25 @@ function initBankSnow() {
     container.appendChild(fragment);
 }
 
+let hasPressedBankGuide = false;
+
 function openBankDashboard() {
     closeTaskbar();
     const overlay = document.getElementById('bank-modal-overlay');
     if (overlay) overlay.classList.add('active');
+    const guide = document.getElementById('bank-how-it-works-guide');
+    const btn = document.getElementById('bank-guide-toggle-btn');
+    if (guide) {
+        guide.style.display = 'none';
+    }
+    if (btn) {
+        btn.textContent = '📖 HOW IT WORKS ▼';
+        if (!hasPressedBankGuide) {
+            btn.classList.add('bank-guide-btn-highlight');
+        } else {
+            btn.classList.remove('bank-guide-btn-highlight');
+        }
+    }
     initBankSnow();
     updateTaskbarActiveNav('nav-item-bank');
     initGameBackend();
@@ -12790,14 +12862,36 @@ function closeBankDashboard() {
     }
 }
 
+function toggleBankGuide() {
+    const guide = document.getElementById('bank-how-it-works-guide');
+    const btn = document.getElementById('bank-guide-toggle-btn');
+    if (!guide) return;
+    hasPressedBankGuide = true;
+    const isHidden = guide.style.display === 'none' || !guide.style.display;
+    guide.style.display = isHidden ? 'flex' : 'none';
+    if (btn) {
+        btn.classList.remove('bank-guide-btn-highlight');
+        btn.style.borderColor = 'rgba(56, 189, 248, 0.5)';
+        btn.style.color = '#38bdf8';
+        btn.textContent = isHidden ? '📖 HIDE GUIDE ▲' : '📖 HOW IT WORKS ▼';
+    }
+}
+
 function setBankTransferAmt(val) {
     const input = document.getElementById('bank-transfer-amt');
     if (!input) return;
-    if (val === 'MAX') {
-        const avail = (currentBankState && currentBankState.available_transfer !== undefined)
-            ? currentBankState.available_transfer
-            : (ClientEngine ? Math.max(0, ClientEngine.bankSavings - ClientEngine.emergencyReserve) : 0);
-        input.value = Math.max(0, Math.floor(avail));
+    const availBank = (currentBankState && currentBankState.available_transfer !== undefined)
+        ? currentBankState.available_transfer
+        : (ClientEngine ? Math.max(0, ClientEngine.bankSavings - ClientEngine.emergencyReserve) : 0);
+    const availCash = (ClientEngine && typeof ClientEngine.cash === 'number')
+        ? Math.max(0, ClientEngine.cash)
+        : 0;
+    if (val === 'MAX_CASH') {
+        input.value = Math.max(0, Math.floor(availCash));
+    } else if (val === 'MAX_BANK') {
+        input.value = Math.max(0, Math.floor(availBank));
+    } else if (val === 'MAX') {
+        input.value = Math.max(0, Math.floor(availBank > 0 ? availBank : availCash));
     } else {
         input.value = val;
     }
