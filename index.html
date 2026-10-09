@@ -8693,16 +8693,16 @@
                     <div class="widget-box" id="tut-target-leverage">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div class="widget-label">Leverage Multiplier</div>
-                            <div style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">TIER: <span id="val-max-margin-tier" style="color: #f59e0b; font-weight: 700;">4.0×</span></div>
+                            <div style="font-size: 0.62rem; color: #64748b; font-family: var(--font-mono);">TIER: <span id="val-max-margin-tier" style="color: #f59e0b; font-weight: 700;">1.0×</span></div>
                         </div>
                         <div class="widget-big-val" id="val-leverage">1.00×</div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
                             <span style="font-size: 0.68rem; color: var(--text-secondary);">Margin Ceiling:</span>
                             <div style="display: flex; gap: 3px;">
-                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(1)" title="1x Cash Only (No Margin)">1×</button>
-                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(2)" title="2x Leverage">2×</button>
-                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(3)" title="3x Leverage">3×</button>
-                                <button class="toggle-btn" style="padding: 1px 5px; font-size: 0.62rem; color: #f59e0b; border-color: rgba(245,158,11,0.4);" onclick="setMarginMultiplier(4)" title="4x Max Legal Margin">4× MAX</button>
+                                <button class="toggle-btn active" data-ceiling-mult="1" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(1)" title="1x Cash Only (No Margin)">1×</button>
+                                <button class="toggle-btn" data-ceiling-mult="2" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(2)" title="2x Leverage">2×</button>
+                                <button class="toggle-btn" data-ceiling-mult="3" style="padding: 1px 5px; font-size: 0.62rem;" onclick="setMarginMultiplier(3)" title="3x Leverage">3×</button>
+                                <button class="toggle-btn" data-ceiling-mult="4" style="padding: 1px 5px; font-size: 0.62rem; color: #f59e0b; border-color: rgba(245,158,11,0.4);" onclick="setMarginMultiplier(4)" title="4x Max Legal Margin">4× MAX</button>
                             </div>
                         </div>
                     </div>
@@ -12323,15 +12323,11 @@ function setOrderQtyMax() {
     }
 }
 
-function setMarginMultiplier(mult, el) {
-    mult = Math.max(1.0, Math.min(4.0, Math.round(parseFloat(mult) * 10) / 10));
-    if (ClientEngine && typeof ClientEngine.setMarginMultiplier === 'function') {
-        ClientEngine.setMarginMultiplier(mult);
-    }
-
+function syncMarginControlsUI(mult) {
+    mult = Math.max(1.0, Math.min(4.0, Math.round(parseFloat(mult) * 10) / 10 || 1.0));
     const chk = document.getElementById('margin-toggle-chk');
     const chkText = document.querySelector('.margin-chk-text');
-    if (mult === 1.0) {
+    if (mult <= 1.0) {
         if (chk) chk.checked = false;
         if (chkText) { chkText.textContent = 'OFF'; chkText.classList.add('off'); }
     } else {
@@ -12339,9 +12335,15 @@ function setMarginMultiplier(mult, el) {
         if (chkText) { chkText.textContent = 'ON'; chkText.classList.remove('off'); }
     }
 
-    // Update preset pills active state
+    // Update preset pills active state in Order Dock
     document.querySelectorAll('.margin-presets-row .mult-pill').forEach(btn => {
         const m = parseFloat(btn.dataset.mult);
+        btn.classList.toggle('active', m === mult);
+    });
+
+    // Update Right Column Margin Ceiling buttons active state
+    document.querySelectorAll('[data-ceiling-mult]').forEach(btn => {
+        const m = parseFloat(btn.dataset.ceilingMult);
         btn.classList.toggle('active', m === mult);
     });
 
@@ -12362,12 +12364,24 @@ function setMarginMultiplier(mult, el) {
 
     // Update Liquidation Floor display in Risk HUD
     const liqFloor = document.getElementById('val-liq-floor');
-    if (liqFloor && ClientEngine) {
+    if (liqFloor && typeof ClientEngine !== 'undefined') {
         const floorPct = ((ClientEngine.maintenanceMarginRatio || 0.20) * 100).toFixed(1);
         liqFloor.textContent = floorPct + '%';
     }
 
     updateEstimatedVal();
+}
+
+function setMarginMultiplier(mult, el) {
+    mult = Math.max(1.0, Math.min(4.0, Math.round(parseFloat(mult) * 10) / 10 || 1.0));
+    if (ClientEngine && typeof ClientEngine.setMarginMultiplier === 'function') {
+        if (mult > 1.0) {
+            ClientEngine._lastActiveMarginMultiplier = mult;
+        }
+        ClientEngine.setMarginMultiplier(mult);
+    }
+
+    syncMarginControlsUI(mult);
 
     // Sync with backend API
     try {
@@ -12404,23 +12418,17 @@ function promptCustomMargin() {
 }
 
 function toggleMarginCheckbox(checked) {
-    const chkText = document.querySelector('.margin-chk-text');
     if (!checked) {
-        if (chkText) { chkText.textContent = 'OFF'; chkText.classList.add('off'); }
-        const badge = document.getElementById('margin-mult-badge');
-        if (badge) {
-            badge.textContent = '1.0× (OFF)';
-            badge.className = 'margin-badge-tier tier-1';
+        if (ClientEngine && ClientEngine.marginMultiplier > 1.0) {
+            ClientEngine._lastActiveMarginMultiplier = ClientEngine.marginMultiplier;
         }
-        document.querySelectorAll('.margin-presets-row .mult-pill').forEach(btn => {
-            btn.classList.toggle('active', parseFloat(btn.dataset.mult) === 1);
-        });
+        setMarginMultiplier(1.0);
     } else {
-        if (chkText) { chkText.textContent = 'ON'; chkText.classList.remove('off'); }
-        const restoreMult = (ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 2.0;
+        const restoreMult = (ClientEngine && ClientEngine._lastActiveMarginMultiplier > 1.0)
+            ? ClientEngine._lastActiveMarginMultiplier
+            : ((ClientEngine && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 2.0);
         setMarginMultiplier(restoreMult);
     }
-    updateEstimatedVal();
 }
 
 function getCurrentSelectedStockPrice() {
@@ -12546,9 +12554,37 @@ function openOrderConfirmModal() {
     const sharesSub = document.getElementById('badass-order-shares-sub');
     if (sharesSub) sharesSub.textContent = `${qty} SHARES @ ${fmt(price)}`;
 
+    // Projected Margin Health Gauge & Post-Trade Position Metrics
+    const curState = (typeof ClientEngine !== 'undefined') ? ClientEngine.getState() : { metrics: { equity: 10000, margin_ratio: 100, margin_debt: 0, cash: 10000, portfolio_value: 0, bank_savings: 0 }, bank: { balance: 0 }, holdings: {} };
+    const curMetrics = curState.metrics || {};
+    const curMarginRatio = (curMetrics.margin_ratio !== undefined && curMetrics.margin_ratio >= 0) ? curMetrics.margin_ratio : 100.0;
+    let postDebt = (curMetrics.margin_debt !== undefined) ? curMetrics.margin_debt : ((typeof ClientEngine !== 'undefined') ? ClientEngine.marginDebt : 0);
+    let postStockVal = Math.max(0, (curMetrics.portfolio_value || 0) - (curMetrics.bank_savings || 0));
+
+    if (isBuy) {
+        postStockVal += est;
+        postDebt += newDebt;
+    } else {
+        postStockVal = Math.max(0, postStockVal - est);
+        const repay = Math.min(postDebt, est);
+        postDebt = Math.max(0, postDebt - repay);
+    }
+
+    const postPositionEquity = postStockVal - postDebt;
+    const postRatio = (postDebt <= 0.005) ? 100.0 : (postStockVal > 0 ? Math.max(0.0, Math.min(100.0, (postPositionEquity / postStockVal) * 100)) : 0.0);
+    const postLeverage = (postDebt <= 0.005) ? 1.0 : (postPositionEquity > 0 ? Math.max(1.0, postStockVal / postPositionEquity) : 999.9);
+
     // Card 2: Leverage
     const levEl = document.getElementById('modal-order-new-lev');
-    if (levEl) levEl.textContent = (isBuy && useMargin && marginMult > 1.0) ? `${marginMult.toFixed(1)}× Tier` : '1.00× (Cash)';
+    if (levEl) {
+        if (isBuy && useMargin && marginMult > 1.0) {
+            levEl.textContent = `${postLeverage.toFixed(2)}× (${marginMult.toFixed(1)}× Tier)`;
+        } else if (postDebt > 0.005) {
+            levEl.textContent = `${postLeverage.toFixed(2)}×`;
+        } else {
+            levEl.textContent = '1.00× (Cash)';
+        }
+    }
     const levTag = document.getElementById('badass-order-lev-tag');
     if (levTag) {
         if (!isBuy) levTag.textContent = 'POSITION LIQUIDATION / DEBT REPAY';
@@ -12580,39 +12616,10 @@ function openOrderConfirmModal() {
         debtSub.textContent = isBuy ? (newDebt > 0 ? 'Broker margin obligation' : 'No leverage borrowed') : 'Proceeds extinguish debt first';
     }
 
-    // Projected Margin Health Gauge
-    const curState = (typeof ClientEngine !== 'undefined') ? ClientEngine.getState() : { metrics: { equity: 10000, margin_ratio: 100, margin_debt: 0, cash: 10000 }, bank: { balance: 0 }, holdings: {} };
-    const curMetrics = curState.metrics || {};
-    const curEquity = (curMetrics.equity !== undefined && curMetrics.equity > 0) ? curMetrics.equity : ((typeof ClientEngine !== 'undefined' && ClientEngine.cash !== undefined) ? ClientEngine.cash : 10000);
-    const curMarginRatio = (curMetrics.margin_ratio !== undefined && curMetrics.margin_ratio > 0) ? curMetrics.margin_ratio : 100;
-    const curCash = (curMetrics.cash !== undefined) ? curMetrics.cash : ((typeof ClientEngine !== 'undefined') ? ClientEngine.cash : 10000);
-    const curBank = (curState.bank && curState.bank.balance !== undefined) ? curState.bank.balance : ((typeof ClientEngine !== 'undefined') ? ClientEngine.bankSavings : 0);
-    let postDebt = (curMetrics.margin_debt !== undefined) ? curMetrics.margin_debt : ((typeof ClientEngine !== 'undefined') ? ClientEngine.marginDebt : 0);
-    let postEquity = curEquity;
-    let postStockVal = 0;
-    const holdings = curState.holdings || ((typeof ClientEngine !== 'undefined') ? ClientEngine.holdings : {}) || {};
-    Object.entries(holdings).forEach(([t, s]) => {
-        const stk = marketStocks.find(m => m.name === t || m.code === t);
-        const p = stk ? stk.price : 100;
-        postStockVal += (s || 0) * p;
-    });
-
-    if (isBuy) {
-        postStockVal += est;
-        postDebt += newDebt;
-        postEquity = Math.max(0, (curCash - reqCash) + postStockVal + curBank - postDebt);
-    } else {
-        postStockVal = Math.max(0, postStockVal - est);
-        const repay = Math.min(postDebt, est);
-        postDebt -= repay;
-        postEquity = Math.max(0, curCash + (est - repay) + postStockVal + curBank - postDebt);
-    }
-
-    const postRatio = (postDebt <= 0) ? 100 : (postStockVal > 0 ? Math.max(0, Math.min(100, (postEquity / postStockVal) * 100)) : 100);
     const ratioTextEl = document.getElementById('badass-gauge-ratio-text');
     if (ratioTextEl) {
-        if (postDebt <= 0 && (!useMargin || marginMult <= 1.0)) {
-            ratioTextEl.textContent = '100% (Cash Settled)';
+        if (postDebt <= 0.005 && (!useMargin || marginMult <= 1.0)) {
+            ratioTextEl.textContent = '100.0% (Cash Settled)';
         } else {
             ratioTextEl.textContent = `${curMarginRatio.toFixed(1)}% → ${postRatio.toFixed(1)}%`;
         }
@@ -12623,9 +12630,9 @@ function openOrderConfirmModal() {
     const gaugeSub = document.getElementById('badass-gauge-sub');
     if (gaugeSub) {
         const buffer = postRatio - 20;
-        if (postDebt > 0 && buffer < 5) {
+        if (postDebt > 0.005 && buffer < 5) {
             gaugeSub.innerHTML = `⚠️ <b style="color:#ef4444;">CRITICAL DANGER:</b> Only ${buffer.toFixed(1)}% buffer before 20% forced liquidation!`;
-        } else if (postDebt > 0) {
+        } else if (postDebt > 0.005) {
             gaugeSub.innerHTML = `🛡️ Solvency Buffer: <b style="color:#10b981;">+${buffer.toFixed(1)}%</b> above 20% liquidation threshold.`;
         } else {
             gaugeSub.innerHTML = `🛡️ Zero Debt: 100% Solvency — Immune to broker liquidation calls.`;
@@ -12662,7 +12669,7 @@ async function executeConfirmedOrder() {
     const quote = gameState.pendingOrderQuote;
     const qty = (quote && quote.qty) || parseFloat(document.getElementById('trade-qty').value) || 1;
     const useMargin = (quote !== undefined && quote.useMargin !== undefined) ? quote.useMargin : (document.getElementById('margin-toggle-chk') ? document.getElementById('margin-toggle-chk').checked : false);
-    const marginMult = (quote && quote.marginMult) || ((ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 4.0);
+    const marginMult = (quote && quote.marginMult) || ((ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 1.0);
     const lockedPrice = (quote && quote.price) || getCurrentSelectedStockPrice();
     const ticker = (quote && quote.ticker) || gameState.currentStock;
     const action = (quote && quote.action) || gameState.orderAction;
@@ -12693,10 +12700,17 @@ async function executeConfirmedOrder() {
         return;
     }
 
-    // 2. Server-side API update with complete state synchronization and price lock
+    // 2. Server-side API mirror (ClientEngine remains authoritative for locked-quote execution)
     try {
         const curStock = marketStocks.find(s => s.name === ticker || s.code === ticker);
-        const res = await fetch('/api/trade', {
+        if (useMargin && marginMult > 1.0) {
+            await fetch('/api/margin', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ margin_multiplier: marginMult })
+            }).catch(() => {});
+        }
+        await fetch('/api/trade', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ 
@@ -12709,23 +12723,6 @@ async function executeConfirmedOrder() {
                 margin_multiplier: marginMult
             })
         });
-        const data = await res.json();
-        if (data && data.state && data.status === 'success') {
-            if (data.state.holdings) {
-                ClientEngine.holdings = { ...data.state.holdings };
-            }
-            if (data.state.pending_shares) {
-                ClientEngine.pendingHoldings = { ...data.state.pending_shares };
-            }
-            if (data.state.metrics) {
-                ClientEngine.cash = data.state.metrics.cash;
-                ClientEngine.bankSavings = data.state.metrics.bank_savings;
-                ClientEngine.marginDebt = data.state.metrics.margin_debt;
-            }
-            updateHUD(ClientEngine.getState());
-        } else if (data && data.is_settlement_locked) {
-            showSettlementLockModalForTicker(ticker);
-        }
     } catch(e) {
         console.warn("Trade API offline or sync error, running standalone:", e);
     }
@@ -13550,7 +13547,11 @@ function returnToTradingDesk() {
 async function launchTradingFromBriefing() {
     hasReadFixedNews = true;
     hasCompletedFirstTutorial = true;
+    const savedMult = (typeof ClientEngine !== 'undefined' && ClientEngine.marginMultiplier > 1.0) ? ClientEngine.marginMultiplier : 1.0;
     await confirmTargetAndStart();
+    if (savedMult > 1.0 && typeof setMarginMultiplier === 'function') {
+        setMarginMultiplier(savedMult);
+    }
     updateMarketStartButton();
     triggerNewsFlash("Intel confirmed. Click 'START MARKET SESSION' on the top bar when you are ready to begin trading.");
 }
@@ -14699,9 +14700,9 @@ async function resetSimulationRuntimeState() {
     if (typeof closeOrderConfirmModal === 'function') closeOrderConfirmModal();
     if (typeof closeSettlementLockModal === 'function') closeSettlementLockModal();
 
-    const marginChk = document.getElementById('use-margin-check');
+    const marginChk = document.getElementById('margin-toggle-chk');
     if (marginChk) marginChk.checked = false;
-    if (typeof setMarginTier === 'function') setMarginTier(1.0);
+    if (typeof syncMarginControlsUI === 'function') syncMarginControlsUI(1.0);
 
     const targetHouse = (typeof gameState !== 'undefined' && gameState.targetType) ? gameState.targetType : 'Normal House';
     const st = ClientEngine.init(10000, targetHouse, 1.0);
@@ -14913,6 +14914,9 @@ const ClientEngine = {
         this.updatePhaseReferencePrices(1);
         this._activePhaseRef = 1;
         this.setGlobalSecond(1);
+        if (typeof syncMarginControlsUI === 'function') {
+            syncMarginControlsUI(this.marginMultiplier);
+        }
         return this.getState();
     },
 
@@ -15099,12 +15103,20 @@ const ClientEngine = {
         // Trading Equity: cash + stock value - margin debt (excludes bank savings to prevent artificial margin inflation)
         // Bank savings are 100% immune from broker custody & liquidation, so they do NOT act as margin collateral!
         const tradingEquity = this.cash + stockVal - this.marginDebt;
-        const leverage = stockVal > 0 ? (tradingEquity > 0 ? stockVal / tradingEquity : 999.9) : 0.0;
+        const positionEquity = stockVal - this.marginDebt;
+        let leverage = 1.0;
         let marginRatio = 100.0;
-        if (stockVal > 0) {
-            marginRatio = Math.max(0, (tradingEquity / stockVal) * 100);
-        } else if (this.marginDebt > 0) {
-            marginRatio = tradingEquity >= 0 ? (tradingEquity / this.marginDebt) * 100 : 0.0;
+        if (this.marginDebt > 0.005) {
+            if (stockVal > 0) {
+                marginRatio = Math.min(100.0, Math.max(0.0, (positionEquity / stockVal) * 100));
+                leverage = positionEquity > 0 ? Math.max(1.0, stockVal / positionEquity) : 999.9;
+            } else {
+                marginRatio = 0.0;
+                leverage = 999.9;
+            }
+        } else {
+            marginRatio = 100.0;
+            leverage = 1.0;
         }
 
         if (typeof this.peakEquity !== 'number' || equity > this.peakEquity) {
@@ -15115,10 +15127,10 @@ const ClientEngine = {
         }
 
         let status = 'HEALTHY';
-        if (this.marginDebt > 0) {
-            if (tradingEquity < 0 || marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
-            else if (marginRatio < this.initialMarginRatio * 100) status = 'WARNING';
-            else status = 'NORMAL';
+        if (this.marginDebt > 0.005) {
+            if (tradingEquity < 0 || positionEquity <= 0 || marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
+            else if (marginRatio < this.initialMarginRatio * 100 - 0.05 || marginRatio <= 25.0) status = 'WARNING';
+            else status = 'HEALTHY';
         }
 
         const progress = Math.max(0, (equity / this.targetValue) * 100);
@@ -15215,9 +15227,12 @@ const ClientEngine = {
                 const postCash = Math.max(0, this.cash - reqCash);
                 const postDebt = this.marginDebt + newDebt;
                 const postStockVal = currentStockVal + cost;
-                const postTradingEquity = postCash + postStockVal - postDebt;
-                if (postStockVal > 0 && (postTradingEquity / postStockVal) < this.initialMarginRatio - 1e-9) {
-                    return { success: false, message: `Order rejected: post-trade margin ratio would fall below the ${(this.initialMarginRatio * 100).toFixed(0)}% initial margin requirement.` };
+                const postPositionEquity = postStockVal - postDebt;
+                const minAllowedRatio = (currentStockVal > 0 && this.marginDebt > 0)
+                    ? Math.min(this.initialMarginRatio, Math.max(this.maintenanceMarginRatio, (currentStockVal - this.marginDebt) / currentStockVal))
+                    : this.initialMarginRatio;
+                if (postStockVal > 0 && (postPositionEquity / postStockVal) < minAllowedRatio - 1e-6) {
+                    return { success: false, message: `Order rejected: post-trade margin ratio would fall below the ${(minAllowedRatio * 100).toFixed(0)}% initial margin requirement.` };
                 }
                 this.cash = postCash;
                 this.marginDebt = postDebt;
@@ -15464,12 +15479,22 @@ function updateHUD(data) {
     if (topBank) topBank.textContent = Math.round(b.balance).toLocaleString();
 
     // Risk & Efficiency (Right Column)
-    document.getElementById('val-leverage').textContent = m.leverage + '×';
-    document.getElementById('val-margin-ratio').textContent = m.margin_ratio + '%';
+    const levNum = (typeof m.leverage === 'number' && isFinite(m.leverage)) ? m.leverage : 1.0;
+    const ratioNum = (typeof m.margin_ratio === 'number' && isFinite(m.margin_ratio)) ? m.margin_ratio : 100.0;
+    const levEl = document.getElementById('val-leverage');
+    if (levEl) {
+        levEl.textContent = levNum.toFixed(2) + '×';
+        levEl.style.color = levNum >= 3.5 ? '#ef4444' : (levNum > 1.5 ? '#f59e0b' : '');
+    }
+    const ratioEl = document.getElementById('val-margin-ratio');
+    if (ratioEl) {
+        ratioEl.textContent = ratioNum.toFixed(1) + '%';
+        ratioEl.className = 'widget-big-val ' + ((m.margin_status === 'HEALTHY' || m.margin_status === 'NORMAL') ? 'text-green' : (m.margin_status === 'WARNING' ? 'text-amber' : 'text-red'));
+    }
 
     const hudTier = document.getElementById('val-max-margin-tier');
     if (hudTier && ClientEngine) {
-        hudTier.textContent = (ClientEngine.marginMultiplier || 4.0).toFixed(1) + '×';
+        hudTier.textContent = (ClientEngine.marginMultiplier || 1.0).toFixed(1) + '×';
     }
     const liqFloor = document.getElementById('val-liq-floor');
     if (liqFloor && ClientEngine) {
@@ -15478,8 +15503,8 @@ function updateHUD(data) {
 
     const statusBadge = document.getElementById('badge-margin-status');
     statusBadge.textContent = m.margin_status;
-    statusBadge.className = m.margin_status === 'HEALTHY' ? 'text-green' : (m.margin_status === 'WARNING' ? 'text-amber' : 'text-red');
-    document.getElementById('health-meter-fill').style.width = Math.min(100, Math.max(0, m.margin_ratio)) + '%';
+    statusBadge.className = (m.margin_status === 'HEALTHY' || m.margin_status === 'NORMAL') ? 'text-green' : (m.margin_status === 'WARNING' ? 'text-amber' : 'text-red');
+    document.getElementById('health-meter-fill').style.width = Math.min(100, Math.max(0, ratioNum)) + '%';
 
     // Emergency Margin Degradation Warning Banner (< 25% and has debt)
     const banner = document.getElementById('emergency-margin-banner');
