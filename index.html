@@ -6901,6 +6901,561 @@
         }
 
         /* =========================================================================
+           CINEMATIC PRE-ENDING TRANSITIONS (3 BADASS GPU-ACCELERATED CASES)
+           Case 1: Super Fail / Liquidation Crash (DEFCON-1 Cyber Tremor & CRT Collapse)
+           Case 2: The Winning / Sovereign House Goal (Auric Reticles & Radiant Bloom)
+           Case 3: The Rest / Tiers B, C, D (KRX Tactical Laser Solvency Audit)
+           ========================================================================= */
+        .ending-transition-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000005;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: #030712;
+            overflow: hidden;
+            pointer-events: auto;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            user-select: none;
+            will-change: transform, opacity;
+        }
+
+        .ending-transition-overlay.active {
+            display: flex;
+        }
+
+        .ending-transition-overlay .trans-backdrop {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.92) 0%, rgba(3, 7, 18, 0.98) 100%);
+            z-index: 1;
+        }
+
+        .ending-transition-overlay .trans-grid-matrix {
+            position: absolute;
+            inset: 0;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            opacity: 0.6;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .ending-transition-overlay .trans-scanlines {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0px, rgba(0, 0, 0, 0.25) 2px, transparent 2px, transparent 4px);
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0.75;
+        }
+
+        .ending-transition-overlay .trans-center-stage {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 680px;
+            padding: 32px 36px;
+            background: rgba(10, 15, 29, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transform: scale(0.92);
+            opacity: 0;
+            will-change: transform, opacity;
+            animation: transStagePop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes transStagePop {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .ending-transition-overlay .trans-pill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 14px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .ending-transition-overlay .pill-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            animation: pillBlink 0.6s infinite ease-in-out alternate;
+        }
+
+        @keyframes pillBlink {
+            from { opacity: 0.3; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1.2); }
+        }
+
+        .ending-transition-overlay .trans-headline-wrap {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .ending-transition-overlay .trans-headline {
+            margin: 0;
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .ending-transition-overlay .trans-headline-glitch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            line-height: 1.1;
+            text-transform: uppercase;
+            display: none;
+            pointer-events: none;
+        }
+
+        .ending-transition-overlay .trans-subline {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .ending-transition-overlay .trans-telemetry-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .ending-transition-overlay .trans-data-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            font-size: 11px;
+            font-family: var(--font-mono, monospace);
+        }
+
+        .ending-transition-overlay .chip-k {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .ending-transition-overlay .chip-v {
+            color: #f1f5f9;
+            font-weight: 700;
+        }
+
+        .ending-transition-overlay .trans-meter-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ending-transition-overlay .trans-meter-track {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .ending-transition-overlay .trans-meter-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            transform-origin: left center;
+            will-change: transform;
+        }
+
+        .ending-transition-overlay .trans-meter-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        /* Case 1: Super Fail */
+        .ending-transition-overlay.case-super-fail {
+            background: radial-gradient(circle at center, #1f0808 0%, #050101 100%);
+            animation: failTremor 0.8s ease-out;
+        }
+
+        @keyframes failTremor {
+            0% { transform: translate3d(0, 0, 0); }
+            10% { transform: translate3d(-6px, 3px, 0); }
+            20% { transform: translate3d(6px, -4px, 0); }
+            30% { transform: translate3d(-5px, -3px, 0); }
+            40% { transform: translate3d(5px, 2px, 0); }
+            50% { transform: translate3d(-4px, 2px, 0); }
+            65% { transform: translate3d(3px, -2px, 0); }
+            80% { transform: translate3d(-2px, 1px, 0); }
+            100% { transform: translate3d(0, 0, 0); }
+        }
+
+        .case-super-fail .trans-center-stage {
+            border-color: rgba(239, 68, 68, 0.4);
+            box-shadow: 0 0 60px rgba(220, 38, 38, 0.35), inset 0 0 20px rgba(239, 68, 68, 0.1);
+        }
+
+        .case-super-fail .trans-pill-tag {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+        }
+
+        .case-super-fail .pill-dot {
+            background: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+        }
+
+        .case-super-fail .trans-headline {
+            color: #f87171;
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(185, 28, 28, 0.5);
+        }
+
+        .case-super-fail .trans-headline-glitch {
+            display: block;
+            color: #38bdf8;
+            mix-blend-mode: screen;
+            opacity: 0.7;
+            animation: failGlitch 0.5s steps(2, end) infinite;
+        }
+
+        @keyframes failGlitch {
+            0% { transform: translate3d(-3px, 1px, 0); clip-path: inset(10% 0 30% 0); }
+            25% { transform: translate3d(3px, -1px, 0); clip-path: inset(40% 0 20% 0); }
+            50% { transform: translate3d(-2px, -2px, 0); clip-path: inset(70% 0 5% 0); }
+            75% { transform: translate3d(2px, 2px, 0); clip-path: inset(15% 0 60% 0); }
+            100% { transform: translate3d(0, 0, 0); clip-path: inset(0 0 0 0); }
+        }
+
+        .case-super-fail .trans-meter-bar {
+            background: linear-gradient(90deg, #b91c1c 0%, #ef4444 100%);
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+            animation: failDrainBar 2.0s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+        }
+
+        @keyframes failDrainBar {
+            0% { transform: scaleX(1); }
+            100% { transform: scaleX(0); }
+        }
+
+        .case-super-fail .trans-hazard-frame {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .case-super-fail .hazard-stripe {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(
+                -45deg,
+                #dc2626,
+                #dc2626 12px,
+                #000000 12px,
+                #000000 24px
+            );
+            opacity: 0.85;
+        }
+
+        .case-super-fail .hazard-stripe.top { top: 0; }
+        .case-super-fail .hazard-stripe.bottom { bottom: 0; }
+
+        .case-super-fail.trans-exit-phase {
+            animation: failScreenCollapse 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        }
+
+        @keyframes failScreenCollapse {
+            0% {
+                transform: scale(1);
+                filter: brightness(1.5);
+                opacity: 1;
+            }
+            60% {
+                transform: scaleY(0.005) scaleX(1.2);
+                filter: brightness(3);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scaleY(0) scaleX(0);
+                filter: brightness(5);
+                opacity: 0;
+            }
+        }
+
+        /* Case 2: The Winning */
+        .ending-transition-overlay.case-winning {
+            background: radial-gradient(circle at center, #062016 0%, #020b08 100%);
+        }
+
+        .case-winning .trans-sovereign-aurora {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(245, 158, 11, 0.15) 45%, transparent 70%);
+            filter: blur(50px);
+            z-index: 2;
+            animation: winAuroraPulse 0.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes winAuroraPulse {
+            from { transform: scale(0.9); opacity: 0.7; }
+            to { transform: scale(1.15); opacity: 1; }
+        }
+
+        .case-winning .trans-reticle-wrap {
+            position: absolute;
+            width: 480px;
+            height: 480px;
+            pointer-events: none;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .case-winning .reticle-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed rgba(245, 158, 11, 0.5);
+        }
+
+        .case-winning .ring-outer {
+            width: 440px;
+            height: 440px;
+            border: 2px dashed rgba(16, 185, 129, 0.6);
+            border-left-color: transparent;
+            border-right-color: transparent;
+            animation: winReticleSpin 4s linear infinite;
+        }
+
+        .case-winning .ring-inner {
+            width: 320px;
+            height: 320px;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            border-top: 2px solid #fbbf24;
+            border-bottom: 2px solid #fbbf24;
+            animation: winReticleSpinRev 3s linear infinite;
+        }
+
+        @keyframes winReticleSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes winReticleSpinRev {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        .case-winning .reticle-crosshair {
+            position: absolute;
+            background: rgba(251, 191, 36, 0.3);
+        }
+
+        .case-winning .ch-x {
+            width: 480px;
+            height: 1px;
+        }
+
+        .case-winning .ch-y {
+            width: 1px;
+            height: 480px;
+        }
+
+        .case-winning .trans-center-stage {
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 60px rgba(16, 185, 129, 0.35), 0 0 100px rgba(245, 158, 11, 0.15);
+        }
+
+        .case-winning .trans-pill-tag {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.5);
+            color: #6ee7b7;
+        }
+
+        .case-winning .pill-dot {
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        .case-winning .trans-headline {
+            background: linear-gradient(135deg, #34d399 0%, #fbbf24 60%, #fef08a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.6));
+        }
+
+        .case-winning .trans-meter-bar {
+            background: linear-gradient(90deg, #059669 0%, #10b981 50%, #fbbf24 100%);
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.9);
+            animation: winFillBar 2.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes winFillBar {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+
+        .case-winning.trans-exit-phase {
+            animation: winIrisBloom 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes winIrisBloom {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+                filter: brightness(1);
+            }
+            50% {
+                filter: brightness(2.5);
+            }
+            100% {
+                transform: scale(1.1);
+                opacity: 0;
+                filter: brightness(3);
+            }
+        }
+
+        /* Case 3: The Rest (KRX Solvency Audit) */
+        .ending-transition-overlay.case-audit {
+            --audit-color: #06b6d4;
+            --audit-glow: rgba(6, 182, 212, 0.5);
+            background: radial-gradient(circle at center, #05141e 0%, #02070c 100%);
+        }
+
+        .case-audit.tier-b-style {
+            --audit-color: #a855f7;
+            --audit-glow: rgba(168, 85, 247, 0.5);
+            background: radial-gradient(circle at center, #150923 0%, #05020a 100%);
+        }
+
+        .case-audit.tier-c-style {
+            --audit-color: #06b6d4;
+            --audit-glow: rgba(6, 182, 212, 0.5);
+            background: radial-gradient(circle at center, #05141e 0%, #02070c 100%);
+        }
+
+        .case-audit.tier-d-style {
+            --audit-color: #f59e0b;
+            --audit-glow: rgba(245, 158, 11, 0.5);
+            background: radial-gradient(circle at center, #1f1406 0%, #080501 100%);
+        }
+
+        .case-audit .trans-laser-sweep {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--audit-color);
+            box-shadow: 0 0 15px var(--audit-color), 0 0 30px var(--audit-color);
+            z-index: 6;
+            pointer-events: none;
+            animation: auditLaserSweep 0.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes auditLaserSweep {
+            0% { transform: translateY(0vh); opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0.2; }
+        }
+
+        .case-audit .trans-center-stage {
+            border-color: var(--audit-color);
+            box-shadow: 0 0 50px var(--audit-glow);
+        }
+
+        .case-audit .trans-pill-tag {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--audit-color);
+            color: var(--audit-color);
+        }
+
+        .case-audit .pill-dot {
+            background: var(--audit-color);
+            box-shadow: 0 0 10px var(--audit-color);
+        }
+
+        .case-audit .trans-headline {
+            color: #ffffff;
+            text-shadow: 0 0 15px var(--audit-glow);
+        }
+
+        .case-audit .trans-meter-bar {
+            background: var(--audit-color);
+            box-shadow: 0 0 14px var(--audit-glow);
+            animation: auditComputeFill 2.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes auditComputeFill {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(var(--target-scale, 0.75)); }
+        }
+
+        .case-audit.trans-exit-phase {
+            animation: auditCurtainSplit 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        }
+
+        @keyframes auditCurtainSplit {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.06);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================================
            CINEMATIC GAME ENDING SYSTEM (F, D, C, B, A)
            Pixel-perfect replica of reference ENDING 1 layout with zero video blackout.
            ========================================================================= */
@@ -8688,7 +9243,6 @@
         <div class="corner-coord" style="top: 22px; left: 28px; color: #475569;">+ TARGET PROTOCOL: ASSET ACQUISITION</div>
         <div class="corner-coord" style="top: 22px; right: 28px; color: #38bdf8;">[SEED CAPITAL: $10,000 USD] +</div>
         <div class="corner-coord" style="bottom: 22px; left: 28px; color: #475569;">+ CAPITAL MULTIPLIER: 3× — 100×</div>
-        <div class="corner-coord" style="bottom: 22px; right: 28px; color: #10b981;">SYS.SELECT // DYNAMIC BACKLIGHT +</div>
     </div>
 
     <div class="diff-container">
@@ -10920,10 +11474,83 @@
      solvency audit breakdown, and restart/menu navigation.
      ========================================================================= -->
 <!-- =========================================================================
+     FREE FALL 2.0 // CINEMATIC PRE-ENDING TRANSITION CURTAIN
+     Hardware-accelerated 3-case pre-ending transition curtain (F, A, and B/C/D)
+     ========================================================================= -->
+<div id="ending-transition-overlay" class="ending-transition-overlay" style="display:none;" aria-hidden="true">
+    <div class="trans-backdrop"></div>
+    <div class="trans-grid-matrix"></div>
+    <div class="trans-scanlines"></div>
+
+    <!-- Case 1: Glitch Hazard Stripes -->
+    <div class="trans-hazard-frame">
+        <div class="hazard-stripe top"></div>
+        <div class="hazard-stripe bottom"></div>
+    </div>
+
+    <!-- Case 2: Sovereign Aurora & Targeting Reticles -->
+    <div class="trans-sovereign-aurora"></div>
+    <div class="trans-reticle-wrap">
+        <div class="reticle-ring ring-outer"></div>
+        <div class="reticle-ring ring-inner"></div>
+        <div class="reticle-crosshair ch-x"></div>
+        <div class="reticle-crosshair ch-y"></div>
+    </div>
+
+    <!-- Case 3: Tactical Laser Sweep HUD -->
+    <div class="trans-laser-sweep"></div>
+
+    <!-- Center Holo-Card / Telemetry Stage -->
+    <div class="trans-center-stage">
+        <!-- Status Pill Tag -->
+        <div class="trans-pill-tag">
+            <span class="pill-dot"></span>
+            <span class="pill-label" id="trans-pill-label">SYSTEM ALERT</span>
+        </div>
+
+        <!-- Big Cinematic Title -->
+        <div class="trans-headline-wrap">
+            <h1 class="trans-headline" id="trans-headline">FORCED LIQUIDATION</h1>
+            <div class="trans-headline-glitch" id="trans-headline-glitch" aria-hidden="true">FORCED LIQUIDATION</div>
+        </div>
+
+        <!-- Subtitle / Tactical Reason -->
+        <div class="trans-subline" id="trans-subline">CRITICAL MARGIN BREACH DETECTED</div>
+
+        <!-- Telemetry Data Stream -->
+        <div class="trans-telemetry-row">
+            <div class="trans-data-chip">
+                <span class="chip-k">PROTOCOL:</span>
+                <span class="chip-v" id="trans-chip-protocol">DEFCON-1 CASCADE</span>
+            </div>
+            <div class="trans-data-chip">
+                <span class="chip-k">STATUS:</span>
+                <span class="chip-v" id="trans-chip-status">LIQUIDATING 100%</span>
+            </div>
+            <div class="trans-data-chip">
+                <span class="chip-k">KRX AUDIT:</span>
+                <span class="chip-v" id="trans-chip-audit">SETTLEMENT FATAL</span>
+            </div>
+        </div>
+
+        <!-- Dynamic Energy / Progress Metric Bar -->
+        <div class="trans-meter-container">
+            <div class="trans-meter-track">
+                <div class="trans-meter-bar" id="trans-meter-bar"></div>
+            </div>
+            <div class="trans-meter-labels">
+                <span id="trans-meter-label-left">MARGIN HEALTH</span>
+                <span id="trans-meter-label-right" class="font-mono">0.00%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
      FREE FALL 2.0 // CINEMATIC ENDING SCREEN OVERLAY
      Matches ENDING 1 reference layout with zero blackout & full video soul.
      ========================================================================= -->
-<div id="ending-screen-overlay" class="ending-screen-overlay ending-tier-f" style="display:none;">
+<div id="ending-screen-overlay" class="ending-tier-f ending-screen-overlay" style="display:none;">
     <!-- Ambient blurred background video for seamless ultrawide / letterbox immersion -->
     <video class="ending-ambient-backdrop" id="ending-ambient-video" autoplay loop muted playsinline poster="assets/ending/endingf.png">
         <source id="ending-ambient-source" src="assets/ending/endingf.mp4" type="video/mp4">
@@ -15315,6 +15942,215 @@ function evaluateEndingCode(state) {
     return 'F';
 }
 
+let endingTransitionTimeout = null;
+let endingTransitionExitTimeout = null;
+
+function playTransitionAudio(caseType) {
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const now = ctx.currentTime;
+
+        if (caseType === 'fail') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(160, now);
+            osc.frequency.exponentialRampToValueAtTime(40, now + 1.2);
+
+            gain.gain.setValueAtTime(0.25, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 2.0);
+
+            const sub = ctx.createOscillator();
+            const subGain = ctx.createGain();
+            sub.type = 'sine';
+            sub.frequency.setValueAtTime(80, now);
+            sub.frequency.exponentialRampToValueAtTime(25, now + 1.5);
+            subGain.gain.setValueAtTime(0.3, now);
+            subGain.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
+            sub.connect(subGain);
+            subGain.connect(ctx.destination);
+            sub.start(now);
+            sub.stop(now + 2.2);
+
+        } else if (caseType === 'win') {
+            const freqs = [523.25, 659.25, 783.99, 1046.50];
+            freqs.forEach((f, idx) => {
+                const noteOsc = ctx.createOscillator();
+                const noteGain = ctx.createGain();
+                const noteTime = now + (idx * 0.14);
+
+                noteOsc.type = 'triangle';
+                noteOsc.frequency.setValueAtTime(f, noteTime);
+
+                noteGain.gain.setValueAtTime(0.001, noteTime);
+                noteGain.gain.exponentialRampToValueAtTime(0.2, noteTime + 0.05);
+                noteGain.gain.exponentialRampToValueAtTime(0.001, noteTime + 1.4);
+
+                noteOsc.connect(noteGain);
+                noteGain.connect(ctx.destination);
+                noteOsc.start(noteTime);
+                noteOsc.stop(noteTime + 1.45);
+            });
+        } else {
+            [0, 0.35].forEach((offset, idx) => {
+                const osc1 = ctx.createOscillator();
+                const g1 = ctx.createGain();
+                const t = now + offset;
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(idx === 0 ? 600 : 750, t);
+                osc1.frequency.exponentialRampToValueAtTime(idx === 0 ? 950 : 1200, t + 0.15);
+
+                g1.gain.setValueAtTime(0.18, t);
+                g1.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+
+                osc1.connect(g1);
+                g1.connect(ctx.destination);
+                osc1.start(t);
+                osc1.stop(t + 0.4);
+            });
+        }
+    } catch (e) {
+        // Silently ignore if AudioContext cannot be initialized without gesture
+    }
+}
+
+function finishEndingTransitionImmediately() {
+    if (endingTransitionTimeout) {
+        clearTimeout(endingTransitionTimeout);
+        endingTransitionTimeout = null;
+    }
+    if (endingTransitionExitTimeout) {
+        clearTimeout(endingTransitionExitTimeout);
+        endingTransitionExitTimeout = null;
+    }
+    const overlay = document.getElementById('ending-transition-overlay');
+    if (overlay) {
+        overlay.classList.remove('active', 'trans-exit-phase', 'case-super-fail', 'case-winning', 'case-audit', 'tier-b-style', 'tier-c-style', 'tier-d-style');
+        overlay.style.display = 'none';
+        overlay.onclick = null;
+    }
+}
+
+function playEndingTransition(tierCode, options = {}) {
+    const overlay = document.getElementById('ending-transition-overlay');
+    if (!overlay) return;
+
+    if (endingTransitionTimeout) {
+        clearTimeout(endingTransitionTimeout);
+        endingTransitionTimeout = null;
+    }
+    if (endingTransitionExitTimeout) {
+        clearTimeout(endingTransitionExitTimeout);
+        endingTransitionExitTimeout = null;
+    }
+
+    const code = (tierCode || 'F').toUpperCase();
+    const reason = options.reason || 'completion';
+    const isSuperFail = (code === 'F' || reason === 'liquidation');
+    const isWinning = (code === 'A');
+
+    // DOM element references
+    const pillLabel = document.getElementById('trans-pill-label');
+    const headline = document.getElementById('trans-headline');
+    const headlineGlitch = document.getElementById('trans-headline-glitch');
+    const subline = document.getElementById('trans-subline');
+    const chipProtocol = document.getElementById('trans-chip-protocol');
+    const chipStatus = document.getElementById('trans-chip-status');
+    const chipAudit = document.getElementById('trans-chip-audit');
+    const meterBar = document.getElementById('trans-meter-bar');
+    const meterLeft = document.getElementById('trans-meter-label-left');
+    const meterRight = document.getElementById('trans-meter-label-right');
+
+    // Reset classes
+    overlay.className = 'ending-transition-overlay active';
+    if (meterBar) meterBar.style.removeProperty('--target-scale');
+
+    if (isSuperFail) {
+        // Case 1: Super Fail
+        overlay.classList.add('case-super-fail');
+        if (pillLabel) pillLabel.textContent = 'DEFCON-1 EMERGENCY';
+        if (headline) headline.textContent = reason === 'liquidation' ? 'FORCED LIQUIDATION' : 'SYSTEM OFFLINE';
+        if (headlineGlitch) headlineGlitch.textContent = headline ? headline.textContent : 'FORCED LIQUIDATION';
+        if (subline) subline.textContent = 'MARGIN THRESHOLD BREACHED // COLLATERAL SEIZED';
+        if (chipProtocol) chipProtocol.textContent = 'DEFCON-1 CASCADE';
+        if (chipStatus) chipStatus.textContent = 'LIQUIDATING 100%';
+        if (chipAudit) chipAudit.textContent = 'SETTLEMENT: FATAL';
+        if (meterLeft) meterLeft.textContent = 'MARGIN HEALTH';
+        if (meterRight) meterRight.textContent = '0.00%';
+
+        playTransitionAudio('fail');
+
+    } else if (isWinning) {
+        // Case 2: The Winning
+        overlay.classList.add('case-winning');
+        if (pillLabel) pillLabel.textContent = 'SOVEREIGN VICTORY';
+        if (headline) headline.textContent = 'TARGET HOUSE ACQUIRED';
+        if (headlineGlitch) headlineGlitch.textContent = 'TARGET HOUSE ACQUIRED';
+        if (subline) subline.textContent = '100% CAPITAL GOAL ACHIEVED // SOVEREIGN STATUS UNLOCKED';
+        if (chipProtocol) chipProtocol.textContent = 'SOVEREIGN FREEDOM';
+        if (chipStatus) chipStatus.textContent = 'TARGET 100%+ SECURED';
+        if (chipAudit) chipAudit.textContent = 'KRX AUDIT: CLEARED';
+        if (meterLeft) meterLeft.textContent = 'SOVEREIGN GOAL';
+        if (meterRight) meterRight.textContent = '100.0%';
+
+        playTransitionAudio('win');
+
+    } else {
+        // Case 3: The Rest (B, C, D)
+        overlay.classList.add('case-audit');
+        const styleClass = code === 'B' ? 'tier-b-style' : (code === 'D' ? 'tier-d-style' : 'tier-c-style');
+        overlay.classList.add(styleClass);
+
+        const tierNames = {
+            'B': { name: 'ALMOST THERE', target: 0.75, pctStr: '75.0%', desc: '75%+ CAPITAL ACCUMULATED // SOVEREIGN NEAR-MISS' },
+            'C': { name: 'STILL STANDING', target: 0.50, pctStr: '50.0%', desc: 'CAPITAL PRESERVED // SOLVENT SURVIVOR' },
+            'D': { name: 'DEBT WON', target: 0.25, pctStr: '25.0%', desc: 'SOLVENT BUT COMPROMISED // DEBT PRESSURE' }
+        };
+        const curTier = tierNames[code] || tierNames['C'];
+
+        if (pillLabel) pillLabel.textContent = `KRX AUDIT // TIER ${code}`;
+        if (headline) headline.textContent = `TIER ${code}: ${curTier.name}`;
+        if (headlineGlitch) headlineGlitch.textContent = headline ? headline.textContent : `TIER ${code}`;
+        if (subline) subline.textContent = curTier.desc;
+        if (chipProtocol) chipProtocol.textContent = 'PORTFOLIO VERIFIED';
+        if (chipStatus) chipStatus.textContent = `TIER ${code} AUDITED`;
+        if (chipAudit) chipAudit.textContent = 'SETTLEMENT: LOGGED';
+        if (meterLeft) meterLeft.textContent = 'PORTFOLIO TARGET';
+        if (meterRight) meterRight.textContent = curTier.pctStr;
+        if (meterBar) meterBar.style.setProperty('--target-scale', curTier.target);
+
+        playTransitionAudio('audit');
+    }
+
+    overlay.style.display = 'flex';
+
+    // Click anywhere to fast-skip immediately
+    overlay.onclick = () => {
+        finishEndingTransitionImmediately();
+    };
+
+    // Transition timing:
+    // Total duration: 2800ms (Extended 2.0s longer)
+    // Phase 1 (0ms - 2300ms): Dramatic arrival, telemetry, reticle / meter surge
+    // Phase 2 (2300ms - 2800ms): Exit dissolve (CRT collapse, golden iris bloom, shutter split)
+    endingTransitionExitTimeout = setTimeout(() => {
+        if (overlay && overlay.classList.contains('active')) {
+            overlay.classList.add('trans-exit-phase');
+        }
+    }, 2300);
+
+    endingTransitionTimeout = setTimeout(() => {
+        finishEndingTransitionImmediately();
+    }, 2800);
+}
+
 function showEndingScreen(tierCode, options = {}) {
     const code = (tierCode || 'F').toUpperCase();
     const cfg = ENDINGS_CONFIG[code] || ENDINGS_CONFIG['F'];
@@ -15338,6 +16174,9 @@ function showEndingScreen(tierCode, options = {}) {
     // Set tier theme class
     overlay.className = `ending-screen-overlay active ${cfg.badgeClass}`;
     overlay.style.display = 'block';
+
+    // Play badass pre-ending transition
+    playEndingTransition(code, { reason, state, ...options });
 
     // Looping background video & Ending A transition elements
     const vid = document.getElementById('ending-video-element');
@@ -15646,6 +16485,7 @@ function showEndingScreen(tierCode, options = {}) {
 }
 
 function closeEndingScreen() {
+    finishEndingTransitionImmediately();
     const overlay = document.getElementById('ending-screen-overlay');
     if (overlay) {
         overlay.classList.remove('active');
@@ -15679,6 +16519,7 @@ function closeEndingScreen() {
 }
 
 async function resetSimulationRuntimeState() {
+    finishEndingTransitionImmediately();
     if (typeof marketTimerInterval !== 'undefined' && marketTimerInterval) {
         clearInterval(marketTimerInterval);
         marketTimerInterval = null;
@@ -15750,9 +16591,14 @@ async function restartSimulationFromEnding() {
     hasReadFixedNews = true;
     hasCompletedFirstTutorial = true;
     await resetSimulationRuntimeState();
+    marketSessionStarted = false;
     navigateTo(6);
-    startMarketSession();
-    triggerNewsFlash('🔄 SIMULATION RESTARTED: Capital restored to $10,000.00 at Phase 1. Session is live!');
+    if (typeof updateMarketStartButton === 'function') updateMarketStartButton();
+    const timerEl = document.getElementById('hud-timer');
+    if (timerEl) {
+        timerEl.textContent = '05:00 [PRE-MARKET]';
+    }
+    triggerNewsFlash('🔄 SIMULATION RESTARTED: Capital restored to $10,000.00 at Phase 1. Click "START PHASE 1" when you are ready to begin trading.');
 }
 
 async function returnToMainMenuFromEnding() {
