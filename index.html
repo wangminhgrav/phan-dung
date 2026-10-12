@@ -7365,92 +7365,390 @@
             }
         }
 
-        /* Case 3: The Rest (KRX Solvency Audit) */
-        .ending-transition-overlay.case-audit {
-            --audit-color: #06b6d4;
-            --audit-glow: rgba(6, 182, 212, 0.5);
-            background: radial-gradient(circle at center, #05141e 0%, #02070c 100%);
+        /* =========================================================================
+           UNIQUE TIER HUD VISIBILITY GUARDS
+           ========================================================================= */
+        .ending-transition-overlay .trans-hazard-frame,
+        .ending-transition-overlay .trans-sovereign-aurora,
+        .ending-transition-overlay .trans-reticle-wrap,
+        .ending-transition-overlay .trans-vector-octagon,
+        .ending-transition-overlay .trans-laser-sweep,
+        .ending-transition-overlay .trans-hex-corners,
+        .ending-transition-overlay .trans-caution-frame {
+            display: none;
         }
 
-        .case-audit.tier-b-style {
-            --audit-color: #a855f7;
-            --audit-glow: rgba(168, 85, 247, 0.5);
-            background: radial-gradient(circle at center, #150923 0%, #05020a 100%);
+        .case-super-fail .trans-hazard-frame { display: block; }
+        .case-winning .trans-sovereign-aurora { display: block; }
+        .case-winning .trans-reticle-wrap { display: flex; }
+        .case-tier-b .trans-vector-octagon { display: flex; }
+        .case-tier-c .trans-laser-sweep { display: block; }
+        .case-tier-c .trans-hex-corners { display: block; }
+        .case-tier-d .trans-caution-frame { display: block; }
+
+        /* =========================================================================
+           CASE TIER B: SOVEREIGN NEAR-MISS // QUANTUM HYPERDRIVE (CYBER-VIOLET)
+           ========================================================================= */
+        .ending-transition-overlay.case-tier-b {
+            background: radial-gradient(circle at center, #1e0b36 0%, #090214 100%);
         }
 
-        .case-audit.tier-c-style {
-            --audit-color: #06b6d4;
-            --audit-glow: rgba(6, 182, 212, 0.5);
-            background: radial-gradient(circle at center, #05141e 0%, #02070c 100%);
+        .case-tier-b .trans-vector-octagon {
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            pointer-events: none;
+            z-index: 5;
+            align-items: center;
+            justify-content: center;
         }
 
-        .case-audit.tier-d-style {
-            --audit-color: #f59e0b;
-            --audit-glow: rgba(245, 158, 11, 0.5);
-            background: radial-gradient(circle at center, #1f1406 0%, #080501 100%);
+        .case-tier-b .octagon-ring {
+            position: absolute;
+            border-radius: 28%;
         }
 
-        .case-audit .trans-laser-sweep {
+        .case-tier-b .oct-outer {
+            width: 490px;
+            height: 490px;
+            border: 2px dashed rgba(168, 85, 247, 0.7);
+            border-left-color: #f472b6;
+            border-right-color: #f472b6;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.35);
+            animation: tierBOctagonSpin 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .case-tier-b .oct-inner {
+            width: 380px;
+            height: 380px;
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            border-top: 2px solid #e879f9;
+            border-bottom: 2px solid #e879f9;
+            animation: tierBOctagonSpinRev 4s linear infinite;
+        }
+
+        @keyframes tierBOctagonSpin {
+            0% { transform: rotate(0deg) scale(0.98); }
+            50% { transform: rotate(180deg) scale(1.02); }
+            100% { transform: rotate(360deg) scale(0.98); }
+        }
+
+        @keyframes tierBOctagonSpinRev {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        .case-tier-b .octagon-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #f472b6;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #f472b6, 0 0 20px #c084fc;
+        }
+
+        .case-tier-b .node-top { top: 10px; }
+        .case-tier-b .node-bottom { bottom: 10px; }
+        .case-tier-b .node-left { left: 10px; }
+        .case-tier-b .node-right { right: 10px; }
+
+        .case-tier-b .trans-center-stage {
+            border-color: rgba(168, 85, 247, 0.55);
+            box-shadow: 0 0 55px rgba(168, 85, 247, 0.4), inset 0 0 30px rgba(244, 114, 182, 0.12);
+        }
+
+        .case-tier-b .trans-pill-tag {
+            background: rgba(168, 85, 247, 0.18);
+            border-color: rgba(168, 85, 247, 0.6);
+            color: #e879f9;
+        }
+
+        .case-tier-b .pill-dot {
+            background: #c084fc;
+            box-shadow: 0 0 10px #c084fc;
+        }
+
+        .case-tier-b .trans-headline {
+            background: linear-gradient(135deg, #f472b6 0%, #c084fc 50%, #e879f9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.7));
+        }
+
+        .case-tier-b .trans-meter-bar {
+            background: linear-gradient(90deg, #7c3aed 0%, #a855f7 50%, #f472b6 100%);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.85);
+            animation: tierBFillBar 2.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes tierBFillBar {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(0.85); }
+        }
+
+        .case-tier-b.trans-exit-phase {
+            animation: tierBHyperdriveSlice 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        }
+
+        @keyframes tierBHyperdriveSlice {
+            0% {
+                transform: scale(1);
+                filter: brightness(1);
+                opacity: 1;
+            }
+            40% {
+                transform: scaleX(1.4) scaleY(0.7);
+                filter: brightness(2);
+                opacity: 0.95;
+            }
+            100% {
+                transform: scaleX(2.8) scaleY(0.01);
+                filter: brightness(4);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================================
+           CASE TIER C: STILL STANDING // IRONCLAD DEFENSE (ELECTRIC CYAN)
+           ========================================================================= */
+        .ending-transition-overlay.case-tier-c {
+            background: radial-gradient(circle at center, #041c2c 0%, #01070e 100%);
+        }
+
+        .case-tier-c .trans-laser-sweep {
             position: absolute;
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--audit-color);
-            box-shadow: 0 0 15px var(--audit-color), 0 0 30px var(--audit-color);
+            background: #06b6d4;
+            box-shadow: 0 0 18px #06b6d4, 0 0 35px rgba(6, 182, 212, 0.8);
             z-index: 6;
             pointer-events: none;
-            animation: auditLaserSweep 0.8s ease-in-out infinite alternate;
+            animation: tierCLaserSweep 1.0s ease-in-out infinite alternate;
         }
 
-        @keyframes auditLaserSweep {
-            0% { transform: translateY(0vh); opacity: 0.2; }
-            50% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0.2; }
+        @keyframes tierCLaserSweep {
+            0% { transform: translateY(0vh); opacity: 0.3; }
+            50% { opacity: 1; filter: brightness(1.6); }
+            100% { transform: translateY(100vh); opacity: 0.3; }
         }
 
-        .case-audit .trans-center-stage {
-            border-color: var(--audit-color);
-            box-shadow: 0 0 50px var(--audit-glow);
+        .case-tier-c .trans-hex-corners {
+            position: absolute;
+            inset: 30px;
+            pointer-events: none;
+            z-index: 4;
         }
 
-        .case-audit .trans-pill-tag {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--audit-color);
-            color: var(--audit-color);
+        .case-tier-c .hex-corner {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            border: 2px solid rgba(6, 182, 212, 0.65);
         }
 
-        .case-audit .pill-dot {
-            background: var(--audit-color);
-            box-shadow: 0 0 10px var(--audit-color);
+        .case-tier-c .hex-corner.tl {
+            top: 0; left: 0;
+            border-right: none;
+            border-bottom: none;
+            box-shadow: -4px -4px 12px rgba(6, 182, 212, 0.3);
+        }
+        .case-tier-c .hex-corner.tr {
+            top: 0; right: 0;
+            border-left: none;
+            border-bottom: none;
+            box-shadow: 4px -4px 12px rgba(6, 182, 212, 0.3);
+        }
+        .case-tier-c .hex-corner.bl {
+            bottom: 0; left: 0;
+            border-right: none;
+            border-top: none;
+            box-shadow: -4px 4px 12px rgba(6, 182, 212, 0.3);
+        }
+        .case-tier-c .hex-corner.br {
+            bottom: 0; right: 0;
+            border-left: none;
+            border-top: none;
+            box-shadow: 4px 4px 12px rgba(6, 182, 212, 0.3);
         }
 
-        .case-audit .trans-headline {
-            color: #ffffff;
-            text-shadow: 0 0 15px var(--audit-glow);
+        .case-tier-c .trans-center-stage {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.35), inset 0 0 25px rgba(2, 132, 199, 0.15);
         }
 
-        .case-audit .trans-meter-bar {
-            background: var(--audit-color);
-            box-shadow: 0 0 14px var(--audit-glow);
-            animation: auditComputeFill 2.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .case-tier-c .trans-pill-tag {
+            background: rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.6);
+            color: #38bdf8;
         }
 
-        @keyframes auditComputeFill {
+        .case-tier-c .pill-dot {
+            background: #06b6d4;
+            box-shadow: 0 0 10px #06b6d4;
+        }
+
+        .case-tier-c .trans-headline {
+            color: #e0f2fe;
+            text-shadow: 0 0 16px rgba(6, 182, 212, 0.9), 0 0 32px rgba(2, 132, 199, 0.5);
+        }
+
+        .case-tier-c .trans-meter-bar {
+            background: linear-gradient(90deg, #0284c7 0%, #06b6d4 100%);
+            box-shadow: 0 0 14px rgba(6, 182, 212, 0.85);
+            animation: tierCFillBar 2.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes tierCFillBar {
             0% { transform: scaleX(0); }
-            100% { transform: scaleX(var(--target-scale, 0.75)); }
+            100% { transform: scaleX(0.55); }
         }
 
-        .case-audit.trans-exit-phase {
-            animation: auditCurtainSplit 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        .case-tier-c.trans-exit-phase {
+            animation: tierCBiometricSplit 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
         }
 
-        @keyframes auditCurtainSplit {
+        @keyframes tierCBiometricSplit {
             0% {
                 transform: scale(1);
+                filter: brightness(1);
                 opacity: 1;
             }
+            40% {
+                transform: scale(1.05);
+                filter: brightness(2.2);
+                opacity: 0.9;
+            }
             100% {
-                transform: scale(1.06);
+                transform: scaleY(1.35) scaleX(0.02);
+                filter: brightness(3.5);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================================
+           CASE TIER D: DEBT WON // INDUSTRIAL STRAIN (WARNING AMBER)
+           ========================================================================= */
+        .ending-transition-overlay.case-tier-d {
+            background: radial-gradient(circle at center, #241403 0%, #090501 100%);
+            animation: tierDStrain 1.2s ease-in-out infinite alternate;
+        }
+
+        .case-tier-d .trans-caution-frame {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .case-tier-d .caution-bar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(
+                -45deg,
+                #f59e0b,
+                #f59e0b 14px,
+                #1c1303 14px,
+                #1c1303 28px
+            );
+            opacity: 0.95;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .case-tier-d .caution-bar.top { top: 0; }
+        .case-tier-d .caution-bar.bottom { bottom: 0; }
+
+        .case-tier-d .caution-bracket {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(245, 158, 11, 0.75);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
+        }
+
+        .case-tier-d .caution-bracket.tl {
+            top: 24px; left: 24px;
+            border-right: none;
+            border-bottom: none;
+        }
+        .case-tier-d .caution-bracket.tr {
+            top: 24px; right: 24px;
+            border-left: none;
+            border-bottom: none;
+        }
+        .case-tier-d .caution-bracket.bl {
+            bottom: 24px; left: 24px;
+            border-right: none;
+            border-top: none;
+        }
+        .case-tier-d .caution-bracket.br {
+            bottom: 24px; right: 24px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .case-tier-d .trans-center-stage {
+            border: 2px solid rgba(245, 158, 11, 0.55);
+            box-shadow: 0 0 50px rgba(217, 119, 6, 0.35), inset 0 0 25px rgba(180, 83, 9, 0.2);
+        }
+
+        @keyframes tierDStrain {
+            0% { transform: translate3d(0, 0, 0); }
+            25% { transform: translate3d(-1px, 1px, 0); }
+            50% { transform: translate3d(1px, -1px, 0); }
+            75% { transform: translate3d(-1px, 0, 0); }
+            100% { transform: translate3d(0, 0, 0); }
+        }
+
+        .case-tier-d .trans-pill-tag {
+            background: rgba(245, 158, 11, 0.18);
+            border-color: rgba(245, 158, 11, 0.6);
+            color: #fbbf24;
+        }
+
+        .case-tier-d .pill-dot {
+            background: #f59e0b;
+            box-shadow: 0 0 10px #f59e0b;
+        }
+
+        .case-tier-d .trans-headline {
+            color: #fde68a;
+            text-shadow: 0 0 16px rgba(245, 158, 11, 0.8), 0 0 35px rgba(180, 83, 9, 0.5);
+        }
+
+        .case-tier-d .trans-meter-bar {
+            background: linear-gradient(90deg, #9a3412 0%, #d97706 70%, #f59e0b 100%);
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.8);
+            animation: tierDFillBar 2.0s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+        }
+
+        @keyframes tierDFillBar {
+            0% { transform: scaleX(0); }
+            30% { transform: scaleX(0.22); }
+            45% { transform: scaleX(0.20); }
+            100% { transform: scaleX(0.35); }
+        }
+
+        .case-tier-d.trans-exit-phase {
+            animation: tierDIndustrialSlam 0.5s cubic-bezier(0.6, 0.04, 0.98, 0.335) forwards;
+        }
+
+        @keyframes tierDIndustrialSlam {
+            0% {
+                transform: translateY(0) scale(1);
+                filter: brightness(1);
+                opacity: 1;
+            }
+            30% {
+                transform: translateY(-8px) scale(1.02);
+                filter: brightness(1.8);
+                opacity: 0.95;
+            }
+            100% {
+                transform: translateY(120px) scale(0.92);
+                filter: brightness(3);
                 opacity: 0;
             }
         }
@@ -11497,8 +11795,34 @@
         <div class="reticle-crosshair ch-y"></div>
     </div>
 
-    <!-- Case 3: Tactical Laser Sweep HUD -->
+    <!-- Tier B: Quantum Octagon Vector Reticle -->
+    <div class="trans-vector-octagon">
+        <div class="octagon-ring oct-outer"></div>
+        <div class="octagon-ring oct-inner"></div>
+        <div class="octagon-node node-top"></div>
+        <div class="octagon-node node-bottom"></div>
+        <div class="octagon-node node-left"></div>
+        <div class="octagon-node node-right"></div>
+    </div>
+
+    <!-- Tier C: Tactical Laser Sweep & Hex Corners -->
     <div class="trans-laser-sweep"></div>
+    <div class="trans-hex-corners">
+        <div class="hex-corner tl"></div>
+        <div class="hex-corner tr"></div>
+        <div class="hex-corner bl"></div>
+        <div class="hex-corner br"></div>
+    </div>
+
+    <!-- Tier D: Heavy Industrial Caution Frame -->
+    <div class="trans-caution-frame">
+        <div class="caution-bar top"></div>
+        <div class="caution-bar bottom"></div>
+        <div class="caution-bracket tl"></div>
+        <div class="caution-bracket tr"></div>
+        <div class="caution-bracket bl"></div>
+        <div class="caution-bracket br"></div>
+    </div>
 
     <!-- Center Holo-Card / Telemetry Stage -->
     <div class="trans-center-stage">
@@ -15998,6 +16322,86 @@ function playTransitionAudio(caseType) {
                 noteOsc.start(noteTime);
                 noteOsc.stop(noteTime + 1.45);
             });
+        } else if (caseType === 'tier-b') {
+            // Tier B: Resonant 130Hz bass synth note + ascending dual crystalline chime (784Hz -> 1174Hz)
+            const bassOsc = ctx.createOscillator();
+            const bassGain = ctx.createGain();
+            bassOsc.type = 'sawtooth';
+            bassOsc.frequency.setValueAtTime(130, now);
+            bassOsc.frequency.exponentialRampToValueAtTime(70, now + 1.2);
+            bassGain.gain.setValueAtTime(0.2, now);
+            bassGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+            bassOsc.connect(bassGain);
+            bassGain.connect(ctx.destination);
+            bassOsc.start(now);
+            bassOsc.stop(now + 1.5);
+
+            [783.99, 1174.66].forEach((f, idx) => {
+                const chimeOsc = ctx.createOscillator();
+                const chimeGain = ctx.createGain();
+                const t = now + 0.15 + (idx * 0.2);
+                chimeOsc.type = 'sine';
+                chimeOsc.frequency.setValueAtTime(f, t);
+                chimeGain.gain.setValueAtTime(0.001, t);
+                chimeGain.gain.exponentialRampToValueAtTime(0.18, t + 0.04);
+                chimeGain.gain.exponentialRampToValueAtTime(0.001, t + 0.9);
+                chimeOsc.connect(chimeGain);
+                chimeGain.connect(ctx.destination);
+                chimeOsc.start(t);
+                chimeOsc.stop(t + 0.95);
+            });
+        } else if (caseType === 'tier-c') {
+            // Tier C: Digital laser sweep chirp (660Hz -> 1150Hz fast ping) + metallic hydraulic lock thump (120Hz)
+            const sweepOsc = ctx.createOscillator();
+            const sweepGain = ctx.createGain();
+            sweepOsc.type = 'sine';
+            sweepOsc.frequency.setValueAtTime(660, now);
+            sweepOsc.frequency.exponentialRampToValueAtTime(1150, now + 0.2);
+            sweepGain.gain.setValueAtTime(0.18, now);
+            sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+            sweepOsc.connect(sweepGain);
+            sweepGain.connect(ctx.destination);
+            sweepOsc.start(now);
+            sweepOsc.stop(now + 0.35);
+
+            const thumpOsc = ctx.createOscillator();
+            const thumpGain = ctx.createGain();
+            const thumpTime = now + 0.18;
+            thumpOsc.type = 'triangle';
+            thumpOsc.frequency.setValueAtTime(120, thumpTime);
+            thumpOsc.frequency.exponentialRampToValueAtTime(45, thumpTime + 0.5);
+            thumpGain.gain.setValueAtTime(0.22, thumpTime);
+            thumpGain.gain.exponentialRampToValueAtTime(0.001, thumpTime + 0.6);
+            thumpOsc.connect(thumpGain);
+            thumpGain.connect(ctx.destination);
+            thumpOsc.start(thumpTime);
+            thumpOsc.stop(thumpTime + 0.65);
+        } else if (caseType === 'tier-d') {
+            // Tier D: Low amber warning drone (105Hz down to 55Hz) + industrial relay mechanical clank
+            const droneOsc = ctx.createOscillator();
+            const droneGain = ctx.createGain();
+            droneOsc.type = 'sawtooth';
+            droneOsc.frequency.setValueAtTime(105, now);
+            droneOsc.frequency.exponentialRampToValueAtTime(55, now + 1.2);
+            droneGain.gain.setValueAtTime(0.18, now);
+            droneGain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
+            droneOsc.connect(droneGain);
+            droneGain.connect(ctx.destination);
+            droneOsc.start(now);
+            droneOsc.stop(now + 1.6);
+
+            const clankOsc = ctx.createOscillator();
+            const clankGain = ctx.createGain();
+            const clankTime = now + 0.25;
+            clankOsc.type = 'square';
+            clankOsc.frequency.setValueAtTime(160, clankTime);
+            clankOsc.frequency.exponentialRampToValueAtTime(40, clankTime + 0.3);
+            clankGain.gain.setValueAtTime(0.15, clankTime);
+            clankGain.gain.exponentialRampToValueAtTime(0.001, clankTime + 0.35);
+            clankOsc.connect(clankGain);
+            clankGain.connect(ctx.destination);
+            clankOsc.start(clankTime);
+            clankOsc.stop(clankTime + 0.35);
         } else {
             [0, 0.35].forEach((offset, idx) => {
                 const osc1 = ctx.createOscillator();
@@ -16032,7 +16436,7 @@ function finishEndingTransitionImmediately() {
     }
     const overlay = document.getElementById('ending-transition-overlay');
     if (overlay) {
-        overlay.classList.remove('active', 'trans-exit-phase', 'case-super-fail', 'case-winning', 'case-audit', 'tier-b-style', 'tier-c-style', 'tier-d-style');
+        overlay.classList.remove('active', 'trans-exit-phase', 'case-super-fail', 'case-winning', 'case-tier-b', 'case-tier-c', 'case-tier-d', 'case-audit', 'tier-b-style', 'tier-c-style', 'tier-d-style');
         overlay.style.display = 'none';
         overlay.onclick = null;
     }
@@ -16102,31 +16506,50 @@ function playEndingTransition(tierCode, options = {}) {
 
         playTransitionAudio('win');
 
+    } else if (code === 'B') {
+        // Tier B: Sovereign Near-Miss // Quantum Hyperdrive (Cyber-Violet & Magenta)
+        overlay.classList.add('case-tier-b');
+        if (pillLabel) pillLabel.textContent = 'QUANTUM HORIZON // TIER B';
+        if (headline) headline.textContent = 'TIER B: ALMOST THERE';
+        if (headlineGlitch) headlineGlitch.textContent = 'TIER B: ALMOST THERE';
+        if (subline) subline.textContent = '85% CAPITAL REACHED // ORBITING SOVEREIGN STATUS';
+        if (chipProtocol) chipProtocol.textContent = 'HYPERDRIVE SURGE';
+        if (chipStatus) chipStatus.textContent = '85.0% VERIFIED';
+        if (chipAudit) chipAudit.textContent = 'KRX: NEAR-SOVEREIGN';
+        if (meterLeft) meterLeft.textContent = 'SOVEREIGN PROXIMITY';
+        if (meterRight) meterRight.textContent = '85.0%';
+
+        playTransitionAudio('tier-b');
+
+    } else if (code === 'C') {
+        // Tier C: Still Standing // Ironclad Defense (Electric Cyan)
+        overlay.classList.add('case-tier-c');
+        if (pillLabel) pillLabel.textContent = 'IRONCLAD DEFENSE // TIER C';
+        if (headline) headline.textContent = 'TIER C: STILL STANDING';
+        if (headlineGlitch) headlineGlitch.textContent = 'TIER C: STILL STANDING';
+        if (subline) subline.textContent = 'CAPITAL SHIELD INTACT // ZERO MARGIN COMPROMISE';
+        if (chipProtocol) chipProtocol.textContent = 'MATRIX SHIELD';
+        if (chipStatus) chipStatus.textContent = '55.0% DEFENDED';
+        if (chipAudit) chipAudit.textContent = 'KRX: SOLVENT SURVIVOR';
+        if (meterLeft) meterLeft.textContent = 'SHIELD INTEGRITY';
+        if (meterRight) meterRight.textContent = '55.0%';
+
+        playTransitionAudio('tier-c');
+
     } else {
-        // Case 3: The Rest (B, C, D)
-        overlay.classList.add('case-audit');
-        const styleClass = code === 'B' ? 'tier-b-style' : (code === 'D' ? 'tier-d-style' : 'tier-c-style');
-        overlay.classList.add(styleClass);
+        // Tier D: Debt Won // Industrial Strain (Warning Amber)
+        overlay.classList.add('case-tier-d');
+        if (pillLabel) pillLabel.textContent = 'HAZARD CONTAINMENT // TIER D';
+        if (headline) headline.textContent = 'TIER D: DEBT WON';
+        if (headlineGlitch) headlineGlitch.textContent = 'TIER D: DEBT WON';
+        if (subline) subline.textContent = 'SOLVENT BUT COMPROMISED // SEVERE DEBT OVERHANG';
+        if (chipProtocol) chipProtocol.textContent = 'INDUSTRIAL LOCKDOWN';
+        if (chipStatus) chipStatus.textContent = '35.0% STRAINED';
+        if (chipAudit) chipAudit.textContent = 'KRX: DEBT COMPROMISED';
+        if (meterLeft) meterLeft.textContent = 'STRESS THRESHOLD';
+        if (meterRight) meterRight.textContent = '35.0%';
 
-        const tierNames = {
-            'B': { name: 'ALMOST THERE', target: 0.75, pctStr: '75.0%', desc: '75%+ CAPITAL ACCUMULATED // SOVEREIGN NEAR-MISS' },
-            'C': { name: 'STILL STANDING', target: 0.50, pctStr: '50.0%', desc: 'CAPITAL PRESERVED // SOLVENT SURVIVOR' },
-            'D': { name: 'DEBT WON', target: 0.25, pctStr: '25.0%', desc: 'SOLVENT BUT COMPROMISED // DEBT PRESSURE' }
-        };
-        const curTier = tierNames[code] || tierNames['C'];
-
-        if (pillLabel) pillLabel.textContent = `KRX AUDIT // TIER ${code}`;
-        if (headline) headline.textContent = `TIER ${code}: ${curTier.name}`;
-        if (headlineGlitch) headlineGlitch.textContent = headline ? headline.textContent : `TIER ${code}`;
-        if (subline) subline.textContent = curTier.desc;
-        if (chipProtocol) chipProtocol.textContent = 'PORTFOLIO VERIFIED';
-        if (chipStatus) chipStatus.textContent = `TIER ${code} AUDITED`;
-        if (chipAudit) chipAudit.textContent = 'SETTLEMENT: LOGGED';
-        if (meterLeft) meterLeft.textContent = 'PORTFOLIO TARGET';
-        if (meterRight) meterRight.textContent = curTier.pctStr;
-        if (meterBar) meterBar.style.setProperty('--target-scale', curTier.target);
-
-        playTransitionAudio('audit');
+        playTransitionAudio('tier-d');
     }
 
     overlay.style.display = 'flex';
