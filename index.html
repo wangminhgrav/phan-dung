@@ -680,6 +680,7 @@
            ========================================================================= */
         .badass-order-box {
             position: relative;
+            z-index: 10;
             width: 100%;
             max-width: 530px;
             background: radial-gradient(ellipse at 50% 0%, rgba(15, 23, 42, 0.97) 0%, rgba(3, 7, 18, 0.99) 100%);
@@ -735,6 +736,1258 @@
         }
         .badass-order-box.theme-sell::after {
             background: linear-gradient(90deg, transparent, #ef4444, transparent);
+        }
+        /* =========================================================================
+           FREE FALL 2.0 — BUY / SELL DYNAMIC AURA SYSTEM (PHASE RESTRUCTURED)
+           Phase 1: Ultra-subtle whisper, slowest motion (8.0s)
+           Phase 2: Subtle aura, medium-slow motion (6.0s) [Former Phase 1]
+           Phase 3: Dense aura, faster motion (4.0s) [Former Phase 2]
+           ========================================================================= */
+        .badass-modal-aura-wrap {
+            position: absolute;
+            inset: 0;
+            pointer-events: none !important;
+            overflow: hidden;
+            z-index: 1;
+            background: #000000;
+        }
+
+        .badass-aura-layer {
+            position: absolute;
+            inset: -6%;
+            width: 112%;
+            height: 112%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none !important;
+            will-change: transform, opacity, filter;
+        }
+
+        .badass-aura-hands {
+            display: none;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none !important;
+            will-change: transform, opacity, filter;
+        }
+
+        .badass-aura-demon {
+            display: none;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none !important;
+            will-change: transform, opacity, filter;
+        }
+
+
+
+        .badass-aura-pulse {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none !important;
+            will-change: transform, opacity;
+        }
+
+        .badass-aura-glitch-bar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 6px;
+            z-index: 4;
+            pointer-events: none !important;
+            opacity: 0;
+            will-change: top, opacity, transform;
+        }
+
+        .badass-modal-aura-wrap.theme-buy .badass-aura-glitch-bar {
+            background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.45), rgba(56, 189, 248, 0.75), transparent);
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+        }
+
+        .badass-modal-aura-wrap.theme-sell .badass-aura-glitch-bar {
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.45), rgba(249, 115, 22, 0.75), transparent);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .badass-aura-particles-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none !important;
+        }
+
+        /* -------------------------------------------------------------------------
+           PHASE 1 (NEW) — THE UNSEEN WHISPER: LESS AURA, SLOWEST MOTION (8.0s)
+           ------------------------------------------------------------------------- */
+        .badass-modal-aura-wrap.theme-buy.phase-1 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-buy.phase-1 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/buy_phase_1.png');
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-1 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-sell.phase-1 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/sell_phase_1.png');
+        }
+
+        .badass-modal-aura-wrap.phase-1 .badass-aura-base {
+            z-index: 1;
+            animation: auraDriftLoopP1 8s linear infinite;
+        }
+
+        @keyframes auraDriftLoopP1 {
+            0% {
+                transform: scale(1.02) translate3d(0px, 0px, 0);
+                opacity: 0.82;
+                filter: brightness(1.0) contrast(1.0);
+            }
+            28% {
+                transform: scale(1.04) translate3d(-8px, 3px, 0);
+                opacity: 0.88;
+            }
+            32.0% {
+                transform: scale(1.04) translate3d(-8px, 3px, 0);
+            }
+            32.6% {
+                transform: scale(1.05) translate3d(-12px, 2px, 0) skewX(-0.8deg);
+                filter: brightness(1.2) contrast(1.1) drop-shadow(-3px 0 0 rgba(0, 255, 230, 0.5)) drop-shadow(3px 0 0 rgba(255, 0, 80, 0.5));
+            }
+            33.4% {
+                transform: scale(1.04) translate3d(-8px, 3px, 0) skewX(0deg);
+                filter: brightness(1.0) contrast(1.0);
+            }
+            58% {
+                transform: scale(1.06) translate3d(6px, -4px, 0);
+                opacity: 0.92;
+            }
+            74.0% {
+                transform: scale(1.04) translate3d(4px, -2px, 0);
+            }
+            74.6% {
+                transform: scale(1.05) translate3d(6px, -4px, 0) skewY(-0.4deg);
+                filter: brightness(1.18) drop-shadow(2px 0 0 rgba(255, 40, 60, 0.5));
+                opacity: 0.78;
+            }
+            75.2% {
+                transform: scale(1.04) translate3d(3px, -2px, 0);
+                filter: brightness(1.0);
+                opacity: 0.88;
+            }
+            100% {
+                transform: scale(1.02) translate3d(0px, 0px, 0);
+                opacity: 0.82;
+                filter: brightness(1.0) contrast(1.0);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-1 .badass-aura-swirl {
+            z-index: 2;
+            mix-blend-mode: screen;
+            opacity: 0.35;
+            animation: auraSwirlLoopP1 8s linear infinite;
+        }
+
+        @keyframes auraSwirlLoopP1 {
+            0% {
+                transform: scale(1.06) rotate(0deg) translate3d(3px, -3px, 0);
+                opacity: 0.30;
+                filter: brightness(0.95) blur(1.5px);
+            }
+            32.0% {
+                transform: scale(1.09) rotate(0.6deg) translate3d(-5px, 4px, 0);
+                opacity: 0.42;
+            }
+            32.6% {
+                opacity: 0.60;
+                filter: brightness(1.25) blur(0.8px);
+            }
+            33.4% {
+                opacity: 0.42;
+                filter: brightness(0.95) blur(1.5px);
+            }
+            60% {
+                transform: scale(1.05) rotate(-0.5deg) translate3d(5px, -4px, 0);
+                opacity: 0.38;
+            }
+            74.6% {
+                opacity: 0.52;
+                filter: brightness(1.2);
+            }
+            75.2% {
+                opacity: 0.35;
+            }
+            100% {
+                transform: scale(1.06) rotate(0deg) translate3d(3px, -3px, 0);
+                opacity: 0.30;
+                filter: brightness(0.95) blur(1.5px);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-1 .badass-aura-pulse {
+            animation: auraPulseLoopP1 8s linear infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-1 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 50% 40%, rgba(16, 185, 129, 0.16) 0%, rgba(5, 150, 105, 0.06) 35%, transparent 70%);
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-1 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 58% 50%, rgba(239, 68, 68, 0.18) 0%, rgba(185, 28, 28, 0.08) 38%, transparent 75%);
+        }
+
+        @keyframes auraPulseLoopP1 {
+            0% { transform: scale(0.98); opacity: 0.35; }
+            50% { transform: scale(1.08); opacity: 0.65; }
+            100% { transform: scale(0.98); opacity: 0.35; }
+        }
+
+        .badass-modal-aura-wrap.phase-1 .badass-aura-glitch-bar {
+            animation: auraGlitchBarP1 8s linear infinite;
+        }
+
+        @keyframes auraGlitchBarP1 {
+            0%, 32.0% { top: 25%; opacity: 0; transform: scaleX(0.2); }
+            32.6% { top: 32%; opacity: 0.75; transform: scaleX(1.0); }
+            33.4%, 74.0% { top: 36%; opacity: 0; transform: scaleX(0.3); }
+            74.6% { top: 62%; opacity: 0.70; transform: scaleX(0.85); }
+            75.2%, 100% { top: 65%; opacity: 0; }
+        }
+
+        /* -------------------------------------------------------------------------
+           PHASE 2 (FORMER PHASE 1) — SUBTLE AURA, MEDIUM-SLOW (6.0s)
+           ------------------------------------------------------------------------- */
+        .badass-modal-aura-wrap.theme-buy.phase-2 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-buy.phase-2 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/buy_phase_2_aura.png');
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-2 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-sell.phase-2 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/sell_phase_2_aura.png');
+        }
+
+        .badass-modal-aura-wrap.phase-2 .badass-aura-base {
+            z-index: 1;
+            animation: auraDriftLoopP2 6s linear infinite;
+        }
+
+        @keyframes auraDriftLoopP2 {
+            0% {
+                transform: scale(1.03) translate3d(0px, 0px, 0);
+                opacity: 0.88;
+                filter: brightness(1.0) contrast(1.0) drop-shadow(0 0 0 transparent);
+            }
+            28% {
+                transform: scale(1.06) translate3d(-10px, 4px, 0);
+                opacity: 0.96;
+                filter: brightness(1.05) contrast(1.02);
+            }
+            30.0% { transform: scale(1.06) translate3d(-10px, 4px, 0); }
+            30.8% {
+                transform: scale(1.07) translate3d(-16px, 2px, 0) skewX(-1.2deg);
+                filter: brightness(1.3) contrast(1.2) drop-shadow(-4px 0 0 rgba(0, 255, 230, 0.7)) drop-shadow(4px 0 0 rgba(255, 0, 80, 0.7));
+            }
+            31.6% {
+                transform: scale(1.06) translate3d(-8px, 5px, 0) skewX(0.8deg);
+                filter: brightness(1.15) contrast(1.08) drop-shadow(-2px 0 0 rgba(0, 255, 230, 0.4));
+            }
+            32.4% {
+                transform: scale(1.06) translate3d(-10px, 4px, 0) skewX(0deg);
+                filter: brightness(1.05) contrast(1.0) drop-shadow(0 0 0 transparent);
+            }
+            55% {
+                transform: scale(1.08) translate3d(8px, -5px, 0);
+                opacity: 1.0;
+                filter: brightness(1.1) contrast(1.04);
+            }
+            72.0% { transform: scale(1.06) translate3d(5px, -3px, 0); }
+            72.6% {
+                transform: scale(1.07) translate3d(7px, -6px, 0) skewY(-0.5deg);
+                filter: brightness(1.25) contrast(1.18) drop-shadow(3px 0 0 rgba(255, 40, 60, 0.65));
+                opacity: 0.80;
+            }
+            73.4% {
+                transform: scale(1.05) translate3d(4px, -2px, 0);
+                filter: brightness(1.05) drop-shadow(0 0 0 transparent);
+                opacity: 0.95;
+            }
+            85% { transform: scale(1.04) translate3d(3px, -1px, 0); opacity: 0.90; }
+            100% {
+                transform: scale(1.03) translate3d(0px, 0px, 0);
+                opacity: 0.88;
+                filter: brightness(1.0) contrast(1.0) drop-shadow(0 0 0 transparent);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-2 .badass-aura-swirl {
+            z-index: 2;
+            mix-blend-mode: screen;
+            opacity: 0.50;
+            animation: auraSwirlLoopP2 6s linear infinite;
+        }
+
+        @keyframes auraSwirlLoopP2 {
+            0% {
+                transform: scale(1.09) rotate(0deg) translate3d(4px, -4px, 0);
+                opacity: 0.45;
+                filter: brightness(1.0) blur(1.5px);
+            }
+            30.0% {
+                transform: scale(1.13) rotate(0.8deg) translate3d(-7px, 6px, 0);
+                opacity: 0.60;
+                filter: brightness(1.15) blur(2.5px);
+            }
+            30.8% {
+                transform: scale(1.15) rotate(1.4deg) translate3d(-11px, 3px, 0);
+                opacity: 0.82;
+                filter: brightness(1.45) blur(0.8px);
+            }
+            32.4% {
+                transform: scale(1.13) rotate(0.8deg) translate3d(-7px, 6px, 0);
+                opacity: 0.60;
+                filter: brightness(1.15) blur(2.5px);
+            }
+            60% {
+                transform: scale(1.07) rotate(-0.6deg) translate3d(7px, -6px, 0);
+                opacity: 0.52;
+                filter: brightness(1.05) blur(2px);
+            }
+            72.6% { opacity: 0.72; filter: brightness(1.35) blur(1.2px); }
+            73.4% { opacity: 0.50; filter: brightness(1.05) blur(2px); }
+            100% {
+                transform: scale(1.09) rotate(0deg) translate3d(4px, -4px, 0);
+                opacity: 0.45;
+                filter: brightness(1.0) blur(1.5px);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-2 .badass-aura-pulse {
+            animation: auraPulseLoopP2 6s linear infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-2 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 50% 40%, rgba(16, 185, 129, 0.24) 0%, rgba(5, 150, 105, 0.11) 38%, rgba(2, 44, 34, 0.04) 60%, transparent 75%);
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-2 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 58% 50%, rgba(239, 68, 68, 0.27) 0%, rgba(185, 28, 28, 0.13) 42%, rgba(69, 10, 10, 0.05) 65%, transparent 80%);
+        }
+
+        @keyframes auraPulseLoopP2 {
+            0% { transform: scale(1.0); opacity: 0.50; }
+            50% { transform: scale(1.15); opacity: 0.85; }
+            100% { transform: scale(1.0); opacity: 0.50; }
+        }
+
+        .badass-modal-aura-wrap.phase-2 .badass-aura-glitch-bar {
+            animation: auraGlitchBarP2 6s linear infinite;
+        }
+
+        @keyframes auraGlitchBarP2 {
+            0%, 30.0% { top: 25%; opacity: 0; transform: scaleX(0.2); }
+            30.8% { top: 32%; opacity: 0.85; transform: scaleX(1.0); }
+            31.6% { top: 36%; opacity: 0.4; transform: scaleX(0.7); }
+            32.4%, 72.0% { top: 68%; opacity: 0; transform: scaleX(0.3); }
+            72.6% { top: 64%; opacity: 0.80; transform: scaleX(1.0); }
+            73.4% { top: 66%; opacity: 0; transform: scaleX(0.4); }
+            100% { top: 25%; opacity: 0; }
+        }
+
+        /* -------------------------------------------------------------------------
+           PHASE 3 (FORMER PHASE 2) — DENSE AURA, FASTER MOTION (4.0s)
+           ------------------------------------------------------------------------- */
+        .badass-modal-aura-wrap.theme-buy.phase-3 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-buy.phase-3 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/buy_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-3 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-sell.phase-3 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/sell_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.phase-3 .badass-aura-base {
+            z-index: 1;
+            animation: auraDriftLoopP3 4s linear infinite;
+        }
+
+        @keyframes auraDriftLoopP3 {
+            0% {
+                transform: scale(1.05) translate3d(0px, 0px, 0);
+                opacity: 0.92;
+                filter: brightness(1.05) contrast(1.05) drop-shadow(0 0 0 transparent);
+            }
+            22% {
+                transform: scale(1.09) translate3d(-14px, 6px, 0);
+                opacity: 0.98;
+                filter: brightness(1.1) contrast(1.08) drop-shadow(0 0 0 transparent);
+            }
+            24.0% { transform: scale(1.09) translate3d(-14px, 6px, 0); filter: brightness(1.1); }
+            24.8% {
+                transform: scale(1.11) translate3d(-20px, 3px, 0) skewX(-1.8deg);
+                filter: brightness(1.35) contrast(1.25) drop-shadow(-5px 0 0 rgba(0, 255, 230, 0.8)) drop-shadow(5px 0 0 rgba(255, 0, 80, 0.8));
+            }
+            25.6% {
+                transform: scale(1.09) translate3d(-11px, 7px, 0) skewX(1.0deg);
+                filter: brightness(1.2) contrast(1.12) drop-shadow(-3px 0 0 rgba(0, 255, 230, 0.5));
+            }
+            26.4% {
+                transform: scale(1.09) translate3d(-14px, 6px, 0) skewX(0deg);
+                filter: brightness(1.1) contrast(1.05) drop-shadow(0 0 0 transparent);
+            }
+            52% {
+                transform: scale(1.12) translate3d(12px, -8px, 0);
+                opacity: 1.0;
+                filter: brightness(1.18) contrast(1.1);
+            }
+            55.6% { transform: scale(1.10) translate3d(8px, -4px, 0); filter: brightness(1.12); }
+            56.2% {
+                transform: scale(1.12) translate3d(10px, -9px, 0) skewY(-0.8deg);
+                filter: brightness(1.35) contrast(1.28) drop-shadow(4px 0 0 rgba(255, 40, 60, 0.75));
+                opacity: 0.82;
+            }
+            57.0% {
+                transform: scale(1.08) translate3d(6px, -3px, 0);
+                filter: brightness(1.12) drop-shadow(0 0 0 transparent);
+                opacity: 0.98;
+            }
+            80% { transform: scale(1.06) translate3d(4px, -2px, 0); opacity: 0.94; }
+            81.6% { transform: scale(1.06) translate3d(4px, -2px, 0); }
+            82.2% {
+                transform: scale(1.07) translate3d(2px, 3px, 0) skewX(1.2deg);
+                filter: brightness(1.28) drop-shadow(-4px 0 0 rgba(0, 255, 230, 0.6));
+            }
+            82.8% {
+                transform: scale(1.06) translate3d(3px, -1px, 0) skewX(0deg);
+                filter: brightness(1.08) drop-shadow(0 0 0 transparent);
+            }
+            100% {
+                transform: scale(1.05) translate3d(0px, 0px, 0);
+                opacity: 0.92;
+                filter: brightness(1.05) contrast(1.05) drop-shadow(0 0 0 transparent);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-3 .badass-aura-swirl {
+            z-index: 2;
+            mix-blend-mode: screen;
+            opacity: 0.70;
+            animation: auraSwirlLoopP3 4s linear infinite;
+        }
+
+        @keyframes auraSwirlLoopP3 {
+            0% {
+                transform: scale(1.12) rotate(0deg) translate3d(6px, -6px, 0);
+                opacity: 0.60;
+                filter: brightness(1.1) blur(1.5px);
+            }
+            24.0% {
+                transform: scale(1.16) rotate(1.0deg) translate3d(-10px, 8px, 0);
+                opacity: 0.75;
+                filter: brightness(1.25) blur(2.5px);
+            }
+            24.8% {
+                transform: scale(1.18) rotate(1.6deg) translate3d(-15px, 5px, 0);
+                opacity: 0.92;
+                filter: brightness(1.55) blur(0.8px);
+            }
+            26.4% {
+                transform: scale(1.16) rotate(1.0deg) translate3d(-10px, 8px, 0);
+                opacity: 0.75;
+                filter: brightness(1.25) blur(2.5px);
+            }
+            54% {
+                transform: scale(1.09) rotate(-0.8deg) translate3d(9px, -8px, 0);
+                opacity: 0.65;
+                filter: brightness(1.12) blur(2px);
+            }
+            56.2% { opacity: 0.88; filter: brightness(1.45) blur(1.2px); }
+            57.0% { opacity: 0.65; filter: brightness(1.12) blur(2px); }
+            82.0% { opacity: 0.82; filter: brightness(1.35); }
+            82.8% { opacity: 0.62; filter: brightness(1.1); }
+            100% {
+                transform: scale(1.12) rotate(0deg) translate3d(6px, -6px, 0);
+                opacity: 0.60;
+                filter: brightness(1.1) blur(1.5px);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-3 .badass-aura-pulse {
+            animation: auraPulseLoopP3 4s linear infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-3 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 50% 40%, rgba(16, 185, 129, 0.32) 0%, rgba(5, 150, 105, 0.16) 42%, rgba(2, 44, 34, 0.06) 65%, transparent 80%);
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-3 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 58% 50%, rgba(239, 68, 68, 0.36) 0%, rgba(185, 28, 28, 0.18) 46%, rgba(69, 10, 10, 0.07) 70%, transparent 85%);
+        }
+
+        @keyframes auraPulseLoopP3 {
+            0% { transform: scale(1.02); opacity: 0.60; }
+            50% { transform: scale(1.22); opacity: 0.95; }
+            100% { transform: scale(1.02); opacity: 0.60; }
+        }
+
+        .badass-modal-aura-wrap.phase-3 .badass-aura-glitch-bar {
+            animation: auraGlitchBarP3 4s linear infinite;
+        }
+
+        @keyframes auraGlitchBarP3 {
+            0%, 24.0% { top: 28%; opacity: 0; transform: scaleX(0.2); }
+            24.8% { top: 34%; opacity: 0.92; transform: scaleX(1.0); }
+            25.6% { top: 38%; opacity: 0.45; transform: scaleX(0.7); }
+            26.4%, 55.6% { top: 65%; opacity: 0; transform: scaleX(0.3); }
+            56.2% { top: 62%; opacity: 0.88; transform: scaleX(1.0); }
+            57.0%, 81.6% { top: 45%; opacity: 0; transform: scaleX(0.4); }
+            82.2% { top: 48%; opacity: 0.80; transform: scaleX(0.85); }
+            82.8% { top: 50%; opacity: 0; transform: scaleX(0.3); }
+            100% { top: 28%; opacity: 0; }
+        }
+
+                        /* -------------------------------------------------------------------------
+                   /* CORNER CLAW OVERLAYS (PHASE 4 CORNER GRAB ON BUY/SELL UI) */
+        .badass-order-corner-claw {
+            display: none;
+            position: absolute;
+            pointer-events: none !important;
+            z-index: 40;
+            will-change: transform, filter;
+        }
+
+        .badass-order-box.theme-buy.phase-4 .badass-order-corner-claw,
+        .badass-order-box.theme-buy.phase-5 .badass-order-corner-claw,
+        .badass-modal-aura-wrap.phase-4 ~ .badass-order-box.theme-buy .badass-order-corner-claw,
+        .badass-modal-aura-wrap.phase-5 ~ .badass-order-box.theme-buy .badass-order-corner-claw {
+            display: block;
+            width: 170px;
+            height: 175px;
+            bottom: -76px;
+            left: -86px;
+            background-image: url('assets/buy_sell_demon/claw_corner_buy.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6)) drop-shadow(0 0 20px rgba(52, 211, 153, 0.3));
+            animation: clawCornerIdleBuy 4s ease-in-out infinite;
+        }
+
+        .badass-order-box.theme-sell.phase-4 .badass-order-corner-claw,
+        .badass-order-box.theme-sell.phase-5 .badass-order-corner-claw,
+        .badass-modal-aura-wrap.phase-4 ~ .badass-order-box.theme-sell .badass-order-corner-claw,
+        .badass-modal-aura-wrap.phase-5 ~ .badass-order-box.theme-sell .badass-order-corner-claw {
+            display: block;
+            width: 170px;
+            height: 175px;
+            bottom: -76px;
+            right: -86px;
+            background-image: url('assets/buy_sell_demon/claw_corner_sell.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.6)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.3));
+            animation: clawCornerIdleSell 4s ease-in-out infinite;
+        }
+
+        @keyframes clawCornerIdleBuy {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) scale(1);
+                filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6)) drop-shadow(0 0 20px rgba(52, 211, 153, 0.3));
+            }
+            35% {
+                transform: translate3d(1.5px, -1px, 0) scale(1.012) rotate(0.3deg);
+                filter: drop-shadow(0 0 16px rgba(52, 211, 153, 0.85)) drop-shadow(0 0 25px rgba(56, 189, 248, 0.5));
+            }
+            50% {
+                transform: translate3d(1px, -0.5px, 0) scale(1.008);
+                filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.7));
+            }
+            80% {
+                transform: translate3d(0.5px, 0, 0) scale(1.003);
+            }
+        }
+
+        @keyframes clawCornerIdleSell {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) scale(1);
+                filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.6)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.3));
+            }
+            35% {
+                transform: translate3d(-1.5px, -1px, 0) scale(1.012) rotate(-0.3deg);
+                filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.85)) drop-shadow(0 0 25px rgba(249, 115, 22, 0.5));
+            }
+            50% {
+                transform: translate3d(-1px, -0.5px, 0) scale(1.008);
+                filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.7));
+            }
+            80% {
+                transform: translate3d(-0.5px, 0, 0) scale(1.003);
+            }
+        }
+
+
+        /* PHASE 4 - THE DEMON HANDS AWAKENING: CORNER GRIP EMERGENCE (4.0s)
+           ------------------------------------------------------------------------- */
+        .badass-modal-aura-wrap.theme-buy.phase-4 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-buy.phase-4 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/buy_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-4 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-sell.phase-4 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/sell_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.phase-4 .badass-aura-base {
+            z-index: 1;
+            animation: auraDriftLoopP3 4s linear infinite;
+        }
+
+        .badass-modal-aura-wrap.phase-4 .badass-aura-hands {
+            display: block;
+            z-index: 2;
+            opacity: 0.95;
+            mix-blend-mode: screen;
+            will-change: transform, opacity;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-4 .badass-aura-hands {
+            background-image: url('assets/buy_sell_demon/buy_phase_4_new_hands.png');
+            mix-blend-mode: screen;
+            animation: auraHandsLoopP4Buy 4s ease-in-out infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-4 .badass-aura-hands {
+            background-image: url('assets/buy_sell_demon/sell_phase_4_new_hands.png');
+            mix-blend-mode: screen;
+            animation: auraHandsLoopP4Sell 4s ease-in-out infinite;
+        }
+
+        @keyframes auraHandsLoopP4Buy {
+            0% {
+                transform: scale(1.0) translate3d(0px, 0px, 0) rotate(0deg);
+                opacity: 0.90;
+                filter: brightness(1.0) contrast(1.0) drop-shadow(0 0 0 transparent);
+            }
+            25% {
+                transform: scale(1.010) translate3d(2px, -2px, 0) rotate(0.4deg);
+                opacity: 0.96;
+                filter: brightness(1.10) contrast(1.05) drop-shadow(2px -2px 8px rgba(52, 211, 153, 0.5));
+            }
+            35% {
+                transform: scale(1.015) translate3d(3px, -3px, 0) rotate(0.7deg) skewX(-0.5deg);
+                opacity: 1.0;
+                filter: brightness(1.26) contrast(1.18) drop-shadow(3px -3px 12px rgba(56, 189, 248, 0.75));
+            }
+            38% {
+                transform: scale(1.013) translate3d(2px, -2px, 0) rotate(0.5deg) skewX(0deg);
+                opacity: 0.95;
+                filter: brightness(1.12) contrast(1.06);
+            }
+            50% {
+                transform: scale(1.012) translate3d(2px, -2px, 0) rotate(0.4deg);
+                opacity: 0.98;
+                filter: brightness(1.12) contrast(1.06) drop-shadow(3px -2px 10px rgba(52, 211, 153, 0.6));
+            }
+            70% {
+                transform: scale(1.004) translate3d(1px, -1px, 0) rotate(0.2deg);
+                opacity: 0.93;
+                filter: brightness(1.04);
+            }
+            82% {
+                transform: scale(1.008) translate3d(2px, -2px, 0) rotate(0.5deg) skewY(0.4deg);
+                opacity: 0.97;
+                filter: brightness(1.20) contrast(1.12) drop-shadow(2px -1px 8px rgba(52, 211, 153, 0.65));
+            }
+            85% {
+                transform: scale(1.002) translate3d(0px, 0px, 0) rotate(0deg) skewY(0deg);
+                opacity: 0.91;
+                filter: brightness(1.04);
+            }
+            100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0) rotate(0deg);
+                opacity: 0.90;
+                filter: brightness(1.0) contrast(1.0) drop-shadow(0 0 0 transparent);
+            }
+        }
+
+        @keyframes auraHandsLoopP4Sell {
+            0% {
+                transform: scale(1.0) translate3d(0px, 0px, 0) rotate(0deg);
+                opacity: 0.90;
+                filter: brightness(1.0) contrast(1.0) drop-shadow(0 0 0 transparent);
+            }
+            25% {
+                transform: scale(1.012) translate3d(-2px, -2px, 0) rotate(-0.5deg);
+                opacity: 0.96;
+                filter: brightness(1.12) contrast(1.06) drop-shadow(-2px -2px 8px rgba(239, 68, 68, 0.6));
+            }
+            35% {
+                transform: scale(1.018) translate3d(-4px, -3px, 0) rotate(-0.9deg) skewX(0.6deg);
+                opacity: 1.0;
+                filter: brightness(1.30) contrast(1.22) drop-shadow(-4px -3px 14px rgba(239, 68, 68, 0.85));
+            }
+            38% {
+                transform: scale(1.015) translate3d(-3px, -2px, 0) rotate(-0.7deg) skewX(0deg);
+                opacity: 0.95;
+                filter: brightness(1.15) contrast(1.08);
+            }
+            50% {
+                transform: scale(1.014) translate3d(-3px, -2px, 0) rotate(-0.6deg);
+                opacity: 0.98;
+                filter: brightness(1.15) contrast(1.08) drop-shadow(-4px -2px 12px rgba(249, 115, 22, 0.7));
+            }
+            70% {
+                transform: scale(1.006) translate3d(-1px, -1px, 0) rotate(-0.2deg);
+                opacity: 0.93;
+                filter: brightness(1.05);
+            }
+            82% {
+                transform: scale(1.010) translate3d(-3px, -2px, 0) rotate(-0.6deg) skewY(-0.4deg);
+                opacity: 0.97;
+                filter: brightness(1.22) contrast(1.14) drop-shadow(2px -2px 8px rgba(239, 68, 68, 0.7));
+            }
+            85% {
+                transform: scale(1.002) translate3d(0px, 0px, 0) rotate(0deg) skewY(0deg);
+                opacity: 0.91;
+                filter: brightness(1.04);
+            }
+            100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0) rotate(0deg);
+                opacity: 0.90;
+                filter: brightness(1.0) contrast(1.0) drop-shadow(0 0 0 transparent);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-4 .badass-aura-swirl {
+            z-index: 3;
+            mix-blend-mode: screen;
+            opacity: 0.55;
+            animation: auraSwirlLoopP3 4s linear infinite;
+        }
+
+        .badass-modal-aura-wrap.phase-4 .badass-aura-pulse {
+            z-index: 4;
+            animation: auraPulseLoopP3 4s linear infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-4 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 50% 40%, rgba(16, 185, 129, 0.32) 0%, rgba(5, 150, 105, 0.16) 42%, rgba(2, 44, 34, 0.06) 65%, transparent 80%);
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-4 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 58% 50%, rgba(239, 68, 68, 0.36) 0%, rgba(185, 28, 28, 0.18) 46%, rgba(69, 10, 10, 0.07) 70%, transparent 85%);
+        }
+
+        .badass-modal-aura-wrap.phase-4 .badass-aura-glitch-bar {
+            z-index: 6;
+            animation: auraGlitchBarP3 4s linear infinite;
+        }
+
+
+                /* -------------------------------------------------------------------------
+           PHASE 5 - THE EYES BEHIND THE ARM: DEMON AWARENESS & GAZE (4.0s)
+           ------------------------------------------------------------------------- */
+        .badass-modal-aura-wrap.theme-buy.phase-5 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-buy.phase-5 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/buy_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-5 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-sell.phase-5 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/sell_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.phase-5 .badass-aura-base {
+            z-index: 1;
+            animation: auraDriftLoopP3 4s linear infinite;
+        }
+
+        /* Swirling Atmospheric Mist in Background (Behind Arm & Eyes) */
+        .badass-modal-aura-wrap.phase-5 .badass-aura-swirl {
+            display: block;
+            z-index: 2;
+            mix-blend-mode: screen;
+            opacity: 0.28;
+            animation: auraSwirlLoopP3 4s linear infinite;
+        }
+
+        /* Arm Layer: Ultra-Crisp Chiseled Arm Extending Towards Corner Scratches */
+        .badass-modal-aura-wrap.phase-5 .badass-aura-hands {
+            display: block;
+            z-index: 3;
+            opacity: 1.0;
+            mix-blend-mode: screen;
+            filter: contrast(1.16) brightness(1.10);
+            will-change: transform, opacity, filter;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-5 .badass-aura-hands {
+            background-image: url('assets/buy_sell_demon/buy_phase_5_arm.png');
+            animation: auraHandsLoopP5Buy 4s ease-in-out infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-5 .badass-aura-hands {
+            background-image: url('assets/buy_sell_demon/sell_phase_5_arm.png');
+            animation: auraHandsLoopP5Sell 4s ease-in-out infinite;
+        }
+
+        /* Eyes Layer: Demonic Eyes Emerging from Darkness Above the Arm */
+        .badass-modal-aura-wrap.phase-5 .badass-aura-demon {
+            display: block;
+            z-index: 4;
+            mix-blend-mode: screen;
+            opacity: 0.98;
+            will-change: transform, opacity, filter;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-5 .badass-aura-demon {
+            background-image: url('assets/buy_sell_demon/buy_phase_5_eyes.png');
+            animation: auraEyesLoopP5Buy 4s ease-in-out infinite;
+            mix-blend-mode: normal;
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-5 .badass-aura-demon {
+            background-image: url('assets/buy_sell_demon/sell_phase_5_eyes.png');
+            animation: auraEyesLoopP5Sell 4s ease-in-out infinite;
+        }
+
+        /* Arm Keyframes - Crisp Chiseled Plates & Restrained Tension */
+        @keyframes auraHandsLoopP5Buy {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0) rotate(0deg);
+                opacity: 0.96;
+                filter: contrast(1.16) brightness(1.10);
+            }
+            35% {
+                transform: scale(1.003) translate3d(0.4px, -0.4px, 0) rotate(0.12deg);
+                opacity: 1.0;
+                filter: contrast(1.20) brightness(1.14) drop-shadow(1px -1px 6px rgba(45, 212, 191, 0.45));
+            }
+            65% {
+                transform: scale(1.001) translate3d(0.2px, -0.2px, 0) rotate(0.06deg);
+                opacity: 0.98;
+                filter: contrast(1.17) brightness(1.11);
+            }
+        }
+
+        @keyframes auraHandsLoopP5Sell {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0) rotate(0deg);
+                opacity: 0.96;
+                filter: contrast(1.16) brightness(1.10);
+            }
+            25% {
+                transform: scale(1.008) translate3d(-1.5px, -1.5px, 0) rotate(-0.3deg);
+                opacity: 1.0;
+                filter: contrast(1.22) brightness(1.18) drop-shadow(-2px -2px 8px rgba(239, 68, 68, 0.65));
+            }
+            40% {
+                transform: scale(1.014) translate3d(-2.2px, -2.5px, 0) rotate(-0.5deg);
+                opacity: 1.0;
+                filter: contrast(1.28) brightness(1.26) drop-shadow(-3px -3px 14px rgba(249, 115, 22, 0.85));
+            }
+            65% {
+                transform: scale(1.006) translate3d(-1.0px, -1.0px, 0) rotate(-0.2deg);
+                opacity: 0.98;
+                filter: contrast(1.18) brightness(1.12);
+            }
+            85% {
+                transform: scale(1.002) translate3d(-0.4px, -0.4px, 0) rotate(-0.1deg);
+                opacity: 0.95;
+            }
+        }
+
+        /* Eyes Keyframes - Calculating Demon Gaze & Gradual Emergence */
+        @keyframes auraEyesLoopP5Buy {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+                opacity: 0.45;
+                filter: brightness(0.88) drop-shadow(0 0 6px rgba(45, 212, 191, 0.3));
+            }
+            25% {
+                transform: scale(1.002) translate3d(0.2px, -0.2px, 0);
+                opacity: 0.80;
+                filter: brightness(1.05) drop-shadow(0 0 12px rgba(45, 212, 191, 0.55));
+            }
+            40%, 65% {
+                transform: scale(1.004) translate3d(0.3px, -0.3px, 0);
+                opacity: 0.98;
+                filter: brightness(1.22) contrast(1.10) drop-shadow(0 0 18px rgba(56, 189, 248, 0.75));
+            }
+            80% {
+                transform: scale(1.001) translate3d(0.1px, -0.1px, 0);
+                opacity: 0.60;
+                filter: brightness(0.92) drop-shadow(0 0 8px rgba(45, 212, 191, 0.35));
+            }
+        }
+
+        @keyframes auraEyesLoopP5Sell {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+                opacity: 0.68;
+                filter: brightness(0.92) drop-shadow(0 0 8px rgba(239, 68, 68, 0.45));
+            }
+            20% {
+                transform: scale(1.008) translate3d(-0.6px, -0.5px, 0);
+                opacity: 0.86;
+                filter: brightness(1.15) drop-shadow(0 0 18px rgba(239, 68, 68, 0.75));
+            }
+            40% {
+                transform: scale(1.018) translate3d(-1.5px, -1.2px, 0);
+                opacity: 1.0;
+                filter: brightness(1.40) contrast(1.18) drop-shadow(0 0 28px rgba(249, 115, 22, 0.95));
+            }
+            65% {
+                transform: scale(1.010) translate3d(-0.8px, -0.6px, 0);
+                opacity: 0.78;
+                filter: brightness(1.08) drop-shadow(0 0 16px rgba(239, 68, 68, 0.65));
+            }
+            85% {
+                transform: scale(1.003) translate3d(-0.3px, -0.2px, 0);
+                opacity: 0.70;
+                filter: brightness(0.95);
+            }
+        }
+
+        .badass-modal-aura-wrap.phase-5 .badass-aura-pulse {
+            z-index: 5;
+            animation: auraPulseLoopP3 4s linear infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-5 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 30% 35%, rgba(16, 185, 129, 0.28) 0%, rgba(5, 150, 105, 0.14) 38%, transparent 70%);
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-5 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 70% 35%, rgba(239, 68, 68, 0.32) 0%, rgba(185, 28, 28, 0.16) 42%, transparent 75%);
+        }
+
+        .badass-modal-aura-wrap.phase-5 .badass-aura-glitch-bar {
+            z-index: 6;
+            animation: auraGlitchBarP3 4s linear infinite;
+        }
+
+        
+        /* -------------------------------------------------------------------------
+           PHASE 6 - THE REVEAL + BREAKING SCREEN EFFECT (6.0s)
+           ------------------------------------------------------------------------- */
+        .badass-modal-aura-wrap.theme-buy.phase-6 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-buy.phase-6 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/buy_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-6 .badass-aura-base,
+        .badass-modal-aura-wrap.theme-sell.phase-6 .badass-aura-swirl {
+            background-image: url('assets/buy_sell_demon/sell_phase_3_aura.png');
+        }
+
+        .badass-modal-aura-wrap.phase-6 .badass-aura-base {
+            z-index: 1;
+            animation: auraDriftLoopP3 6s linear infinite;
+        }
+
+        /* Swirling Atmospheric Mist in Background (Behind Face & Arm) */
+        .badass-modal-aura-wrap.phase-6 .badass-aura-swirl {
+            display: block;
+            z-index: 2;
+            mix-blend-mode: screen;
+            opacity: 0.32;
+            animation: auraSwirlLoopP3 6s linear infinite;
+        }
+
+        /* Face Layer: Demon Partial Face Emerging from Darkness Behind Arm */
+        .badass-modal-aura-wrap.phase-6 .badass-aura-demon {
+            display: block;
+            z-index: 3;
+            will-change: transform, opacity, filter;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-6 .badass-aura-demon {
+            background-image: url('assets/buy_sell_demon/buy_phase_6_face.png');
+            animation: auraFaceLoopP6Buy 6s ease-in-out infinite;
+            mix-blend-mode: normal;
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-6 .badass-aura-demon {
+            background-image: url('assets/buy_sell_demon/sell_phase_6_face.png');
+            animation: auraFaceLoopP6Sell 6s ease-in-out infinite;
+            mix-blend-mode: normal;
+        }
+
+        /* Arm Layer: Grounded in Foreground Extending to UI Corner Scratches */
+        .badass-modal-aura-wrap.phase-6 .badass-aura-hands {
+            display: block;
+            z-index: 4;
+            opacity: 1.0;
+            mix-blend-mode: screen;
+            filter: contrast(1.18) brightness(1.10);
+            will-change: transform, opacity, filter;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-6 .badass-aura-hands {
+            background-image: url('assets/buy_sell_demon/buy_phase_6_arm.png');
+            animation: auraHandsLoopP6Buy 6s ease-in-out infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-6 .badass-aura-hands {
+            background-image: url('assets/buy_sell_demon/sell_phase_6_arm.png');
+            animation: auraHandsLoopP6Sell 6s ease-in-out infinite;
+        }
+
+        /* Breaking Screen Fractures Layer (z-index: 5) */
+        .badass-aura-cracks {
+            display: none;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            will-change: transform, opacity, filter;
+        }
+
+        .badass-modal-aura-wrap.phase-6 .badass-aura-cracks {
+            display: block;
+            z-index: 5;
+            mix-blend-mode: screen;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-6 .badass-aura-cracks {
+            background-image: url('assets/buy_sell_demon/buy_phase_6_cracks.png');
+            animation: auraCracksLoopP6Buy 6s ease-in-out infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-6 .badass-aura-cracks {
+            background-image: url('assets/buy_sell_demon/sell_phase_6_cracks.png');
+            animation: auraCracksLoopP6Sell 6s ease-in-out infinite;
+        }
+
+        /* Arm Keyframes - Phase 6 */
+        @keyframes auraHandsLoopP6Buy {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+                opacity: 0.94;
+                filter: contrast(1.15) brightness(1.08);
+            }
+            25% {
+                transform: scale(1.003) translate3d(-0.8px, -0.3px, 0);
+                opacity: 0.98;
+                filter: contrast(1.20) brightness(1.14) drop-shadow(0 0 10px rgba(45, 212, 191, 0.45));
+            }
+            38% {
+                /* Hand presses firmly against the glass break on left edge */
+                transform: scale(1.007) translate3d(-1.5px, -0.6px, 0);
+                opacity: 1.0;
+                filter: contrast(1.26) brightness(1.22) drop-shadow(-2px 0 16px rgba(45, 212, 191, 0.75)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.45));
+            }
+            60%, 80% {
+                transform: scale(1.002) translate3d(-0.5px, -0.2px, 0);
+                opacity: 0.96;
+                filter: contrast(1.18) brightness(1.10);
+            }
+        }
+
+        @keyframes auraHandsLoopP6Sell {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+                opacity: 0.94;
+                filter: contrast(1.15) brightness(1.08);
+            }
+            22% {
+                transform: scale(1.006) translate3d(1.2px, -0.6px, 0);
+                opacity: 0.98;
+                filter: contrast(1.22) brightness(1.16) drop-shadow(0 0 12px rgba(239, 68, 68, 0.55));
+            }
+            35% {
+                /* Arm claws aggressively into the glass break on right edge */
+                transform: scale(1.014) translate3d(2.4px, -1.2px, 0);
+                opacity: 1.0;
+                filter: contrast(1.32) brightness(1.28) drop-shadow(2px 0 20px rgba(239, 68, 68, 0.85)) drop-shadow(0 0 30px rgba(249, 115, 22, 0.6));
+            }
+            55%, 80% {
+                transform: scale(1.004) translate3d(0.8px, -0.4px, 0);
+                opacity: 0.96;
+                filter: contrast(1.18) brightness(1.12);
+            }
+        }
+
+        @keyframes auraDriftLoopP6 {
+            0%, 100% {
+                transform: scale(1.05) translate3d(0px, 0px, 0);
+                opacity: 0.35;
+                filter: brightness(1.0) blur(2px);
+            }
+            50% {
+                transform: scale(1.08) translate3d(-6px, -4px, 0);
+                opacity: 0.45;
+                filter: brightness(1.15) blur(2px);
+            }
+        }
+
+        @keyframes auraSwirlLoopP6 {
+            0%, 100% {
+                transform: scale(1.06) rotate(0deg) translate3d(0px, 0px, 0);
+                opacity: 0.28;
+                filter: brightness(1.0) blur(1.5px);
+            }
+            50% {
+                transform: scale(1.10) rotate(1.2deg) translate3d(6px, -4px, 0);
+                opacity: 0.38;
+                filter: brightness(1.18) blur(1.5px);
+            }
+        }
+
+        /* Face Keyframes - The Mastermind Revealed (BUY) */
+        @keyframes auraFaceLoopP6Buy {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+                opacity: 0.82;
+                filter: brightness(1.04) contrast(1.10) drop-shadow(0 0 16px rgba(45, 212, 191, 0.65)) drop-shadow(0 0 32px rgba(56, 189, 248, 0.35));
+            }
+            35%, 65% {
+                /* Armored mastermind glowing eye smoothly intensifies */
+                transform: scale(1.006) translate3d(-0.6px, -0.3px, 0);
+                opacity: 1.0;
+                filter: brightness(1.24) contrast(1.18) drop-shadow(0 0 24px rgba(45, 212, 191, 0.90)) drop-shadow(0 0 45px rgba(56, 189, 248, 0.60));
+            }
+        }
+
+        /* Face Keyframes - The Predator Revealed (SELL) */
+        @keyframes auraFaceLoopP6Sell {
+            0%, 100% {
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+                opacity: 0.55;
+                filter: brightness(0.90) contrast(1.12);
+            }
+            18% {
+                transform: scale(1.006) translate3d(0.5px, -0.4px, 0);
+                opacity: 0.82;
+                filter: brightness(1.15) contrast(1.18);
+            }
+            32% {
+                /* Armored demon on upper-left locks menacing gaze rightward */
+                transform: scale(1.014) translate3d(1.2px, -1.0px, 0);
+                opacity: 1.0;
+                filter: brightness(1.35) contrast(1.25) drop-shadow(0 0 22px rgba(239, 68, 68, 0.85));
+            }
+            45% {
+                transform: scale(1.018) translate3d(1.6px, -1.4px, 0) skewX(0.15deg);
+                opacity: 1.0;
+                filter: brightness(1.30) contrast(1.28) drop-shadow(0 0 28px rgba(249, 115, 22, 0.75));
+            }
+            65%, 80% {
+                transform: scale(1.008) translate3d(0.8px, -0.6px, 0);
+                opacity: 0.88;
+                filter: brightness(1.12) contrast(1.16) drop-shadow(0 0 14px rgba(239, 68, 68, 0.5));
+            }
+            92% {
+                transform: scale(1.002) translate3d(0.2px, -0.2px, 0);
+                opacity: 0.65;
+                filter: brightness(0.98);
+            }
+        }
+
+        /* Fractures Keyframes - Fine Teal Glass Fractures (BUY) Synchronized with Arm */
+        @keyframes auraCracksLoopP6Buy {
+            0%, 100% {
+                opacity: 0.16;
+                filter: brightness(0.75) drop-shadow(0 0 3px rgba(45, 212, 191, 0.2));
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+            }
+            25% {
+                /* Arm begins contacting glass */
+                opacity: 0.38;
+                filter: brightness(1.05) drop-shadow(0 0 8px rgba(45, 212, 191, 0.45));
+                transform: scale(1.002) translate3d(-0.8px, -0.3px, 0);
+            }
+            38% {
+                /* Arm reaches maximum force pressing into glass break */
+                opacity: 0.88;
+                filter: brightness(1.50) contrast(1.25) drop-shadow(-2px 0 16px rgba(45, 212, 191, 0.9)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.55));
+                transform: scale(1.006) translate3d(-1.5px, -0.6px, 0);
+            }
+            60%, 80% {
+                /* Arm stabilizes, cracks settle into sharp clean fissures */
+                opacity: 0.36;
+                filter: brightness(1.0) drop-shadow(0 0 6px rgba(45, 212, 191, 0.35));
+                transform: scale(1.002) translate3d(-0.5px, -0.2px, 0);
+            }
+            92% {
+                opacity: 0.20;
+                filter: brightness(0.80);
+                transform: scale(1.0) translate3d(-0.2px, -0.1px, 0);
+            }
+        }
+
+        /* Fractures Keyframes - Jagged Crimson Fractures & Localized Edge Ripple (SELL) */
+        @keyframes auraCracksLoopP6Sell {
+            0%, 100% {
+                opacity: 0.18;
+                filter: brightness(0.80);
+                transform: scale(1.0) translate3d(0px, 0px, 0);
+            }
+            22% {
+                opacity: 0.42;
+                filter: brightness(1.10) drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
+                transform: scale(1.004) translate3d(1.2px, -0.6px, 0);
+            }
+            35% {
+                /* Arm claws hard into right-edge glass */
+                opacity: 0.90;
+                filter: brightness(1.55) contrast(1.35) drop-shadow(2px 0 18px rgba(239, 68, 68, 0.95)) drop-shadow(0 0 28px rgba(249, 115, 22, 0.7));
+                transform: scale(1.012) translate3d(2.4px, -1.2px, 0) skewY(0.10deg);
+            }
+            55%, 80% {
+                opacity: 0.38;
+                filter: brightness(1.05) drop-shadow(0 0 8px rgba(239, 68, 68, 0.4));
+                transform: scale(1.002) translate3d(0.8px, -0.4px, 0);
+            }
+            90% {
+                opacity: 0.22;
+                filter: brightness(0.85);
+                transform: scale(1.0) translate3d(0.2px, -0.1px, 0);
+            }
+        }
+
+        @keyframes auraPulseLoopP6 {
+            0%, 100% { opacity: 0.50; }
+            50% { opacity: 0.88; }
+        }
+
+        .badass-modal-aura-wrap.phase-6 .badass-aura-pulse {
+            z-index: 6;
+            animation: auraPulseLoopP6 6s ease-in-out infinite;
+        }
+
+        .badass-modal-aura-wrap.theme-buy.phase-6 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 76% 29%, rgba(45, 212, 191, 0.45) 0%, rgba(16, 185, 129, 0.22) 28%, transparent 62%),
+                        radial-gradient(ellipse at 12% 55%, rgba(45, 212, 191, 0.26) 0%, transparent 52%);
+        }
+
+        .badass-modal-aura-wrap.theme-sell.phase-6 .badass-aura-pulse {
+            background: radial-gradient(ellipse at 18% 30%, rgba(239, 68, 68, 0.34) 0%, transparent 58%),
+                        radial-gradient(ellipse at 88% 55%, rgba(249, 115, 22, 0.30) 0%, transparent 52%);
+        }
+
+        .badass-modal-aura-wrap.phase-6 .badass-aura-glitch-bar {
+            display: none !important;
         }
 
         /* Corner Cyber Brackets */
@@ -1861,31 +3114,130 @@
                 inset 0 0 35px rgba(239, 68, 68, 0.1);
         }
 
-        /* Screen 2 Input & Elements */
+        /* =========================================================================
+           SCREEN 2: REFINED TACTICAL TEXT BOX & WHITE BUTTON (CLEAN & COMPACT)
+           ========================================================================= */
+        .s2-cyber-input-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 22px;
+        }
+
+        /* Clean Compact Input Wrap: Controlled 1px Border, Tight Glow */
         .s2-input-wrap {
             position: relative;
-            background: rgba(2, 4, 8, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 14px 20px;
+            background: rgba(10, 8, 12, 0.94);
+            border: 1px solid rgba(239, 68, 68, 0.45);
+            padding: 13px 20px;
             display: flex;
             align-items: center;
             gap: 14px;
-            margin-bottom: 24px;
             border-radius: 4px;
+            transition: all 0.22s ease;
+            box-shadow: 
+                0 4px 18px rgba(0, 0, 0, 0.7),
+                0 0 12px rgba(239, 68, 68, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            cursor: text;
+        }
+
+        /* Subtle 1.5px Hairline Accent on Bottom */
+        .s2-input-laser-rail {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent 0%, rgba(239, 68, 68, 0.8) 50%, transparent 100%);
+            opacity: 0.6;
             transition: all 0.25s ease;
+        }
+
+        /* Tight 8px Corner Accents */
+        .s2-input-corner {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 4;
+            transition: all 0.2s ease;
+        }
+        .s2-corner-tl-bracket {
+            top: 0; left: 0;
+            border-top: 2px solid #ef4444;
+            border-left: 2px solid #ef4444;
+        }
+        .s2-corner-tr-bracket {
+            top: 0; right: 0;
+            border-top: 2px solid #ef4444;
+            border-right: 2px solid #ef4444;
+        }
+        .s2-corner-bl-bracket {
+            bottom: 0; left: 0;
+            border-bottom: 2px solid #ef4444;
+            border-left: 2px solid #ef4444;
+        }
+        .s2-corner-br-bracket {
+            bottom: 0; right: 0;
+            border-bottom: 2px solid #ef4444;
+            border-right: 2px solid #ef4444;
+        }
+
+        /* Hover & Focus (Controlled, Crisp, Not Overblown) */
+        .s2-input-wrap:hover {
+            border-color: rgba(239, 68, 68, 0.7);
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.8),
+                0 0 16px rgba(239, 68, 68, 0.22);
         }
         .s2-input-wrap:focus-within {
             border-color: #ef4444;
-            box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
-            background: rgba(6, 4, 8, 0.95);
+            background: rgba(14, 8, 12, 0.98);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.85),
+                0 0 20px rgba(239, 68, 68, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
-        .s2-input-prefix {
-            font-family: var(--font-mono);
-            font-size: 22px;
-            color: #10b981;
-            font-weight: bold;
+        .s2-input-wrap:focus-within .s2-input-laser-rail {
+            opacity: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #ff4444 30%, #f97316 50%, #ff4444 70%, transparent 100%);
+            box-shadow: 0 0 8px #ef4444;
+        }
+
+        /* The Prompt */
+        .s2-prompt-lead {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
             user-select: none;
         }
+        .s2-input-prefix-chevron {
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 800;
+            color: #ef4444;
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+            line-height: 1;
+        }
+        .s2-cursor-block {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 800;
+            color: #f97316;
+            text-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
+            line-height: 1;
+            animation: s2CursorBlink 1.05s infinite;
+        }
+        @keyframes s2CursorBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Clean Hero Callsign Input */
         .s2-input-field {
             flex: 1;
             background: transparent;
@@ -1894,26 +3246,36 @@
             color: #ffffff;
             font-family: var(--font-mono);
             font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 0.15em;
+            font-weight: 800;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            caret-color: #10b981;
+            caret-color: #ef4444;
+            min-width: 0;
+            line-height: 1.1;
         }
+        .s2-input-field::placeholder {
+            color: rgba(148, 163, 184, 0.35);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+        }
+
+        /* Clearance Strip */
         .s2-clearance-strip {
             border: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(5, 7, 12, 0.75);
             backdrop-filter: blur(12px);
-            padding: 16px 20px;
+            padding: 14px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             border-radius: 4px;
         }
         .s2-avatar-chip {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: linear-gradient(135deg, #10b981, #059669);
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.35);
@@ -1923,32 +3285,80 @@
             font-family: var(--font-mono);
             font-size: 20px;
             font-weight: 900;
-            color: #000;
+            color: #000000;
             flex-shrink: 0;
         }
+
+        /* Clean High-Contrast White Launch Button */
         .s2-launch-btn {
             width: 100%;
-            background: linear-gradient(180deg, #f4f4f5 0%, #d4d4d8 100%);
+            position: relative;
+            background: #ffffff;
             color: #000000;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.9);
             padding: 16px 32px;
             font-size: 13.5px;
             font-weight: 800;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            border-radius: 3px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            box-shadow: 
+                0 4px 18px rgba(0, 0, 0, 0.6),
+                0 0 15px rgba(255, 255, 255, 0.12);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
         }
         .s2-launch-btn:hover {
-            background: #ffffff;
+            background: #f4f4f5;
             transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.7),
+                0 0 25px rgba(255, 255, 255, 0.3);
+        }
+        .s2-launch-btn:hover .s2-launch-arrow {
+            transform: translateX(5px);
+        }
+        .s2-launch-btn:active {
+            transform: translateY(1px) scale(0.99);
+            background: #e4e4e7;
+        }
+        .s2-launch-arrow {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 17px;
+            transition: transform 0.2s ease;
+        }
+
+        /* Card Exit Transition */
+        .s2-cyber-card.s2-submitting {
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.985);
+            filter: blur(4px);
+            transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (max-width: 768px) {
+            .s2-input-wrap {
+                padding: 11px 14px;
+                gap: 10px;
+            }
+            .s2-input-field {
+                font-size: 18px;
+                letter-spacing: 0.14em;
+            }
+            .s2-input-prefix-chevron, .s2-cursor-block {
+                font-size: 19px;
+            }
+            .s2-launch-btn {
+                padding: 13px 20px;
+                font-size: 12px;
+            }
         }
 
         /* SCREEN 3: HIGH-INTENSITY MARKET CRASH INTRODUCTION (IMAGE 2 REPLICA) */
@@ -9406,23 +10816,44 @@
                 <img src="assets/demon_claw_right.png" onerror="this.onerror=null; this.src='web/assets/demon_claw_right.png';" alt="Demon Claws Right Grip" class="demon-claw-img">
             </div>
 
-            <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; color: #10b981; text-transform: uppercase; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+            <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; color: #f87171; text-transform: uppercase; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444;"></span>
                 <span>STEP 01 // TRADER IDENTIFICATION CLEARANCE</span>
             </div>
             
-            <h1 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); font-weight: 900; letter-spacing: -0.02em; color: #ffffff; line-height: 1.15; margin-bottom: 8px; text-transform: uppercase;">
-                Before the market opens...<br>
-                <span style="color: #475569; font-weight: 800;">What should we call you?</span>
+            <h1 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); font-weight: 900; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 10px; text-transform: uppercase;">
+                <span style="color: #ffffff; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);">Before the market opens...</span><br>
+                <span style="background: linear-gradient(90deg, #ff4d4d 0%, #fb923c 55%, #facc15 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.4));">What should we call you?</span>
             </h1>
 
-            <p style="font-size: 13px; color: #94a3b8; line-height: 1.55; margin-bottom: 24px; max-width: 680px;">
+            <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin-bottom: 22px; max-width: 680px;">
                 Your calls will be permanently recorded in the clearinghouse ledger. Every leveraged trade, margin call warning, and liquidation report will bear your name.
             </p>
 
-            <div class="s2-input-wrap">
-                <span class="s2-input-prefix">>_</span>
-                <input type="text" id="player-name-input" class="s2-input-field" placeholder="ENTER CALLSIGN..." value="MINH" maxlength="16" autocomplete="off" autofocus oninput="onPlayerNameChange(this.value)">
+            <!-- Refined Compact Hero Text Box -->
+            <div class="s2-cyber-input-container">
+                <div class="s2-input-wrap" onclick="document.getElementById('player-name-input').focus()">
+                    <!-- 4 Precision Tactical Brackets -->
+                    <div class="s2-input-corner s2-corner-tl-bracket"></div>
+                    <div class="s2-input-corner s2-corner-tr-bracket"></div>
+                    <div class="s2-input-corner s2-corner-bl-bracket"></div>
+                    <div class="s2-input-corner s2-corner-br-bracket"></div>
+
+                    <!-- Subtle Bottom Laser Rail -->
+                    <div class="s2-input-laser-rail"></div>
+
+                    <!-- Clean Terminal Prompt -->
+                    <div class="s2-prompt-lead">
+                        <span class="s2-input-prefix-chevron">&gt;</span><span class="s2-cursor-block">_</span>
+                    </div>
+
+                    <!-- Clean Hero Input -->
+                    <input type="text" id="player-name-input" class="s2-input-field" 
+                           placeholder="ENTER CALLSIGN..." value="MINH" maxlength="16" 
+                           autocomplete="off" autofocus 
+                           oninput="onPlayerNameChange(this.value)"
+                           onkeydown="if(event.key==='Enter') submitPlayerName()">
+                </div>
             </div>
 
             <!-- Live Trader Clearance HUD Preview -->
@@ -9446,9 +10877,9 @@
                 </div>
             </div>
 
-            <button onclick="submitPlayerName()" class="s2-launch-btn">
-                <span>INITIALIZE TRADER PROFILE</span>
-                <span style="font-family: var(--font-mono); font-size: 16px;">→</span>
+            <button onclick="submitPlayerName()" id="s2-submit-btn" class="s2-launch-btn">
+                <span id="s2-btn-label">INITIALIZE TRADER PROFILE</span>
+                <span class="s2-launch-arrow">→</span>
             </button>
         </div>
     </div>
@@ -10259,14 +11690,14 @@
                                 <span>+</span>
                                 <span>QUICK ORDER</span>
                             </button>
-                            <button class="filter-tab active" onclick="setBoardFilter('all')">All Assets (50)</button>
-                            <button class="filter-tab" onclick="setBoardFilter('tech')">Tech & Chips</button>
-                            <button class="filter-tab" onclick="setBoardFilter('energy')">Energy & Battery</button>
-                            <button class="filter-tab" onclick="setBoardFilter('auto')">Auto & Mobility</button>
-                            <button class="filter-tab" onclick="setBoardFilter('bluechips')">Industrial Bellwethers</button>
-                            <button class="filter-tab" onclick="setBoardFilter('financial')">Financials</button>
-                            <button class="filter-tab" onclick="setBoardFilter('bio')">Bio & Health</button>
-                            <button class="filter-tab" onclick="setBoardFilter('etf')">Sector & 2× ETFs</button>
+                            <button class="filter-tab active" onclick="setBoardFilter('all', this)">All Assets (50)</button>
+                            <button class="filter-tab" onclick="setBoardFilter('tech', this)">Tech & Chips</button>
+                            <button class="filter-tab" onclick="setBoardFilter('energy', this)">Energy & Battery</button>
+                            <button class="filter-tab" onclick="setBoardFilter('auto', this)">Auto & Mobility</button>
+                            <button class="filter-tab" onclick="setBoardFilter('bluechips', this)">Industrial Bellwethers</button>
+                            <button class="filter-tab" onclick="setBoardFilter('financial', this)">Financials</button>
+                            <button class="filter-tab" onclick="setBoardFilter('bio', this)">Bio & Health</button>
+                            <button class="filter-tab" onclick="setBoardFilter('etf', this)">Sector & 2× ETFs</button>
                         </div>
                         <button class="cat-scroll-arrow right" onclick="scrollCategoryTabs(160)" title="Scroll Categories Right">›</button>
                     </div>
@@ -11350,7 +12781,7 @@
         <div class="badass-corner top-right"></div>
         <div class="badass-corner bottom-left"></div>
         <div class="badass-corner bottom-right"></div>
-
+        
         <!-- Telemetry Header Strip -->
         <div class="badass-telemetry-header">
             <div class="badass-telemetry-left">
@@ -11646,13 +13077,26 @@
 
 <!-- ORDER CONFIRMATION MODAL (CYBERPUNK TACTICAL MATCHING TERMINAL) -->
 <div id="order-confirm-modal" class="s1-modal-backdrop" onclick="if(event.target===this) closeOrderConfirmModal()">
+    <!-- FREE FALL 2.0 Dynamic Animated Aura Backdrop -->
+    <div id="badass-modal-aura-wrap" class="badass-modal-aura-wrap theme-buy phase-1">
+        <div id="badass-aura-layer-base" class="badass-aura-layer badass-aura-base"></div>
+        <div id="badass-aura-layer-swirl" class="badass-aura-layer badass-aura-swirl"></div>
+        <div id="badass-aura-layer-demon" class="badass-aura-demon"></div>
+        <div id="badass-aura-layer-hands" class="badass-aura-hands"></div>
+        <div id="badass-aura-layer-cracks" class="badass-aura-cracks"></div>
+        <div id="badass-aura-layer-pulse" class="badass-aura-layer badass-aura-pulse"></div>
+        <div id="badass-aura-glitch-bar" class="badass-aura-glitch-bar"></div>
+        <canvas id="badass-aura-particles-canvas" class="badass-aura-particles-canvas"></canvas>
+    </div>
+
     <div class="badass-order-box theme-buy" id="badass-order-box">
         <!-- Corner Cyber Brackets -->
         <div class="badass-corner top-left"></div>
         <div class="badass-corner top-right"></div>
         <div class="badass-corner bottom-left"></div>
         <div class="badass-corner bottom-right"></div>
-
+        <div class="badass-order-corner-claw" id="badass-order-corner-claw"></div>
+        
         <!-- Telemetry Header Strip -->
         <div class="badass-telemetry-header">
             <div class="badass-telemetry-left">
@@ -11759,7 +13203,7 @@
         <div class="badass-corner top-right"></div>
         <div class="badass-corner bottom-left"></div>
         <div class="badass-corner bottom-right"></div>
-
+        
         <!-- Telemetry Header Strip -->
         <div class="badass-telemetry-header">
             <div class="badass-telemetry-left">
@@ -12593,12 +14037,15 @@ function startS2Embers() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     
-    function resize() {
+    if (window._s2EmbersResizeHandler) {
+        window.removeEventListener('resize', window._s2EmbersResizeHandler);
+    }
+    window._s2EmbersResizeHandler = function() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
+    };
+    window._s2EmbersResizeHandler();
+    window.addEventListener('resize', window._s2EmbersResizeHandler);
 
     const embers = [];
     const count = 40;
@@ -12715,7 +14162,8 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function onPlayerNameChange(val) {
-    const clean = val.trim().toUpperCase() || 'TRADER';
+    const raw = (val || '');
+    const clean = raw.trim().toUpperCase() || 'TRADER';
     const initial = clean.charAt(0) || 'T';
     const previewName = document.getElementById('preview-name');
     const previewAvatar = document.getElementById('preview-avatar');
@@ -12723,14 +14171,31 @@ function onPlayerNameChange(val) {
     if (previewAvatar) previewAvatar.textContent = initial;
 }
 
+let isSubmittingTraderProfile = false;
 function submitPlayerName() {
+    if (isSubmittingTraderProfile) return;
     const input = document.getElementById('player-name-input');
-    if (input.value.trim()) {
-        gameState.playerName = input.value.trim().toUpperCase();
-        document.getElementById('hud-player-name').textContent = gameState.playerName;
-        document.getElementById('hud-avatar').textContent = gameState.playerName.charAt(0);
-    }
-    navigateTo(3);
+    const callsign = (input && input.value.trim()) ? input.value.trim().toUpperCase() : 'TRADER';
+    
+    gameState.playerName = callsign;
+    const hudName = document.getElementById('hud-player-name');
+    const hudAv = document.getElementById('hud-avatar');
+    if (hudName) hudName.textContent = callsign;
+    if (hudAv) hudAv.textContent = callsign.charAt(0);
+
+    isSubmittingTraderProfile = true;
+    const card = document.getElementById('s2-enter-name-box');
+    const btnLabel = document.getElementById('s2-btn-label');
+    
+    if (btnLabel) btnLabel.textContent = 'CALLSIGN AUTHORIZED...';
+    if (card) card.classList.add('s2-submitting');
+
+    setTimeout(() => {
+        navigateTo(3);
+        if (card) card.classList.remove('s2-submitting');
+        if (btnLabel) btnLabel.textContent = 'INITIALIZE TRADER PROFILE';
+        isSubmittingTraderProfile = false;
+    }, 240);
 }
 
 /* =========================================================================
@@ -13849,10 +15314,15 @@ function updateMarketBreadth() {
     if (decEl) decEl.textContent = `${dec} ▼`;
 }
 
-function setBoardFilter(filter) {
+function setBoardFilter(filter, el) {
     boardActiveFilter = filter;
     document.querySelectorAll('.filter-tabs-group .filter-tab').forEach(b => b.classList.remove('active'));
-    if (window.event && window.event.target) window.event.target.classList.add('active');
+    if (el) {
+        el.classList.add('active');
+    } else {
+        const btn = Array.from(document.querySelectorAll('.filter-tabs-group .filter-tab')).find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${filter}'`));
+        if (btn) btn.classList.add('active');
+    }
     renderPriceBoard();
 }
 
@@ -14198,8 +15668,8 @@ function appendPriceToChart(stock, globalSec) {
     labels.push(label);
     ds.data.push(stock.price);
 
-    // V-2: Preserve full 300-second phase chart data without premature truncation
-    if (labels.length > 300) {
+    // V-2: Preserve full 300-second phase chart data without premature truncation (labels.length > 300)
+    if (labels.length > 301) {
         labels.shift();
         ds.data.shift();
     }
@@ -14330,8 +15800,8 @@ function setMarginMultiplier(mult, el) {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ margin_multiplier: mult })
-        }).catch(() => {});
-    } catch(e) {}
+        }).catch(e => console.warn('API sync error:', e));
+    } catch(e) { console.warn('API sync error:', e); }
 }
 
 function stepMarginMultiplier(delta) {
@@ -14416,7 +15886,7 @@ function openOrderConfirmModal() {
     if (isBuy && ClientEngine && price > 0) {
         const availCash = ClientEngine.cash || 0;
         const maxCashPower = availCash * marginMult;
-        if (qty * price > maxCashPower + 0.10) {
+        if (qty * price > maxCashPower + 1e-9) {
             qty = Math.max(1, Math.floor(maxCashPower / price));
             const tradeQtyInput = document.getElementById('trade-qty');
             if (tradeQtyInput) tradeQtyInput.value = qty;
@@ -14452,9 +15922,10 @@ function openOrderConfirmModal() {
         marginMult: marginMult
     };
 
+    const curP = (typeof ClientEngine !== 'undefined' && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
     const modalBox = document.getElementById('badass-order-box');
     if (modalBox) {
-        modalBox.className = 'badass-order-box ' + (isBuy ? 'theme-buy' : 'theme-sell');
+        modalBox.className = `badass-order-box ${isBuy ? 'theme-buy' : 'theme-sell'} phase-${curP}`;
     }
 
     const ticketEl = document.getElementById('badass-order-ticket');
@@ -14599,12 +16070,139 @@ function openOrderConfirmModal() {
     }
 
     document.getElementById('order-confirm-modal').classList.add('active');
+    updateModalAura(isBuy);
 }
 
 function closeOrderConfirmModal() {
     document.getElementById('order-confirm-modal').classList.remove('active');
+    stopModalAuraParticles();
     resumeMarketTimer('ORDERING');
 }
+
+/* =========================================================================
+   FREE FALL 2.0 — BUY / SELL DYNAMIC AURA CONTROLLER
+   ========================================================================= */
+let auraAnimId = null;
+let auraParticles = [];
+
+function updateModalAura(isBuy) {
+    const wrap = document.getElementById('badass-modal-aura-wrap');
+    const box = document.getElementById('badass-order-box');
+    const curP = (typeof ClientEngine !== 'undefined' && ClientEngine.currentPhase) ? ClientEngine.currentPhase : 1;
+    if (wrap) wrap.className = 'badass-modal-aura-wrap ' + (isBuy ? 'theme-buy' : 'theme-sell') + ' phase-' + curP;
+    if (box) box.className = 'badass-order-box ' + (isBuy ? 'theme-buy' : 'theme-sell') + ' phase-' + curP;
+    startModalAuraParticles(isBuy, curP);
+}
+
+function stopModalAuraParticles() {
+    if (auraAnimId) {
+        cancelAnimationFrame(auraAnimId);
+        auraAnimId = null;
+    }
+}
+
+function startModalAuraParticles(isBuy, phase = 1) {
+    const canvas = document.getElementById('badass-aura-particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let count = 18;
+    let CYCLE_DURATION = 8000;
+    if (phase === 2) {
+        count = 32;
+        CYCLE_DURATION = 6000;
+    } else if (phase === 3) {
+        count = 48;
+        CYCLE_DURATION = 4000;
+    } else if (phase >= 4) {
+        count = 56;
+        CYCLE_DURATION = 4000;
+    }
+
+    auraParticles = [];
+    for (let i = 0; i < count; i++) {
+        auraParticles.push({
+            baseX: (i * 123.7 + 31) % canvas.width,
+            baseY: (i * 183.1 + 71) % canvas.height,
+            radius: 1.0 + (i % 5) * 0.35,
+            maxAlpha: 0.22 + (i % 6) * 0.08,
+            cyclesY: (i % 2) + 1,
+            driftX: isBuy ? Math.sin(i * 1.5) * 45 : -(35 + (i % 4) * 15),
+            swayAmp: 12 + (i % 8) * 3,
+            swayFreq: (i % 3) + 1
+        });
+    }
+
+    if (auraAnimId) cancelAnimationFrame(auraAnimId);
+    const startTime = performance.now();
+
+    function render(now) {
+        const elapsed = (now - startTime) % CYCLE_DURATION;
+        const progress = elapsed / CYCLE_DURATION;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        let glitchOffsetX = 0;
+        if (phase >= 3 && phase < 6) {
+            if (progress >= 0.244 && progress <= 0.258) {
+                glitchOffsetX = (Math.sin(progress * 600) > 0 ? 10 : -10);
+            } else if (progress >= 0.558 && progress <= 0.568) {
+                glitchOffsetX = (Math.sin(progress * 500) > 0 ? -8 : 8);
+            } else if (progress >= 0.818 && progress <= 0.826) {
+                glitchOffsetX = (Math.sin(progress * 450) > 0 ? 7 : -7);
+            }
+        } else if (phase === 2) {
+            if (progress >= 0.306 && progress <= 0.318) {
+                glitchOffsetX = (Math.sin(progress * 500) > 0 ? 8 : -8);
+            } else if (progress >= 0.724 && progress <= 0.732) {
+                glitchOffsetX = (Math.sin(progress * 400) > 0 ? -6 : 6);
+            }
+        } else {
+            // Phase 1: very subtle glitch offset
+            if (progress >= 0.322 && progress <= 0.330) {
+                glitchOffsetX = (Math.sin(progress * 400) > 0 ? 5 : -5);
+            } else if (progress >= 0.744 && progress <= 0.750) {
+                glitchOffsetX = (Math.sin(progress * 350) > 0 ? -4 : 4);
+            }
+        }
+
+        for (let p of auraParticles) {
+            const y = (p.baseY - progress * p.cyclesY * canvas.height + canvas.height * 10) % canvas.height;
+            const sway = Math.sin(progress * Math.PI * 2 * p.swayFreq) * p.swayAmp;
+            const drift = progress * p.driftX;
+            const x = (p.baseX + drift + sway + glitchOffsetX + canvas.width * 10) % canvas.width;
+            
+            const alphaMod = 0.5 + 0.5 * Math.sin(progress * Math.PI * 2 * p.cyclesY + p.baseX);
+            const currentAlpha = p.maxAlpha * (0.6 + 0.4 * alphaMod);
+
+            ctx.beginPath();
+            ctx.arc(x, y, p.radius, 0, Math.PI * 2);
+            if (isBuy) {
+                ctx.fillStyle = `rgba(52, 211, 153, ${currentAlpha})`;
+                ctx.shadowColor = '#10b981';
+            } else {
+                ctx.fillStyle = `rgba(248, 113, 113, ${currentAlpha})`;
+                ctx.shadowColor = '#ef4444';
+            }
+            ctx.shadowBlur = 5;
+            ctx.fill();
+        }
+
+        auraAnimId = requestAnimationFrame(render);
+    }
+    auraAnimId = requestAnimationFrame(render);
+}
+
+window.addEventListener('resize', () => {
+    const canvas = document.getElementById('badass-aura-particles-canvas');
+    if (canvas && auraAnimId) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+});
 
 async function executeConfirmedOrder() {
     const quote = gameState.pendingOrderQuote;
@@ -14924,7 +16522,7 @@ async function execTransferToTrading() {
         if (data && data.state) {
             updateHUD(ClientEngine.getState());
         }
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
     showSettlementToast('VAULT TRANSFER COMPLETE', `Successfully transferred $${amt.toLocaleString()} to Trading Cash.`, 'delivered');
 }
 
@@ -14951,7 +16549,7 @@ async function execTransferToBank() {
         if (data && data.state) {
             updateHUD(ClientEngine.getState());
         }
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
     showSettlementToast('SAFE HAVEN DEPOSIT COMPLETE', `Successfully secured $${amt.toLocaleString()} in Sovereign Vault. Immune to liquidation!`, 'delivered');
 }
 
@@ -14978,7 +16576,7 @@ async function execRepayDebt(source) {
         if (data && data.state) {
             updateHUD(ClientEngine.getState());
         }
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
     const sourceLabel = source === 'bank' ? 'Safe Haven Bank' : 'Trading Cash';
     showSettlementToast('DEBT DEFENSE EXECUTED', `Successfully repaid $${amt.toLocaleString()} margin debt from ${sourceLabel}. Margin health restored.`, 'delivered');
 }
@@ -15002,7 +16600,7 @@ async function execSetEmergencyReserve() {
         if (data && data.state) {
             updateHUD(ClientEngine.getState());
         }
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
     showSettlementToast('EMERGENCY RESERVE LOCKED', `🔒 $${amt.toLocaleString()} locked into Sovereign Cold Storage. Protected against FOMO transfers.`, 'delivered');
 }
 
@@ -15024,7 +16622,7 @@ async function execUnlockEmergencyReserve() {
         if (data && data.state) {
             updateHUD(ClientEngine.getState());
         }
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
     showSettlementToast('RESERVE UNLOCKED', '🔓 All funds in Safe Haven Bank are unlocked and deployable.', 'delivered');
 }
 
@@ -15644,9 +17242,16 @@ function closePreGameBriefingModal() {
     returnToTradingDesk();
 }
 
-// Global ESC key handler for Market Briefing
+// Global ESC key handler for Market Briefing & Modals
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+        // Priority: close modals first, then screens
+        const orderModal = document.getElementById('order-confirm-modal');
+        if (orderModal && orderModal.classList.contains('active')) return;
+        const bankOverlay = document.getElementById('bank-modal-overlay');
+        if (bankOverlay && bankOverlay.classList.contains('active')) { closeBankDashboard(); return; }
+        const settlementModal = document.getElementById('settlement-lock-modal');
+        if (settlementModal && settlementModal.classList.contains('active')) { closeSettlementLockModal(); return; }
         const briefing = document.getElementById('screen-briefing');
         if (briefing && briefing.classList.contains('active')) {
             returnToTradingDesk();
@@ -15775,7 +17380,7 @@ function updateMarketFlashNews(forceSlot) {
         item.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
                 <span style="color:#10b981; font-weight:800; font-size:0.62rem; font-family:var(--font-mono); letter-spacing:0.04em;">⚡ [${n.time}] ${n.badge}</span>
-                <span style="color:#64748b; font-size:0.6rem; font-family:var(--font-mono);">#0${idx + 1}/07</span>
+                <span style="color:#64748b; font-size:0.6rem; font-family:var(--font-mono);">#${String(idx + 1).padStart(2, '0')}/${String(newsItems.length).padStart(2, '0')}</span>
             </div>
             <div style="font-weight:700; color:#f8fafc; font-size:0.71rem; margin-bottom: 2px;">${n.title}</div>
             <div style="color:#94a3b8; font-size:0.67rem; line-height:1.3;">${n.body}</div>
@@ -16045,8 +17650,10 @@ function startMarketSession() {
 
     marketTimerInterval = setInterval(() => {
         const now = Date.now();
-        const deltaMs = now - lastWallClockTime;
+        const rawDeltaMs = now - lastWallClockTime;
         lastWallClockTime = now;
+        // Cap delta to 2 seconds max to prevent time jumps when tab is backgrounded
+        const deltaMs = Math.min(rawDeltaMs, 2000);
 
         if (isMarketTimerPaused()) {
             updatePausedTimerDisplay();
@@ -16153,7 +17760,7 @@ async function syncTickToServer(globalSec) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ global_second: globalSec })
         });
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
 }
 
 /* =========================================================================
@@ -16239,7 +17846,7 @@ async function advancePhaseAction() {
         const res = await fetch('/api/advance', { method: 'POST' });
         const data = await res.json();
         if (data.state) updateHUD(data.state);
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
 }
 
 /* =========================================================================
@@ -16349,7 +17956,7 @@ const ENDINGS_CONFIG = {
         codeTag: 'ENDING [A]',
         statusTitle: 'KEY TRANSFERRED // SOVEREIGN OWNER',
         accentColor: '#10b981',
-        glowColor: 'rgba(168, 85, 129, 0.7)',
+        glowColor: 'rgba(16, 185, 129, 0.7)',
         badgeClass: 'ending-tier-a',
         videoSrc: 'assets/ending/endinga.mp4',
         imageSrc: 'assets/ending/endinga1.png',
@@ -17501,14 +19108,21 @@ const ClientEngine = {
         let marginRatio = 100.0;
         if (this.marginDebt > 0.005) {
             if (stockVal > 0) {
-                marginRatio = Math.min(100.0, Math.max(0.0, (positionEquity / stockVal) * 100));
-                leverage = positionEquity > 0 ? Math.max(1.0, stockVal / positionEquity) : 999.9;
+                // Use tradingEquity (includes cash buffer) to match Python engine behavior
+                marginRatio = Math.max(0.0, (tradingEquity / stockVal) * 100);
+                leverage = tradingEquity > 0 ? Math.max(1.0, stockVal / tradingEquity) : 999.9;
             } else {
-                marginRatio = 0.0;
+                // Uncollateralized debt with no stock → MARGIN_CALL
+                marginRatio = (this.cash >= this.marginDebt) ? 100.0 : 0.0;
                 leverage = 999.9;
             }
         } else {
-            marginRatio = 100.0;
+            // No debt: show actual ratio (can be >100% for cash-cushioned positions)
+            if (stockVal > 0) {
+                marginRatio = Math.max(0.0, (tradingEquity / stockVal) * 100);
+            } else {
+                marginRatio = 100.0;
+            }
             leverage = 1.0;
         }
 
@@ -17521,9 +19135,10 @@ const ClientEngine = {
 
         let status = 'HEALTHY';
         if (this.marginDebt > 0.005) {
-            if (tradingEquity < 0 || positionEquity <= 0 || marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
-            else if (marginRatio < this.initialMarginRatio * 100 - 0.05 || marginRatio <= 25.0) status = 'WARNING';
-            else status = 'HEALTHY';
+            if (tradingEquity <= 0 || stockVal === 0 || marginRatio < this.maintenanceMarginRatio * 100) status = 'MARGIN_CALL';
+            else if (marginRatio < this.initialMarginRatio * 100 - 0.05) status = 'WARNING';
+            else if (marginRatio >= 100.0) status = 'HEALTHY';
+            else status = 'NORMAL';
         }
 
         const progress = Math.max(0, (equity / this.targetValue) * 100);
@@ -17590,7 +19205,7 @@ const ClientEngine = {
 
         if (action === 'BUY') {
             if (!useMargin || this.marginMultiplier <= 1.0) {
-                if (cost > this.cash + 0.10) {
+                if (cost > this.cash + 1e-9) {
                     const affordable = Math.floor(this.cash / price);
                     if (affordable > 0 && Math.abs(shares - affordable) <= 1) {
                         shares = affordable;
@@ -17604,7 +19219,7 @@ const ClientEngine = {
                 const mult = (this.marginMultiplier && this.marginMultiplier > 1.0) ? this.marginMultiplier : (1.0 / this.initialMarginRatio);
                 let reqCash = cost / mult;
                 let newDebt = Math.max(0, cost - reqCash);
-                if (this.cash < reqCash - 0.10) {
+                if (this.cash < reqCash - 1e-9) {
                     const maxAffordable = Math.floor((this.cash * mult) / price);
                     if (maxAffordable > 0 && Math.abs(shares - maxAffordable) <= 1) {
                         shares = maxAffordable;
@@ -17640,6 +19255,11 @@ const ClientEngine = {
                 deliverPhase = this.currentPhase;
                 deliverPhaseSec = phaseSec + 30;
                 deliverGlobalSec = this.currentGlobalSecond + 30;
+            } else if (this.currentPhase >= 6) {
+                // CRIT-04: Final phase PM orders deliver within Phase 6 (30 ticks later, capped at 300)
+                deliverPhase = 6;
+                deliverPhaseSec = Math.min(phaseSec + 30, 300);
+                deliverGlobalSec = Math.min(this.currentGlobalSecond + 30, 1800);
             } else {
                 // PM Session: Settles at start of next phase
                 deliverPhase = this.currentPhase + 1;
@@ -17737,6 +19357,19 @@ const ClientEngine = {
 
     transferToBank(amt) {
         if (!isFinite(amt) || isNaN(amt) || amt <= 0 || amt > this.cash) return { success: false, message: 'Invalid transfer amount.' };
+        // HIGH-06: Block deposit if margin positions are under margin call
+        if (this.marginDebt > 0) {
+            const preState = this.getState();
+            if (preState.metrics.margin_status === 'MARGIN_CALL') {
+                return { success: false, message: 'Transfer blocked: Account is under margin call. Repay debt before transferring to bank.' };
+            }
+            const remainingCash = this.cash - amt;
+            if (remainingCash < 0) return { success: false, message: 'Insufficient cash balance.' };
+            const stockVal = Math.max(0, preState.metrics.portfolio_value - preState.metrics.bank_savings);
+            if (stockVal === 0 && remainingCash < this.marginDebt) {
+                return { success: false, message: 'Transfer blocked: Uncollateralized margin debt requires cash buffer.' };
+            }
+        }
         this.cash -= amt;
         this.bankSavings += amt;
         let postState = this.getState();
@@ -17833,7 +19466,7 @@ async function initGameBackend() {
                 body: JSON.stringify({
                     difficulty: window.selectedDifficulty || 'REGULAR',
                     scenario: window.activeScenarioId || 1,
-                    cash: ClientEngine.initialCash || 10000
+                    cash: ClientEngine.initialCapital || 10000
                 })
             });
             updateHUD(ClientEngine.getState());
@@ -17848,7 +19481,7 @@ async function initGameBackend() {
             }
             updateHUD(ClientEngine.getState());
         }
-    } catch(e) {}
+    } catch(e) { console.warn('API sync error:', e); }
 }
 
 function updateHUD(data) {
@@ -17895,9 +19528,12 @@ function updateHUD(data) {
     }
 
     const statusBadge = document.getElementById('badge-margin-status');
-    statusBadge.textContent = m.margin_status;
-    statusBadge.className = (m.margin_status === 'HEALTHY' || m.margin_status === 'NORMAL') ? 'text-green' : (m.margin_status === 'WARNING' ? 'text-amber' : 'text-red');
-    document.getElementById('health-meter-fill').style.width = Math.min(100, Math.max(0, ratioNum)) + '%';
+    if (statusBadge) {
+        statusBadge.textContent = m.margin_status;
+        statusBadge.className = (m.margin_status === 'HEALTHY' || m.margin_status === 'NORMAL') ? 'text-green' : (m.margin_status === 'WARNING' ? 'text-amber' : 'text-red');
+    }
+    const healthMeterFill = document.getElementById('health-meter-fill');
+    if (healthMeterFill) healthMeterFill.style.width = Math.min(100, Math.max(0, ratioNum)) + '%';
 
     // Emergency Margin Degradation Warning Banner (< 25% and has debt)
     const banner = document.getElementById('emergency-margin-banner');
