@@ -4,35 +4,35 @@
     {
       "company": "Vintrumite (000660) — Major Korean semiconductor company focused on memory products including DRAM, NAND and high-bandwidth memory (HBM). Its exposure to AI infrastructure makes it highly sensitive to memory demand and semiconductor expectations.",
       "recent_trend": "Aug 31–Sep 11, 2026: rose from about ₩1.674m to ₩1.812m (+8.2%). It rallied strongly in early September, including +8.26% on Sep 7, before a -2.21% move on Sep 11. Recent trading shows strong momentum with high day-to-day volatility.",
-      "possible_news": "• AI/data-center investment and HBM demand• Memory-price changes• Semiconductor earnings/guidance• AI spending concerns• Export or geopolitical restrictions",
+      "possible_news": "• AI/data-center investment and HBM demand • Memory-price changes • Semiconductor earnings/guidance • AI spending concerns • Export or geopolitical restrictions",
       "game_role": "High-impact individual semiconductor stock; a key driver of the simulated semiconductor theme.",
       "for_the_player": "AI + HBM demand can move Vintrumite strongly. High upside potential comes with high volatility."
     },
     {
       "company": "Samsung Electronics (005930) — Diversified Korean technology company spanning semiconductors, smartphones, consumer electronics and other technology businesses. Its semiconductor business is particularly relevant to the game's market theme.",
       "recent_trend": "Aug 31–Sep 11, 2026: roughly flat overall, from ₩260,000 to ₩259,500 (-0.2%). The period included a +5.68% move on Sep 7 followed by a -3.53% move on Sep 11, showing meaningful short-term swings despite limited net change.",
-      "possible_news": "• Semiconductor earnings and memory demand• AI-chip demand and technology investment• Smartphone/electronics demand• Company investment or shareholder-return decisions• Global technology-market sentiment",
+      "possible_news": "• Semiconductor earnings and memory demand • AI-chip demand and technology investment • Smartphone/electronics demand • Company investment or shareholder-return decisions • Global technology-market sentiment",
       "game_role": "Major Korean technology-market bellwether and semiconductor-related driver.",
       "for_the_player": "A diversified giant, but semiconductor news can still move the stock sharply."
     },
     {
       "company": "KODEX Semiconductor (091160) — ETF providing exposure to Korean semiconductor companies rather than a single stock. It gives the player a broader semiconductor-sector position.",
       "recent_trend": "Aug 31–Sep 11, 2026: rose from about ₩124,680 to ₩128,900 (+3.4%). It gained strongly during Sep 4–10, including +6.02% on Sep 7, then fell -5.86% on Sep 11. The recent pattern reflects strong sector momentum followed by a sharp pullback.",
-      "possible_news": "• Korean semiconductor-sector outlook• AI and HBM demand• Semiconductor exports and earnings• Changes in major chip-company expectations• Broad technology-sector risk-off events",
+      "possible_news": "• Korean semiconductor-sector outlook • AI and HBM demand • Semiconductor exports and earnings • Changes in major chip-company expectations • Broad technology-sector risk-off events",
       "game_role": "Sector-level semiconductor exposure; less dependent on one company than a single-stock position.",
       "for_the_player": "You are betting on the semiconductor sector, not just one company."
     },
     {
       "company": "KODEX Leverage (122630) — Leveraged ETF designed to provide approximately 2× the daily return of the KOSPI200. It is inherently more sensitive to market movements than a normal broad-market ETF.",
       "recent_trend": "Aug 31–Sep 10, 2026: rose from about ₩107,080 to ₩115,000 (+7.4%). It experienced very large daily moves, including +12.37% on Aug 20 and -12.42% on Aug 19 in the broader recent period. This is the most naturally volatile instrument in the five-asset set.",
-      "possible_news": "• KOSPI200 market direction• Large-cap Korean equity sentiment• Interest rates and foreign flows• Global risk-on/risk-off moves• Sudden market shocks",
+      "possible_news": "• KOSPI200 market direction • Large-cap Korean equity sentiment • Interest rates and foreign flows • Global risk-on/risk-off moves • Sudden market shocks",
       "game_role": "High-risk leveraged instrument. It amplifies market moves before the player's own margin leverage is even considered.",
       "for_the_player": "This asset can make gains fast — and losses faster. Watch leverage carefully."
     },
     {
       "company": "TIGER Semiconductor TOP10 (396500) — ETF concentrated in 10 major Korean semiconductor companies, giving diversified but still concentrated exposure to the sector's leading firms.",
       "recent_trend": "Sep 8–Sep 11, 2026: moved from about ₩37,230 to ₩36,595 (-1.7%). It gained on Sep 9 (+2.42%) and Sep 10 (+0.24%) before falling -4.25% on Sep 11. The short sample shows a quick reversal after a short rebound.",
-      "possible_news": "• Performance of major Korean chipmakers• AI/HBM demand• Semiconductor-sector earnings• Index composition/rebalancing effects• Broad sector corrections",
+      "possible_news": "• Performance of major Korean chipmakers • AI/HBM demand • Semiconductor-sector earnings • Index composition/rebalancing effects • Broad sector corrections",
       "game_role": "Concentrated semiconductor basket; useful for testing sector conviction without choosing only one company.",
       "for_the_player": "A basket of major chipmakers: more diversified than one stock, but still sector-heavy."
     }
@@ -43,15 +43,15 @@
       "industry_news": [
         {
           "time": "0:00",
-          "content": "KOREAN SEMICONDUCTOR OUTLOOK IMPROVES AS AI DEMAND REMAINS STRONG — Korean semiconductor industry sentiment improves as global demand for AI-related computing equipment remains resilient. Analysts expect continued demand for advanced memory and semiconductor components."
+          "content": "KOREAN SEMICONDUCTOR OUTLOOK IMPROVES AS AI DEMAND REMAINS STRONG Korean semiconductor industry sentiment improves as global demand for AI-related computing equipment remains resilient. Analysts expect continued demand for advanced memory and semiconductor components."
         },
         {
           "time": "2:30",
-          "content": "KOREAN CHIPMAKERS GAIN AS AI INFRASTRUCTURE INVESTMENT EXPANDS — Global investment in AI data centers continues to support expectations for memory and semiconductor demand. Korean technology companies are seen as potential beneficiaries of the expanding AI infrastructure cycle."
+          "content": "KOREAN CHIPMAKERS GAIN AS AI INFRASTRUCTURE INVESTMENT EXPANDS Global investment in AI data centers continues to support expectations for memory and semiconductor demand. Korean technology companies are seen as potential beneficiaries of the expanding AI infrastructure cycle."
         },
         {
           "time": "4:00",
-          "content": "INVESTOR CONFIDENCE RETURNS TO KOREAN TECHNOLOGY STOCKS — Improving technology-sector sentiment is attracting investors back to Korean semiconductor and large-cap technology stocks. Analysts remain positive on the sector, although they caution that the recovery could still be sensitive to changes in global demand."
+          "content": "INVESTOR CONFIDENCE RETURNS TO KOREAN TECHNOLOGY STOCKS Improving technology-sector sentiment is attracting investors back to Korean semiconductor and large-cap technology stocks. Analysts remain positive on the sector, although they caution that the recovery could still be sensitive to changes in global demand."
         }
       ],
       "market_news": [
@@ -73,31 +73,31 @@
           "time": "0:00",
           "ticker": "VNT",
           "asset_name": "Vintrumite",
-          "content": "RECORD PROFITS TURN HBM INTO A REAL EARNINGS STORY — Vintrumite reported record Q2 2026 revenue of ₩79.3 trillion and operating profit of ₩60.5 trillion, with AI memory demand a major driver. The result gives investors a concrete reason to focus on HBM rather than only the broader AI narrative."
+          "content": "RECORD PROFITS TURN HBM INTO A REAL EARNINGS STORY - Vintrumite reported record Q2 2026 revenue of ₩79.3 trillion and operating profit of ₩60.5 trillion, with AI memory demand a major driver. The result gives investors a concrete reason to focus on HBM rather than only the broader AI narrative."
         },
         {
           "time": "0:00",
           "ticker": "SEC",
           "asset_name": "Samsung Electronics",
-          "content": "SAMSUNG TARGETS A MUCH BIGGER HBM BUSINESS — Samsung is increasing HBM production as AI accelerator demand expands. The company has indicated that HBM could take a substantially larger share of its DRAM capacity, making the memory mix a major earnings and capacity story."
+          "content": "SAMSUNG TARGETS A MUCH BIGGER HBM BUSINESS - Samsung is increasing HBM production as AI accelerator demand expands. The company has indicated that HBM could take a substantially larger share of its DRAM capacity, making the memory mix a major earnings and capacity story."
         },
         {
           "time": "0:00",
           "ticker": "KODEX_SEMI",
           "asset_name": "KODEX Semiconductor",
-          "content": "KOREAN CHIP EXPORT BOOM SPREADS ACROSS THE SECTOR — A semiconductor-sector rally is no longer dependent on one stock. Strong memory exports and improving results at major Korean chipmakers create multiple potential contributors to the ETF's underlying basket."
+          "content": "KOREAN CHIP EXPORT BOOM SPREADS ACROSS THE SECTOR - A semiconductor-sector rally is no longer dependent on one stock. Strong memory exports and improving results at major Korean chipmakers create multiple potential contributors to the ETF's underlying basket."
         },
         {
           "time": "0:00",
           "ticker": "KODEX_LEV",
           "asset_name": "KODEX Leverage",
-          "content": "KOSPI200 MOMENTUM TURNS INTO A 2× AI TRADE — Korean large-cap technology stocks are becoming a major driver of index performance. Because the fund targets approximately 2× the daily KOSPI200 return, stronger index moves translate directly into amplified daily exposure."
+          "content": "KOSPI200 MOMENTUM TURNS INTO A 2× AI TRADE - Korean large-cap technology stocks are becoming a major driver of index performance. Because the fund targets approximately 2× the daily KOSPI200 return, stronger index moves translate directly into amplified daily exposure."
         },
         {
           "time": "0:00",
           "ticker": "TIGER_TOP10",
           "asset_name": "TIGER Semiconductor TOP10",
-          "content": "TOP KOREAN CHIPMAKERS BECOME A SINGLE AI-MEMORY TRADE — Record results, HBM investment and semiconductor-export growth can affect several leading Korean chipmakers at the same time. The TOP10 basket gives players broad participation in that common industry catalyst."
+          "content": "TOP KOREAN CHIPMAKERS BECOME A SINGLE AI-MEMORY TRADE - Record results, HBM investment and semiconductor-export growth can affect several leading Korean chipmakers at the same time. The TOP10 basket gives players broad participation in that common industry catalyst."
         }
       ]
     },
@@ -106,15 +106,15 @@
       "industry_news": [
         {
           "time": "0:00",
-          "content": "AI MEMORY DEMAND SHOWS SIGNS OF FUNDAMENTAL STRENGTH — Continued investment in AI infrastructure supports expectations for HBM, advanced memory and related semiconductor demand. The improving outlook gives greater support to the Korean semiconductor industry."
+          "content": "AI MEMORY DEMAND SHOWS SIGNS OF FUNDAMENTAL STRENGTH Continued investment in AI infrastructure supports expectations for HBM, advanced memory and related semiconductor demand. The improving outlook gives greater support to the Korean semiconductor industry."
         },
         {
           "time": "2:30",
-          "content": "KOREAN SEMICONDUCTOR INVESTMENT OUTLOOK IMPROVES — New investment commitments across semiconductor materials, equipment and infrastructure reinforce expectations that Korea will remain an important part of the global chip supply chain."
+          "content": "KOREAN SEMICONDUCTOR INVESTMENT OUTLOOK IMPROVES New investment commitments across semiconductor materials, equipment and infrastructure reinforce expectations that Korea will remain an important part of the global chip supply chain."
         },
         {
           "time": "4:00",
-          "content": "GLOBAL CHIPMAKER SPENDING SUPPORTS KOREAN TECHNOLOGY SHARES — Major semiconductor manufacturers continue to invest in advanced production capacity. The stronger industry backdrop is drawing attention toward Korean technology and semiconductor assets."
+          "content": "GLOBAL CHIPMAKER SPENDING SUPPORTS KOREAN TECHNOLOGY SHARES Major semiconductor manufacturers continue to invest in advanced production capacity. The stronger industry backdrop is drawing attention toward Korean technology and semiconductor assets."
         }
       ],
       "market_news": [
@@ -169,15 +169,15 @@
       "industry_news": [
         {
           "time": "0:00",
-          "content": "KOREAN TECHNOLOGY STOCKS ENTER A BROADER RALLY — Improving semiconductor fundamentals and continued AI investment are supporting broader interest in Korean technology shares. Market attention is spreading beyond individual names toward the wider sector."
+          "content": "KOREAN TECHNOLOGY STOCKS ENTER A BROADER RALLY Improving semiconductor fundamentals and continued AI investment are supporting broader interest in Korean technology shares. Market attention is spreading beyond individual names toward the wider sector."
         },
         {
           "time": "2:30",
-          "content": "AI INFRASTRUCTURE SPENDING DRIVES STRONGER SEMICONDUCTOR SENTIMENT — Investment in data centers and advanced computing infrastructure continues to support expectations for memory, logic and semiconductor equipment demand."
+          "content": "AI INFRASTRUCTURE SPENDING DRIVES STRONGER SEMICONDUCTOR SENTIMENT Investment in data centers and advanced computing infrastructure continues to support expectations for memory, logic and semiconductor equipment demand."
         },
         {
           "time": "4:00",
-          "content": "RISK APPETITE RETURNS ACROSS KOREAN EQUITIES — Stronger technology-sector sentiment is encouraging investors to increase exposure to Korean equities. Semiconductor companies remain central to the market's AI-related growth narrative."
+          "content": "RISK APPETITE RETURNS ACROSS KOREAN EQUITIES Stronger technology-sector sentiment is encouraging investors to increase exposure to Korean equities. Semiconductor companies remain central to the market's AI-related growth narrative."
         }
       ],
       "market_news": [
@@ -232,15 +232,15 @@
       "industry_news": [
         {
           "time": "0:00",
-          "content": "SEMICONDUCTOR RALLY GAINS MOMENTUM AS INVESTORS CHASE AI EXPOSURE — Strong performance across semiconductor assets is increasing attention on AI-related growth opportunities. More investors are focusing on companies and funds with direct exposure to the theme."
+          "content": "SEMICONDUCTOR RALLY GAINS MOMENTUM AS INVESTORS CHASE AI EXPOSURE Strong performance across semiconductor assets is increasing attention on AI-related growth opportunities. More investors are focusing on companies and funds with direct exposure to the theme."
         },
         {
           "time": "2:30",
-          "content": "AI INFRASTRUCTURE BECOMES THE MARKET'S DOMINANT GROWTH THEME — AI data-center investment, advanced memory and next-generation semiconductor manufacturing remain central to expectations for future technology growth."
+          "content": "AI INFRASTRUCTURE BECOMES THE MARKET'S DOMINANT GROWTH THEME AI data-center investment, advanced memory and next-generation semiconductor manufacturing remain central to expectations for future technology growth."
         },
         {
           "time": "4:00",
-          "content": "KOREAN TECHNOLOGY SHARES SEE INCREASED SPECULATIVE INTEREST — As recent gains attract more attention, investors are increasingly focused on momentum and AI exposure. Valuation and volatility remain important considerations for market participants."
+          "content": "KOREAN TECHNOLOGY SHARES SEE INCREASED SPECULATIVE INTEREST As recent gains attract more attention, investors are increasingly focused on momentum and AI exposure. Valuation and volatility remain important considerations for market participants."
         }
       ],
       "market_news": [
@@ -295,15 +295,15 @@
       "industry_news": [
         {
           "time": "0:00",
-          "content": "KOREAN AI TRADE ENTERS EUFORIC PHASE AS SEMICONDUCTOR SHARES SURGE — Semiconductor and AI-related assets are receiving exceptionally strong attention as investors focus on the continuation of the technology growth cycle."
+          "content": "KOREAN AI TRADE ENTERS EUFORIC PHASE AS SEMICONDUCTOR SHARES SURGE Semiconductor and AI-related assets are receiving exceptionally strong attention as investors focus on the continuation of the technology growth cycle."
         },
         {
           "time": "2:30",
-          "content": "INVESTORS LOOK BEYOND NEAR-TERM VALUATIONS AS AI DEMAND REMAINS STRONG — Strong expectations for AI infrastructure and memory demand are encouraging investors to emphasize future growth opportunities even as market valuations attract greater discussion."
+          "content": "INVESTORS LOOK BEYOND NEAR-TERM VALUATIONS AS AI DEMAND REMAINS STRONG Strong expectations for AI infrastructure and memory demand are encouraging investors to emphasize future growth opportunities even as market valuations attract greater discussion."
         },
         {
           "time": "4:00",
-          "content": "MOMENTUM TRADING INTENSIFIES ACROSS KOREAN TECHNOLOGY ASSETS — Rapid gains and strong thematic narratives are increasing participation in technology assets. The market is becoming more sensitive to shifts in expectations and liquidity."
+          "content": "MOMENTUM TRADING INTENSIFIES ACROSS KOREAN TECHNOLOGY ASSETS Rapid gains and strong thematic narratives are increasing participation in technology assets. The market is becoming more sensitive to shifts in expectations and liquidity."
         }
       ],
       "market_news": [
@@ -358,15 +358,15 @@
       "industry_news": [
         {
           "time": "0:00",
-          "content": "GLOBAL TECHNOLOGY STOCKS FALL AS INVESTORS QUESTION THE PACE OF AI SPENDING — Concerns about the speed and sustainability of AI development trigger a broad reassessment of technology-sector expectations. Semiconductor shares come under pressure as investors reduce risk."
+          "content": "GLOBAL TECHNOLOGY STOCKS FALL AS INVESTORS QUESTION THE PACE OF AI SPENDING Concerns about the speed and sustainability of AI development trigger a broad reassessment of technology-sector expectations. Semiconductor shares come under pressure as investors reduce risk."
         },
         {
           "time": "2:30",
-          "content": "KOREAN TECHNOLOGY SHARES FACE BROAD RISK-OFF SELLING — Weakness in global technology markets spreads into Korean equities. Semiconductor companies and sector ETFs face simultaneous selling as investors reassess growth expectations."
+          "content": "KOREAN TECHNOLOGY SHARES FACE BROAD RISK-OFF SELLING Weakness in global technology markets spreads into Korean equities. Semiconductor companies and sector ETFs face simultaneous selling as investors reassess growth expectations."
         },
         {
           "time": "4:00",
-          "content": "LIQUIDITY PRESSURE INTENSIFIES AS LEVERAGED POSITIONS ARE CUT — Falling asset prices increase pressure on leveraged investors. As positions are reduced, selling can spread across semiconductor stocks, broad-market ETFs and leveraged products."
+          "content": "LIQUIDITY PRESSURE INTENSIFIES AS LEVERAGED POSITIONS ARE CUT Falling asset prices increase pressure on leveraged investors. As positions are reduced, selling can spread across semiconductor stocks, broad-market ETFs and leveraged products."
         }
       ],
       "market_news": [
