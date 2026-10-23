@@ -12083,6 +12083,10 @@
                 <span class="hud-chip-lbl">PROTOCOL STATUS</span>
                 <span class="hud-chip-val" style="color: #facc15;">PRE-MARKET ARMED</span>
             </div>
+            <div class="hud-chip" style="cursor: pointer; border-color: rgba(168, 85, 247, 0.45);" onclick="toggleAdminScenario()" title="[ADMIN] Click to switch between Scenario 1 and Scenario 2">
+                <span class="hud-chip-lbl">SCENARIO</span>
+                <span class="hud-chip-val" id="briefing-hud-scenario" style="color: #c084fc;">SCENARIO 1 (AI TECH)</span>
+            </div>
             <button class="toggle-btn" style="border-color: #ef4444; color: #ef4444; padding: 4px 10px; font-weight: 700; margin-left: 6px;" onclick="returnToTradingDesk()">
                 ✕ RETURN TO DESK [ESC]
             </button>
@@ -12243,12 +12247,12 @@
              PANEL 2: 5 CORE ASSETS INTELLIGENCE MATRIX
              ================================================================= -->
         <div id="briefing-panel-assets" class="briefing-panel">
-            <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 8px 14px; font-size: 0.74rem; color: #bae6fd; display: flex; align-items: center; gap: 8px;">
+            <div id="briefing-assets-intel-bar" style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 8px 14px; font-size: 0.74rem; color: #bae6fd; display: flex; align-items: center; gap: 8px;">
                 <span style="font-size: 1.1rem;">💡</span>
-                <span><b>Traders Reference Intel:</b> Recent trend data reflects authentic market history (Aug 31–Sep 11, 2026). Intraday price paths follow the calibrated 6-phase simulation dataset.</span>
+                <span id="briefing-assets-intel-text"><b>Traders Reference Intel:</b> Recent trend data reflects authentic market history (Aug 31–Sep 11, 2026). Intraday price paths follow the calibrated 6-phase simulation dataset.</span>
             </div>
 
-            <div class="asset-cards-grid">
+            <div class="asset-cards-grid" id="briefing-asset-cards-grid">
                 <!-- Asset 1: VNT -->
                 <div class="asset-intel-card vnt">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
@@ -12507,7 +12511,7 @@
                     <div style="flex: 1;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
                             <h4 id="briefing-fixed-market-title" style="font-size: 0.95rem; color: #fff; font-weight: 800;">South Korea's Semiconductor Outlook Strengthens</h4>
-                            <span style="font-family: var(--font-mono); font-size: 8.5px; color: #10b981; font-weight: 800; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); padding: 2px 8px; border-radius: 3px;">
+                            <span id="briefing-fixed-market-badge" style="font-family: var(--font-mono); font-size: 8.5px; color: #10b981; font-weight: 800; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); padding: 2px 8px; border-radius: 3px;">
                                 BROAD MARKET CATALYST
                             </span>
                         </div>
@@ -12515,7 +12519,7 @@
                             Strong AI-related demand continues to support expectations for Korean semiconductor exports and memory-chip demand. Investors are watching major Korean technology stocks as the AI infrastructure cycle remains a key growth theme.
                         </p>
                         <div style="background: rgba(0,0,0,0.3); border-radius: 4px; padding: 6px 10px; font-size: 0.72rem; color: #94a3b8; font-family: var(--font-mono); border-left: 2px solid #10b981;">
-                            📊 <b>Market Impact:</b> Sets the opening macro tone across the KOSPI tech sector. Liquidity concentrates on major semiconductor proxies.
+                            📊 <b>Market Impact:</b> <span id="briefing-fixed-market-impact-text">Sets the opening macro tone across the KOSPI tech sector. Liquidity concentrates on major semiconductor proxies.</span>
                         </div>
                     </div>
                 </div>
@@ -12529,7 +12533,7 @@
                     <div style="flex: 1;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 6px;">
                             <h4 id="briefing-fixed-industry-title" style="font-size: 0.95rem; color: #fff; font-weight: 800;">Korean Semiconductor Outlook Improves as AI Demand Remains Strong</h4>
-                            <span style="font-family: var(--font-mono); font-size: 8.5px; color: #38bdf8; font-weight: 800; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); padding: 2px 8px; border-radius: 3px;">
+                            <span id="briefing-fixed-industry-badge" style="font-family: var(--font-mono); font-size: 8.5px; color: #38bdf8; font-weight: 800; background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3); padding: 2px 8px; border-radius: 3px;">
                                 INDUSTRY INTEL WIRE
                             </span>
                         </div>
@@ -12537,7 +12541,7 @@
                             Korean semiconductor industry sentiment improves as global demand for AI-related computing equipment remains resilient. Analysts expect continued demand for advanced memory and semiconductor components.
                         </p>
                         <div style="background: rgba(0,0,0,0.3); border-radius: 4px; padding: 6px 10px; font-size: 0.72rem; color: #94a3b8; font-family: var(--font-mono); border-left: 2px solid #38bdf8;">
-                            🏭 <b>Sector Focus:</b> Advanced lithography, HBM memory packaging, and hyperscale cloud data center capex cycles.
+                            🏭 <b>Sector Focus:</b> <span id="briefing-fixed-industry-focus-text">Advanced lithography, HBM memory packaging, and hyperscale cloud data center capex cycles.</span>
                         </div>
                     </div>
                 </div>
@@ -14887,7 +14891,8 @@ function selectMarketScenario(scenarioId, notify = false) {
     }
 
     // Refresh Scenario-specific News Views (Briefing Fixed News, Flash News, and News DB)
-    if (typeof renderBriefingFixedNews === 'function') renderBriefingFixedNews();
+    if (typeof updateBriefingHUD === 'function') updateBriefingHUD();
+    else if (typeof renderBriefingFixedNews === 'function') renderBriefingFixedNews();
     if (typeof currentFlashSlot !== 'undefined') currentFlashSlot = '';
     if (typeof updateMarketFlashNews === 'function') updateMarketFlashNews();
     if (typeof renderNewsDB === 'function') renderNewsDB();
@@ -16769,14 +16774,17 @@ let selectedNewsAssetCode = 'VNT';
 
 function parseNewsItem(content) {
     if (!content) return { title: 'Market Intelligence Wire', body: '' };
-    if (content.includes(' — ')) {
-        const parts = content.split(' — ');
-        return {
-            title: parts[0].trim(),
-            body: parts.slice(1).join(' — ').trim()
-        };
+    const seps = [' \u2014 ', ' \u2013 ', ' - ', ' \ufffd '];
+    for (const sep of seps) {
+        if (content.includes(sep)) {
+            const parts = content.split(sep);
+            return {
+                title: parts[0].trim(),
+                body: parts.slice(1).join(sep).trim()
+            };
+        }
     }
-    const m = content.match(/^([A-Z0-9\s,.'-]{4,})([A-Z][a-z].*)$/);
+    const m = content.match(/^([A-Z0-9\s,.'-]{6,})\s+([A-Z][a-z].*)$/);
     if (m) {
         return {
             title: m[1].trim(),
@@ -16784,16 +16792,13 @@ function parseNewsItem(content) {
         };
     }
     const dotIdx = content.indexOf('. ');
-    if (dotIdx > 0 && dotIdx < 100) {
+    if (dotIdx > 0 && dotIdx < 120) {
         return {
             title: content.substring(0, dotIdx + 1),
             body: content.substring(dotIdx + 2)
         };
     }
-    return {
-        title: content.substring(0, 70),
-        body: content
-    };
+    return { title: content.substring(0, 50) + '...', body: content };
 }
 
 function parseTimeToSeconds(timeStr) {
@@ -17191,7 +17196,210 @@ function renderNewsFeed() {
     }
 }
 
+const SCENARIO_1_ASSET_INTEL = [
+    {
+        symbol: 'VNT',
+        name: 'Vintrumite (000660)',
+        tag: 'HIGH-BETA SPECULATIVE',
+        borderCol: '#10b981',
+        tagBg: 'rgba(16, 185, 129, 0.15)',
+        tagText: '#10b981',
+        basePrice: '$1,033.57',
+        trendText: 'Trend: +8.2% (₩1.674m→₩1.812m)',
+        trendCol: '#10b981',
+        profile: 'Global AI memory & HBM leader. Extreme sensitivity to data center capex cycles. High day-to-day momentum (+8.26% single-day bursts).',
+        catalysts: 'AI capex surges, HBM supply contracts, memory pricing revisions, export restrictions.',
+        tactical: 'Your primary compounding vehicle in Phases 1–3. Massive upside velocity, but carrying debt into Phase 6 guarantees instant liquidation.',
+        tacticalBorder: '#10b981'
+    },
+    {
+        symbol: 'SEC',
+        name: 'Samsung Electronics (005930)',
+        tag: 'TECH BELLWETHER ANCHOR',
+        borderCol: '#38bdf8',
+        tagBg: 'rgba(56, 189, 248, 0.15)',
+        tagText: '#38bdf8',
+        basePrice: '$166.07',
+        trendText: 'Trend: Flat (-0.2%, ±5% swings)',
+        trendCol: '#94a3b8',
+        profile: 'Diversified technology titan spanning foundry, memory, smartphones, and consumer hardware. The anchor of the Korean equity market.',
+        catalysts: 'AI chip foundry alliances (Mistral AI, ASML EUV), mobile demand, corporate capital expenditure.',
+        tactical: 'Lower drawdown risk than VNT. An exceptional anchor position to preserve Margin Health ratio buffer while still capturing upside.',
+        tacticalBorder: '#38bdf8'
+    },
+    {
+        symbol: 'KODEX',
+        name: 'KODEX Semiconductor (091160)',
+        tag: 'SECTOR BASKET ETF',
+        borderCol: '#facc15',
+        tagBg: 'rgba(250, 204, 21, 0.15)',
+        tagText: '#facc15',
+        basePrice: '$93.19',
+        trendText: 'Trend: +3.4% (₩124k→₩128k)',
+        trendCol: '#facc15',
+        profile: 'Index ETF tracking the broad Korean semiconductor sector. Gained +6.02% during peak momentum before a -5.86% pullback.',
+        catalysts: 'Korean chip-sector export reports, global foundry utilization, broad tech risk-off macro flows.',
+        tactical: 'You are betting on the semiconductor industry as a whole, not just one firm. Eliminates single-stock headline risk while maintaining sector exposure.',
+        tacticalBorder: '#facc15'
+    },
+    {
+        symbol: 'KODEX 2X',
+        name: 'KODEX Leverage (122630)',
+        tag: '2× AMPLIFIED LEVERAGE',
+        borderCol: '#ef4444',
+        tagBg: 'rgba(239, 68, 68, 0.15)',
+        tagText: '#ef4444',
+        basePrice: '$91.28',
+        trendText: 'Trend: +7.4% (swings ±12.4%)',
+        trendCol: '#ef4444',
+        profile: 'Leveraged instrument delivering 2× daily KOSPI200 return. Highest inherent volatility in the 5-asset lineup (+12.3% on Aug 20, -12.4% on Aug 19).',
+        catalysts: 'KOSPI200 market direction, foreign institutional inflows, interest rate shifts, systemic market liquidity.',
+        tactical: 'Built-in 2× leverage combined with broker margin creates up to <b>8.0× effective leverage</b>! Multiplies gains rapidly, but a 12% dip triggers instant liquidation.',
+        tacticalBorder: '#ef4444'
+    },
+    {
+        symbol: 'TIGER',
+        name: 'TIGER Semi TOP10 (396500)',
+        tag: 'CONCENTRATED LEADERS',
+        borderCol: '#c084fc',
+        tagBg: 'rgba(192, 132, 252, 0.15)',
+        tagText: '#c084fc',
+        basePrice: '$30.12',
+        trendText: 'Trend: -1.7% (₩37.2k→₩36.6k)',
+        trendCol: '#c084fc',
+        profile: 'Concentrated basket of the top 10 semiconductor companies in Korea. Rebounded +2.42% before pulling back -4.25% on Sep 11.',
+        catalysts: 'Top 10 chip balance sheets, HBM supply chains, semiconductor ETF index rebalancing.',
+        tactical: 'Concentrated chip exposure: more diversified than VNT alone, yet remains sector-heavy. Perfect balance of upside velocity and basket diversification.',
+        tacticalBorder: '#c084fc'
+    }
+];
+
+const SCENARIO_2_ASSET_INTEL = [
+    {
+        symbol: 'HMM',
+        name: 'HMM (011200)',
+        tag: 'CYCLICAL SHIPPING PROXY',
+        borderCol: '#10b981',
+        tagBg: 'rgba(16, 185, 129, 0.15)',
+        tagText: '#10b981',
+        basePrice: '$15.11',
+        trendText: 'Trend: Cyclical Shipping (Freight & Route Risk)',
+        trendCol: '#10b981',
+        profile: 'Major South Korean container-shipping and logistics company. Sensitive to container freight rates, global trade volumes, fleet capacity, and geopolitical route disruptions.',
+        catalysts: 'Container freight rates, global trade and China/export demand, Red Sea route disruptions, bunker fuel costs.',
+        tactical: 'Shipping-rate news moves HMM quickly. Stronger freight rates support upside momentum, while demand pullbacks or excess capacity create sharp downward pressure.',
+        tacticalBorder: '#10b981'
+    },
+    {
+        symbol: 'KODEX 200',
+        name: 'KODEX 200 (069500)',
+        tag: 'LARGE-CAP BENCHMARK',
+        borderCol: '#38bdf8',
+        tagBg: 'rgba(56, 189, 248, 0.15)',
+        tagText: '#38bdf8',
+        basePrice: '$75.21',
+        trendText: 'Trend: Macro Baseline (Broad Large-Cap Index)',
+        trendCol: '#38bdf8',
+        profile: 'Exchange-traded fund tracking the KOSPI 200, providing broad exposure to large-cap Korean equities rather than a single stock.',
+        catalysts: 'Foreign investor flows, KRW/USD moves, Bank of Korea / Fed policy, broad large-cap risk appetite.',
+        tactical: 'The anchor of the Korean large-cap market. Diversification reduces single-stock headline risk, but does not prevent broad losses during systemic market-wide selloffs.',
+        tacticalBorder: '#38bdf8'
+    },
+    {
+        symbol: 'WONIK',
+        name: 'Wonik IPS (240810)',
+        tag: 'HIGH-BETA CHIP EQUIP',
+        borderCol: '#facc15',
+        tagBg: 'rgba(250, 204, 21, 0.15)',
+        tagText: '#facc15',
+        basePrice: '$87.50',
+        trendText: 'Trend: Capex Swings (₩110,000↔₩110,300)',
+        trendCol: '#facc15',
+        profile: 'Korean semiconductor equipment maker supplying deposition, etch, and related process equipment used in advanced chip manufacturing.',
+        catalysts: 'Semiconductor capex plans, memory/advanced chip cycles, Samsung/SK hynix equipment spending outlook.',
+        tactical: 'High-beta semiconductor equipment exposure. Chip-capex optimism can lift the stock, but equipment cycles are volatile—watch for abrupt reversals when capex slows.',
+        tacticalBorder: '#facc15'
+    },
+    {
+        symbol: 'LG-ENERGY',
+        name: 'LG Energy Solution (373220)',
+        tag: 'BATTERY BELLWETHER',
+        borderCol: '#ef4444',
+        tagBg: 'rgba(239, 68, 68, 0.15)',
+        tagText: '#ef4444',
+        basePrice: '$337.11',
+        trendText: 'Trend: Q3 Profit +25.7% (KRW 756B, Tax Credits)',
+        trendCol: '#ef4444',
+        profile: 'Major South Korean battery-cell manufacturer serving EV and energy-storage markets, with exposure to North American production and policy incentives.',
+        catalysts: 'EV sales forecasts, U.S. tariffs and production tax credits, lithium prices, grid-scale ESS demand.',
+        tactical: 'Headline earnings can look strong due to tax credits while EV demand remains mixed. Separate recurring operating momentum from one-off payments and subsidies.',
+        tacticalBorder: '#ef4444'
+    },
+    {
+        symbol: 'HYUNDAI',
+        name: 'Hyundai Motor (005380)',
+        tag: 'GLOBAL AUTO TITAN',
+        borderCol: '#c084fc',
+        tagBg: 'rgba(192, 132, 252, 0.15)',
+        tagText: '#c084fc',
+        basePrice: '$385.01',
+        trendText: 'Trend: Auto Volume (Global Sales & Hybrid Demand)',
+        trendCol: '#c084fc',
+        profile: 'Major Korean automaker with global sales across internal-combustion, hybrid, and electric vehicles; exposed to consumer demand, tariffs, FX, and product mix.',
+        catalysts: 'Global vehicle sales, U.S. tariffs/trade policy, KRW exchange rates, hybrid/EV product mix, recalls.',
+        tactical: 'Global diversification cushions weakness in any single country, but tariff headlines, currency swings, and consumer confidence shifts can trigger rapid repricing.',
+        tacticalBorder: '#c084fc'
+    }
+];
+
+function renderBriefingAssetMatrix() {
+    const isS2 = (typeof window.activeScenarioId !== 'undefined' && window.activeScenarioId === 2);
+    const intelTextEl = document.getElementById('briefing-assets-intel-text');
+    if (intelTextEl) {
+        intelTextEl.innerHTML = isS2
+            ? '<b>Traders Reference Intel:</b> Authentic market data (September–October 2026). <b>Scenario 2:</b> Container shipping, KOSPI 200 large-cap benchmark, semiconductor equipment, EV/ESS battery, and automotive export leaders.'
+            : '<b>Traders Reference Intel:</b> Recent trend data reflects authentic market history (Aug 31–Sep 11, 2026). <b>Scenario 1:</b> Semiconductor memory & AI infrastructure theme (Vintrumite, Samsung, KODEX, TIGER).';
+    }
+
+    const gridEl = document.getElementById('briefing-asset-cards-grid');
+    if (!gridEl) return;
+
+    const list = isS2 ? SCENARIO_2_ASSET_INTEL : SCENARIO_1_ASSET_INTEL;
+    gridEl.innerHTML = list.map(item => `
+        <div class="asset-intel-card" style="border-left: 3px solid ${item.borderCol};">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <span class="cell-symbol" style="font-size: 0.95rem; font-weight: 900; color: ${item.borderCol};">${item.symbol}</span>
+                    <div style="font-size: 0.68rem; color: #94a3b8;">${item.name}</div>
+                </div>
+                <span style="background: ${item.tagBg}; border: 1px solid ${item.borderCol}; color: ${item.tagText}; font-family: var(--font-mono); font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 3px;">
+                    ${item.tag}
+                </span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; padding: 4px 6px; background: rgba(0,0,0,0.3); border-radius: 4px;">
+                <span>Base Price: <b style="color: ${item.borderCol};">${item.basePrice}</b></span>
+                <span style="color: ${item.trendCol};">${item.trendText}</span>
+            </div>
+
+            <div style="font-size: 0.72rem; color: #94a3b8; line-height: 1.4;">
+                <b style="color: #cbd5e1;">Profile:</b> ${item.profile}
+            </div>
+
+            <div style="font-size: 0.7rem; color: #64748b; line-height: 1.35;">
+                <b style="color: #94a3b8;">Key Catalysts:</b> ${item.catalysts}
+            </div>
+
+            <div class="asset-directive-box" style="border-left-color: ${item.tacticalBorder};">
+                <b style="color: ${item.tacticalBorder};">Tactical Advice:</b> ${item.tactical}
+            </div>
+        </div>
+    `).join('');
+}
+
 function renderBriefingFixedNews() {
+    renderBriefingAssetMatrix();
+    const isS2 = (typeof window.activeScenarioId !== 'undefined' && window.activeScenarioId === 2);
     const p1 = window.FREE_FALL_NEWS?.phases?.['1'];
     if (!p1) return;
 
@@ -17204,6 +17412,17 @@ function renderBriefingFixedNews() {
         if (mBodyEl) mBodyEl.textContent = parsed.body;
     }
 
+    const mBadgeEl = document.getElementById('briefing-fixed-market-badge');
+    if (mBadgeEl) {
+        mBadgeEl.textContent = isS2 ? 'BROAD MACRO CATALYST' : 'BROAD MARKET CATALYST';
+    }
+    const mImpactEl = document.getElementById('briefing-fixed-market-impact-text');
+    if (mImpactEl) {
+        mImpactEl.textContent = isS2
+            ? 'Opening cross-asset divergence across shipping, batteries, autos and large-caps. Sets the opening macro risk tone.'
+            : 'Sets the opening macro tone across the KOSPI tech sector. Liquidity concentrates on major semiconductor proxies.';
+    }
+
     const iNews = (p1.industry_news || []).find(item => item.time === '0:00') || (p1.industry_news || [])[0];
     if (iNews) {
         const parsed = parseNewsItem(iNews.content);
@@ -17211,6 +17430,17 @@ function renderBriefingFixedNews() {
         const iBodyEl = document.getElementById('briefing-fixed-industry-body');
         if (iTitleEl) iTitleEl.textContent = parsed.title;
         if (iBodyEl) iBodyEl.textContent = parsed.body;
+    }
+
+    const iBadgeEl = document.getElementById('briefing-fixed-industry-badge');
+    if (iBadgeEl) {
+        iBadgeEl.textContent = 'INDUSTRY INTEL WIRE';
+    }
+    const iFocusEl = document.getElementById('briefing-fixed-industry-focus-text');
+    if (iFocusEl) {
+        iFocusEl.textContent = isS2
+            ? 'AI infrastructure investment, global freight-rate premiums, energy-storage demand, and export logistics.'
+            : 'Advanced lithography, HBM memory packaging, and hyperscale cloud data center capex cycles.';
     }
 
     // Dynamic 0:00 Asset Disclosures Grid
@@ -17416,6 +17646,15 @@ function updateBriefingHUD() {
         const mult = gameState.targetMultiplier || (gameState.targetType === 'small' ? 3 : (gameState.targetType === 'tolam' ? 100 : 20));
         targetEl.textContent = `${type} HOUSE ($${(mult * 10000).toLocaleString()})`;
     }
+
+    const scenEl = document.getElementById('briefing-hud-scenario');
+    if (scenEl) {
+        const isS2 = (typeof window.activeScenarioId !== 'undefined' && window.activeScenarioId === 2);
+        scenEl.textContent = isS2 ? 'SCENARIO 2 (DIVERSIFIED)' : 'SCENARIO 1 (AI TECH)';
+        scenEl.style.color = isS2 ? '#38bdf8' : '#c084fc';
+    }
+
+    renderBriefingAssetMatrix();
     renderBriefingFixedNews();
 }
 
