@@ -11233,7 +11233,7 @@
                     <div class="target-specs-grid">
                         <div class="target-spec-item">
                             <span class="target-spec-lbl">Recommended Leverage</span>
-                            <span class="target-spec-val text-red">4.0× Max Margin</span>
+                            <span class="target-spec-val text-red">4.0x Max Margin</span>
                         </div>
                         <div class="target-spec-item">
                             <span class="target-spec-lbl">Survival Probability</span>
@@ -11242,7 +11242,7 @@
                     </div>
 
                     <p class="target-desc-text">
-                        Maximum greed and degenerate ambition. Requires riding maximum 4.0× leverage at the market peak. A single 10% pullback triggers instant liquidation.
+                        Maximum greed and degenerate ambition. Requires riding maximum 4.0x leverage at the market peak. A single 10% pullback triggers instant liquidation.
                     </p>
 
                     <div class="target-select-bar">SELECT TO-LAM VILLA</div>
@@ -12410,9 +12410,9 @@
                 <div class="protocol-card p-accent">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-family: var(--font-mono); font-size: 9px; font-weight: 800; color: #00f0ff;">PROTOCOL 01 // LEVERAGE MECHANICS</span>
-                        <span style="font-family: var(--font-mono); font-size: 9px; color: #00f0ff; background: rgba(0,240,255,0.1); padding: 2px 6px; border-radius: 3px;">MAX 4.0×</span>
+                        <span style="font-family: var(--font-mono); font-size: 9px; color: #00f0ff; background: rgba(0,240,255,0.1); padding: 2px 6px; border-radius: 3px;">MAX 4.0x</span>
                     </div>
-                    <h4 style="font-size: 0.95rem; color: #fff;">4.0× Margin Multiplier & Purchasing Power</h4>
+                    <h4 style="font-size: 0.95rem; color: #fff;">4.0x Margin Multiplier & Purchasing Power</h4>
                     <p style="font-size: 0.76rem; color: #94a3b8; line-height: 1.45;">
                         Toggling Margin allows you to borrow 75% of your trade value from the clearinghouse. Your purchasing power quadruples: with <b>$10,000 cash</b>, you can control <b>$40,000 in shares</b>.
                     </p>
@@ -13139,7 +13139,7 @@
             <!-- Card 2: Leverage Tier -->
             <div class="badass-card">
                 <div class="badass-card-label">LEVERAGE MULTIPLIER</div>
-                <div class="badass-card-primary" id="modal-order-new-lev">4.0× Tier</div>
+                <div class="badass-card-primary" id="modal-order-new-lev">4.0x Tier</div>
                 <div class="badass-card-sub" id="badass-order-lev-tag">⚠️ 25% INITIAL MARGIN REQUIREMENT</div>
             </div>
 
@@ -14241,9 +14241,9 @@ const tutorialStepsData = [
         badge: 'STEP 4 / 7',
         targetTag: '[RISK MULTIPLIER]',
         targetLabel: 'LEVERAGE',
-        title: 'LEVERAGE MULTIPLIER (1.0× - 4.0×)',
-        desc: 'Shows your current portfolio leverage. At 4.0× leverage, your purchasing power quadruples — but price drops are also multiplied 4x against your cash equity.',
-        tip: 'A -25% market dip at 4.0x leverage completely destroys 100% of your capital in minutes.',
+        title: 'LEVERAGE & MARGIN CEILING (1.0x - 4.0x)',
+        desc: 'Shows your live portfolio leverage, while the buttons set your maximum margin ceiling. When effective leverage is at 4.0x, price moves impact your equity 4x faster.',
+        tip: 'Leverage is dynamic: profits lower your leverage, while losses push it higher. At 4.0x leverage, a drop of just -6.25% hits the 20% floor and triggers forced liquidation.',
         nextBtnText: 'NEXT: MARGIN HEALTH'
     },
     {
@@ -15812,7 +15812,7 @@ function stepMarginMultiplier(delta) {
 
 function promptCustomMargin() {
     const cur = (ClientEngine && ClientEngine.marginMultiplier) ? ClientEngine.marginMultiplier : 1.0;
-    const input = prompt(`Enter custom margin multiplier (1.0× to 4.0× MAX):\nCurrently: ${cur}×`, cur);
+    const input = prompt(`Enter custom margin multiplier (1.0× to 4.0x MAX):\nCurrently: ${cur}×`, cur);
     if (input !== null) {
         const trimmed = input.trim();
         if (trimmed === '') {
