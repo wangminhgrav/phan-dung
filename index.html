@@ -12550,7 +12550,7 @@
                         </span>
                         <span style="font-size: 0.68rem; color: #10b981; font-family: var(--font-mono); font-weight: 700;">5/5 FIXED INTEL UNLOCKED</span>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
+                    <div id="briefing-fixed-assets-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px;">
                         <!-- VNT -->
                         <div style="background: rgba(16, 185, 129, 0.06); border-radius: 5px; border-left: 3px solid #10b981; padding: 8px 10px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
@@ -14855,6 +14855,7 @@ function selectMarketScenario(scenarioId, notify = false) {
             window.FREE_FALL_NEWS = scenNews;
         }
     }
+    selectedNewsAssetCode = (scenarioId === 2) ? 'HMM' : 'VNT';
 
     // Update the Admin Note in the blank space
     const adminTextEl = document.getElementById('admin-scenario-text');
@@ -16716,6 +16717,46 @@ const assetIntelData = {
         catalysts: 'Top 10 Korean chipmakers performance, HBM supply chains, index weighting rebalancing.',
         role: 'Concentrated semiconductor basket ETF; useful for sector conviction without single-company idiosyncratic risk.',
         advice: 'Concentrated exposure to leading chipmakers: diversified, but still heavily exposed to the chip cycle.'
+    },
+    'HMM': {
+        code: 'HMM',
+        sub: 'HMM | Container Shipping & Logistics',
+        trend: 'Aug 31–Sep 11, 2026: Cyclical shipping stock. Sensitive to freight rates, global trade demand, and route disruptions.',
+        catalysts: 'Freight rates, global trade volumes, Red Sea/route disruptions, fuel prices, earnings guidance.',
+        role: 'Global trade and freight-rate proxy; responds to macro and trade news differently from tech.',
+        advice: 'Shipping-rate news moves HMM quickly. Stronger freight rates support upside, while weaker demand pressures the stock.'
+    },
+    'KODEX200': {
+        code: 'KODEX 200',
+        sub: 'KODEX 200 | Broad Large-Cap Index ETF',
+        trend: 'Aug 31–Sep 11, 2026: Benchmark tracking KOSPI 200 large-cap Korean equities and systemic market flows.',
+        catalysts: 'KOSPI 200 constituent performance, foreign investor flows, FX rates, BOK/Fed rate expectations.',
+        role: 'Broad Korean large-cap market exposure. Diversifies company risk but exposed to index selloffs.',
+        advice: 'Betting on the Korean large-cap market. Diversification reduces single-stock risk but does not prevent market-wide losses.'
+    },
+    'WONIK': {
+        code: 'WONIK',
+        sub: 'Wonik IPS | Semiconductor Equipment Maker',
+        trend: 'Sep 1–11, 2026: Volatile day-to-day swings. Closed KRW 110,000 on Sep 1 and KRW 110,300 on Sep 11 with sharp moves.',
+        catalysts: 'Semiconductor equipment orders, chipmaker capex cycles, Samsung/SK hynix spending, export controls.',
+        role: 'High-beta semiconductor equipment exposure; driven by customer capex and order timing.',
+        advice: 'Capex optimism lifts the stock, but equipment demand is cyclical. Watch for sharp reversals.'
+    },
+    'LG-ENERGY': {
+        code: 'LG-ENERGY',
+        sub: 'LG Energy Solution | Battery Bellwether',
+        trend: 'Early October 2026: Q3 operating profit KRW 756B (+25.7% YoY) supported by US tax credits and customer payment.',
+        catalysts: 'EV sales, battery demand forecasts, US policy & tax credits, lithium prices, grid storage demand.',
+        role: 'Battery-sector bellwether with exposure to EV demand, policy support, and energy-storage growth.',
+        advice: 'Headline earnings can be strong while underlying demand remains uncertain. Separate recurring operations from tax credits.'
+    },
+    'HYUNDAI': {
+        code: 'HYUNDAI',
+        sub: 'Hyundai Motor | Global Automaker',
+        trend: 'Mid-October 2026: Pune capacity expansion investment, US recall affecting certain seat motors, broad FX sensitivity.',
+        catalysts: 'Global vehicle sales, trade policy & tariffs, KRW exchange rates, EV/hybrid mix, recalls.',
+        role: 'Large-cap auto exposure with global revenue diversification, sensitive to trade policy and FX.',
+        advice: 'Global scale cushions weakness in one market, but tariff headlines, recalls, or weaker demand cause abrupt moves.'
     }
 };
 
@@ -16788,12 +16829,25 @@ const ASSET_CODE_MAP = {
     'SEC': { idx: 1, code: 'SEC', name: 'Samsung Electronics (005930)', sub: 'Tech Bellwether & Foundry', badge: 'FOUNDRY', aliases: ['SEC', '005930'] },
     'KODEX': { idx: 2, code: 'KODEX', name: 'KODEX Semiconductor (091160)', sub: 'Chip Sector Basket ETF', badge: 'ETF BASKET', aliases: ['KODEX', '091160', 'KODEX_SEMI'] },
     'KODEX2X': { idx: 3, code: 'KODEX 2X', name: 'KODEX Leverage (122630)', sub: '2× Leveraged KOSPI200 ETF', badge: '2X LEVERAGE', aliases: ['KODEX2X', '122630', 'KODEX_LEV', 'KODEX 2X'] },
-    'TIGER': { idx: 4, code: 'TIGER', name: 'TIGER Semiconductor TOP10 (396500)', sub: 'Top 10 Chip Basket ETF', badge: 'TOP 10', aliases: ['TIGER', '396500', 'TIGER_TOP10'] }
+    'TIGER': { idx: 4, code: 'TIGER', name: 'TIGER Semiconductor TOP10 (396500)', sub: 'Top 10 Chip Basket ETF', badge: 'TOP 10', aliases: ['TIGER', '396500', 'TIGER_TOP10'] },
+
+    // Scenario 2 Core Assets
+    'HMM': { idx: 0, code: 'HMM', name: 'HMM (011200)', sub: 'Container Shipping & Logistics', badge: 'SHIPPING', aliases: ['HMM', '011200'] },
+    '011200': { idx: 0, code: 'HMM', name: 'HMM (011200)', sub: 'Container Shipping & Logistics', badge: 'SHIPPING', aliases: ['HMM', '011200'] },
+    'KODEX200': { idx: 1, code: 'KODEX 200', name: 'KODEX 200 (069500)', sub: 'Large-Cap KOSPI 200 Index ETF', badge: 'INDEX ETF', aliases: ['KODEX200', '069500', 'KODEX 200'] },
+    '069500': { idx: 1, code: 'KODEX 200', name: 'KODEX 200 (069500)', sub: 'Large-Cap KOSPI 200 Index ETF', badge: 'INDEX ETF', aliases: ['KODEX200', '069500', 'KODEX 200'] },
+    'WONIK': { idx: 2, code: 'WONIK', name: 'Wonik IPS (240810)', sub: 'Semiconductor Equipment Maker', badge: 'CHIP EQUIP', aliases: ['WONIK', '240810', 'Wonik IPS'] },
+    '240810': { idx: 2, code: 'WONIK', name: 'Wonik IPS (240810)', sub: 'Semiconductor Equipment Maker', badge: 'CHIP EQUIP', aliases: ['WONIK', '240810', 'Wonik IPS'] },
+    'LG-ENERGY': { idx: 3, code: 'LG-ENERGY', name: 'LG Energy Solution (373220)', sub: 'EV & Energy Storage Battery Bellwether', badge: 'BATTERY', aliases: ['LG-ENERGY', 'LG_ENERGY', '373220', 'LG Energy Solution'] },
+    '373220': { idx: 3, code: 'LG-ENERGY', name: 'LG Energy Solution (373220)', sub: 'EV & Energy Storage Battery Bellwether', badge: 'BATTERY', aliases: ['LG-ENERGY', 'LG_ENERGY', '373220', 'LG Energy Solution'] },
+    'HYUNDAI': { idx: 4, code: 'HYUNDAI', name: 'Hyundai Motor (005380)', sub: 'Global Automaker & Hybrid Leader', badge: 'AUTO', aliases: ['HYUNDAI', '005380', 'Hyundai Motor'] },
+    '005380': { idx: 4, code: 'HYUNDAI', name: 'Hyundai Motor (005380)', sub: 'Global Automaker & Hybrid Leader', badge: 'AUTO', aliases: ['HYUNDAI', '005380', 'Hyundai Motor'] }
 };
 
 function selectNewsAsset(code) {
     selectedNewsAssetCode = code;
-    const assetMeta = ASSET_CODE_MAP[code] || ASSET_CODE_MAP['VNT'];
+    const defaultCode = (typeof activeScenarioId !== 'undefined' && activeScenarioId === 2) ? 'HMM' : 'VNT';
+    const assetMeta = ASSET_CODE_MAP[code] || ASSET_CODE_MAP[defaultCode] || ASSET_CODE_MAP['VNT'];
 
     let brief = null;
     if (window.FREE_FALL_NEWS && window.FREE_FALL_NEWS.pre_game_briefing && window.FREE_FALL_NEWS.pre_game_briefing[assetMeta.idx]) {
@@ -16877,7 +16931,9 @@ function renderNewsFeed() {
 
         const briefings = window.FREE_FALL_NEWS?.pre_game_briefing || [];
         if (briefings.length > 0) {
-            const assetCodes = ['VNT', 'SEC', 'KODEX', 'KODEX2X', 'TIGER'];
+            const assetCodes = (typeof activeScenarioId !== 'undefined' && activeScenarioId === 2)
+                ? ['HMM', 'KODEX200', 'WONIK', 'LG-ENERGY', 'HYUNDAI']
+                : ['VNT', 'SEC', 'KODEX', 'KODEX2X', 'TIGER'];
             container.innerHTML = briefings.map((b, idx) => {
                 const code = assetCodes[idx] || 'VNT';
                 const meta = ASSET_CODE_MAP[code];
@@ -17078,7 +17134,8 @@ function renderNewsFeed() {
 
     // VIEW 4: ASSET ANALYSIS
     if (activeNewsTab === 'assets') {
-        const meta = ASSET_CODE_MAP[selectedNewsAssetCode] || ASSET_CODE_MAP['VNT'];
+        const defaultCode = (typeof activeScenarioId !== 'undefined' && activeScenarioId === 2) ? 'HMM' : 'VNT';
+        const meta = ASSET_CODE_MAP[selectedNewsAssetCode] || ASSET_CODE_MAP[defaultCode] || ASSET_CODE_MAP['VNT'];
         if (headingEl) headingEl.textContent = `ASSET INTEL: ${meta.name}`;
         if (subheadingEl) subheadingEl.textContent = `ALL UNLOCKED INTEL WIRES FOR ${meta.code}`;
 
@@ -17156,14 +17213,170 @@ function renderBriefingFixedNews() {
         if (iBodyEl) iBodyEl.textContent = parsed.body;
     }
 
-    (p1.asset_news || []).forEach(item => {
-        if (!item.ticker) return;
-        const parsed = parseNewsItem(item.content);
-        const aTitleEl = document.getElementById(`briefing-fixed-asset-${item.ticker}-title`);
-        const aBodyEl = document.getElementById(`briefing-fixed-asset-${item.ticker}-body`);
-        if (aTitleEl) aTitleEl.textContent = parsed.title;
-        if (aBodyEl) aBodyEl.textContent = parsed.body;
-    });
+    // Dynamic 0:00 Asset Disclosures Grid
+    const gridEl = document.getElementById('briefing-fixed-assets-grid');
+    if (gridEl && p1.asset_news) {
+        const colors = [
+            { border: '#10b981', bg: 'rgba(16, 185, 129, 0.06)', text: '#10b981', tagBg: 'rgba(16, 185, 129, 0.15)', tagText: '#6ee7b7' },
+            { border: '#38bdf8', bg: 'rgba(56, 189, 248, 0.06)', text: '#38bdf8', tagBg: 'rgba(56, 189, 248, 0.15)', tagText: '#7dd3fc' },
+            { border: '#facc15', bg: 'rgba(250, 204, 21, 0.06)', text: '#facc15', tagBg: 'rgba(250, 204, 21, 0.15)', tagText: '#fde047' },
+            { border: '#ef4444', bg: 'rgba(239, 68, 68, 0.06)', text: '#ef4444', tagBg: 'rgba(239, 68, 68, 0.15)', tagText: '#fca5a5' },
+            { border: '#a855f7', bg: 'rgba(168, 85, 247, 0.06)', text: '#a855f7', tagBg: 'rgba(168, 85, 247, 0.15)', tagText: '#d8b4fe' }
+        ];
+        gridEl.innerHTML = (p1.asset_news || []).map((item, idx) => {
+            const meta = ASSET_CODE_MAP[item.ticker] || { code: item.ticker, name: item.asset_name, badge: 'CORE ASSET' };
+            const col = colors[idx % colors.length];
+            const parsed = parseNewsItem(item.content);
+            return `
+                <div style="background: ${col.bg}; border-radius: 5px; border-left: 3px solid ${col.border}; padding: 8px 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                        <span style="font-family: var(--font-mono); font-weight: 800; font-size: 0.74rem; color: ${col.text};">${meta.code} // ${meta.name}</span>
+                        <span style="font-size: 8px; color: ${col.tagText}; background: ${col.tagBg}; padding: 1px 5px; border-radius: 2px;">${meta.badge}</span>
+                    </div>
+                    <div id="briefing-fixed-asset-${item.ticker}-title" style="font-weight: 700; color: #f8fafc; font-size: 0.73rem; margin-bottom: 3px;">${parsed.title}</div>
+                    <div id="briefing-fixed-asset-${item.ticker}-body" style="font-size: 0.69rem; color: #94a3b8; line-height: 1.35;">${parsed.body}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Dynamic View 2: Strategic Dossiers in Briefing
+    const dossiersContainer = document.getElementById('briefing-news-view-asset');
+    if (dossiersContainer && window.FREE_FALL_NEWS?.pre_game_briefing) {
+        const briefings = window.FREE_FALL_NEWS.pre_game_briefing;
+        const assetCodes = (window.activeScenarioId === 2)
+            ? ['HMM', 'KODEX200', 'WONIK', 'LG-ENERGY', 'HYUNDAI']
+            : ['VNT', 'SEC', 'KODEX', 'KODEX2X', 'TIGER'];
+        const colors = [
+            { border: '#10b981', badgeCol: '#10b981', badgeBg: 'rgba(16,185,129,0.12)', dirCol: '#6ee7b7', dirBg: 'rgba(16,185,129,0.08)' },
+            { border: '#38bdf8', badgeCol: '#38bdf8', badgeBg: 'rgba(56,189,248,0.12)', dirCol: '#7dd3fc', dirBg: 'rgba(56,189,248,0.08)' },
+            { border: '#facc15', badgeCol: '#facc15', badgeBg: 'rgba(250,204,21,0.12)', dirCol: '#fde047', dirBg: 'rgba(250,204,21,0.08)' },
+            { border: '#ef4444', badgeCol: '#ef4444', badgeBg: 'rgba(239,68,68,0.12)', dirCol: '#fca5a5', dirBg: 'rgba(239,68,68,0.08)' },
+            { border: '#a855f7', badgeCol: '#a855f7', badgeBg: 'rgba(168,85,247,0.12)', dirCol: '#d8b4fe', dirBg: 'rgba(168,85,247,0.08)' }
+        ];
+
+        let html = `
+            <div style="font-size: 0.76rem; color: #94a3b8; margin-bottom: 4px;">
+                Reference dossiers for the 5 primary assets before simulation commences. Authentic market baseline (Scenario ${window.activeScenarioId || 1}):
+            </div>
+        `;
+        briefings.forEach((b, idx) => {
+            const code = assetCodes[idx] || 'VNT';
+            const meta = ASSET_CODE_MAP[code] || { code: code, name: b.company.split(' — ')[0], sub: '', badge: 'CORE ASSET' };
+            const col = colors[idx % colors.length];
+            const compParts = b.company.split(' — ');
+            const compName = compParts[0];
+            const compDesc = compParts.length > 1 ? compParts.slice(1).join(' — ') : b.company;
+            html += `
+                <div style="background: rgba(8, 14, 26, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 3px solid ${col.border}; border-radius: 8px; padding: 12px 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div>
+                            <span style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: ${col.border};">${compName}</span>
+                            <span style="font-size: 0.73rem; color: #94a3b8; margin-left: 8px;">${meta.sub || meta.name}</span>
+                        </div>
+                        <span style="font-family: var(--font-mono); font-size: 8px; color: ${col.badgeCol}; font-weight: 800; background: ${col.badgeBg}; padding: 2px 6px; border-radius: 3px;">${meta.badge}</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.45; margin-bottom: 8px;">
+                        ${compDesc}
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.72rem; margin-bottom: 8px;">
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Recent Trend:</b> <span style="color: #94a3b8;">${b.recent_trend}</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.35); padding: 6px 8px; border-radius: 4px;">
+                            <b style="color: #f8fafc;">Key Catalysts:</b> <span style="color: #94a3b8;">${b.possible_news}</span>
+                        </div>
+                    </div>
+                    <div style="background: ${col.dirBg}; border-left: 2px solid ${col.border}; padding: 6px 10px; border-radius: 3px; font-size: 0.72rem; color: ${col.dirCol}; font-family: var(--font-mono);">
+                        🛡️ <b>Strategic Directive:</b> ${b.for_the_player}
+                    </div>
+                </div>
+            `;
+        });
+        dossiersContainer.innerHTML = html;
+    }
+
+    // Dynamic Column 1 in News DB (#news-asset-list)
+    const assetListEl = document.getElementById('news-asset-list');
+    if (assetListEl) {
+        if (window.activeScenarioId === 2) {
+            assetListEl.innerHTML = `
+                <div class="news-asset-item ${selectedNewsAssetCode === 'HMM' ? 'active' : ''}" onclick="selectNewsAsset('HMM')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">HMM</span>
+                        <span class="news-asset-tag">SHIPPING</span>
+                    </div>
+                    <div class="news-asset-name">HMM (011200)</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'KODEX200' ? 'active' : ''}" onclick="selectNewsAsset('KODEX200')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">KODEX 200</span>
+                        <span class="news-asset-tag">INDEX ETF</span>
+                    </div>
+                    <div class="news-asset-name">KODEX 200 (069500)</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'WONIK' ? 'active' : ''}" onclick="selectNewsAsset('WONIK')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">WONIK</span>
+                        <span class="news-asset-tag">CHIP EQUIP</span>
+                    </div>
+                    <div class="news-asset-name">Wonik IPS (240810)</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'LG-ENERGY' ? 'active' : ''}" onclick="selectNewsAsset('LG-ENERGY')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">LG-ENERGY</span>
+                        <span class="news-asset-tag">BATTERY</span>
+                    </div>
+                    <div class="news-asset-name">LG Energy Solution</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'HYUNDAI' ? 'active' : ''}" onclick="selectNewsAsset('HYUNDAI')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">HYUNDAI</span>
+                        <span class="news-asset-tag">AUTO</span>
+                    </div>
+                    <div class="news-asset-name">Hyundai Motor</div>
+                </div>
+            `;
+        } else {
+            assetListEl.innerHTML = `
+                <div class="news-asset-item ${selectedNewsAssetCode === 'VNT' ? 'active' : ''}" onclick="selectNewsAsset('VNT')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">VNT</span>
+                        <span class="news-asset-tag">AI / HBM</span>
+                    </div>
+                    <div class="news-asset-name">Vintrumite (SK hynix Proxy)</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'SEC' ? 'active' : ''}" onclick="selectNewsAsset('SEC')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">SEC</span>
+                        <span class="news-asset-tag">FOUNDRY</span>
+                    </div>
+                    <div class="news-asset-name">Samsung Electronics</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'KODEX' ? 'active' : ''}" onclick="selectNewsAsset('KODEX')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">KODEX</span>
+                        <span class="news-asset-tag">ETF BASKET</span>
+                    </div>
+                    <div class="news-asset-name">KODEX Semiconductor</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'KODEX2X' ? 'active' : ''}" onclick="selectNewsAsset('KODEX2X')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">KODEX 2X</span>
+                        <span class="news-asset-tag" style="color: #ef4444; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1);">2X LEVERAGE</span>
+                    </div>
+                    <div class="news-asset-name">KODEX Leverage</div>
+                </div>
+                <div class="news-asset-item ${selectedNewsAssetCode === 'TIGER' ? 'active' : ''}" onclick="selectNewsAsset('TIGER')">
+                    <div class="news-asset-ticker-row">
+                        <span class="news-asset-ticker">TIGER</span>
+                        <span class="news-asset-tag">TOP 10</span>
+                    </div>
+                    <div class="news-asset-name">TIGER Semi TOP10</div>
+                </div>
+            `;
+        }
+    }
 }
 
 function renderNewsDB() {
