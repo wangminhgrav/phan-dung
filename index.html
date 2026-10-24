@@ -4861,17 +4861,26 @@
             padding: 14px 8px;
             z-index: 40;
             transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-x: hidden;
-            overflow-y: auto;
+            overflow: visible;
             white-space: nowrap;
             box-sizing: border-box;
             box-shadow: none;
-            contain: paint;
+            contain: layout style;
         }
         .left-taskbar.expanded {
             width: 226px;
             min-width: 226px;
             padding: 14px 10px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .left-taskbar:not(.expanded) .brand-text-col,
+        .left-taskbar:not(.expanded) .nav-label,
+        .left-taskbar:not(.expanded) .profile-info {
+            display: none;
+        }
+        .left-taskbar:not(.expanded) .nav-item {
+            justify-content: center;
         }
         .taskbar-brand {
             display: flex;
@@ -4993,14 +5002,13 @@
             box-sizing: border-box;
         }
         .nav-item:hover {
-            background: linear-gradient(90deg, rgba(56, 189, 248, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border-color: rgba(56, 189, 248, 0.25);
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(56, 189, 248, 0.3);
             color: #f8fafc;
-            transform: translateX(2px);
         }
         .nav-item:hover .nav-svg-wrap {
-            border-color: rgba(56, 189, 248, 0.4);
-            background: rgba(56, 189, 248, 0.12);
+            border-color: rgba(56, 189, 248, 0.45);
+            background: rgba(56, 189, 248, 0.14);
             color: #38bdf8;
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
         }
@@ -5311,6 +5319,8 @@
         .hft-volatility-capsule {
             cursor: pointer;
             border-color: rgba(56, 189, 248, 0.3);
+            padding: 2px 9px;
+            gap: 6px;
         }
         .hft-volatility-capsule:hover {
             border-color: #38bdf8;
@@ -10876,8 +10886,21 @@
             color: #000;
         }
         .admin-taskbar-item:hover {
-            border-color: rgba(239, 68, 68, 0.5) !important;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.25) !important;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.16) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+            border-color: rgba(239, 68, 68, 0.55) !important;
+            box-shadow: 0 0 14px rgba(239, 68, 68, 0.25) !important;
+            color: #fecaca !important;
+        }
+        .admin-taskbar-item:hover .nav-svg-wrap {
+            border-color: rgba(239, 68, 68, 0.65) !important;
+            background: rgba(239, 68, 68, 0.18) !important;
+            color: #ef4444 !important;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.35) !important;
+        }
+        .left-taskbar:not(.expanded) .admin-taskbar-item::after {
+            border-color: rgba(239, 68, 68, 0.55);
+            color: #fca5a5;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 12px rgba(239, 68, 68, 0.3);
         }
     
         /* =========================================================================
@@ -13052,7 +13075,7 @@
 <div id="screen-6" class="screen">
     <!-- Left Navigation Rail (Tactical Command Rail) -->
     <div id="main-left-taskbar" class="left-taskbar">
-        <div class="taskbar-brand" onclick="toggleTaskbar()" title="Toggle Tactical Taskbar Width">
+        <div class="taskbar-brand" onclick="toggleTaskbar()">
             <div class="brand-badge-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline>
@@ -13067,7 +13090,7 @@
 
         <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; width: 100%;">
             <!-- 01 TRADING -->
-            <div class="nav-item active" id="nav-item-trading" onclick="switchNavTab('home', this)" data-tooltip="01 // TRADING FLOOR" title="Trading Floor [EXECUTION]">
+            <div class="nav-item active" id="nav-item-trading" onclick="switchNavTab('home', this)" data-tooltip="01 // TRADING FLOOR">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 3v18h18"/>
@@ -13079,7 +13102,7 @@
             </div>
 
             <!-- 02 NEWS DB (Moved above Bank) -->
-            <div class="nav-item" id="nav-item-news" onclick="switchNavTab('news', this)" data-tooltip="02 // NEWS INTELLIGENCE" title="News Intelligence Database [INTEL]">
+            <div class="nav-item" id="nav-item-news" onclick="switchNavTab('news', this)" data-tooltip="02 // NEWS INTELLIGENCE">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
@@ -13092,7 +13115,7 @@
             </div>
 
             <!-- 03 SAFE HAVEN BANK -->
-            <div class="nav-item" id="nav-item-bank" onclick="openBankDashboard()" data-tooltip="03 // SAFE HAVEN VAULT" title="Safe Haven Liquidity Vault [VAULT]">
+            <div class="nav-item" id="nav-item-bank" onclick="openBankDashboard()" data-tooltip="03 // SAFE HAVEN VAULT">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -13103,7 +13126,7 @@
             </div>
 
             <!-- 04 PORTFOLIO -->
-            <div class="nav-item active" id="nav-item-portfolio" onclick="toggleColumn('col-left')" data-tooltip="04 // ASSETS & HOLDINGS" title="Toggle Account & Holdings Panel [ASSETS]">
+            <div class="nav-item active" id="nav-item-portfolio" onclick="toggleColumn('col-left')" data-tooltip="04 // ASSETS & HOLDINGS">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="7" height="9" x="3" y="3" rx="1"/>
@@ -13116,7 +13139,7 @@
             </div>
 
             <!-- 05 RISK HUD -->
-            <div class="nav-item active" id="nav-item-risk" onclick="toggleColumn('col-right')" data-tooltip="05 // THREAT TELEMETRY" title="Toggle Risk & Leverage Panel [THREAT]">
+            <div class="nav-item active" id="nav-item-risk" onclick="toggleColumn('col-right')" data-tooltip="05 // THREAT TELEMETRY">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
@@ -13126,7 +13149,7 @@
             </div>
 
             <!-- 06 PROTOCOL / GUIDE -->
-            <div class="nav-item" id="nav-item-protocol" onclick="tutorialOrigin = 'trading'; navigateTo(4)" data-tooltip="06 // PROTOCOL MANUAL" title="Operational Guide & Mechanics [PROTOCOL]">
+            <div class="nav-item" id="nav-item-protocol" onclick="tutorialOrigin = 'trading'; navigateTo(4)" data-tooltip="06 // PROTOCOL MANUAL">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
@@ -13138,8 +13161,8 @@
                 <span class="nav-label"><span class="nav-idx">06</span> PROTOCOL</span>
             </div>
 
-            <!-- 07 [ADMIN] CONTROL FRAME & CHEATS (LOCKED WITH PASSCODE: "truongcon") -->
-            <div class="nav-item admin-taskbar-item" id="nav-item-admin-endings" onclick="openAdminControlFrame()" data-tooltip="07 // [ADMIN] CONSOLE" title="[ADMIN ONLY] Administrative Control Console & Overrides (Passcode: truongcon)">
+            <!-- 07 [ADMIN] CONTROL FRAME & CHEATS (SECURITY CLEARANCE REQUIRED) -->
+            <div class="nav-item admin-taskbar-item" id="nav-item-admin-endings" onclick="openAdminControlFrame()" data-tooltip="07 // [ADMIN] CONSOLE">
                 <div class="nav-svg-wrap">
                     <svg class="nav-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -13195,7 +13218,7 @@
                             <path class="hft-wave-line" d="M0 5 L4 5 L7 2 L10 8 L13 3 L16 7 L19 5 L26 5" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <span class="tech-capsule-val" id="phase-bar-vol-status">VOL: NORM</span>
+                    <span class="tech-capsule-val" id="phase-bar-vol-status" style="color: #34d399;">VOL: NORMAL</span>
                 </div>
             </div>
 
@@ -15514,7 +15537,6 @@
 
 <!-- =========================================================================
      [ADMIN] CONTROL TERMINAL & SECURITY OVERRIDE CONSOLE
-     Protected by Passcode: "truongcon"
      ========================================================================= -->
 <div id="admin-endings-modal" class="s1-modal-backdrop" style="display:none;" onclick="if(event.target===this) closeAdminControlFrame()">
     <div class="admin-endings-modal-box" style="position: relative; max-width: 760px; width: 95%; background: #080c16; border: 1px solid rgba(239, 68, 68, 0.6); box-shadow: 0 0 40px rgba(239, 68, 68, 0.25), 0 20px 40px rgba(0,0,0,0.85); border-radius: 8px; padding: 22px 24px; color: #e2e8f0; font-family: var(--font-sans); max-height: 88vh; overflow-y: auto;">
@@ -24306,13 +24328,13 @@ function updateHUD(data) {
                 volStatus.textContent = 'VOL: PANIC';
                 volStatus.style.color = '#ef4444';
             } else if (pId >= 5) {
-                volStatus.textContent = 'VOL: MAX';
+                volStatus.textContent = 'VOL: EXTREME';
                 volStatus.style.color = '#f97316';
             } else if (pId >= 3) {
                 volStatus.textContent = 'VOL: HIGH';
                 volStatus.style.color = '#fbbf24';
             } else {
-                volStatus.textContent = 'VOL: NORM';
+                volStatus.textContent = 'VOL: NORMAL';
                 volStatus.style.color = '#34d399';
             }
         }
