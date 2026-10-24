@@ -17574,7 +17574,7 @@ const AudioManager = {
 
         if (isLoop) {
             audio.addEventListener('ended', () => {
-                if (this.currentTrackKey === key || this.activeOverlayKey === key) {
+                if (this.activeOverlayKey ? (this.activeOverlayKey === key) : (this.currentTrackKey === key)) {
                     try {
                         audio.currentTime = 0;
                         if (this.trackSavedPositions[key] !== undefined) {
@@ -17611,6 +17611,31 @@ const AudioManager = {
         if (this.ctx && this.ctx.state === 'suspended') {
             this.ctx.resume().catch(() => {});
         }
+        // If an overlay (news, bank, buy, sell) is active, preserve it in the foreground;
+        // NEVER resume or unmute the underlying base trading/menu track while an overlay is active!
+        if (this.activeOverlayKey) {
+            const overlayTrack = this.tracks[this.activeOverlayKey];
+            if (overlayTrack && overlayTrack.audio && overlayTrack.audio.paused && !this.isMuted) {
+                try {
+                    const p = overlayTrack.audio.play();
+                    if (p !== undefined) p.catch(() => {});
+                } catch (e) {}
+                if (overlayTrack.gainNode && this.ctx) {
+                    const now = this.ctx.currentTime;
+                    overlayTrack.gainNode.gain.cancelScheduledValues(now);
+                    overlayTrack.gainNode.gain.setValueAtTime(0.0001, now);
+                    overlayTrack.gainNode.gain.linearRampToValueAtTime(1.0, now + 0.5);
+                }
+            }
+            // Ensure any underlying base track remains paused while overlay is active
+            Object.entries(this.tracks).forEach(([k, t]) => {
+                if (k !== this.activeOverlayKey && t && t.audio && !t.audio.paused) {
+                    try { t.audio.pause(); } catch (e) {}
+                }
+            });
+            return;
+        }
+
         const cur = this.currentTrackKey ? this.tracks[this.currentTrackKey] : null;
         if (cur && cur.audio && cur.audio.paused && !this.isMuted) {
             try {
@@ -17640,9 +17665,20 @@ const AudioManager = {
     },
 
     crossfade(newTrackKey, durationSec = 2.0) {
+        // If an overlay (Buy/Sell/Bank/News) is currently active, preserve foreground overlay;
+        // quietly update the underlying base track key so resumption is ready.
+        if (this.activeOverlayKey) {
+            const oldTrack = this.currentTrackKey ? this.tracks[this.currentTrackKey] : null;
+            if (oldTrack && oldTrack.key !== this.activeOverlayKey && oldTrack.audio) {
+                try { oldTrack.audio.pause(); } catch (e) {}
+            }
+            this.currentTrackKey = newTrackKey;
+            return;
+        }
+
         this.unlockAudio();
         const currentTrack = this.currentTrackKey ? this.tracks[this.currentTrackKey] : null;
-        if (newTrackKey === this.currentTrackKey && !this.activeOverlayKey) {
+        if (newTrackKey === this.currentTrackKey) {
             if (currentTrack && currentTrack.audio && currentTrack.audio.paused && !this.isMuted) {
                 try {
                     const p = currentTrack.audio.play();
@@ -17666,16 +17702,6 @@ const AudioManager = {
 
         const now = this.ctx ? this.ctx.currentTime : 0;
         const oldTrack = this.currentTrackKey ? this.tracks[this.currentTrackKey] : null;
-
-        // If an overlay (Buy/Sell/Bank/News) is currently active, preserve foreground overlay;
-        // quietly update the underlying base track key so resumption is ready.
-        if (this.activeOverlayKey) {
-            if (oldTrack && oldTrack.key !== this.activeOverlayKey) {
-                try { oldTrack.audio.pause(); } catch (e) {}
-            }
-            this.currentTrackKey = newTrackKey;
-            return;
-        }
 
         // Smoothly fade out old track
         if (oldTrack && oldTrack.gainNode && this.ctx) {
@@ -17748,20 +17774,21 @@ const AudioManager = {
             }
         }
 
-        // 2. If entering overlay mode from base phase music, smoothly fade out current base track
-        if (!this.activeOverlayKey && this.currentTrackKey) {
-            const baseTrack = this.tracks[this.currentTrackKey];
-            if (baseTrack && baseTrack.gainNode && this.ctx) {
-                baseTrack.gainNode.gain.cancelScheduledValues(now);
-                baseTrack.gainNode.gain.setValueAtTime(Math.max(0.0001, baseTrack.gainNode.gain.value), now);
-                baseTrack.gainNode.gain.linearRampToValueAtTime(0.0001, now + fadeDuration);
-            }
-            setTimeout(() => {
-                if (this.activeOverlayKey && baseTrack) {
-                    try { baseTrack.audio.pause(); } catch (e) {}
+        // 2. If entering overlay mode from base phase music, smoothly fade out any running non-overlay tracks
+        Object.entries(this.tracks).forEach(([k, t]) => {
+            if (k !== key && t && t.audio && !t.audio.paused) {
+                if (t.gainNode && this.ctx) {
+                    t.gainNode.gain.cancelScheduledValues(now);
+                    t.gainNode.gain.setValueAtTime(Math.max(0.0001, t.gainNode.gain.value), now);
+                    t.gainNode.gain.linearRampToValueAtTime(0.0001, now + fadeDuration);
                 }
-            }, fadeDuration * 1000);
-        }
+                setTimeout(() => {
+                    if (this.activeOverlayKey && t && t.audio) {
+                        try { t.audio.pause(); } catch (e) {}
+                    }
+                }, fadeDuration * 1000);
+            }
+        });
 
         // 3. Prepare target overlay track
         const targetTrack = this.getOrCreateTrack(key);
@@ -18060,6 +18087,7 @@ const AudioManager = {
     },
 
     playMenuTheme() {
+        if (this.activeOverlayKey) return;
         const menuTrack = this.tracks['menu'];
         if (this.currentTrackKey === 'menu' && menuTrack && menuTrack.audio && menuTrack.audio.paused && !this.isMuted) {
             try {
@@ -18206,7 +18234,7 @@ function setupAudioUnlockListeners() {
     const unlock = () => {
         if (typeof AudioManager !== 'undefined') {
             AudioManager.unlockAudio();
-            if (!marketSessionStarted && (!isEndingActive)) {
+            if (!marketSessionStarted && (!isEndingActive) && (!AudioManager.activeOverlayKey)) {
                 AudioManager.playMenuTheme();
             }
             const v1 = document.getElementById('ending-video-element');
@@ -18214,7 +18242,8 @@ function setupAudioUnlockListeners() {
             const v2 = document.getElementById('ending-ambient-video');
             if (v2 && (!window.isEndingActive)) { v2.pause(); v2.muted = true; }
         }
-        const cur = (typeof AudioManager !== 'undefined' && AudioManager.currentTrackKey) ? AudioManager.tracks[AudioManager.currentTrackKey] : null;
+        const activeKey = (typeof AudioManager !== 'undefined') ? (AudioManager.activeOverlayKey || AudioManager.currentTrackKey) : null;
+        const cur = (typeof AudioManager !== 'undefined' && activeKey) ? AudioManager.tracks[activeKey] : null;
         if (cur && cur.audio && !cur.audio.paused) {
             window.removeEventListener('pointerdown', unlock);
             window.removeEventListener('keydown', unlock);
@@ -23307,7 +23336,10 @@ function adminWipeMarginDebtCheat() {
     }
 }
 
-function openGameSettingsModal() {
+function openGameSettingsModal(event) {
+    const evt = event || (typeof window !== 'undefined' ? window.event : null);
+    if (evt && evt.stopPropagation) evt.stopPropagation();
+    if (typeof closeTaskbar === 'function') closeTaskbar();
     const modal = document.getElementById('game-settings-modal');
     if (!modal) return;
     if (typeof pauseMarketTimer === 'function') pauseMarketTimer('SETTINGS');
