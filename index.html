@@ -17049,18 +17049,45 @@ function switchNavTab(tab, el) {
                     newsView.classList.remove('active');
                     newsView.classList.remove('transition-exit');
                     newsView.style.display = 'none';
+                    if (!isMarketTimerPaused()) {
+                        updateActiveTimerDisplay();
+                    }
                 }
             }, 280);
         }
         resumeMarketTimer('NEWS DB');
         updateTaskbarActiveNav('nav-item-trading');
+        if (!isMarketTimerPaused()) {
+            updateActiveTimerDisplay();
+        }
 
     } else if (tab === 'bank') {
-        if (newsView && newsView.classList.contains('active')) {
+        if (newsView && (newsView.classList.contains('active') || newsView.classList.contains('transition-exit'))) {
             closeNewsDatabase();
         }
         openBankDashboard();
         return;
+    }
+}
+
+function closeNewsDatabase() {
+    const newsView = document.getElementById('news-db-view');
+    if (newsView && (newsView.classList.contains('active') || newsView.classList.contains('transition-exit'))) {
+        if (newsTransitionTimeout) {
+            clearTimeout(newsTransitionTimeout);
+            newsTransitionTimeout = null;
+        }
+        newsView.classList.remove('active');
+        newsView.classList.remove('transition-exit');
+        newsView.style.display = 'none';
+        if (typeof AudioManager !== 'undefined') {
+            AudioManager.stopOverlayTheme('news', 0.6);
+            AudioManager.playSFX('news-close');
+        }
+        resumeMarketTimer('NEWS DB');
+        if (!isMarketTimerPaused()) {
+            updateActiveTimerDisplay();
+        }
     }
 }
 
@@ -17584,6 +17611,19 @@ const AudioManager = {
         if (this.ctx && this.ctx.state === 'suspended') {
             this.ctx.resume().catch(() => {});
         }
+        const cur = this.currentTrackKey ? this.tracks[this.currentTrackKey] : null;
+        if (cur && cur.audio && cur.audio.paused && !this.isMuted) {
+            try {
+                const p = cur.audio.play();
+                if (p !== undefined) p.catch(() => {});
+            } catch (e) {}
+            if (cur.gainNode && this.ctx) {
+                const now = this.ctx.currentTime;
+                cur.gainNode.gain.cancelScheduledValues(now);
+                cur.gainNode.gain.setValueAtTime(0.0001, now);
+                cur.gainNode.gain.linearRampToValueAtTime(1.0, now + 1.0);
+            }
+        }
     },
 
     getBaseTrackKey() {
@@ -17601,7 +17641,22 @@ const AudioManager = {
 
     crossfade(newTrackKey, durationSec = 2.0) {
         this.unlockAudio();
-        if (newTrackKey === this.currentTrackKey && !this.activeOverlayKey) return;
+        const currentTrack = this.currentTrackKey ? this.tracks[this.currentTrackKey] : null;
+        if (newTrackKey === this.currentTrackKey && !this.activeOverlayKey) {
+            if (currentTrack && currentTrack.audio && currentTrack.audio.paused && !this.isMuted) {
+                try {
+                    const p = currentTrack.audio.play();
+                    if (p !== undefined) p.catch(() => {});
+                } catch (e) {}
+                if (currentTrack.gainNode && this.ctx) {
+                    const now = this.ctx.currentTime;
+                    currentTrack.gainNode.gain.cancelScheduledValues(now);
+                    currentTrack.gainNode.gain.setValueAtTime(0.0001, now);
+                    currentTrack.gainNode.gain.linearRampToValueAtTime(1.0, now + durationSec);
+                }
+            }
+            return;
+        }
 
         const newTrack = this.getOrCreateTrack(newTrackKey);
         if (!newTrack) {
@@ -18005,6 +18060,20 @@ const AudioManager = {
     },
 
     playMenuTheme() {
+        const menuTrack = this.tracks['menu'];
+        if (this.currentTrackKey === 'menu' && menuTrack && menuTrack.audio && menuTrack.audio.paused && !this.isMuted) {
+            try {
+                const p = menuTrack.audio.play();
+                if (p !== undefined) p.catch(() => {});
+            } catch (e) {}
+            if (menuTrack.gainNode && this.ctx) {
+                const now = this.ctx.currentTime;
+                menuTrack.gainNode.gain.cancelScheduledValues(now);
+                menuTrack.gainNode.gain.setValueAtTime(0.0001, now);
+                menuTrack.gainNode.gain.linearRampToValueAtTime(1.0, now + 1.0);
+            }
+            return;
+        }
         this.crossfade('menu', 1.5);
     },
 
@@ -18145,10 +18214,13 @@ function setupAudioUnlockListeners() {
             const v2 = document.getElementById('ending-ambient-video');
             if (v2 && (!window.isEndingActive)) { v2.pause(); v2.muted = true; }
         }
-        window.removeEventListener('pointerdown', unlock);
-        window.removeEventListener('keydown', unlock);
-        window.removeEventListener('click', unlock);
-        window.removeEventListener('touchstart', unlock);
+        const cur = (typeof AudioManager !== 'undefined' && AudioManager.currentTrackKey) ? AudioManager.tracks[AudioManager.currentTrackKey] : null;
+        if (cur && cur.audio && !cur.audio.paused) {
+            window.removeEventListener('pointerdown', unlock);
+            window.removeEventListener('keydown', unlock);
+            window.removeEventListener('click', unlock);
+            window.removeEventListener('touchstart', unlock);
+        }
     };
     window.addEventListener('pointerdown', unlock, { passive: true });
     window.addEventListener('keydown', unlock, { passive: true });
@@ -21185,7 +21257,7 @@ function getActiveModalPauseReasons() {
         reasons.add('BANK VAULT');
     }
     const newsView = document.getElementById('news-db-view');
-    if (newsView && (newsView.classList.contains('active') || (newsView.style.display && newsView.style.display !== 'none'))) {
+    if (newsView && !newsView.classList.contains('transition-exit') && (newsView.classList.contains('active') || (newsView.style.display && newsView.style.display !== 'none'))) {
         reasons.add('NEWS DB');
     }
     const settleModal = document.getElementById('settlement-lock-modal');
@@ -21796,6 +21868,10 @@ function startMarketSession() {
                 const secs = String(sessionSecondsRemaining % 60).padStart(2, '0');
                 const el = document.getElementById('hud-timer');
                 if (el) {
+                    if (el.classList.contains('timer-paused-blink')) {
+                        el.classList.remove('timer-paused-blink');
+                        el.style.color = '';
+                    }
                     el.textContent = `${mins}:${secs} [P${ClientEngine.currentPhase}]`;
                     el.title = `Phase ${ClientEngine.currentPhase} • Second ${globalSec} of 1800`;
                 }
