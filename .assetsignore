@@ -1,0 +1,11 @@
+.git
+.git/**
+*.pack
+*.idx
+*.rev
+node_modules
+node_modules/**
+.wrangler
+.wrangler/**
+.vscode
+.vscode/**
