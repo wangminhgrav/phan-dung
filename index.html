@@ -12838,6 +12838,7 @@
         <div class="target-cards-row">
             <!-- 01. SAFE // SMALL HOUSE -->
             <div class="target-card card-theme-safe" 
+                 data-sfx="difficulty-safe"
                  onmouseenter="onDifficultyHover('house_small')" 
                  onmouseleave="onDifficultyLeave()" 
                  onclick="selectPropertyTarget('Small House', 3, this)">
@@ -12886,6 +12887,7 @@
 
             <!-- 02. BALANCED // NORMAL HOUSE (DEFAULT SELECTED) -->
             <div class="target-card card-theme-balanced selected" 
+                 data-sfx="difficulty-balanced"
                  onmouseenter="onDifficultyHover('house_normal')" 
                  onmouseleave="onDifficultyLeave()" 
                  onclick="selectPropertyTarget('Normal House', 20, this)">
@@ -12934,6 +12936,7 @@
 
             <!-- 03. EXTREME // TO-LAM VILLA -->
             <div class="target-card card-theme-extreme" 
+                 data-sfx="difficulty-extreme"
                  onmouseenter="onDifficultyHover('house_tolam')" 
                  onmouseleave="onDifficultyLeave()" 
                  onclick="selectPropertyTarget('ToLam Villa', 100, this)">
@@ -16744,6 +16747,10 @@ function onDifficultyLeave() {
 }
 
 function selectPropertyTarget(type, mult, cardEl) {
+    if (typeof AudioManager !== 'undefined' && typeof AudioManager.playDifficultySFX === 'function') {
+        AudioManager.playDifficultySFX(type || mult);
+    }
+
     gameState.targetType = type;
     gameState.targetMult = mult;
     gameState.targetCapital = 10000 * mult;
@@ -18104,8 +18111,162 @@ const AudioManager = {
                 osc.connect(gain);
                 osc.start(now);
                 osc.stop(now + 0.20);
+
+            } else if (type === 'diff-safe' || type === 'difficulty-safe' || type === 'diff-small') {
+                // DIFFICULTY 1: SAFE // DISCIPLINED (Small House)
+                // Pristine harmonic chime chord (C5 -> E5 -> G5 -> C6) with warm acoustic decay
+                const chordGain = this.ctx.createGain();
+                chordGain.connect(gain);
+                chordGain.gain.setValueAtTime(0.0001, now);
+                chordGain.gain.linearRampToValueAtTime(0.24 * vol, now + 0.015);
+                chordGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
+
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(4800, now);
+                filter.connect(chordGain);
+
+                const notes = [
+                    { f: 523.25, delay: 0, dur: 0.38, type: 'sine', g: 0.16 },         // C5
+                    { f: 659.25, delay: 0.040, dur: 0.40, type: 'sine', g: 0.18 },     // E5
+                    { f: 783.99, delay: 0.080, dur: 0.42, type: 'triangle', g: 0.14 }, // G5
+                    { f: 1046.50, delay: 0.120, dur: 0.45, type: 'sine', g: 0.12 }     // C6
+                ];
+                notes.forEach(n => {
+                    const osc = this.ctx.createOscillator();
+                    const nGain = this.ctx.createGain();
+                    osc.type = n.type;
+                    osc.frequency.setValueAtTime(n.f, now + n.delay);
+                    nGain.gain.setValueAtTime(0.0001, now + n.delay);
+                    nGain.gain.linearRampToValueAtTime(n.g, now + n.delay + 0.008);
+                    nGain.gain.exponentialRampToValueAtTime(0.0001, now + n.delay + n.dur);
+                    osc.connect(nGain);
+                    nGain.connect(filter);
+                    osc.start(now + n.delay);
+                    osc.stop(now + n.delay + n.dur + 0.02);
+                });
+
+            } else if (type === 'diff-balanced' || type === 'difficulty-balanced' || type === 'diff-normal') {
+                // DIFFICULTY 2: BALANCED // RECOMMENDED (Normal House)
+                // Tactical dual-pulse cyber lock-on: fast digital frequency chirp + laser-sharp HUD lock
+                const p1Osc = this.ctx.createOscillator();
+                p1Osc.type = 'triangle';
+                p1Osc.frequency.setValueAtTime(880, now); // A5
+                p1Osc.frequency.exponentialRampToValueAtTime(1320, now + 0.055); // E6
+                const p1Gain = this.ctx.createGain();
+                p1Gain.gain.setValueAtTime(0.0001, now);
+                p1Gain.gain.linearRampToValueAtTime(0.18 * vol, now + 0.006);
+                p1Gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.065);
+                p1Osc.connect(p1Gain);
+                p1Gain.connect(gain);
+                p1Osc.start(now);
+                p1Osc.stop(now + 0.07);
+
+                // Pulse 2: Precision target acquisition lock ping
+                const p2Time = now + 0.055;
+                const p2Osc = this.ctx.createOscillator();
+                const p2Sub = this.ctx.createOscillator();
+                p2Osc.type = 'sine';
+                p2Osc.frequency.setValueAtTime(1760, p2Time); // A6
+                p2Osc.frequency.exponentialRampToValueAtTime(1400, p2Time + 0.16);
+                p2Sub.type = 'triangle';
+                p2Sub.frequency.setValueAtTime(880, p2Time); // A5
+                p2Sub.frequency.exponentialRampToValueAtTime(700, p2Time + 0.14);
+
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(2200, p2Time);
+                filter.frequency.exponentialRampToValueAtTime(1600, p2Time + 0.18);
+                filter.Q.setValueAtTime(2.2, p2Time);
+
+                const p2Gain = this.ctx.createGain();
+                p2Gain.gain.setValueAtTime(0.0001, p2Time);
+                p2Gain.gain.linearRampToValueAtTime(0.20 * vol, p2Time + 0.008);
+                p2Gain.gain.exponentialRampToValueAtTime(0.0001, p2Time + 0.19);
+
+                p2Osc.connect(filter);
+                p2Sub.connect(filter);
+                filter.connect(p2Gain);
+                p2Gain.connect(gain);
+                p2Osc.start(p2Time);
+                p2Sub.start(p2Time);
+                p2Osc.stop(p2Time + 0.20);
+                p2Sub.stop(p2Time + 0.20);
+
+            } else if (type === 'diff-extreme' || type === 'difficulty-extreme' || type === 'diff-tolam') {
+                // DIFFICULTY 3: EXTREME // HIGH ROLLER (To-Lam Villa)
+                // Heavy ominous cinematic sub-bass slam + distorted dark sawtooth sweep
+                const subOsc = this.ctx.createOscillator();
+                subOsc.type = 'sine';
+                subOsc.frequency.setValueAtTime(155, now);
+                subOsc.frequency.exponentialRampToValueAtTime(34, now + 0.38);
+
+                const subGain = this.ctx.createGain();
+                subGain.gain.setValueAtTime(0.0001, now);
+                subGain.gain.linearRampToValueAtTime(0.32 * vol, now + 0.012);
+                subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+                subOsc.connect(subGain);
+                subGain.connect(gain);
+                subOsc.start(now);
+                subOsc.stop(now + 0.48);
+
+                // Ominous gritty saw drop with resonant lowpass filter sweep
+                const sawOsc1 = this.ctx.createOscillator();
+                const sawOsc2 = this.ctx.createOscillator();
+                sawOsc1.type = 'sawtooth';
+                sawOsc1.frequency.setValueAtTime(98, now); // G2
+                sawOsc1.frequency.exponentialRampToValueAtTime(49, now + 0.36); // G1
+                sawOsc2.type = 'sawtooth';
+                sawOsc2.frequency.setValueAtTime(146.83, now); // D3
+                sawOsc2.frequency.exponentialRampToValueAtTime(73.41, now + 0.36); // D2
+
+                const sawFilter = this.ctx.createBiquadFilter();
+                sawFilter.type = 'lowpass';
+                sawFilter.frequency.setValueAtTime(1400, now);
+                sawFilter.frequency.exponentialRampToValueAtTime(90, now + 0.36);
+                sawFilter.Q.setValueAtTime(3.8, now);
+
+                const sawGain = this.ctx.createGain();
+                sawGain.gain.setValueAtTime(0.0001, now);
+                sawGain.gain.linearRampToValueAtTime(0.24 * vol, now + 0.015);
+                sawGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+
+                sawOsc1.connect(sawFilter);
+                sawOsc2.connect(sawFilter);
+                sawFilter.connect(sawGain);
+                sawGain.connect(gain);
+                sawOsc1.start(now);
+                sawOsc2.start(now);
+                sawOsc1.stop(now + 0.45);
+                sawOsc2.stop(now + 0.45);
+
+                // Initial impact crack transient
+                const clickOsc = this.ctx.createOscillator();
+                clickOsc.type = 'triangle';
+                clickOsc.frequency.setValueAtTime(480, now);
+                clickOsc.frequency.exponentialRampToValueAtTime(60, now + 0.05);
+                const clickGain = this.ctx.createGain();
+                clickGain.gain.setValueAtTime(0.0001, now);
+                clickGain.gain.linearRampToValueAtTime(0.20 * vol, now + 0.004);
+                clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+                clickOsc.connect(clickGain);
+                clickGain.connect(gain);
+                clickOsc.start(now);
+                clickOsc.stop(now + 0.07);
             }
         } catch (e) {}
+    },
+
+    playDifficultySFX(levelOrType) {
+        if (!levelOrType) return;
+        const s = String(levelOrType).toLowerCase();
+        if (s.includes('small') || s.includes('safe') || s === '3' || s === 'tier-1') {
+            this.playSFX('difficulty-safe');
+        } else if (s.includes('tolam') || s.includes('villa') || s.includes('extreme') || s === '100' || s === 'tier-3') {
+            this.playSFX('difficulty-extreme');
+        } else {
+            this.playSFX('difficulty-balanced');
+        }
     },
 
     playMenuTheme() {
