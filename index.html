@@ -12153,8 +12153,8 @@
             border: 1px solid rgba(56, 189, 248, 0.45);
             background: linear-gradient(90deg, 
                 #0284c7 0%, 
-                #38bdf8 var(--slider-fill, 50%), 
-                rgba(15, 23, 42, 0.9) var(--slider-fill, 50%), 
+                #38bdf8 var(--slider-fill, 65%), 
+                rgba(15, 23, 42, 0.9) var(--slider-fill, 65%), 
                 rgba(2, 6, 23, 0.98) 100%);
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 10px rgba(56, 189, 248, 0.2);
         }
@@ -12164,8 +12164,8 @@
             border: 1px solid rgba(56, 189, 248, 0.45);
             background: linear-gradient(90deg, 
                 #0284c7 0%, 
-                #38bdf8 var(--slider-fill, 50%), 
-                rgba(15, 23, 42, 0.9) var(--slider-fill, 50%), 
+                #38bdf8 var(--slider-fill, 65%), 
+                rgba(15, 23, 42, 0.9) var(--slider-fill, 65%), 
                 rgba(2, 6, 23, 0.98) 100%);
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 10px rgba(56, 189, 248, 0.2);
         }
@@ -15836,14 +15836,14 @@
                         </div>
                         <div id="settings-volume-badge" class="cyber-volume-badge">
                             <span id="settings-volume-status">NOMINAL</span>
-                            <b id="settings-volume-label">50%</b>
+                            <b id="settings-volume-label">65%</b>
                         </div>
                     </div>
 
                     <!-- Cyber Range Slider Container -->
                     <div class="cyber-slider-wrap">
-                        <input type="range" min="0" max="100" value="50" id="settings-audio-slider" class="cyber-range-input"
-                               style="--slider-fill: 50%;"
+                        <input type="range" min="0" max="100" value="65" id="settings-audio-slider" class="cyber-range-input"
+                               style="--slider-fill: 65%;"
                                oninput="if(typeof AudioManager!=='undefined') AudioManager.setVolume(this.value / 100);">
 
                         <!-- 16-Segment Tactical LED VU Meter -->
@@ -15869,9 +15869,9 @@
                         <!-- Graticule Tick Labels -->
                         <div class="cyber-graticule-row">
                             <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0);" title="Mute BGM">0% [MUTE]</span>
-                            <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.25);" title="Low Volume">25%</span>
-                            <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.50);" class="grat-default" title="Default Volume">50% [DEFAULT]</span>
-                            <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.75);" title="High Volume">75%</span>
+                            <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.30);" title="Low Volume">30%</span>
+                            <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.65);" class="grat-default" title="Default Volume">65% [DEFAULT]</span>
+                            <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.85);" title="High Volume">85%</span>
                             <span onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(1.0);" title="Max Volume">100% [MAX]</span>
                         </div>
                     </div>
@@ -15881,9 +15881,10 @@
                 <div class="cyber-presets-row" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;">
                     <span style="font-size: 0.68rem; color: #64748b; font-family: var(--font-mono); font-weight: 700; width: 68px; letter-spacing: 0.05em;">PRESETS:</span>
                     <button type="button" class="cyber-preset-btn" data-vol="0" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0);">🔇 0%</button>
-                    <button type="button" class="cyber-preset-btn" data-vol="25" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.25);">25%</button>
-                    <button type="button" class="cyber-preset-btn active" data-vol="50" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.50);">50%</button>
-                    <button type="button" class="cyber-preset-btn" data-vol="75" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.75);">75%</button>
+                    <button type="button" class="cyber-preset-btn" data-vol="30" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.30);">30%</button>
+                    <button type="button" class="cyber-preset-btn" data-vol="50" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.50);">50%</button>
+                    <button type="button" class="cyber-preset-btn active" data-vol="65" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.65);">65%</button>
+                    <button type="button" class="cyber-preset-btn" data-vol="85" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(0.85);">85%</button>
                     <button type="button" class="cyber-preset-btn" data-vol="100" onclick="if(typeof AudioManager!=='undefined') AudioManager.setVolume(1.0);">100%</button>
                 </div>
 
@@ -17268,7 +17269,7 @@ const AudioManager = {
         news: 0
     },
     isMuted: false,
-    savedVolume: 0.5,
+    savedVolume: 0.65,
     isPanicFilterActive: false,
     isTensionFilterEnabled: true,
     isSfxEnabled: true,
@@ -18094,7 +18095,7 @@ const AudioManager = {
             }
         } else {
             if (this.savedVolume <= 0.01) {
-                this.savedVolume = 0.5;
+                this.savedVolume = 0.65;
             }
             if (this.masterGainNode && this.ctx) {
                 this.masterGainNode.gain.cancelScheduledValues(now);
@@ -22133,7 +22134,7 @@ function playTransitionAudio(caseType) {
         }
         const now = ctx.currentTime;
         const masterGain = ctx.createGain();
-        const vol = (typeof AudioManager !== 'undefined') ? AudioManager.savedVolume : 0.5;
+        const vol = (typeof AudioManager !== 'undefined') ? AudioManager.savedVolume : 0.65;
         masterGain.gain.setValueAtTime(vol, now);
         masterGain.connect((typeof AudioManager !== 'undefined' && AudioManager.masterGainNode) ? AudioManager.masterGainNode : ctx.destination);
 
@@ -22515,7 +22516,7 @@ function showEndingScreen(tierCode, options = {}) {
         const shouldMute = (typeof AudioManager !== 'undefined') ? AudioManager.isMuted : false;
         vid.muted = shouldMute;
         vid.defaultMuted = shouldMute;
-        vid.volume = (typeof AudioManager !== 'undefined' && !AudioManager.isMuted) ? AudioManager.savedVolume : 0.5;
+        vid.volume = (typeof AudioManager !== 'undefined' && !AudioManager.isMuted) ? AudioManager.savedVolume : 0.65;
         vid.playsInline = true;
         vid.onended = null;
         vid.ontimeupdate = null;
@@ -22578,7 +22579,7 @@ function showEndingScreen(tierCode, options = {}) {
         const unlockEndingSound = () => {
             if (vid && vid.muted && (!AudioManager || !AudioManager.isMuted)) {
                 vid.muted = false;
-                vid.volume = (typeof AudioManager !== 'undefined') ? AudioManager.savedVolume : 0.5;
+                vid.volume = (typeof AudioManager !== 'undefined') ? AudioManager.savedVolume : 0.65;
             }
         };
         overlay.addEventListener('pointerdown', unlockEndingSound, { once: true });
